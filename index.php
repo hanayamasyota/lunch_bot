@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/reply.php';
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
 define('TABLE_NAME_USERS', 'users');
@@ -55,7 +56,7 @@ foreach ($events as $event) {
     //直前のメッセージに対する応答
     if (getBeforeMessageByUserId($event->getUserId()) === "shop_review") {
         if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
+            replyTextMessage($bot, $event->getReplyToken(), "直前のメッセージを受け取りました。");
         }
     }
 
@@ -63,9 +64,13 @@ foreach ($events as $event) {
     if(strcmp($event->getText(), "お店のレビュー") == 0) {
         //データがない場合、ユーザデータテーブルにデータを登録
         if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
-            registerUser($event->getUserId(), "shop_review");
+            registerUser($event->getUserId, "shop_review");
         }
-        replyTextMessage($bot, $event->getReplyToken(), 'TextMessage');
+        replyTextMessage($bot, $event->getReplyToken(), 
+        'テストでレビューを登録します。
+        まずは店舗のIDを入力してください。
+        (店のIDは仮で111a,222b,333cとしています。)'
+        );
     }
 }
 
