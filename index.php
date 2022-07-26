@@ -62,7 +62,7 @@ foreach ($events as $event) {
     //メッセージに対する返答
     if(strcmp($event->getText(), "お店のレビュー") == 0) {
         //データがない場合、ユーザデータテーブルにデータを登録
-        if(getStonesByUserId($event->getUserId()) === PDO::PARAM_NULL) {
+        if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
             registerUser($event->getUserId, "shop_review");
         }
         replyTextMessage($bot, $event->getReplyToken(),
