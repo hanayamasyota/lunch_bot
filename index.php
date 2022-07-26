@@ -31,7 +31,7 @@ foreach ($events as $event) {
     }
 
     //メッセージに対する返答
-    if (strcmp($event->getText(), "あ")) {
+    if (strcmp($event->getText(), "あ") == 0) {
         replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
     } else {
         replyTextMessage($bot, $event->getReplyToken(), $event->getText());
