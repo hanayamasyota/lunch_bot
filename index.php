@@ -7,19 +7,21 @@ define('TABLE_NAME_USERS', 'users');
 define('TABLE_NAME_REVIEWS', 'reviews');
 //店の情報テーブル名(テストで3件のみ)
 define('TABLE_NAME_SHOPS', 'shops');
-/*テーブルデータ(★:PRIMARY, ☆:FOREIGHN)
+/*テーブルデータ(★:PRIMARY, ☆:FOREIGN)
 users(
-    ★userid...ユーザID
-    before_send...直前のメッセージ
+    ★userid(bytea)...ユーザID
+    before_send(text)...直前のメッセージ
 )
 reviews(
-    shopid...店舗のID
-    evaluation...全体の評価
-    free...自由欄
+    ★review_no(integer)...レビューを一意にするための番号
+    ☆shopid(text)...店舗のID
+    ☆userid(bytea)...ユーザID
+    evaluation(interger)...全体の評価
+    free(text)...自由欄
 )
 shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
-    ★shopid...店舗のID
-    shopname...店舗名
+    ★shopid(text)...店舗のID
+    shopname(text)...店舗名
 )
 */
 
