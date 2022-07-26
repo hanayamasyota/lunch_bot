@@ -53,13 +53,6 @@ foreach ($events as $event) {
         continue;
     }
 
-    //直前のメッセージに対する応答
-    if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
-        if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
-        }
-    }
-
     //メッセージに対する返答
     if(strcmp($event->getText(), "お店のレビュー") == 0) {
         //データがない場合、ユーザデータテーブルにデータを登録
@@ -70,6 +63,13 @@ foreach ($events as $event) {
             updateUser($event->getUserId(), 'shop_review');
         }
         break;
+    }
+
+    //直前のメッセージに対する応答
+    if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
+        if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
+            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
+        }
     }
 }
 
