@@ -54,9 +54,9 @@ foreach ($events as $event) {
     }
 
     //直前のメッセージに対する応答
-    if (getBeforeMessageByUserId($event->getUserId()) === "shop_review") {
+    if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
         if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), "直前のメッセージを受け取りました。");
+            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
         }
     }
 
@@ -64,13 +64,15 @@ foreach ($events as $event) {
     if(strcmp($event->getText(), "お店のレビュー") == 0) {
         //データがない場合、ユーザデータテーブルにデータを登録
         if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
-            registerUser($event->getUserId, "shop_review");
+            registerUser($event->getUserId(), 'shop_review');
+        } else {
+            replyTextMessage($bot, $event->getReplyToken(), 
+            'テストでレビューを登録します。
+            まずは店舗のIDを入力してください。
+            (店のIDは仮で111a,222b,333cとしています。)'
+            );
+            updateUser($event->getUserId(), 'shop_review');
         }
-        replyTextMessage($bot, $event->getReplyToken(), 
-        'テストでレビューを登録します。
-        まずは店舗のIDを入力してください。
-        (店のIDは仮で111a,222b,333cとしています。)'
-        );
     }
 }
 
@@ -96,7 +98,7 @@ function checkExistsShopId($shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select shopid, shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute($shopId);
+    $sth->execute(array($shopId));
     // レコードが存在しなければNULL
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
