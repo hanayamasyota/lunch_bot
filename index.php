@@ -46,6 +46,7 @@ try {
     error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
 }
 
+//メイン処理
 foreach ($events as $event) {
     // MessageEvent型でなければ処理をスキップ
     if (!($event instanceof \LINE\LINEBot\Event\MessageEvent)) {
@@ -62,7 +63,6 @@ foreach ($events as $event) {
             replyTextMessage($bot, $event->getReplyToken(), 'レビューの登録をします。まずは店舗のIDを入力してください。(店のIDは仮で111a,222b,333cとしています。)');
             updateUser($event->getUserId(), 'shop_review');
         }
-        break;
     }
 
     //直前のメッセージに対する応答
