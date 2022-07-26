@@ -96,7 +96,7 @@ function checkExistsShopId($shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select shopid, shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
+    $sth->execute($shopId);
     // レコードが存在しなければNULL
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
