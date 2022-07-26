@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
+require_once __DIR__ . '/search.php';
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
 define('TABLE_NAME_USERS', 'users');
@@ -55,6 +56,15 @@ foreach ($events as $event) {
     }
 
     //メッセージに対する返答
+    if(strcmp($event->getText(), "お店を探す") == 0) {
+        #データベースから位置情報取得
+        #テスト用の位置情報
+        $lat = 36.063513;
+        $lon = 136.222748;
+        $return_message_text = get_restaurant_information($lat, $lon);
+        $response_format = text_format($return_message_text);
+        replyTextMessage($bot, $event->getReplyToken(), $response_format);
+    }
     if(strcmp($event->getText(), "お店のレビュー") == 0) {
         //データがない場合、ユーザデータテーブルにデータを登録
         if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
