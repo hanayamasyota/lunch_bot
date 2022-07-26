@@ -76,13 +76,13 @@ foreach ($events as $event) {
     }
 
     //直前のメッセージに対する応答
-    if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
-        if (getShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
-        } else {
+    // if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
+    //     if (getShopId($event->getText()) != PDO::PARAM_NULL) {
+    //         replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
+    //     } else {
 
-        }
-    }
+    //     }
+    // }
 }
 
 //データベース関連--------------------------------------------------------------
@@ -103,19 +103,19 @@ function getBeforeMessageByUserId($userId) {
 }
 
 // 店舗IDを元にデータベースから情報を取得
-function getShopNameByShopId($shopId) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select shop_name from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
-    // レコードが存在しなければNULL
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        //直前のメッセージを返す
-        return $row['shop_name'];
-    }
-}
+// function getShopNameByShopId($shopId) {
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'select shop_name from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($shopId));
+//     // レコードが存在しなければNULL
+//     if (!($row = $sth->fetch())) {
+//         return PDO::PARAM_NULL;
+//     } else {
+//         //直前のメッセージを返す
+//         return $row['shop_name'];
+//     }
+// }
 
 // ユーザーをデータベースに登録する
 function registerUser($userId, $beforeSend) {
