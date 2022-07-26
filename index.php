@@ -14,8 +14,8 @@ users(
 )
 reviews(
     ★review_no(integer)...レビューを一意にするための番号
-    ☆shopid(text)...店舗のID
-    ☆userid(bytea)...ユーザID
+    ☆shopid(text)...登録された店舗のID
+    ☆userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
     free(text)...自由欄
 )
@@ -122,12 +122,12 @@ function updateUser($userId, $beforeSend) {
 }
 
 //レビュー情報の登録
-function registerReview() {
-    $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (shopid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId, $));
-}
+// function registerReview() {
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (shopid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($shopId, $));
+// }
 
 // データベースへの接続を管理するクラス
 class dbConnection {
