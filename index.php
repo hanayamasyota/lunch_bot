@@ -55,7 +55,7 @@ foreach ($events as $event) {
     //直前のメッセージに対する応答
     if (getBeforeMessageByUserId($event->getUserId()) === "shop_review") {
         if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), "直前のメッセージを受け取りました。");
+            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
         }
     }
 
@@ -65,7 +65,7 @@ foreach ($events as $event) {
         if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
             registerUser($event->getUserId, "shop_review");
         }
-        replyTextMessage($bot, $event->getReplyToken(), "テストでレビューを登録します。まずは店舗のIDを入力してください。(店のIDは仮で111a,222b,333cとしています。)");
+        replyTextMessage($bot, $event->getReplyToken(), 'TextMessage');
     }
 }
 
