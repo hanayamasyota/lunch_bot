@@ -55,9 +55,9 @@ foreach ($events as $event) {
 
     //直前のメッセージに対する応答
     if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
-        if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
-            replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
-        }
+        // if (checkExistsShopId($event->getText()) != PDO::PARAM_NULL) {
+        //     replyTextMessage($bot, $event->getReplyToken(), '直前のメッセージを受け取りました。');
+        // }
     }
 
     //メッセージに対する返答
@@ -90,19 +90,19 @@ function getBeforeMessageByUserId($userId) {
 }
 
 // 店舗IDを元にデータベースから情報を取得
-function checkExistsShopId($shopId) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
-    // レコードが存在しなければNULL
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        //直前のメッセージを返す
-        return $row['shopname'];
-    }
-}
+// function checkExistsShopId($shopId) {
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'select shopid, shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($shopId));
+//     // レコードが存在しなければNULL
+//     if (!($row = $sth->fetch())) {
+//         return PDO::PARAM_NULL;
+//     } else {
+//         //直前のメッセージを返す
+//         return $row['shopname'];
+//     }
+// }
 
 // ユーザーをデータベースに登録する
 function registerUser($userId, $beforeSend) {
