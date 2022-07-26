@@ -66,11 +66,7 @@ foreach ($events as $event) {
         if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
             registerUser($event->getUserId(), 'shop_review');
         } else {
-            replyTextMessage($bot, $event->getReplyToken(), 
-            'テストでレビューを登録します。
-            まずは店舗のIDを入力してください。
-            (店のIDは仮で111a,222b,333cとしています。)'
-            );
+            replyTextMessage($bot, $event->getReplyToken(), 'テストでレビューを登録します。まずは店舗のIDを入力してください。(店のIDは仮で111a,222b,333cとしています。)');
             updateUser($event->getUserId(), 'shop_review');
         }
     }
