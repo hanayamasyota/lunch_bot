@@ -1,31 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
-require_once __DIR__ . '/search.php';
-// テーブル名を定義
-//ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
-define('TABLE_NAME_USERS', 'users');
-//ユーザの感想テーブル名
-define('TABLE_NAME_REVIEWS', 'reviews');
-//店の情報テーブル名(テストで3件のみ)
-define('TABLE_NAME_SHOPS', 'shops');
-/*テーブルデータ(★:PRIMARY, ☆:FOREIGN)
-users(
-    ★userid(bytea)...ユーザID
-    before_send(text)...直前のメッセージ
-)
-reviews(
-    ★review_no(integer)...レビューを一意にするための番号
-    ☆shopid(text)...登録された店舗のID
-    ☆userid(bytea)...登録したユーザID
-    evaluation(interger)...全体の評価
-    free(text)...自由欄
-)
-shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
-    ★shopid(text)...店舗のID
-    shopname(text)...店舗名
-)
-*/
 
 // アクセストークンを使いCurlHTTPClientをインスタンス化
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
@@ -57,9 +32,9 @@ foreach ($events as $event) {
 
     //メッセージに対する返答
     if (strcmp($event->getText(), "あ")) {
-        $bot->replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
+        replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
     } else {
-        $bot->replyTextMessage($bot, $event->getReplyToken(), $event->getText());
+        replyTextMessage($bot, $event->getReplyToken(), $event->getText());
     }
 }
 
