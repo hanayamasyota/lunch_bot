@@ -16,13 +16,13 @@ users(
 )
 reviews(
     ★review_no(integer)...レビューを一意にするための番号
-    ☆shopid(text)...登録された店舗のID
+    ☆shopid(bytea)...登録された店舗のID
     ☆userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
     free(text)...自由欄
 )
 shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
-    ★shopid(text)...店舗のID
+    ★shopid(bytea)...店舗のID
     shopname(text)...店舗名
 )
 */

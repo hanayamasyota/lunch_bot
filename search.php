@@ -44,22 +44,19 @@ function renderJson($json) {
     $lunch_count = 0;
     $result = "";
     for ($i = 0; $i < $restaurant_length; $i++) {
-        //ランチのある店のみ取り出す
-        if ($temp->{"shop"}[$i]->{"lunch"} == "あり") {
-            #店名、店ID、ジャンル、予算(ホットペッパーのページ)
-            $result .= "店名：".$temp->{"shop"}[$i]->{"name"}."\r\n";
-            $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
-            $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
-            $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
-            if ($lunch_count > 3) {
-                $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
-                break;
-            }
-            $result .= "\r\n";
-            $lunch_count += 1;
+        #店名、店ID、ジャンル、予算(ホットペッパーのページ)
+        $result .= "店名：".$temp->{"shop"}[$i]->{"name"}."\r\n";
+        $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
+        $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
+        $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
+        if ($lunch_count > 3) {
+            $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
+            break;
         }
+        $result .= "\r\n";
+        $lunch_count += 1;
     }
     $result_txt = "周辺1km以内に".$lunch_count."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
-
     return $result_txt;
 }
+?>
