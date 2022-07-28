@@ -61,9 +61,8 @@ foreach ($events as $event) {
         #テスト用の位置情報
         $lat = 36.063513;
         $lon = 136.222748;
-        $return_message_text = get_restaurant_information($lat, $lon);
-        $response_format = text_format($return_message_text);
-        replyTextMessage($bot, $event->getReplyToken(), $response_format);
+        $restaurant_information = get_restaurant_information($lat, $lon);
+        replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
     }
 
     //メッセージに対する返答
