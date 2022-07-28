@@ -54,7 +54,7 @@ function renderJson($json) {
         }
         $result .= "\r\n";
     }
-    $result_txt = "周辺1km以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
+    $result_txt = "周辺1km以内に".$restaurant_length."件見つかりました。\r\n10件まで表示します。\r\n\n" . $result;
     return $result_txt;
 }
 ?>
