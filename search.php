@@ -2,7 +2,7 @@
 function get_restaurant_information($lat, $lon) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
-    $range = 2;
+    $range = 3;
 
     // クエリをまとめる
     $query = [
@@ -56,9 +56,10 @@ function renderJson($json) {
                 break;
             }
             $result .= "\r\n";
+            $lunch_count += 1;
         }
     }
-    $result_txt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
+    $result_txt = "周辺1km以内に".$lunch_count."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
 
     return $result_txt;
 }
