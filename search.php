@@ -2,7 +2,7 @@
 function get_restaurant_information($lat, $lon) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
-    $range = 1;
+    $range = 2;
 
     // クエリをまとめる
     $query = [
@@ -37,23 +37,28 @@ function text_format($message) {
 function renderJson($json) {
     $restaurant_length = $json->{"results"}->{"results_available"};
     if ($restaurant_length < 1) {
-        $txt = "周辺にお店が見つかりませんでした。";
-        return $txt;
+        $result = "周辺にお店が見つかりませんでした。";
+        return $result;
     }
     $temp = $json->{"results"};
-    $txt = "周辺300m以内に".$restaurant_length."件見つかりました。\r\nテストで5件まで表示します。\r\n";
+    $lunch_count = 0;
+    $result = "";
     for ($i = 0; $i < $restaurant_length; $i++) {
-        #店名、住所、ジャンル、URL(ホットペッパーのページ)
-        $txt .= "店名：".$temp->{"shop"}[$i]->{"name"}."\r\n";
-        $txt .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
-        // $txt .= "url:".$temp->{"shop"}[$i]->{"urls"}->{"pc"}."\r\n";
-        $txt .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
-        $txt .= "ジャンル:".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
-        if ($i > 3) {
-            $txt .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
-            break;
+        //ランチのある店のみ取り出す
+        if ($temp->{"shop"}[$i]->{"lunch"} == "あり") {
+            #店名、店ID、ジャンル、予算(ホットペッパーのページ)
+            $result .= "店名：".$temp->{"shop"}[$i]->{"name"}."\r\n";
+            $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
+            $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
+            $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
+            if ($lunch_count > 3) {
+                $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
+                break;
+            }
+            $result .= "\r\n";
         }
-        $txt .= "\r\n";
     }
-    return $txt;
+    $result_txt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
+
+    return $result_txt;
 }
