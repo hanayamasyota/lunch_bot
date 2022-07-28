@@ -41,7 +41,6 @@ function renderJson($json) {
         return $result;
     }
     $temp = $json->{"results"};
-    $lunch_count = 0;
     $result = "";
     for ($i = 0; $i < $restaurant_length; $i++) {
         #店名、店ID、ジャンル、予算(ホットペッパーのページ)
@@ -49,14 +48,13 @@ function renderJson($json) {
         $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
         $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
         $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
-        if ($lunch_count > 3) {
+        if ($i > 10) {
             $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
             break;
         }
         $result .= "\r\n";
-        $lunch_count += 1;
     }
-    $result_txt = "周辺1km以内に".$lunch_count."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
+    $result_txt = "周辺1km以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n" . $result;
     return $result_txt;
 }
 ?>
