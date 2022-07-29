@@ -56,10 +56,9 @@ foreach ($events as $event) {
     }
 
     //直前のメッセージの削除を行う
-    // if (strcmp($event->getText(), 'キャンセル') == 0) {
-    //     updateUser($event->getUserId(), '');
-    //     continue;
-    // }
+    if (strcmp($event->getText(), 'キャンセル') == 0) {
+        updateUser($event->getUserId(), null);
+    }
 
     //直前のメッセージがデータベースにある場合
     if (getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) {
@@ -84,6 +83,7 @@ foreach ($events as $event) {
         }
     
     //直前のメッセージがデータベースにない場合
+    } else {
         //メッセージに対する返答---------------------------------
         //お店を探す
         if(strcmp($event->getText(), 'お店を探す') == 0) {
@@ -129,6 +129,9 @@ function getBeforeMessageByUserId($userId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
+        if ($row['before_send'] == null) {
+            return PDO::PARAM_NULL;
+        }
         //直前のメッセージを返す
         return $row['before_send'];
     }
