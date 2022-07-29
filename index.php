@@ -146,7 +146,7 @@ function getShopNameByShopId($shopId) {
         return PDO::PARAM_NULL;
     } else {
         //店名を返す
-        return $row['shop_name'];
+        return $row['shopname'];
     }
 }
 
