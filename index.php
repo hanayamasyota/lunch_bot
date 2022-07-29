@@ -16,13 +16,13 @@ users(
 )
 reviews(
     ★review_no(integer)...レビューを一意にするための番号
-    ☆shopid(bytea)...登録された店舗のID
+    ☆shopid(text)...登録された店舗のID
     ☆userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
     free(text)...自由欄
 )
 shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
-    ★shopid(bytea)...店舗のID
+    ★shopid(text)...店舗のID
     shopname(text)...店舗名
 )
 */
@@ -55,29 +55,66 @@ foreach ($events as $event) {
         continue;
     }
 
-    //メッセージに対する返答
-    if(strcmp($event->getText(), "お店を探す") == 0) {
-        #データベースから位置情報取得
-        #テスト用の位置情報
-        $lat = 36.063513;
-        $lon = 136.222748;
-        $restaurant_information = get_restaurant_information($lat, $lon);
-        replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
-    }else if(strcmp($event->getText(), "お店のレビュー") == 0) {
-        //データがない場合、ユーザデータテーブルにデータを登録
-        if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
-            registerUser($event->getUserId(), 'shop_review');
-        } else {
-            updateUser($event->getUserId(), 'shop_review');
-        }
-        replyTextMessage($bot, $event->getReplyToken(), '前のメッセージ:' . getBeforeMessageByUserId($event->getUserId()));
+    //直前のメッセージの削除を行う
+    if (strcmp($event->getText(), 'キャンセル')) {
+        updateUser($event->getUser(), '');
+        continue;
     }
 
-    //メッセージに対する返答
-    else if (strcmp($event->getText(), "あ") == 0) {
-        replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
+    //直前のメッセージがデータベースにある場合
+    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) or (getBeforeMessageByUserId($event->getUserId()) != '')) {
+        //shop_review
+        if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
+            //入力したIDの店が存在するか確認
+            if (getShopNameByShopId($event->getText()) != PDO::PARAM_NULL) {
+                $shopname = getShopNameByShopId($event->getText());
+                replyConfirmTemplate($bot, $event->getReplyToken(),
+                'レビュー確認',
+                $shopname.': この店のレビューを書きますか？',
+                new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder(
+                    'はい', 'cmd_review_1'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'キャンセル', 'キャンセル')
+                );
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(),
+                '店が見つかりませんでした。
+                正しいIDを入力して下さい。');
+            }
+        }
+    
+    //直前のメッセージがデータベースにない場合
     } else {
-        replyTextMessage($bot, $event->getReplyToken(), $event->getText());
+        //メッセージに対する返答---------------------------------
+        //お店を探す
+        if(strcmp($event->getText(), 'お店を探す') == 0) {
+            #データベースから位置情報取得
+            #テスト用の位置情報
+            $lat = 36.063513;
+            $lon = 136.222748;
+            $restaurant_information = get_restaurant_information($lat, $lon);
+            replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+        //お店のレビュー
+        }else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
+            //データがない場合、ユーザデータテーブルにデータを登録
+            if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
+                registerUser($event->getUserId(), 'shop_review');
+            } else {
+                //ある場合は直前のメッセージ内容を更新
+                updateUser($event->getUserId(), 'shop_review');
+            }
+            replyTextMessage($bot, $event->getReplyToken(),
+            'お店のレビューをします。
+            まずはお店のIDを入力して下さい。
+            (IDは「お店を探す」で確認できます。)');
+        }
+
+        //メッセージに対する返答(test)
+        // else if (strcmp($event->getText(), "あ") == 0) {
+        //     replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
+        // } else {
+        //     replyTextMessage($bot, $event->getReplyToken(), $event->getText());
+        // }
     }
 }
 
@@ -109,7 +146,7 @@ function getShopNameByShopId($shopId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        //直前のメッセージを返す
+        //店名を返す
         return $row['shop_name'];
     }
 }
@@ -130,6 +167,15 @@ function updateUser($userId, $beforeSend) {
     $sth->execute(array($beforeSend, $userId));
 }
 
+// ユーザ情報の削除
+function daleteUser($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'delete from ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+}
+
+//CLASS//-----------------------------------------------------------
 // データベースへの接続を管理するクラス
 class dbConnection {
     // インスタンス
@@ -160,5 +206,4 @@ class dbConnection {
     return self::$db;
     }
 }
-
 ?>
