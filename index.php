@@ -138,7 +138,7 @@ function getBeforeMessageByUserId($userId) {
 // 店舗IDを元にデータベースから情報を取得
 function getShopNameByShopId($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // レコードが存在しなければNULL
