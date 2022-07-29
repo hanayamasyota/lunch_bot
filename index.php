@@ -62,7 +62,7 @@ foreach ($events as $event) {
     }
 
     //直前のメッセージがデータベースにある場合
-    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) or (getBeforeMessageByUserId($event->getUserId()) != '')) {
+    if (getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) {
         //shop_review
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
             //入力したIDの店が存在するか確認
@@ -104,9 +104,9 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'shop_review');
             }
             replyTextMessage($bot, $event->getReplyToken(),
-            'お店のレビューをします。
+            "お店のレビューをします。
             まずはお店のIDを入力して下さい。
-            (IDは「お店を探す」で確認できます。)');
+            (IDは「お店を探す」で確認できます。)");
         }
 
         //メッセージに対する返答(test)
