@@ -57,7 +57,7 @@ foreach ($events as $event) {
 
     //直前のメッセージの削除を行う
     if (strcmp($event->getText(), 'キャンセル')) {
-        updateUser($event->getUser(), '');
+        updateUser($event->getUserId(), '');
         continue;
     }
 
