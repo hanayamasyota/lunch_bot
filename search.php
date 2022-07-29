@@ -9,6 +9,7 @@ function get_restaurant_information($lat, $lon) {
     'key' => '7264b03648f65bd1',
     'lat' => $latitude, // 緯度
     'lng' => $longitude, // 経度
+    'start' => 10,
     'range' => $range, // 検索範囲
     // 'start' => $start, // 検索の開始位置
     'format' => 'json',
@@ -25,15 +26,6 @@ function get_restaurant_information($lat, $lon) {
     return $message;
 }
 
-#テキストフォーマット
-function text_format($message) {
-    return [
-        "type" => "text",
-        "text" => $message
-    ];
-}
-
-
 function renderJson($json) {
     $restaurant_length = $json->{"results"}->{"results_available"};
     if ($restaurant_length < 1) {
@@ -48,7 +40,7 @@ function renderJson($json) {
         $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
         $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
         $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
-        if ($i > 10) {
+        if ($i > 8) {
             $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
             break;
         }
