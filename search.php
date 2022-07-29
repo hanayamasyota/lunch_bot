@@ -35,10 +35,10 @@ function renderJson($json) {
     $result = "";
     for ($i = 0; $i < $restaurant_length; $i++) {
         #店名、店ID、ジャンル、予算(ホットペッパーのページ)
-        $result .= "店名：".$temp->{"shop"}[$i]->{"name"}."\r\n";
-        $result .= "店舗ID:".$temp->{"shop"}[$i]->{"id"}."\r\n";
-        $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
-        $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
+        $result .= "店名:  ".$temp->{"shop"}[$i]->{"name"}."\r\n";
+        $result .= "店舗ID: ".$temp->{"shop"}[$i]->{"id"}."\r\n";
+        $result .= "ジャンル: ".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
+        $result .= "予算: ".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
         if ($i > 8) {
             $result .= "\nPowered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
             break;

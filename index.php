@@ -104,8 +104,7 @@ foreach ($events as $event) {
             }
             replyTextMessage($bot, $event->getReplyToken(),
             "お店のレビューをします。
-            まずはお店のIDを入力して下さい。
-            (IDは「お店を探す」で確認できます。)");
+            まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)");
         }
 
         //メッセージに対する返答(test)
