@@ -2,16 +2,15 @@
 function get_restaurant_information($lat, $lon) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
-    $range = 3;
+    $range = 2;
 
     // クエリをまとめる
     $query = [
     'key' => '7264b03648f65bd1',
     'lat' => $latitude, // 緯度
     'lng' => $longitude, // 経度
-    'start' => 10,
     'range' => $range, // 検索範囲
-    // 'start' => $start, // 検索の開始位置
+    'start' => 10,
     'format' => 'json',
     ];
     // グルメサーチAPIからjsonを取得
@@ -46,7 +45,7 @@ function renderJson($json) {
         }
         $result .= "\r\n";
     }
-    $result_txt = "周辺1km以内に".$restaurant_length."件見つかりました。\r\n10件まで表示します。\r\n\n" . $result;
+    $result_txt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n10件まで表示します。\r\n\n" . $result;
     return $result_txt;
 }
 ?>
