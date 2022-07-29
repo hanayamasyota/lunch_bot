@@ -56,10 +56,10 @@ foreach ($events as $event) {
     }
 
     //直前のメッセージの削除を行う
-    if (strcmp($event->getText(), 'キャンセル') == 0) {
-        updateUser($event->getUserId(), '');
-        continue;
-    }
+    // if (strcmp($event->getText(), 'キャンセル') == 0) {
+    //     updateUser($event->getUserId(), '');
+    //     continue;
+    // }
 
     //直前のメッセージがデータベースにある場合
     if (getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) {
