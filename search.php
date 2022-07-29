@@ -40,7 +40,7 @@ function renderJson($json) {
         $result .= "ジャンル：".$temp->{"shop"}[$i]->{"genre"}->{"name"}."\r\n";
         $result .= "予算:".$temp->{"shop"}[$i]->{"budget"}->{"average"}."\r\n";
         if ($i > 8) {
-            $result .= "Powered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
+            $result .= "\nPowered by http://webservice.recruit.co.jp/ホットペッパー Webサービス";
             break;
         }
         $result .= "\r\n";

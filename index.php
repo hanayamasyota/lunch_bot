@@ -1,9 +1,4 @@
 <?php
-/*
-つぎやること
-・ジャンル指定で店を出す
-・実際の店IDと名前をDBに登録する
-*/
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
@@ -68,6 +63,14 @@ foreach ($events as $event) {
         $lon = 136.222748;
         $restaurant_information = get_restaurant_information($lat, $lon);
         replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+    }else if(strcmp($event->getText(), "お店のレビュー") == 0) {
+        //データがない場合、ユーザデータテーブルにデータを登録
+        if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
+            registerUser($event->getUserId(), 'shop_review');
+        } else {
+            updateUser($event->getUserId(), 'shop_review');
+        }
+        replyTextMessage($bot, $event->getReplyToken(), '前のメッセージ:' . getBeforeMessageByUserId($event->getUserId()));
     }
 
     //メッセージに対する返答
@@ -75,6 +78,85 @@ foreach ($events as $event) {
         replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
     } else {
         replyTextMessage($bot, $event->getReplyToken(), $event->getText());
+    }
+}
+
+//データベース関連--------------------------------------------------------------
+
+// ユーザーIDを元にデータベースから情報を取得
+function getBeforeMessageByUserId($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // レコードが存在しなければNULL
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //直前のメッセージを返す
+        return $row['before_send'];
+    }
+}
+
+// 店舗IDを元にデータベースから情報を取得
+function getShopNameByShopId($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shop_name from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($shopId));
+    // レコードが存在しなければNULL
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //直前のメッセージを返す
+        return $row['shop_name'];
+    }
+}
+
+// ユーザーをデータベースに登録する
+function registerUser($userId, $beforeSend) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $beforeSend));
+}
+
+// ユーザ情報の更新
+function updateUser($userId, $beforeSend) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($beforeSend, $userId));
+}
+
+// データベースへの接続を管理するクラス
+class dbConnection {
+    // インスタンス
+    protected static $db;
+    // コンストラクタ
+    private function __construct() {
+
+        try {
+            // 環境変数からデータベースへの接続情報を取得し
+            $url = parse_url(getenv('DATABASE_URL'));
+            // データソース
+            $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
+            // 接続を確立
+            self::$db = new PDO($dsn, $url['user'], $url['pass']);
+            // エラー時例外を投げるように設定
+            self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+        }
+        catch (PDOException $e) {
+            error_log('Connection Error: ' . $e->getMessage());
+        }
+    }
+
+    // シングルトン。存在しない場合のみインスタンス化
+    public static function getConnection() {
+        if (!self::$db) {
+            new dbConnection();
+        }
+    return self::$db;
     }
 }
 
