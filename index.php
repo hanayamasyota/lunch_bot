@@ -88,6 +88,7 @@ function getBeforeMessageByUserId($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
+    $userId_bytea = pg_escape_bytea($userId);
     $sth->execute(array($userId));
     // レコードが存在しなければNULL
     if (!($row = $sth->fetch())) {
@@ -101,7 +102,7 @@ function getBeforeMessageByUserId($userId) {
 // 店舗IDを元にデータベースから情報を取得
 function getShopNameByShopId($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shop_name from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(shopid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // レコードが存在しなければNULL
