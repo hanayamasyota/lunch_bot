@@ -3,7 +3,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
-require_once __DIR__ . 'database_function/database_function.php';
+require_once __DIR__ . '/database_function/database_function.php';
 
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
