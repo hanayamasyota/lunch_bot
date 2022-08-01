@@ -21,11 +21,11 @@ function getBeforeMessageByUserId($userId) {
 }
 
 // userid exists check and return userid
-function getUserIdCheck($userId) {
+function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select before_send from ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($table, $userId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
@@ -67,10 +67,24 @@ function updateUser($userId, $beforeSend) {
 }
 
 // delete userinfo
-function daleteUser($userId) {
+function deleteUser($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'delete from ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'delete from ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($table, $userId));
+}
+
+// entry reviewstock
+function registerReviewData($column, $data, $userId) {
+    $dbh = dbConnection::getConnection();
+    if ($column == 'userid') {
+        $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (?) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'))';
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($column, $userId));
+    } else {
+        $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (?) values (?) where ? = pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+        $sth = $dbh->prepare($sql);
+        $sth->execute(array($column, $data, $userId));
+    }
 }
 ?>

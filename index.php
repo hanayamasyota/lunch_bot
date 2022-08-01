@@ -41,6 +41,9 @@ shops(テスト用、実際はマップ等から選んでレビューを書け�
 )
 */
 
+//useclass
+use LINE\LINEBot\TemplateActionBuilder;
+
 // アクセストークンを使いCurlHTTPClientをインスタンス化
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
 // CurlHTTPClientとシークレットを使いLINEBotをインスタンス化
@@ -74,11 +77,21 @@ foreach ($events as $event) {
         updateUser($event->getUserId(), null);
         replyTextMessage($bot, $event->getReplyToken(),
         'レビューがキャンセルされました。');
+        if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
+            //reset reviewstock
+            deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
+        }
+    // entry data
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && preg_match('/score_^([1-5]{1})$/', $event->getText())) {
+        // insert reviewstock
+        registerReviewData('review_1', $event->getText(), $event->getUserId());
+        // update before_send
+        updateUser($event->getUserId(), 'shop_review_2');
     }
 
     //reply for before_send
     if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
-        //if before_send is shop_review
+        //shop_review
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
             //check exists shopid
             if (getShopNameByShopId($event->getText()) != PDO::PARAM_NULL) {
@@ -86,16 +99,34 @@ foreach ($events as $event) {
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shopname.': この店のレビューを書きますか？',
-                new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder(
+                new TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'shop_review_1'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                new TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。
-                正しいIDを入力して下さい。');
+                '店が見つかりませんでした。\n正しいIDを入力して下さい。');
             }
+        //shop_review_1
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
+            //entry userid reviewstock
+            registerReviewData('userid', '', $event->getUserId());
+            //buttontemplate
+            replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
+            '総合の評価を5段階で選んで下さい。',
+            new TemplateActionBuilder\MessageTemplateActionBuilder('1', 'score_1'),
+            new TemplateActionBuilder\MessageTemplateActionBuilder('2', 'score_2'),
+            new TemplateActionBuilder\MessageTemplateActionBuilder('3', 'score_3'),
+            new TemplateActionBuilder\MessageTemplateActionBuilder('4', 'score_4'),
+            new TemplateActionBuilder\MessageTemplateActionBuilder('5', 'score_5'),
+            );
+        //shop_review_2
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
+        
+        //shop_review_3
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
+
         }
     } 
     // reply for message
@@ -110,15 +141,14 @@ foreach ($events as $event) {
         //reviewshop
         }else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
             //if not exists userid, entry userid
-            if(getUserIdCheck($event->getUserId()) === PDO::PARAM_NULL) {
+            if(getUserIdCheck($event->getUserId(), TABLE_NAME_USERS) === PDO::PARAM_NULL) {
                 registerUser($event->getUserId(), 'shop_review');
             } else {
                 //if already exists, update
                 updateUser($event->getUserId(), 'shop_review');
             }
             replyTextMessage($bot, $event->getReplyToken(),
-            "お店のレビューをします。
-            まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)");
+            'お店のレビューをします。\nまずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
         }
 
         // test message
