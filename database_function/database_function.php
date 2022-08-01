@@ -23,9 +23,9 @@ function getBeforeMessageByUserId($userId) {
 // userid exists check and return userid
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select before_send from ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select before_send from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($table, $userId));
+    $sth->execute(array($userId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
@@ -69,9 +69,9 @@ function updateUser($userId, $beforeSend) {
 // delete userinfo
 function deleteUser($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'delete from ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'delete from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($table, $userId));
+    $sth->execute(array($userId));
 }
 
 // entry reviewstock
