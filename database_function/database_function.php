@@ -1,0 +1,76 @@
+<?php
+//DATABASE_FUNCTIONS//--------------------------------------------------------------
+
+// get berore_send message by userid
+function getBeforeMessageByUserId($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        // if defore_send is NULL
+        if ($row['before_send'] == null) {
+            return PDO::PARAM_NULL;
+        }
+        //return before_send
+        return $row['before_send'];
+    }
+}
+
+// userid exists check and return userid
+function getUserIdCheck($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return userId
+        return $row['userid'];
+    }
+}
+
+// get shopname by shopid and return shopname
+function getShopNameByShopId($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return shopname
+        return $row['shopname'];
+    }
+}
+
+// entry userinfo
+function registerUser($userId, $beforeSend) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $beforeSend));
+}
+
+// update userinfo
+function updateUser($userId, $beforeSend) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($beforeSend, $userId));
+}
+
+// delete userinfo
+function daleteUser($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'delete from ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+}
+?>
