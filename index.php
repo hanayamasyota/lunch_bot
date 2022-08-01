@@ -1,25 +1,38 @@
 <?php
+// load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
+
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
 define('TABLE_NAME_USERS', 'users');
 //ユーザの感想テーブル名
 define('TABLE_NAME_REVIEWS', 'reviews');
+//レビューの内容を一時的にストックするテーブル名
+define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 //店の情報テーブル名(テストで3件のみ)
 define('TABLE_NAME_SHOPS', 'shops');
 /*テーブルデータ(★:PRIMARY, ☆:FOREIGN)
 users(
     ★userid(bytea)...ユーザID
     before_send(text)...直前のメッセージ
+    latitude(float)...緯度
+    longitude(float)...経度
 )
 reviews(
     ★review_no(integer)...レビューを一意にするための番号
     ☆shopid(text)...登録された店舗のID
     ☆userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
+    recommend(text)...おすすめメニュー
     free(text)...自由欄
+)
+reviewstock(レビューのデータをストックしておくテーブル、キャンセル時・コミット時には消去する)(
+    ★userid(bytea)...ユーザID
+    review_1...全体の評価
+    review_2...おすすめメニュー
+    review_3...自由欄
 )
 shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
     ★shopid(text)...店舗のID
@@ -34,7 +47,7 @@ $bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_SECRET
 // LINE Messaging APIがリクエストに付与した署名を取得
 $signature = $_SERVER['HTTP_' . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
 
-// 署名チェック
+// signature check
 try {
     $events = $bot->parseEventRequest(file_get_contents('php://input'), $signature);
 } catch(\LINE\LINEBot\Exception\InvalidSignatureException $e) {
@@ -47,31 +60,33 @@ try {
     error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
 }
 
-//メイン処理
+//main//----------------------------------------------------------------
 foreach ($events as $event) {
-    // MessageEvent型でなければ処理をスキップ
+    // event is  continue(skip)
     if (!($event instanceof \LINE\LINEBot\Event\MessageEvent)) {
         error_log('Non message event has come');
         continue;
     }
 
-    //直前のメッセージの削除を行う
+    // review chancel
     if (strcmp($event->getText(), 'キャンセル') == 0) {
         updateUser($event->getUserId(), null);
+        replyTextMessage($bot, $event->getReplyToken(),
+        'レビューがキャンセルされました。');
     }
 
-    //直前のメッセージがデータベースにある場合
-    if (getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-        //shop_review
+    //reply for before_send
+    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+        //if before_send is shop_review
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
-            //入力したIDの店が存在するか確認
+            //check exists shopid
             if (getShopNameByShopId($event->getText()) != PDO::PARAM_NULL) {
                 $shopname = getShopNameByShopId($event->getText());
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shopname.': この店のレビューを書きますか？',
                 new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder(
-                    'はい', 'cmd_review_1'),
+                    'はい', 'shop_review_1'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
@@ -80,26 +95,24 @@ foreach ($events as $event) {
                 '店が見つかりませんでした。
                 正しいIDを入力して下さい。');
             }
-        }
-    
-    //直前のメッセージがデータベースにない場合
-    } else {
-        //メッセージに対する返答---------------------------------
-        //お店を探す
+        }    
+    } 
+    // reply for message
+    else {
+        //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
-            #データベースから位置情報取得
-            #テスト用の位置情報
+            // temporary location
             $lat = 36.063513;
             $lon = 136.222748;
             $restaurant_information = get_restaurant_information($lat, $lon);
             replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
-        //お店のレビュー
+        //reviewshop
         }else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
-            //データがない場合、ユーザデータテーブルにデータを登録
-            if(getBeforeMessageByUserId($event->getUserId()) === PDO::PARAM_NULL) {
+            //if not exists userid, entry userid
+            if(getUserIdCheck($event->getUserId()) === PDO::PARAM_NULL) {
                 registerUser($event->getUserId(), 'shop_review');
             } else {
-                //ある場合は直前のメッセージ内容を更新
+                //if already exists, update
                 updateUser($event->getUserId(), 'shop_review');
             }
             replyTextMessage($bot, $event->getReplyToken(),
@@ -107,7 +120,7 @@ foreach ($events as $event) {
             まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)");
         }
 
-        //メッセージに対する返答(test)
+        // test message
         // else if (strcmp($event->getText(), "あ") == 0) {
         //     replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
         // } else {
@@ -116,43 +129,58 @@ foreach ($events as $event) {
     }
 }
 
-//データベース関連--------------------------------------------------------------
+//DATABASE_FUNCTIONS//--------------------------------------------------------------
 
-// ユーザーIDを元にデータベースから情報を取得
+// get berore_send message by userid
 function getBeforeMessageByUserId($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    // $userId_bytea = pg_escape_bytea($userId);
     $sth->execute(array($userId));
-    // レコードが存在しなければNULL
+    // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
+        // if defore_send is NULL
         if ($row['before_send'] == null) {
             return PDO::PARAM_NULL;
         }
-        //直前のメッセージを返す
+        //return before_send
         return $row['before_send'];
     }
 }
 
-// 店舗IDを元にデータベースから情報を取得
+// userid exists check and return userid
+function getUserIdCheck($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select before_send from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return userId
+        return $row['userid'];
+    }
+}
+
+// get shopname by shopid and return shopname
 function getShopNameByShopId($shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
-    // レコードが存在しなければNULL
+    // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        //店名を返す
+        //return shopname
         return $row['shopname'];
     }
 }
 
-// ユーザーをデータベースに登録する
+// entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
@@ -160,7 +188,7 @@ function registerUser($userId, $beforeSend) {
     $sth->execute(array($userId, $beforeSend));
 }
 
-// ユーザ情報の更新
+// update userinfo
 function updateUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
     $sql = 'update ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
@@ -168,7 +196,7 @@ function updateUser($userId, $beforeSend) {
     $sth->execute(array($beforeSend, $userId));
 }
 
-// ユーザ情報の削除
+// delete userinfo
 function daleteUser($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'delete from ' . TABLE_NAME_USERS . ' set before_send = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
@@ -177,21 +205,21 @@ function daleteUser($userId) {
 }
 
 //CLASS//-----------------------------------------------------------
-// データベースへの接続を管理するクラス
+// database_connection manage class
 class dbConnection {
-    // インスタンス
+    // instance
     protected static $db;
-    // コンストラクタ
+    // constructor
     private function __construct() {
 
         try {
-            // 環境変数からデータベースへの接続情報を取得し
+            // get connection_infomation from environmentvaliable to database
             $url = parse_url(getenv('DATABASE_URL'));
-            // データソース
+            // data_source
             $dsn = sprintf('pgsql:host=%s;dbname=%s', $url['host'], substr($url['path'], 1));
-            // 接続を確立
+            // establish connection
             self::$db = new PDO($dsn, $url['user'], $url['pass']);
-            // エラー時例外を投げるように設定
+            // thrown Exception on error
             self::$db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         }
         catch (PDOException $e) {
@@ -199,7 +227,7 @@ class dbConnection {
         }
     }
 
-    // シングルトン。存在しない場合のみインスタンス化
+    // singleton. if not exists instance, create new one.
     public static function getConnection() {
         if (!self::$db) {
             new dbConnection();
