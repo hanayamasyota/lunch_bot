@@ -112,7 +112,8 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
+                $userId = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
+                registerReviewDataFirst($userId, $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
