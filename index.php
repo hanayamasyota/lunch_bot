@@ -113,6 +113,7 @@ foreach ($events as $event) {
                 );
                 //entry review data
                 $userId = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
+                error_log('userid:'.$userId);
                 registerReviewDataFirst($userId, $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
