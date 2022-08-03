@@ -121,7 +121,7 @@ foreach ($events as $event) {
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
             //buttontemplate
-            replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー点数入力', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'レビュー点数',
             '総合の評価を5段階で選んで下さい。',
             new TemplateActionBuilder\MessageTemplateActionBuilder('1', 'score_1'),
             new TemplateActionBuilder\MessageTemplateActionBuilder('2', 'score_2'),
