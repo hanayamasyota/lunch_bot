@@ -92,6 +92,7 @@ function registerReviewDataFirst($userId, $shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (userid, shopid) values (?, ?) ';
     $sth = $dbh->prepare($sql);
+    $userId = pg_escape_bytea($userId);
     $sth->execute(array($userId, $shopId));
 }
 function registerReviewData($userId, $column, $data) {
