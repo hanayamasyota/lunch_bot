@@ -112,7 +112,7 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
+                registerReviewDataFirst(pg_escape_bytea($event->getUserId()), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
