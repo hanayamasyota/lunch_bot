@@ -112,7 +112,7 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst($userId, $shop['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -172,7 +172,7 @@ foreach ($events as $event) {
             'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
         //locationset
         } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
-            replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
+            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定',
             '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
             new TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
             );
