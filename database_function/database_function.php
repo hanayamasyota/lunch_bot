@@ -19,11 +19,24 @@ function getBeforeMessageByUserId($userId) {
         return $row['before_send'];
     }
 }
+function getLocationByUserId($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select latitude, longitude from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return location
+        return $row;
+    }
+}
 
 // userid exists check and return userid
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select before_send from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select userid from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
@@ -38,7 +51,7 @@ function getUserIdCheck($userId, $table) {
 // get shopname by shopid and return shopname
 function getShopNameByShopId($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopname from ' . TABLE_NAME_SHOPS . ' where ? = shopid';
+    $sql = 'select shopid, shopname from ' . TABLE_NAME_SHOPS . ' where ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // if no record
@@ -46,7 +59,7 @@ function getShopNameByShopId($shopId) {
         return PDO::PARAM_NULL;
     } else {
         //return shopname
-        return $row['shopname'];
+        return $row;
     }
 }
 
@@ -75,16 +88,16 @@ function deleteUser($userId, $table) {
 }
 
 // entry reviewstock
-function registerReviewData($column, $data, $userId) {
+function registerReviewDataFirst($userId, $shopId) {
     $dbh = dbConnection::getConnection();
-    if ($column == 'userid') {
-        $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (?) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'))';
-        $sth = $dbh->prepare($sql);
-        $sth->execute(array($column, $userId));
-    } else {
-        $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (?) values (?) where ? = pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-        $sth = $dbh->prepare($sql);
-        $sth->execute(array($column, $data, $userId));
-    }
+    $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (userid, shopid) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?)';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+}
+function registerReviewData($userId, $column, $data) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (?) values (?) where ? = pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($column, $data, $userId));
 }
 ?>

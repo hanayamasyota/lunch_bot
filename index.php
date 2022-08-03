@@ -22,7 +22,7 @@ users(
     longitude(float)...経度
 )
 reviews(
-    ★review_no(integer)...レビューを一意にするための番号
+    ★review_no(serial)...レビューを一意にするための番号
     ☆shopid(text)...登録された店舗のID
     ☆userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
@@ -30,10 +30,11 @@ reviews(
     free(text)...自由欄
 )
 reviewstock(レビューのデータをストックしておくテーブル、キャンセル時・コミット時には消去する)(
-    ★userid(bytea)...ユーザID
-    review_1...全体の評価
-    review_2...おすすめメニュー
-    review_3...自由欄
+    ☆userid(bytea)...ユーザID
+    ☆shopid(text)...店舗ID
+    review_1(integer)...全体の評価
+    review_2(text)...おすすめメニュー
+    review_3(text)...自由欄
 )
 shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
     ★shopid(text)...店舗のID
@@ -82,9 +83,15 @@ foreach ($events as $event) {
             deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
         }
     // entry data
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && strcmp($event->getText(), 'はい')) {
+        // update before_send
+        updateUser($event->getUserId(), 'shop_review_1');
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && preg_match('/score_^([1-5]{1})$/', $event->getText())) {
         // insert reviewstock
-        registerReviewData('review_1', $event->getText(), $event->getUserId());
+        $text = $event->getText();
+        //最後の文字をとり、textをintに
+        $score = (int) substr($text, -1);
+        registerReviewData($event->getUserId(), 'review_1', $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
     }
@@ -95,23 +102,24 @@ foreach ($events as $event) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
             //check exists shopid
             if (getShopNameByShopId($event->getText()) != PDO::PARAM_NULL) {
-                $shopname = getShopNameByShopId($event->getText());
+                $shop = getShopNameByShopId($event->getText());
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
-                $shopname.': この店のレビューを書きますか？',
+                $shop['shopname'].': この店のレビューを書きますか？',
                 new TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'はい', 'shop_review_1'),
+                    'はい', 'はい'),
                 new TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
+                //entry review data
+                registerReviewDataFirst($userId, $shop['shopid']);
+                updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。\n正しいIDを入力して下さい。');
+                '店が見つかりませんでした。正しいIDを入力して下さい。');
             }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
-            //entry userid reviewstock
-            registerReviewData('userid', '', $event->getUserId());
             //buttontemplate
             replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
             '総合の評価を5段階で選んで下さい。',
@@ -134,10 +142,23 @@ foreach ($events as $event) {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             // temporary location
+            // location already setting
+            // if($location = getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
+            //     $lat = $location['latitude'];
+            //     $lon = $location['longitude'];
+            //     $restaurant_information = get_restaurant_information($lat, $lon);
+            //     replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+            // } else {
+            //     replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
+            //     '位置情報が設定されていません。位置情報の設定をお願いします。',
+            //     new TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
+            //     );
+            // }
             $lat = 36.063513;
             $lon = 136.222748;
             $restaurant_information = get_restaurant_information($lat, $lon);
             replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+
         //reviewshop
         }else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
             //if not exists userid, entry userid
@@ -148,7 +169,13 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'shop_review');
             }
             replyTextMessage($bot, $event->getReplyToken(),
-            'お店のレビューをします。\nまずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
+            'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
+        //locationset
+        } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
+            replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
+            '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
+            new TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
+            );
         }
 
         // test message
