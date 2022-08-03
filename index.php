@@ -112,9 +112,7 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                $userId = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
-                error_log('userid:'.$userId);
-                registerReviewDataFirst($userId, $shop['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -180,12 +178,6 @@ foreach ($events as $event) {
             );
         }
 
-        // test message
-        // else if (strcmp($event->getText(), "あ") == 0) {
-        //     replyTextMessage($bot, $event->getReplyToken(), "こんにちは");
-        // } else {
-        //     replyTextMessage($bot, $event->getReplyToken(), $event->getText());
-        // }
     }
 }
 
