@@ -93,7 +93,7 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
         // update before_send
         updateUser($event->getUserId(), 'shop_review_1');
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('[1-5]{1}', $event->getText()))) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
         // insert reviewstock
         $text = $event->getText();
         //最後の文字をとり、textをintに
