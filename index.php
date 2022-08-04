@@ -112,7 +112,7 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
+                registerReviewDataFirst($shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -160,7 +160,7 @@ foreach ($events as $event) {
             replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
 
         //reviewshop
-        }else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
+        } else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
             //if not exists userid, entry userid
             if(getUserIdCheck($event->getUserId(), TABLE_NAME_USERS) === PDO::PARAM_NULL) {
                 registerUser($event->getUserId(), 'shop_review');
