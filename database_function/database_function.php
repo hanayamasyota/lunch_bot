@@ -97,7 +97,7 @@ function deleteUser($userId, $table) {
 // entry reviewstock
 function registerReviewDataFirst($userId, $shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '.TABLE_NAME_REVIEWSTOCK.' (shopid) values (?) ';
+    $sql = 'insert into '. TABLE_NAME_REVIEWSTOCK . ' (userid, shopid) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
 }
