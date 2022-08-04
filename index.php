@@ -93,7 +93,7 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
         // update before_send
         updateUser($event->getUserId(), 'shop_review_1');
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/score_^([1-5]{1})$/', $event->getText()))) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('[1-5]{1}', $event->getText()))) {
         // insert reviewstock
         $text = $event->getText();
         //最後の文字をとり、textをintに
@@ -127,11 +127,8 @@ foreach ($events as $event) {
             }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
-            error_log('SHOP_REVIEW_1!!!');
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー点数入力', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'レビュー点数',
-            '総合の評価を5段階で選んで下さい。',
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★1', 'score_1'),
-            );
+            // ボタンは4件までしかできないので入力してもらう
+            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
         
@@ -160,6 +157,7 @@ foreach ($events as $event) {
             $lat = 36.063513;
             $lon = 136.222748;
             $restaurant_information = get_restaurant_information($lat, $lon);
+            // カルーセルで表示させたい
             replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
 
         //reviewshop
