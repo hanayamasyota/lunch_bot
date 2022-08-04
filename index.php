@@ -131,10 +131,6 @@ foreach ($events as $event) {
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー点数入力', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'レビュー点数',
             '総合の評価を5段階で選んで下さい。',
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★1', 'score_1'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★2', 'score_2'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★3', 'score_3'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★4', 'score_4'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★5', 'score_5'),
             );
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
