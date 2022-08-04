@@ -90,13 +90,13 @@ function deleteUser($userId, $table) {
 // entry reviewstock
 function registerReviewDataFirst($userId, $shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into reviewstock (userid, shopid) values (pgp_sym_decrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sql = 'insert into '.TABLE_NAME_REVIEWSTOCK.' (userid, shopid) values (pgp_sym_decrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
 }
 function registerReviewData($userId, $column, $data) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into reviewstock (?) values (?) where ? = pgp_sym_encrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'insert into '.TABLE_NAME_REVIEWSTOCK.' (?) values (?) where ? = pgp_sym_encrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($column, $data, $userId));
 }

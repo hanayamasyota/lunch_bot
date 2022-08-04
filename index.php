@@ -112,7 +112,7 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst(pg_escape_bytea($event->getUserId()), $shop['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -168,6 +168,8 @@ foreach ($events as $event) {
                 //if already exists, update
                 updateUser($event->getUserId(), 'shop_review');
             }
+            $id = getUserIdCheck($event->getUserId, TABLE_NAME_USERS);
+            error_log('USERID:'. $id);
             replyTextMessage($bot, $event->getReplyToken(),
             'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
         //locationset
