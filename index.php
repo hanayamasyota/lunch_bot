@@ -90,10 +90,10 @@ foreach ($events as $event) {
             deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
         }
     // entry data
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && strcmp($event->getText(), 'はい') == 0) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
         // update before_send
         updateUser($event->getUserId(), 'shop_review_1');
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && preg_match('/score_^([1-5]{1})$/', $event->getText())) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/score_^([1-5]{1})$/', $event->getText()))) {
         // insert reviewstock
         $text = $event->getText();
         //最後の文字をとり、textをintに
@@ -127,14 +127,14 @@ foreach ($events as $event) {
             }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
-            //buttontemplate
+            error_log('SHOP_REVIEW_1!!!');
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー点数入力', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'レビュー点数',
             '総合の評価を5段階で選んで下さい。',
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('1', 'score_1'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('2', 'score_2'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('3', 'score_3'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('4', 'score_4'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('5', 'score_5'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★1', 'score_1'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★2', 'score_2'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★3', 'score_3'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★4', 'score_4'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('★5', 'score_5'),
             );
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
