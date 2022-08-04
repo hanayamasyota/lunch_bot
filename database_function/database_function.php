@@ -78,6 +78,13 @@ function updateUser($userId, $beforeSend) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($beforeSend, $userId));
 }
+// update location
+function updateLocation($userId, $lat, $lon) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERS . ' set (latitude = ?, longitude = ?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($lat, $lon, $userId));
+}
 
 // delete userinfo
 function deleteUser($userId, $table) {

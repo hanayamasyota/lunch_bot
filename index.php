@@ -42,9 +42,6 @@ shops(テスト用、実際はマップ等から選んでレビューを書け�
 )
 */
 
-//useclass
-use LINE\LINEBot\TemplateActionBuilder;
-
 // アクセストークンを使いCurlHTTPClientをインスタンス化
 $httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
 // CurlHTTPClientとシークレットを使いLINEBotをインスタンス化
@@ -71,6 +68,16 @@ foreach ($events as $event) {
     if (!($event instanceof \LINE\LINEBot\Event\MessageEvent)) {
         error_log('Non message event has come');
         continue;
+    }
+
+    if ($event instanceof \LINE\LINEBot\Event\MessageEvent\LocationMessage) {
+        // location entry usersTABLE
+        if (getUserIdCheck($userId, TABLE_NAME_USERS) === 'location_set') {
+            $lat = $event->getLatitude();
+            $lon = $event->getLongitude();
+            updateLocation($event->getUserId(), $lat, $lon);
+            updateUser($event->getUserId(), null);
+        }
     }
 
     // review chancel
@@ -106,13 +113,13 @@ foreach ($events as $event) {
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shop['shopname'].': この店のレビューを書きますか？',
-                new TemplateActionBuilder\MessageTemplateActionBuilder(
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'はい'),
-                new TemplateActionBuilder\MessageTemplateActionBuilder(
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                registerReviewDataFirst($shop['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -123,11 +130,11 @@ foreach ($events as $event) {
             //buttontemplate
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー点数入力', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'レビュー点数',
             '総合の評価を5段階で選んで下さい。',
-            new TemplateActionBuilder\MessageTemplateActionBuilder('1', 'score_1'),
-            new TemplateActionBuilder\MessageTemplateActionBuilder('2', 'score_2'),
-            new TemplateActionBuilder\MessageTemplateActionBuilder('3', 'score_3'),
-            new TemplateActionBuilder\MessageTemplateActionBuilder('4', 'score_4'),
-            new TemplateActionBuilder\MessageTemplateActionBuilder('5', 'score_5'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('1', 'score_1'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('2', 'score_2'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('3', 'score_3'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('4', 'score_4'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('5', 'score_5'),
             );
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
@@ -161,14 +168,8 @@ foreach ($events as $event) {
 
         //reviewshop
         } else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
-            //if not exists userid, entry userid
-            if(getUserIdCheck($event->getUserId(), TABLE_NAME_USERS) === PDO::PARAM_NULL) {
-                registerUser($event->getUserId(), 'shop_review');
-            } else {
-                //if already exists, update
-                updateUser($event->getUserId(), 'shop_review');
-            }
-            $id = getUserIdCheck($event->getUserId, TABLE_NAME_USERS);
+            createUser($event->getUserId(), 'shop_review');
+            $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
             error_log('USERID:'. $id);
             replyTextMessage($bot, $event->getReplyToken(),
             'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
@@ -178,8 +179,19 @@ foreach ($events as $event) {
             '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
             new TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
             );
+            createUser($event->getUserId(), 'location_set');
         }
 
+    }
+}
+
+function createUser($userId, $beforeSend) {
+    //if not exists userid, entry userid
+    if(getUserIdCheck($userId, TABLE_NAME_USERS) === PDO::PARAM_NULL) {
+        registerUser($userId, $beforeSend);
+    } else {
+        //if already exists, update
+        updateUser($userId, $beforeSend);
     }
 }
 
