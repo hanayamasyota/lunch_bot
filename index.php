@@ -90,7 +90,7 @@ foreach ($events as $event) {
             deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
         }
     // entry data
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && strcmp($event->getText(), 'はい')) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && strcmp($event->getText(), 'はい') == 0) {
         // update before_send
         updateUser($event->getUserId(), 'shop_review_1');
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && preg_match('/score_^([1-5]{1})$/', $event->getText())) {
