@@ -177,7 +177,7 @@ foreach ($events as $event) {
         } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
             replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定',
             '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
-            new TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
             );
             createUser($event->getUserId(), 'location_set');
         }
