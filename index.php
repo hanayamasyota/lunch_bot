@@ -1,4 +1,5 @@
 <?php
+//次にやること：レビュー2問目を作る(おすすめメニュー)
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -99,7 +100,6 @@ foreach ($events as $event) {
         updateReviewData($event->getUserId(), 'review_1', $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
-        replyTextMessage($bot, $event->getReplyToken(), 'success!');
     }
 
     //reply for before_send
