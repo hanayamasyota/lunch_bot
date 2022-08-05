@@ -96,9 +96,10 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
         // insert reviewstock
         $score = intval($event->getText());
-        updateReviewData($event->getUserId(), $score);
+        updateReviewData($event->getUserId(), 'review_1', $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
+        replyTextMessage($bot, $event->getUserId(), 'success!');
     }
 
     //reply for before_send

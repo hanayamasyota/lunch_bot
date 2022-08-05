@@ -101,9 +101,9 @@ function registerReviewDataFirst($userId, $shopId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
 }
-function updateReviewData($userId, $data) {
+function updateReviewData($userId, $column, $data) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update '.TABLE_NAME_REVIEWSTOCK.' set review_1 = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'update '.TABLE_NAME_REVIEWSTOCK.' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($data, $userId));
 }
