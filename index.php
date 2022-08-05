@@ -99,7 +99,7 @@ foreach ($events as $event) {
         updateReviewData($event->getUserId(), 'review_1', $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
-        replyTextMessage($bot, $event->getUserId(), 'success!');
+        replyTextMessage($bot, $event->getReplyToken(), 'success!');
     }
 
     //reply for before_send
