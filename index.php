@@ -97,7 +97,8 @@ foreach ($events as $event) {
         // insert reviewstock
         $text = $event->getText();
         //最後の文字をとり、textをintに
-        $score = (int) $text;
+        // $score = (int) $text;
+        error_log('SCORE:'.$text);
         updateReviewData($event->getUserId(), $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
