@@ -95,10 +95,7 @@ foreach ($events as $event) {
         updateUser($event->getUserId(), 'shop_review_1');
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
         // insert reviewstock
-        $text = $event->getText();
-        //最後の文字をとり、textをintに
-        // $score = (int) $text;
-        error_log('SCORE:'.$text);
+        $score = intval($event->getText());
         updateReviewData($event->getUserId(), $score);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
