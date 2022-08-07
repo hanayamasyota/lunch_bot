@@ -133,8 +133,12 @@ foreach ($events as $event) {
             }
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
-            replyTextMessage($bot, $event->getReplyToken(),
-            '食べたメニューまたはおすすめのメニューを入力して下さい。');
+            if (mb_strlen($event->getText()) > 0) {
+
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(),
+                '食べたメニューまたはおすすめのメニューを入力して下さい。');
+            }
         //shop_review_3
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
             replyTextMessage($bot, $event->getReplyToken(),
