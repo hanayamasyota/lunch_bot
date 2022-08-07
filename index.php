@@ -90,6 +90,9 @@ foreach ($events as $event) {
             //reset reviewstock
             deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
         }
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') && ($event instanceof \LINE\LINEBot\Event\MessageEvent\TextMessage)) {
+        updateReviewData($event->getUserId(), 'review_2', $event->getText());
+        updateUser($event->getUserId(), 'shop_review_3');
     }
 
     //reply for before_send
@@ -133,16 +136,29 @@ foreach ($events as $event) {
             }
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
-            if (mb_strlen($event->getText()) > 0) {
-
-            } else {
-                replyTextMessage($bot, $event->getReplyToken(),
-                '食べたメニューまたはおすすめのメニューを入力して下さい。');
-            }
+            replyTextMessage($bot, $event->getReplyToken(),
+            '食べたメニューまたはおすすめのメニューを入力して下さい。');
         //shop_review_3
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
             replyTextMessage($bot, $event->getReplyToken(),
-            'review_3まできましたよ。');
+            '備考等があれば入力して下さい。(50字以下)ない場合は「なし」と入力してください。');
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_confirm') {
+            if (strcmp($event->getText(), 'はい') == 0) {
+                //entry reviews and delete reviewstock
+
+                deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
+                replyTextMessage($bot, $event->getReplyToken(),
+                'レビューを登録しました。');
+            } else {
+                replyConfirmTemplate($bot, $event->getReplyToken(),
+                'レビュー最終確認',
+                'レビューを登録しますか？',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'はい', 'はい'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'キャンセル', 'キャンセル')
+                );
+            }
         }
     } 
     // reply for message
