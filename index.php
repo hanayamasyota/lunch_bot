@@ -82,7 +82,7 @@ foreach ($events as $event) {
     }
 
     // review chancel
-    if (strcmp($event->getText(), 'キャンセル') == 0) {
+    if (strcmp($event->getText(), 'レビューのキャンセル') == 0) {
         updateUser($event->getUserId(), null);
         replyTextMessage($bot, $event->getReplyToken(),
         'レビューがキャンセルされました。');
@@ -90,16 +90,6 @@ foreach ($events as $event) {
             //reset reviewstock
             deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
         }
-    // entry data
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
-        // update before_send
-        updateUser($event->getUserId(), 'shop_review_1');
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
-        // insert reviewstock
-        $score = intval($event->getText());
-        updateReviewData($event->getUserId(), 'review_1', $score);
-        // update before_send
-        updateUser($event->getUserId(), 'shop_review_2');
     }
 
     //reply for before_send
@@ -115,7 +105,7 @@ foreach ($events as $event) {
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'はい'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'キャンセル', 'キャンセル')
+                    'キャンセル', 'レビューのキャンセル')
                 );
                 //entry review data
                 registerReviewDataFirst($event->getUserId(), $shop['shopid']);
@@ -124,16 +114,36 @@ foreach ($events as $event) {
                 replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しいIDを入力して下さい。');
             }
+        //shop_review_0
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') {
+            if (strcmp($event->getText(), 'はい') == 0) {
+                updateUser($event->getUserId(), 'shop_review_1');
+            }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
             // ボタンは4件までしかできないので入力してもらう
-            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
+            if (!(preg_match('/^[1-5]{1}/', $event->getText()))) {
+                replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
+            } else {
+                // insert reviewstock
+                $score = intval($event->getText());
+                updateReviewData($event->getUserId(), 'review_1', $score);
+                // update before_send
+                updateUser($event->getUserId(), 'shop_review_2');
+            }
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
-        
+            if ($event->getText() != null) {
+                updateReviewData($event->getUserId(), 'review_2', $event->getText());
+                updateUser($event->getUserId(), 'shop_review_3');
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(),
+                '食べたメニューまたはおすすめのメニューを入力して下さい。');
+            }
         //shop_review_3
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
-
+            replyTextMessage($bot, $event->getReplyToken(),
+            'review_3まできましたよ。');
         }
     } 
     // reply for message
