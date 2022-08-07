@@ -82,7 +82,7 @@ foreach ($events as $event) {
     }
 
     // review chancel
-    if (strcmp($event->getText(), 'レビューのキャンセル') == 0) {
+    if (strcmp($event->getText(), 'キャンセル') == 0) {
         updateUser($event->getUserId(), null);
         replyTextMessage($bot, $event->getReplyToken(),
         'レビューがキャンセルされました。');
@@ -105,7 +105,7 @@ foreach ($events as $event) {
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'はい'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'キャンセル', 'レビューのキャンセル')
+                    'キャンセル', 'キャンセル')
                 );
                 //entry review data
                 registerReviewDataFirst($event->getUserId(), $shop['shopid']);
