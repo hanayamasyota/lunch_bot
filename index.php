@@ -133,7 +133,7 @@ foreach ($events as $event) {
             }
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
-            if ($event->getText() != null) {
+            if (isset($event->getText())) {
                 updateReviewData($event->getUserId(), 'review_2', $event->getText());
                 updateUser($event->getUserId(), 'shop_review_3');
             } else {
