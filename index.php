@@ -172,22 +172,20 @@ foreach ($events as $event) {
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             // 登録された位置情報周辺のお店を探す
             // location already setting
-            // if($location = getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-            //     $lat = $location['latitude'];
-            //     $lon = $location['longitude'];
-            //     $restaurant_information = get_restaurant_information($lat, $lon);
-            //     replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
-            // } else {
-            //     replyButtonsTemplate($bot, $event->getReplyToken(), '', '', '',
-            //     '位置情報が設定されていません。位置情報の設定をお願いします。',
-            //     new TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
-            //     );
-            // }
-            $lat = 36.063513;
-            $lon = 136.222748;
-            $restaurant_information = get_restaurant_information($lat, $lon);
-            // カルーセルで表示させたい
-            replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+            if($location = getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
+                $lat = $location['latitude'];
+                $lon = $location['longitude'];
+                $restaurant_information = get_restaurant_information($lat, $lon);
+                replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+                $restaurant_information = get_restaurant_information($lat, $lon);
+                // 今はテキストだがカルーセルで表示させたい
+                replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+            } else {
+                replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
+                '位置情報が設定されていません。位置情報の設定をお願いします。',
+                new TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
+                );
+            }
 
         //reviewshop
         } else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
