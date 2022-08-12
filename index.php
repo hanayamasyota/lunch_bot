@@ -183,7 +183,7 @@ foreach ($events as $event) {
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
                 '位置情報が設定されていません。位置情報の設定をお願いします。',
-                new TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
                 );
             }
 
