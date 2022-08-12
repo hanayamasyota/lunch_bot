@@ -100,7 +100,7 @@ foreach ($events as $event) {
             }
 
             // location_setを含む場合 !
-            if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
+            else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
                 $mode = '位置情報の設定';
             }
             
@@ -191,7 +191,9 @@ foreach ($events as $event) {
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             // 登録された位置情報周辺のお店を探す
             // 位置情報が設定されているかチェック
-            if($location = getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
+            if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
+                $location = getLocationByUserId($event->getUserId());
+                error_log('latitude:'.$location['latitude'].',longitude:'.$location['longitude']);
                 $restaurant_information = get_restaurant_information($location['latitude'], $location['longitude']);
                 // 今はテキストだがカルーセルで表示させたい
                 replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
@@ -212,8 +214,7 @@ foreach ($events as $event) {
 
         //locationset
         } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
-            replyConfirmTemplate($bot, $event->getReplyToken(), 
-            '位置情報の設定',
+            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定',
             '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
