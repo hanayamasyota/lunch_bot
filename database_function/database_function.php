@@ -94,6 +94,14 @@ function deleteUser($userId, $table) {
     $sth->execute(array($userId));
 }
 
+// register review
+function registerReview($userId, $shopId, $evaluation, $recommend, $free) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (shopid, userid, evaluation, recommend, free) values (?, pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?) ';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($shopId, $userId, $evaluation, $recommend, $free));
+}
+
 // entry reviewstock
 function registerReviewDataFirst($userId, $shopId) {
     $dbh = dbConnection::getConnection();
@@ -106,5 +114,19 @@ function updateReviewData($userId, $column, $data) {
     $sql = 'update '.TABLE_NAME_REVIEWSTOCK.' set '. $column .' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($data, $userId));
+}
+// reviewstockのデータ取り出し
+function getReviewStockData($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select * from '.TABLE_NAME_REVIEWSTOCK.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return shopname
+        return $row;
+    }
 }
 ?>
