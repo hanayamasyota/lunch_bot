@@ -86,13 +86,30 @@ foreach ($events as $event) {
 
     // キャンセル
     if (strcmp($event->getText(), 'キャンセル') == 0) {
-        updateUser($event->getUserId(), null);
-        replyTextMessage($bot, $event->getReplyToken(),
-        'レビューがキャンセルされました。');
-        if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
-            //reset reviewstock
-            deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
+        // before_sendの有無を確認、ない場合はスルー
+        if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+            $mode = '';
+
+            // shop_reviewを含む場合 !
+            if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
+                if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
+                    //reset reviewstock
+                    deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
+                    $mode = 'レビュー';
+                }
+            }
+
+            // location_setを含む場合 !
+            if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
+                $mode = '位置情報の設定';
+            }
+            
+            // 共通部分
+            updateUser($event->getUserId(), null);
+            replyTextMessage($bot, $event->getReplyToken(),
+            $mode.'がキャンセルされました。');
         }
+
     // レビューを書くかの場面で「はい」と送信された場合
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
         updateUser($event->getUserId(), 'shop_review_1');
@@ -173,13 +190,9 @@ foreach ($events as $event) {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             // 登録された位置情報周辺のお店を探す
-            // location already setting
+            // 位置情報が設定されているかチェック
             if($location = getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-                $lat = $location['latitude'];
-                $lon = $location['longitude'];
-                $restaurant_information = get_restaurant_information($lat, $lon);
-                replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
-                $restaurant_information = get_restaurant_information($lat, $lon);
+                $restaurant_information = get_restaurant_information($location['latitude'], $location['longitude']);
                 // 今はテキストだがカルーセルで表示させたい
                 replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
             } else {
@@ -196,11 +209,16 @@ foreach ($events as $event) {
             error_log('USERID:'. $id);
             replyTextMessage($bot, $event->getReplyToken(),
             'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
+
         //locationset
         } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
-            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定',
+            replyConfirmTemplate($bot, $event->getReplyToken(), 
+            '位置情報の設定',
             '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
-            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder('位置情報の設定・変更', 'line://nv/location'),
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '位置情報の設定・変更', 'line://nv/location'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'キャンセル', 'キャンセル'),
             );
             createUser($event->getUserId(), 'location_set');
         }
