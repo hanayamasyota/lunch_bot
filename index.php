@@ -73,6 +73,7 @@ foreach ($events as $event) {
 
     // 位置情報メッセージ
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\LocationMessage) {
+        error_log('locationmessage!!!');
         if (getUserIdCheck($userId, TABLE_NAME_USERS) === 'location_set') {
             // usersテーブルに緯度経度を設定
             $lat = $event->getLatitude();
