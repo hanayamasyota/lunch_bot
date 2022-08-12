@@ -28,6 +28,9 @@ function getLocationByUserId($userId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
+        if (($row['latitude'] === null) || ($row['longitude'] === null)) {
+            return PDO::PARAM_NULL;
+        }
         //return location
         return $row;
     }
