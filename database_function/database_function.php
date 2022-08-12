@@ -81,7 +81,7 @@ function updateUser($userId, $beforeSend) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($beforeSend, $userId));
 }
-// update location
+// 位置情報の設定・更新
 function updateLocation($userId, $lat, $lon) {
     $dbh = dbConnection::getConnection();
     $sql = 'update ' . TABLE_NAME_USERS . ' set (latitude, longitude) = (?, ?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
