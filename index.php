@@ -1,5 +1,5 @@
 <?php
-//次にやること：レビュー2問目を作る(おすすめメニュー)
+//次にやること：お店を探すの結果をカルーセルで返すようにする
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -90,16 +90,16 @@ foreach ($events as $event) {
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
 
-            // shop_reviewを含む場合 !
+            // shop_reviewを含む場合
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
                 if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
                     //reset reviewstock
                     deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
-                    $mode = 'レビュー';
                 }
+                $mode = 'レビュー';
             }
 
-            // location_setを含む場合 !
+            // location_setを含む場合
             else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
                 $mode = '位置情報の設定';
             }
@@ -124,6 +124,7 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2')) {
         updateReviewData($event->getUserId(), 'review_2', $event->getText());
         updateUser($event->getUserId(), 'shop_review_3');
+    // 自由欄を登録
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3')) {
         updateReviewData($event->getUserId(), 'review_3', $event->getText());
         updateUser($event->getUserId(), 'shop_review_confirm');
@@ -185,6 +186,7 @@ foreach ($events as $event) {
             }
         }
     } 
+
     // reply for message
     else {
         //searchshop
