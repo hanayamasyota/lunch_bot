@@ -10,6 +10,7 @@ function get_restaurant_information($lat, $lon, $start) {
     'lat' => $latitude, // 緯度
     'lng' => $longitude, // 経度
     'range' => $range, // 検索範囲
+    'lunch' => 1,
     'start' => $start,
     'count' => 5,
     'format' => 'json',

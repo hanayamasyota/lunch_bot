@@ -99,7 +99,7 @@ foreach ($events as $event) {
                     //reset reviewstock
                     deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
                 }
-                $mode = 'レビュー';
+                $mode = 'お店のレビュー';
             }
 
             // location_setを含む場合
@@ -108,11 +108,14 @@ foreach ($events as $event) {
             }
 
             // shop_searchを含む場合 !
-            
+            else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
+                $mode = 'お店を探す';
+            }
+
             // 共通部分
             updateUser($event->getUserId(), null);
             replyTextMessage($bot, $event->getReplyToken(),
-            $mode.'がキャンセルされました。');
+            '「'.$mode.'」がキャンセルされました。');
         }
 
     // レビューを書くかの場面で「はい」と送信された場合
@@ -189,7 +192,12 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
             }
+
+        } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_search') && (preg_match('/get_id_J^[0-9]{9}/' ,$event->getText()))) {
+            $id = explode('_', $event->getText())[2];
+            replyTextMessage($bot, $event->getReplyToken(), $id);
         }
+        
     } 
 
     // reply for message
@@ -208,6 +216,8 @@ foreach ($events as $event) {
                     $actionArray = array();
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
                         '店舗情報', $restaurant_infomation[$i]["url"]));
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+                        '店舗IDの取得', 'get_id_'.$restaurant_infomation[$i]["url"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
                         $restaurant_infomation[$i]["name"],
                         '店舗ID:'.$restaurant_infomation[$i]["id"],
@@ -217,6 +227,7 @@ foreach ($events as $event) {
                     array_push($columnArray, $column);
                 }
                 replyCarouselTemplate($bot, $event->getReplyToken(), 'お店を探す:'.($page+1).'ページ目', $columnArray);
+                updateUser($event->getUserId(), 'shop_search');
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
                 '位置情報が設定されていません。位置情報の設定をお願いします。',
