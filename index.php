@@ -82,11 +82,11 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
-            if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getText())) {
+            if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // postbackテキストからidを抜き出す
                 $id = explode('_', $event->getText())[2];
                 replyTextMessage($bot, $event->getReplyToken(), $id);
-            } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getText())) {
+            } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // idが一致する店のレビューを表示 !
             }
         }
