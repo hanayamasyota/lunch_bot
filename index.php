@@ -215,6 +215,7 @@ foreach ($events as $event) {
                         $restaurant_infomation[$i]["image"],
                         $actionArray
                     );
+                    array_push($columnArray, $column);
                 }
                 replyCarouselTemplate($bot, $event->getReplyToken(), 'お店を探す:'.$page.'ページ目', $columnArray);
             } else {
