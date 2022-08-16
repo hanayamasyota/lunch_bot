@@ -68,11 +68,6 @@ try {
 
 //main//----------------------------------------------------------------
 foreach ($events as $event) {
-    // メッセージイベント以外はスキップ
-    if (!($event instanceof \LINE\LINEBot\Event\MessageEvent)) {
-        error_log('Non message event has come');
-        continue;
-    }
 
     // 位置情報メッセージ
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\LocationMessage) {
@@ -84,6 +79,14 @@ foreach ($events as $event) {
             updateUser($event->getUserId(), null);
             replyTextMessage($bot, $event->getReplyToken(),
             '位置情報を設定しました。');
+        }
+    }
+
+    // postbackイベント
+    if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
+        if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+            $id = explode('_', $event->getPostbackData())[2];
+            replyTextMessage($bot, $event->getReplyToken(), $id);
         }
     }
 
