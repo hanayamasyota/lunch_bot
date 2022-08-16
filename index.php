@@ -84,7 +84,7 @@ foreach ($events as $event) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // postbackテキストからidを抜き出す
-                $id = explode('_', $event->getText())[2];
+                $id = explode('_', $event->getPostbackData()())[2];
                 replyTextMessage($bot, $event->getReplyToken(), $id);
             } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // idが一致する店のレビューを表示 !
