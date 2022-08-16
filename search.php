@@ -10,7 +10,6 @@ function get_restaurant_information($lat, $lon, $start) {
     'lat' => $latitude, // 緯度
     'lng' => $longitude, // 経度
     'range' => $range, // 検索範囲
-    'lunch' => 1,
     'start' => $start,
     'count' => 5,
     'format' => 'json',
@@ -101,7 +100,7 @@ function renderJson2($json, $start) {
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
         ); 
-        $data_array += $array;
+        array_push($data_array, $array);
         if ($restaurant_length-$start > $i) {
             break;
         }

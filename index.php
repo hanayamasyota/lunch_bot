@@ -217,7 +217,7 @@ foreach ($events as $event) {
                     );
                     array_push($columnArray, $column);
                 }
-                replyCarouselTemplate($bot, $event->getReplyToken(), 'お店を探す:'.$page.'ページ目', $columnArray);
+                replyCarouselTemplate($bot, $event->getReplyToken(), 'お店を探す:'.($page+1).'ページ目', $columnArray);
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
                 '位置情報が設定されていません。位置情報の設定をお願いします。',
