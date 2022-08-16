@@ -49,7 +49,7 @@ function renderJson($json, $start) {
             "genre" => $temp->{'shop'}[$i]->{'genre'}->{'name'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
-            "search_range" => ($start+1).'/'.$restaurant_length
+            "search_range" => ($start+($i+1)).'/'.$restaurant_length
         )); 
         $data_array += $array;
     }

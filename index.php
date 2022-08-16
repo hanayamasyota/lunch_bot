@@ -1,9 +1,6 @@
 <?php
-//次にやること：お店を探すの結果をカルーセルで返すようにする
+//次にやること:投稿したレビューを表示させる
 // load files
-
-use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
-
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
@@ -85,8 +82,13 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
-            $id = explode('_', $event->getPostbackData())[2];
-            replyTextMessage($bot, $event->getReplyToken(), $id);
+            if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getText())) {
+                // postbackテキストからidを抜き出す
+                $id = explode('_', $event->getText())[2];
+                replyTextMessage($bot, $event->getReplyToken(), $id);
+            } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getText())) {
+                // idが一致する店のレビューを表示 !
+            }
         }
     }
 
@@ -95,7 +97,6 @@ foreach ($events as $event) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
-
             // shop_reviewを含む場合
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
                 if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
@@ -104,17 +105,14 @@ foreach ($events as $event) {
                 }
                 $mode = 'お店のレビュー';
             }
-
             // location_setを含む場合
             else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
                 $mode = '位置情報の設定';
             }
-
-            // shop_searchを含む場合 !
+            // shop_searchを含む場合
             else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_search') !== false) {
                 $mode = 'お店を探す';
             }
-
             // 共通部分
             updateUser($event->getUserId(), null);
             replyTextMessage($bot, $event->getReplyToken(),
@@ -196,9 +194,6 @@ foreach ($events as $event) {
                 );
             }
 
-        } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_search') && (preg_match('/get_id_J^[0-9]{9}/' ,$event->getText()))) {
-            $id = explode('_', $event->getText())[2];
-            replyTextMessage($bot, $event->getReplyToken(), $id);
         }
         
     } 
@@ -221,11 +216,12 @@ foreach ($events as $event) {
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
                         '店舗情報', $restaurant_infomation[$i]["url"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+                        'レビュー確認', 'review_id_'.$restaurant_infomation[$i]["id"]));
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
                         '店舗IDの取得', 'get_id_'.$restaurant_infomation[$i]["id"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
                         $restaurant_infomation[$i]["name"],
-                        $restaurant_infomation[$i]["genre"].
-$restaurant_infomation[$i]["search_range"].'件',
+                        $restaurant_infomation[$i]["search_range"].'件:'.$restaurant_infomation[$i]["genre"],
                         $restaurant_infomation[$i]["image"],
                         $actionArray
                     );
