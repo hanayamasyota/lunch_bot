@@ -94,6 +94,9 @@ function renderJson2($json, $start) {
 
     $data_array = array();
     for ($i = 0; $i < 5; $i++) {
+        if ($restaurant_length-$start <= $i) {
+            break;
+        }
         $array[$i] = array(
             "name" => $temp->{'shop'}[$i]->{'name'},
             "id" => $temp->{'shop'}[$i]->{'id'},
@@ -101,9 +104,6 @@ function renderJson2($json, $start) {
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
         ); 
         array_push($data_array, $array);
-        if ($restaurant_length-$start > $i) {
-            break;
-        }
     }
     return $data_array;
 }
