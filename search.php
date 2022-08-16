@@ -95,13 +95,13 @@ function renderJson2($json, $start) {
 
     $data_array = array();
     for ($i = 0; $i < 5; $i++) {
-        $array = array(
+        $array[$i] = array(
             "name" => $temp->{'shop'}[$i]->{'name'},
             "id" => $temp->{'shop'}[$i]->{'id'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
         ); 
-        $data_array[$i] += $array;
+        $data_array += $array;
         if ($restaurant_length-$start > $i) {
             break;
         }
