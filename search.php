@@ -92,18 +92,18 @@ function renderJson2($json, $start) {
     $temp = $json->{"results"};
     $resultTxt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n\n" . $result;
 
-    $data_array = array(0, 1, 2, 3, 4);
+    $data_array = array();
     for ($i = 0; $i < 5; $i++) {
         if ($restaurant_length-$start <= $i) {
             break;
         }
-        $array = array(
+        $array = array($i => array(
             "name" => $temp->{'shop'}[$i]->{'name'},
             "id" => $temp->{'shop'}[$i]->{'id'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
-        ); 
-        $data_array[$i] += $array;
+        )); 
+        $data_array += $array;
     }
     return $data_array;
 }
