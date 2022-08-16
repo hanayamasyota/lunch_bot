@@ -200,7 +200,6 @@ foreach ($events as $event) {
             // 位置情報が設定されているかチェック
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
                 $location = getLocationByUserId($event->getUserId());
-                error_log('latitude:'.$location['latitude'].',longitude:'.$location['longitude']);
                 //1ページに5店表示(現在のページはデータベースに登録？)
                 $page = 0;
                 $restaurant_infomation = get_restaurant_information2($location['latitude'], $location['longitude'], $page);
