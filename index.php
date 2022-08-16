@@ -86,7 +86,7 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             $id = explode('_', $event->getPostbackData())[2];
-            replyTextMessage($bot, $event->getReplyToken(), $id);
+            replyTextMessage($bot, $event->getReplyToken(), '\r'.$id);
         }
     }
 
@@ -111,7 +111,7 @@ foreach ($events as $event) {
             }
 
             // shop_searchを含む場合 !
-            else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
+            else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_search') !== false) {
                 $mode = 'お店を探す';
             }
 
@@ -170,11 +170,11 @@ foreach ($events as $event) {
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
             replyTextMessage($bot, $event->getReplyToken(),
-            '食べたメニューまたはおすすめのメニューを入力して下さい。(30字以下)');
+            '食べたメニューまたはおすすめのメニューを入力して下さい。');
         //shop_review_3
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
             replyTextMessage($bot, $event->getReplyToken(),
-            '備考等があれば入力して下さい。(50字以内)ない場合は「なし」と入力してください。');
+            '備考等があれば入力して下さい。ない場合は「なし」と入力してください。');
         //shop_review_confirm(レビュー内容の確認)
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_confirm') {
             if (strcmp($event->getText(), 'はい') == 0) {
