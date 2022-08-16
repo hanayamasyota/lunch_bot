@@ -205,20 +205,16 @@ foreach ($events as $event) {
                 $page = 0;
                 $restaurant_infomation = get_restaurant_information2($location['latitude'], $location['longitude'], $page);
                 $columnArray = array();
-                for($i = 0; $i < 10; $i++) {
+                for($i = 0; $i < count($restaurant_infomation); $i++) {
                     $actionArray = array();
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-                        '店舗情報', $restaurant_infomation->{'shop'}[$i]->{'url'}));
+                        '店舗情報', $restaurant_infomation[$i]["url"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-                        $restaurant_infomation->{'shop'}[$i]->{'name'},
-                        '店舗ID:'.$restaurant_infomation->{'shop'}[$i]->{'id'},
-                        $restaurant_infomation->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
+                        $restaurant_infomation[$i]["name"],
+                        '店舗ID:'.$restaurant_infomation[$i]["id"],
+                        $restaurant_infomation[$i]["image"],
                         $actionArray
                     );
-                    array_push($columnArray, $column);
-                    if (strlen($restaurant_infomation->{'results_available'}) - ($page*10) <= $i-1) {
-                        break;
-                    }
                 }
                 replyCarouselTemplate($bot, $event->getReplyToken(), $restaurant_infomation, 'お店を探す:'.$page.'ページ目', $columnArray);
             } else {

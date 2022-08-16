@@ -10,7 +10,9 @@ function get_restaurant_information($lat, $lon, $start) {
     'lat' => $latitude, // 緯度
     'lng' => $longitude, // 経度
     'range' => $range, // 検索範囲
+    'lunch' => 1,
     'start' => $start,
+    'count' => 5,
     'format' => 'json',
     ];
     // グルメサーチAPIからjsonを取得
@@ -57,16 +59,18 @@ function get_restaurant_information2($lat, $lon, $page) {
     $longitude = round($lon, 6);
     //範囲も変えられるようにする？
     $range = 2;
-    $start = $page * 10 + 1;
+    $start = $page * 5;
 
     // クエリをまとめる
     $query = [
-    'key' => '7264b03648f65bd1',
-    'lat' => $latitude, // 緯度
-    'lng' => $longitude, // 経度
-    'range' => $range, // 検索範囲
-    'start' => $start,
-    'format' => 'json',
+        'key' => '7264b03648f65bd1',
+        'lat' => $latitude, // 緯度
+        'lng' => $longitude, // 経度
+        'range' => $range, // 検索範囲
+        'lunch' => 1,
+        'start' => ($start+1),
+        'count' => 5,
+        'format' => 'json',
     ];
     // グルメサーチAPIからjsonを取得
     $message = "";
@@ -75,19 +79,33 @@ function get_restaurant_information2($lat, $lon, $page) {
     $response = file_get_contents($url);
 
     $json = json_decode($response);
-    $message .= renderJson2($json);
+    $data_array = renderJson2($json, $start);
 
-    return $message;
+    return $data_array;
 }
 
-function renderJson2($json) {
+function renderJson2($json, $start) {
     $restaurant_length = $json->{"results"}->{"results_available"};
     if ($restaurant_length < 1) {
         $result = "周辺にお店が見つかりませんでした。";
         return $result;
     }
     $temp = $json->{"results"};
-    $result_txt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n\n" . $result;
-    return $temp;
+    $resultTxt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n\n" . $result;
+
+    $data_array = array();
+    for ($i = 0; $i < 5; $i++) {
+        $array = array(
+            "name" => $temp->{'shop'}[$i]->{'name'},
+            "id" => $temp->{'shop'}[$i]->{'id'},
+            "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
+            "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
+        ); 
+        $data_array[$i] += $array;
+        if ($restaurant_length-$start > $i) {
+            break;
+        }
+    }
+    return $data_array;
 }
 ?>
