@@ -1,6 +1,9 @@
 <?php
 //次にやること：お店を探すの結果をカルーセルで返すようにする
 // load files
+
+use LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder;
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
@@ -103,6 +106,8 @@ foreach ($events as $event) {
             else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
                 $mode = '位置情報の設定';
             }
+
+            // shop_searchを含む場合 !
             
             // 共通部分
             updateUser($event->getUserId(), null);
@@ -196,9 +201,26 @@ foreach ($events as $event) {
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
                 $location = getLocationByUserId($event->getUserId());
                 error_log('latitude:'.$location['latitude'].',longitude:'.$location['longitude']);
-                $restaurant_information = get_restaurant_information($location['latitude'], $location['longitude'], 1);
-                // 今はテキストだがカルーセルで表示させたい
-                replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
+                //1ページに5店表示(現在のページはデータベースに登録？)
+                $page = 0;
+                $restaurant_infomation = get_restaurant_information2($location['latitude'], $location['longitude'], $page);
+                $columnArray = array();
+                for($i = 0; $i < 10; $i++) {
+                    $actionArray = array();
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+                        '店舗情報', $restaurant_infomation->{'shop'}[$i]->{'url'}));
+                    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+                        $restaurant_infomation->{'shop'}[$i]->{'name'},
+                        '店舗ID:'.$restaurant_infomation->{'shop'}[$i]->{'id'},
+                        $restaurant_infomation->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
+                        $actionArray
+                    );
+                    array_push($columnArray, $column);
+                    if (strlen($restaurant_infomation->{'results_available'}) - ($page*10) <= $i-1) {
+                        break;
+                    }
+                }
+                replyCarouselTemplate($bot, $event->getReplyToken(), $restaurant_infomation, 'お店を探す:'.$page.'ページ目', $columnArray);
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
                 '位置情報が設定されていません。位置情報の設定をお願いします。',
