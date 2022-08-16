@@ -196,7 +196,7 @@ foreach ($events as $event) {
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
                 $location = getLocationByUserId($event->getUserId());
                 error_log('latitude:'.$location['latitude'].',longitude:'.$location['longitude']);
-                $restaurant_information = get_restaurant_information($location['latitude'], $location['longitude']);
+                $restaurant_information = get_restaurant_information($location['latitude'], $location['longitude'], 1);
                 // 今はテキストだがカルーセルで表示させたい
                 replyTextMessage($bot, $event->getReplyToken(), $restaurant_information);
             } else {
