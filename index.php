@@ -86,7 +86,7 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             $id = explode('_', $event->getPostbackData())[2];
-            replyTextMessage($bot, $event->getReplyToken(), '\r'.$id);
+            replyTextMessage($bot, $event->getReplyToken(), $id);
         }
     }
 
@@ -211,19 +211,21 @@ foreach ($events as $event) {
             // 位置情報が設定されているかチェック
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
                 $location = getLocationByUserId($event->getUserId());
+                //カルーセルは5件まで
                 //1ページに5店表示(現在のページはデータベースに登録？)
                 $page = 0;
-                $restaurant_infomation = get_restaurant_information2($location['latitude'], $location['longitude'], $page);
+                $restaurant_infomation = get_restaurant_information($location['latitude'], $location['longitude'], $page);
                 $columnArray = array();
                 for($i = 0; $i < count($restaurant_infomation); $i++) {
                     $actionArray = array();
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
                         '店舗情報', $restaurant_infomation[$i]["url"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        '店舗IDの取得', 'get_id_'.$restaurant_infomation[$i]["url"]));
+                        '店舗IDの取得', 'get_id_'.$restaurant_infomation[$i]["id"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
                         $restaurant_infomation[$i]["name"],
-                        '店舗ID:'.$restaurant_infomation[$i]["id"],
+                        $restaurant_infomation[$i]["genre"].
+$restaurant_infomation[$i]["search_range"].'件',
                         $restaurant_infomation[$i]["image"],
                         $actionArray
                     );
