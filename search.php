@@ -103,7 +103,7 @@ function renderJson2($json, $start) {
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
         ); 
-        array_push($data_array, $array);
+        $data_array += $array;
     }
     return $data_array;
 }
