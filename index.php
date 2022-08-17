@@ -1,5 +1,7 @@
 <?php
-//次にやること:投稿したレビューを表示させる
+//PythonやNode.jsに変える？
+//LINEのミニアプリを作る？
+//
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -241,8 +243,8 @@ foreach ($events as $event) {
         } else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
             createUser($event->getUserId(), 'shop_review');
             $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
-            error_log('USERID:'. $id);
             replyTextMessage($bot, $event->getReplyToken(),
+            // ユーザ登録、レビューはwebでさせる
             'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
 
         //locationset
