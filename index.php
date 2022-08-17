@@ -82,6 +82,7 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+            // pregmatchができてない？ !
             if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // postbackテキストからidを抜き出す
                 $id = explode('_', $event->getPostbackData())[2];
