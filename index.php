@@ -1,7 +1,7 @@
 <?php
 //PythonやNode.jsに変える？
 //LINEのミニアプリを作る？
-//
+//番号で店のレビューをかけるようにする(一意に識別させる)、お店を探したときにuserid、番号、店舗IDを格納するテーブルに入れる
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -17,7 +17,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 //店の情報テーブル名(テストで3件のみ)
 define('TABLE_NAME_SHOPS', 'shops');
-/*テーブルデータ(★:PRIMARY, ☆:FOREIGN)
+/*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
 users(
     ★userid(bytea)...ユーザID
     before_send(text)...直前のメッセージ
@@ -26,15 +26,15 @@ users(
 )
 reviews(
     ★review_no(serial)...レビューを一意にするための番号
-    ☆shopid(text)...登録された店舗のID
-    ☆userid(bytea)...登録したユーザID
+    shopid(text)...登録された店舗のID
+    userid(bytea)...登録したユーザID
     evaluation(interger)...全体の評価
     recommend(text)...おすすめメニュー
     free(text)...自由欄
 )
 reviewstock(レビューのデータをストックしておくテーブル、キャンセル時・コミット時には消去する)(
-    ☆userid(bytea)...ユーザID
-    ☆shopid(text)...店舗ID
+    userid(bytea)...ユーザID
+    shopid(text)...店舗ID
     review_1(integer)...全体の評価
     review_2(text)...おすすめメニュー
     review_3(text)...自由欄
