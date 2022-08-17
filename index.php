@@ -39,7 +39,7 @@ reviewstock(レビューのデータをストックしておくテーブル、�
     review_2(text)...おすすめメニュー
     review_3(text)...自由欄
 )
-shops(テスト用、実際はマップ等から選んでレビューを書けるようにする予定)(
+shops(これを使わずにレビューをかけるようにする)(
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
 )
