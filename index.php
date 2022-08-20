@@ -106,6 +106,7 @@ foreach ($events as $event) {
             // review_write_...の形式かを確認する !
             if (strpos('review_write_' ,$event->getPostbackData()) !== false) {
                 // postbackテキストからidを抜き出す
+                error_log('SHOPNUM='.$shopNum);
                 $shopNum = explode('_', $event->getPostbackData())[2];
                 replyTextMessage($bot, $event->getReplyToken(), $shopNum);
             } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
