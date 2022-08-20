@@ -50,6 +50,8 @@ function renderJson($json, $start) {
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
             "number" => $start+($i+1),
+            "latitude" => $temp->{'shop'}->{'lat'},
+            "longitude" => $temp->{'shop'}->{'lng'},
             "resultrange" => $restaurant_length
         )); 
         $data_array += $array;

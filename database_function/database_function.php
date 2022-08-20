@@ -36,7 +36,7 @@ function getLocationByUserId($userId) {
     }
 }
 
-// userid exists check and return userid
+// テーブル内にユーザIDが存在するかを調べる
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
     $sql = 'select userid from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
@@ -73,7 +73,6 @@ function registerUser($userId, $beforeSend) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $beforeSend));
 }
-
 // update userinfo
 function updateUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
@@ -132,4 +131,13 @@ function getReviewStockData($userId) {
         return $row;
     }
 }
+
+//navigationテーブルへのデータ挿入
+// function registerNavigation($userId, $shopId, $shopNum, $shopName, $lat, $lng) {
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'insert into '.TABLE_NAME_NAVIGATION.' (userid, shopid, shopnum, shopname, shop_lat, shop_lng) 
+//             values (pgp_sym_decrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?)';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($userId, $shopId, $shopNum, $shopName, $lat, $lng));
+// }
 ?>

@@ -16,6 +16,8 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 //店の情報テーブル名(テストで3件のみ)
 define('TABLE_NAME_SHOPS', 'shops');
+//個人の検索結果データ
+define('TABLE_NAME_NAVIGATION', 'navigation');//未実装
 /*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
 users(
     ★userid(bytea)...ユーザID
@@ -48,7 +50,7 @@ reviews(新)(
 )
 reviews_recommend(おすすめメニュー)
 reviews_free(自由欄)
-shops(これを使わずにレビューをかけるようにする)(
+shops(
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
 )
@@ -102,10 +104,10 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...の形式かを確認する !
-            if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
+            if (strpos('/review_write_/' ,$event->getPostbackData()) !== false) {
                 // postbackテキストからidを抜き出す
-                $id = explode('_', $event->getPostbackData())[2];
-                replyTextMessage($bot, $event->getReplyToken(), $id);
+                $shopNum = explode('_', $event->getPostbackData())[2];
+                replyTextMessage($bot, $event->getReplyToken(), $shopNum);
             } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // 番号が一致する店のレビューを表示 !
             }
@@ -229,21 +231,29 @@ foreach ($events as $event) {
                 //カルーセルは5件まで
                 //1ページに5店表示(現在のページはデータベースに登録？)
                 $page = 0;
-                $restaurant_infomation = get_restaurant_information($location['latitude'], $location['longitude'], $page);
+                $shopInfo = get_restaurant_information($location['latitude'], $location['longitude'], $page);
                 $columnArray = array();
-                for($i = 0; $i < count($restaurant_infomation); $i++) {
-                    //for文内でnavigationテーブルへのデータ追加をする !
+                for($i = 0; $i < count($shopInfo); $i++) {
+                    //for文内でnavigationテーブルへのデータ追加をする
+                    // registerNavigation(
+                    //     $event->getUserId(),
+                    //     $shopInfo[$i]["id"],
+                    //     $shopInfo[$i]["number"],
+                    //     $shopInfo[$i]["name"],
+                    //     $shopInfo[$i]["latitude"],
+                    //     $shopInfo[$i]["longitude"]
+                    // );
                     $actionArray = array();
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-                        '店舗情報', $restaurant_infomation[$i]["url"]));
+                        '店舗情報', $shopInfo[$i]["url"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        'レビュー確認', 'review_id_'.$restaurant_infomation[$i]["id"]));
+                        'レビュー確認', 'review_id_'.$shopInfo[$i]["id"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        'レビューを書く', 'review_write_'.$restaurant_infomation[$i]["id"]));
+                        'レビューを書く', 'review_write_'.$shopInfo[$i]["number"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-                        $restaurant_infomation[$i]["name"],
-                        $restaurant_infomation[$i]["number"].'/'.$restaurant_infomation[$i]["resultrange"].'件:'.$restaurant_infomation[$i]["genre"],
-                        $restaurant_infomation[$i]["image"],
+                        $shopInfo[$i]["name"],
+                        $shopInfo[$i]["number"].'/'.$shopInfo[$i]["resultrange"].'件:'.$shopInfo[$i]["genre"],
+                        $shopInfo[$i]["image"],
                         $actionArray
                     );
                     array_push($columnArray, $column);
