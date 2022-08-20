@@ -26,6 +26,7 @@ users(
     longitude(float)...経度
     追加
     page_num...検索結果の現在のページ数
+    review_shop...レビュー中の店舗ID
 )
 reviews(あとから変更や削除ができるようにする。自分が書いたレビューを見れるようにする。
     ★review_no(serial)...レビューを一意にするための番号
