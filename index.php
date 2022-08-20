@@ -113,6 +113,7 @@ foreach ($events as $event) {
                 // 番号が一致する店のレビューを表示 !
             }
         }
+        continue;
     }
 
     // キャンセル
