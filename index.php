@@ -104,7 +104,7 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...の形式かを確認する !
-            if (strpos('/review_write_/' ,$event->getPostbackData()) !== false) {
+            if (strpos('review_write_' ,$event->getPostbackData()) !== false) {
                 // postbackテキストからidを抜き出す
                 $shopNum = explode('_', $event->getPostbackData())[2];
                 replyTextMessage($bot, $event->getReplyToken(), $shopNum);
