@@ -1,7 +1,6 @@
 <?php
 //PythonやNode.jsに変える？
 //LINEのミニアプリを作る？
-//番号で店のレビューをかけるようにする(一意に識別させる)、お店を探したときにuserid、番号、店舗IDを格納するテーブルに入れる
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -23,8 +22,10 @@ users(
     before_send(text)...直前のメッセージ
     latitude(float)...緯度
     longitude(float)...経度
+    追加
+    page_num...検索結果の現在のページ数
 )
-reviews(
+reviews(あとから変更や削除ができるようにする。自分が書いたレビューを見れるようにする。
     ★review_no(serial)...レビューを一意にするための番号
     shopid(text)...登録された店舗のID
     userid(bytea)...登録したユーザID
@@ -39,9 +40,25 @@ reviewstock(レビューのデータをストックしておくテーブル、�
     review_2(text)...おすすめメニュー
     review_3(text)...自由欄
 )
+reviews(新)(
+    userid(bytea)
+    shopid(text)
+    review_num(int)...レビューの順番
+    review(text)
+)
+reviews_recommend(おすすめメニュー)
+reviews_free(自由欄)
 shops(これを使わずにレビューをかけるようにする)(
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
+)
+navigation(お店を探すとレビューで使用)(
+    ★userid(bytea)...ユーザIDと店舗IDの複合主キー
+    ★shopid(text)...
+    shopnum(int)...店の表示順に番号を付ける
+    shopname(text)...店名
+    shop_lat(float)...店の緯度(apiから取得)
+    shop_lng(float)...店の経度    
 )
 */
 
@@ -84,13 +101,13 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
-            // pregmatchができてない？ !
+            // review_write_...の形式かを確認する !
             if (preg_match('/get_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // postbackテキストからidを抜き出す
                 $id = explode('_', $event->getPostbackData())[2];
                 replyTextMessage($bot, $event->getReplyToken(), $id);
             } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
-                // idが一致する店のレビューを表示 !
+                // 番号が一致する店のレビューを表示 !
             }
         }
     }
@@ -215,16 +232,17 @@ foreach ($events as $event) {
                 $restaurant_infomation = get_restaurant_information($location['latitude'], $location['longitude'], $page);
                 $columnArray = array();
                 for($i = 0; $i < count($restaurant_infomation); $i++) {
+                    //for文内でnavigationテーブルへのデータ追加をする !
                     $actionArray = array();
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
                         '店舗情報', $restaurant_infomation[$i]["url"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
                         'レビュー確認', 'review_id_'.$restaurant_infomation[$i]["id"]));
                     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        '店舗IDの取得', 'get_id_'.$restaurant_infomation[$i]["id"]));
+                        'レビューを書く', 'review_write_'.$restaurant_infomation[$i]["id"]));
                     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
                         $restaurant_infomation[$i]["name"],
-                        $restaurant_infomation[$i]["search_range"].'件:'.$restaurant_infomation[$i]["genre"],
+                        $restaurant_infomation[$i]["number"].'/'.$restaurant_infomation[$i]["resultrange"].'件:'.$restaurant_infomation[$i]["genre"],
                         $restaurant_infomation[$i]["image"],
                         $actionArray
                     );
