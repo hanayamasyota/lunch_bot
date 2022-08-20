@@ -104,10 +104,9 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...の形式かを確認する !
-            if (strpos('review_write_' ,$event->getPostbackData()) !== false) {
+            if (strpos($event->getPostbackData(), 'review_write_') !== false) {
                 // postbackテキストからidを抜き出す
-                error_log('SHOPNUM='.$shopNum);
-                $shopNum = explode('_', $event->getPostbackData())[2];
+                $shopNum = intval(explode('_', $event->getPostbackData())[2]);
                 replyTextMessage($bot, $event->getReplyToken(), $shopNum);
             } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
                 // 番号が一致する店のレビューを表示 !
