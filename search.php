@@ -30,17 +30,17 @@ function get_restaurant_information($lat, $lon, $page) {
 }
 
 function renderJson($json, $start) {
-    $restaurant_length = $json->{"results"}->{"results_available"};
-    if ($restaurant_length < 1) {
+    $resultLength = $json->{"results"}->{"results_available"};
+    if ($resultLength < 1) {
         $result = "周辺にお店が見つかりませんでした。";
         return $result;
     }
     $temp = $json->{"results"};
-    $resultTxt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n".PAGE_COUNT."件ごとに表示します。\r\n\n" . $result;
+    $resultTxt = "周辺500m以内に".$resultLength."件見つかりました。\r\n".PAGE_COUNT."件ごとに表示します。\r\n\n" . $result;
 
     $data_array = array();
     for ($i = 0; $i < PAGE_COUNT; $i++) {
-        if ($restaurant_length-$start <= $i) {
+        if ($resultLength-$start <= $i) {
             break;
         }
         $array = array($i => array(
@@ -52,10 +52,10 @@ function renderJson($json, $start) {
             "number" => $start+($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
+            "shoprange" => $resultLength,
         )); 
         $data_array += $array;
     }
-    $data_array += array("resultrange" => $restaurant_length);
     return $data_array;
 }
 ?>

@@ -341,7 +341,7 @@ function searchShop($userId, $bot, $token, $page=0) {
     if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
         deleteUser($userId, TABLE_NAME_USERSHOPDATA);
     }
-    registerUserShopData($userId, $shopInfo["resultrange"]);
+    registerUserShopData($userId, $shopInfo[0]["resultrange"]);
 }
 
 //CLASS//-----------------------------------------------------------
