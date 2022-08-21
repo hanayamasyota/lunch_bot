@@ -36,6 +36,31 @@ function getLocationByUserId($userId) {
     }
 }
 
+function registerUserShopData($userId, $page=0, $searchRange) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_USERSHOPDATA . ' (userid, page_num, shop_range) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?) ';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $page, $searchRange));
+}
+function getDataByUserShopData($userId, $column) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select '.$column.' from ' . TABLE_NAME_USERSHOPDATA . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row;
+    }
+}
+function updateUserShopData($userId, $column, $data) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERSHOPDATA . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($data, $userId));
+}
+
 // テーブル内にユーザIDが存在するかを調べる
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
@@ -69,7 +94,7 @@ function getShopNameByShopId($shopId) {
 // entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send, page_num) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $beforeSend));
 }
@@ -139,5 +164,18 @@ function getReviewStockData($userId) {
 //             values (pgp_sym_decrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?)';
 //     $sth = $dbh->prepare($sql);
 //     $sth->execute(array($userId, $shopId, $shopNum, $shopName, $lat, $lng));
+// }
+
+// function getShoprangeByNavigation($userId) {
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'select max(shopnum) from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($userId));
+//     // if no record
+//     if (!($row = $sth->fetch())) {
+//         return PDO::PARAM_NULL;
+//     } else {
+//         return $row;
+//     }
 // }
 ?>

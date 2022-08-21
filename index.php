@@ -10,6 +10,8 @@ require_once __DIR__ . '/database_function/database_function.php';
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
 define('TABLE_NAME_USERS', 'users');
+//ユーザの検索結果のデータを保持する
+define('TABLE_NAME_USERSHOPDATA', 'usershopdata');
 //ユーザの感想テーブル名
 define('TABLE_NAME_REVIEWS', 'reviews');
 //レビューの内容を一時的にストックするテーブル名
@@ -18,6 +20,9 @@ define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 define('TABLE_NAME_SHOPS', 'shops');
 //個人の検索結果データ
 define('TABLE_NAME_NAVIGATION', 'navigation');//未実装
+
+//1ページ当たりの表示件数(後から変更できるように)
+define('PAGE_COUNT', 5);
 /*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
 users(
     ★userid(bytea)...ユーザID
@@ -27,6 +32,13 @@ users(
     追加
     page_num...検索結果の現在のページ数
     review_shop...レビュー中の店舗ID
+    shop_range...検索件数
+)
+usershopdata(
+    ★userid(bytea)
+    page_num(integer)...検索結果の現在のページ数
+    review_shop(text)...レビュー中の店舗ID
+    shop_range(integer)...検索件数
 )
 reviews(あとから変更や削除ができるようにする。自分が書いたレビューを見れるようにする。
     ★review_no(serial)...レビューを一意にするための番号
@@ -63,6 +75,7 @@ navigation(お店を探すとレビューで使用)(
     shop_lat(float)...店の緯度(apiから取得)
     shop_lng(float)...店の経度    
 )
+
 */
 
 // アクセストークンを使いCurlHTTPClientをインスタンス化
@@ -104,13 +117,13 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
-            // review_write_...の形式かを確認する !
+            // review_write_...
             if (strpos($event->getPostbackData(), 'review_write_') !== false) {
                 // postbackテキストからidを抜き出す
                 $shopNum = intval(explode('_', $event->getPostbackData())[2]);
+                $id = explode('_', $event->getPostbackData())[3];
+                updateUserShopData($event->getUserId(), 'review_shop', $id);
                 replyTextMessage($bot, $event->getReplyToken(), $shopNum);
-            } else if (preg_match('/review_id_J^[0-9]{9}/' ,$event->getPostbackData())) {
-                // 番号が一致する店のレビューを表示 !
             }
         }
         continue;
@@ -217,51 +230,46 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
             }
+        }
 
+        else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+            //件数を超えて次のページにいけないようにする
+            if (strcmp($event->getText(), '次へ') == 0) {}
+                $page = getPagenumByUserId($event->getUserId());
+                $range = getDataByUserShopData($event->getUserId(), 'shop_range');
+                //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
+                if ($page < ceil($range/PAGE_COUNT)) {
+                    updateUserShopData($event->getUserId(), 'page_num', ($Page+1));
+                    searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page+1));
+                } else {
+                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
+                }
+            //0ページよりも前にいけないようにする
+            if (strcmp($event->getText(), '前へ') == 0) {}
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                if ($page >= 1) {
+                    updateUserShopData($event->getUserId(), 'page_num', ($Page-1));
+                    searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page-1));
+                } else {
+                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
+                }
         }
         
     } 
 
-    // reply for message
+    //前のメッセージが登録されていない場合
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             // 登録された位置情報周辺のお店を探す
             // 位置情報が設定されているかチェック
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-                $location = getLocationByUserId($event->getUserId());
-                //カルーセルは5件まで
-                //1ページに5店表示(現在のページはデータベースに登録？)
-                $page = 0;
-                $shopInfo = get_restaurant_information($location['latitude'], $location['longitude'], $page);
-                $columnArray = array();
-                for($i = 0; $i < count($shopInfo); $i++) {
-                    //for文内でnavigationテーブルへのデータ追加をする
-                    // registerNavigation(
-                    //     $event->getUserId(),
-                    //     $shopInfo[$i]["id"],
-                    //     $shopInfo[$i]["number"],
-                    //     $shopInfo[$i]["name"],
-                    //     $shopInfo[$i]["latitude"],
-                    //     $shopInfo[$i]["longitude"]
-                    // );
-                    $actionArray = array();
-                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-                        '店舗情報', $shopInfo[$i]["url"]));
-                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        'レビュー確認', 'review_id_'.$shopInfo[$i]["id"]));
-                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        'レビューを書く', 'review_write_'.$shopInfo[$i]["number"]));
-                    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-                        $shopInfo[$i]["name"],
-                        $shopInfo[$i]["number"].'/'.$shopInfo[$i]["resultrange"].'件:'.$shopInfo[$i]["genre"],
-                        $shopInfo[$i]["image"],
-                        $actionArray
-                    );
-                    array_push($columnArray, $column);
-                }
-                replyCarouselTemplate($bot, $event->getReplyToken(), 'お店を探す:'.($page+1).'ページ目', $columnArray);
                 updateUser($event->getUserId(), 'shop_search');
+                if (getDataByUserShopData($event->getUserId(), 'userid') != PDO::PARAM_NULL) {
+                    deleteUser($event->getUserId(), TABLE_NAME_USERSHOPDATA);
+                }
+                registerUserShopData($event->getUserId(), $shopInfo["resultrange"]);
+                searchShop($event->getUserId(), $bot, $event->getReplyToken());
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
                 '位置情報が設定されていません。位置情報の設定をお願いします。',
@@ -300,6 +308,40 @@ function createUser($userId, $beforeSend) {
         //if already exists, update
         updateUser($userId, $beforeSend);
     }
+}
+
+function searchShop($userId, $bot, $token, $page=0) {
+    $location = getLocationByUserId($userId);
+    //カルーセルは5件まで
+    //1ページに5店表示(現在のページはデータベースに登録？)
+    $shopInfo = get_restaurant_information($location['latitude'], $location['longitude'], $page);
+    $columnArray = array();
+    for($i = 0; $i < count($shopInfo); $i++) {
+        //for文内でnavigationテーブルへのデータ追加をする
+        // registerNavigation(
+        //     $event->getUserId(),
+        //     $shopInfo[$i]["id"],
+        //     $shopInfo[$i]["number"],
+        //     $shopInfo[$i]["name"],
+        //     $shopInfo[$i]["latitude"],
+        //     $shopInfo[$i]["longitude"]
+        // );
+        $actionArray = array();
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            '店舗情報', $shopInfo[$i]["url"]));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+            'レビュー確認', 'まだ実装されていません。'));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+            'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
+        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+            $shopInfo[$i]["name"],
+            $shopInfo[$i]["number"].'/'.$shopInfo["resultrange"].'件:'.$shopInfo[$i]["genre"],
+            $shopInfo[$i]["image"],
+            $actionArray
+        );
+        array_push($columnArray, $column);
+    }
+    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
 
 //CLASS//-----------------------------------------------------------

@@ -4,7 +4,7 @@ function get_restaurant_information($lat, $lon, $page) {
     $longitude = round($lon, 6);
     //範囲も変えられるようにする？
     $range = 2;
-    $start = $page * 5;
+    $start = $page * PAGE_COUNT;
 
     // クエリをまとめる
     $query = [
@@ -14,7 +14,7 @@ function get_restaurant_information($lat, $lon, $page) {
         'range' => $range, // 検索範囲
         'lunch' => 1,
         'start' => ($start+1),
-        'count' => 5,
+        'count' => PAGE_COUNT,
         'format' => 'json',
     ];
     // グルメサーチAPIからjsonを取得
@@ -36,10 +36,10 @@ function renderJson($json, $start) {
         return $result;
     }
     $temp = $json->{"results"};
-    $resultTxt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n5件まで表示します。\r\n\n" . $result;
+    $resultTxt = "周辺500m以内に".$restaurant_length."件見つかりました。\r\n".PAGE_COUNT."件ごとに表示します。\r\n\n" . $result;
 
     $data_array = array();
-    for ($i = 0; $i < 5; $i++) {
+    for ($i = 0; $i < PAGE_COUNT; $i++) {
         if ($restaurant_length-$start <= $i) {
             break;
         }
@@ -52,10 +52,10 @@ function renderJson($json, $start) {
             "number" => $start+($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
-            "resultrange" => $restaurant_length
         )); 
         $data_array += $array;
     }
+    $data_array += array("resultrange" => $restaurant_length);
     return $data_array;
 }
 ?>
