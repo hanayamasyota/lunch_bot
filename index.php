@@ -235,7 +235,7 @@ foreach ($events as $event) {
         else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {}
-                $page = getPagenumByUserId($event->getUserId());
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 $range = getDataByUserShopData($event->getUserId(), 'shop_range');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page < ceil($range/PAGE_COUNT)) {
