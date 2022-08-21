@@ -234,25 +234,27 @@ foreach ($events as $event) {
 
         else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             //件数を超えて次のページにいけないようにする
-            if (strcmp($event->getText(), '次へ') == 0) {}
+            if (strcmp($event->getText(), '次へ') == 0) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 $range = getDataByUserShopData($event->getUserId(), 'shop_range');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
-                    updateUserShopData($event->getUserId(), 'page_num', ($Page+1));
+                    updateUserShopData($event->getUserId(), 'page_num', ($page+1));
                     searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page+1));
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
                 }
+            }
             //0ページよりも前にいけないようにする
-            if (strcmp($event->getText(), '前へ') == 0) {}
+            if (strcmp($event->getText(), '前へ') == 0) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
-                    updateUserShopData($event->getUserId(), 'page_num', ($Page-1));
+                    updateUserShopData($event->getUserId(), 'page_num', ($page-1));
                     searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page-1));
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
+            }
         }
         
     } 
