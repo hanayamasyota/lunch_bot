@@ -32,13 +32,13 @@ users(
     追加
     page_num...検索結果の現在のページ数
     review_shop...レビュー中の店舗ID
-    shop_range...検索件数
+    shop_length...検索件数
 )
 usershopdata(
     ★userid(bytea)
     page_num(integer)...検索結果の現在のページ数
     review_shop(text)...レビュー中の店舗ID
-    shop_range(integer)...検索件数
+    shop_length(integer)...検索件数
 )
 reviews(あとから変更や削除ができるようにする。自分が書いたレビューを見れるようにする。
     ★review_no(serial)...レビューを一意にするための番号
@@ -236,9 +236,9 @@ foreach ($events as $event) {
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                $range = getDataByUserShopData($event->getUserId(), 'shop_range');
+                $range = getDataByUserShopData($event->getUserId(), 'shop_length');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
-                if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
+                if ($page <= ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($event->getUserId(), 'page_num', ($page+1));
                     searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page+1));
                 } else {
@@ -246,7 +246,7 @@ foreach ($events as $event) {
                 }
             }
             //0ページよりも前にいけないようにする
-            if (strcmp($event->getText(), '前へ') == 0) {
+            else if (strcmp($event->getText(), '前へ') == 0) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
                     updateUserShopData($event->getUserId(), 'page_num', ($page-1));
@@ -341,9 +341,10 @@ function searchShop($userId, $bot, $token, $page=0) {
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
     updateUser($userId, 'shop_search');
     if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-        deleteUser($userId, TABLE_NAME_USERSHOPDATA);
+        updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
+    } else {
+        registerUserShopData($userId, $shopInfo[0]["shoplength"]);
     }
-    registerUserShopData($userId, $shopInfo[0]["shoplength"]);
 }
 
 //CLASS//-----------------------------------------------------------
