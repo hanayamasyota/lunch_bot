@@ -36,7 +36,7 @@ function getLocationByUserId($userId) {
     }
 }
 
-function registerUserShopData($userId, $page=0, $searchRange) {
+function registerUserShopData($userId, $searchRange, $page=0) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_USERSHOPDATA . ' (userid, page_num, shop_range) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
