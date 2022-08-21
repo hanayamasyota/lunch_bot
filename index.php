@@ -330,7 +330,7 @@ function searchShop($userId, $bot, $token, $page=0) {
             'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shopInfo[$i]["name"],
-            $shopInfo[$i]["number"].'/'.$shopInfo[i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
+            $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
             $shopInfo[$i]["image"],
             $actionArray
         );
