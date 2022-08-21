@@ -264,11 +264,6 @@ foreach ($events as $event) {
             // 登録された位置情報周辺のお店を探す
             // 位置情報が設定されているかチェック
             if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-                updateUser($event->getUserId(), 'shop_search');
-                if (getDataByUserShopData($event->getUserId(), 'userid') != PDO::PARAM_NULL) {
-                    deleteUser($event->getUserId(), TABLE_NAME_USERSHOPDATA);
-                }
-                registerUserShopData($event->getUserId(), $shopInfo["resultrange"]);
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
             } else {
                 replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
@@ -342,6 +337,11 @@ function searchShop($userId, $bot, $token, $page=0) {
         array_push($columnArray, $column);
     }
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
+    updateUser($userId, 'shop_search');
+    if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
+        deleteUser($userId, TABLE_NAME_USERSHOPDATA);
+    }
+    registerUserShopData($userId, $shopInfo["resultrange"]);
 }
 
 //CLASS//-----------------------------------------------------------
