@@ -236,7 +236,7 @@ foreach ($events as $event) {
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {}
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                $range = getDataByUserShopData($event->getUserId(), 'shop_range');
+                $range = intval(getDataByUserShopData($event->getUserId(), 'shop_range'));
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page < ceil($range/PAGE_COUNT)) {
                     updateUserShopData($event->getUserId(), 'page_num', ($Page+1));
