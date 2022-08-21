@@ -52,7 +52,7 @@ function renderJson($json, $start) {
             "number" => $start+($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
-            "shoprange" => $resultLength,
+            "shoplength" => $resultLength,
         )); 
         $data_array += $array;
     }
