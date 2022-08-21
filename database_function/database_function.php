@@ -51,7 +51,7 @@ function getDataByUserShopData($userId, $column) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row;
+        return $row[$column];
     }
 }
 function updateUserShopData($userId, $column, $data) {
