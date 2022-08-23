@@ -94,7 +94,7 @@ function getShopNameByShopId($shopId) {
 // entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send, page_num) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $beforeSend));
 }
