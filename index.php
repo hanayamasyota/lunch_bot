@@ -44,7 +44,7 @@ reviews(あとから変更や削除ができるようにする。自分が書い
     ★review_no(serial)...レビューを一意にするための番号
     shopid(text)...登録された店舗のID
     userid(bytea)...登録したユーザID
-    evaluation(interger)...全体の評価
+    evaluation(integer)...全体の評価
     recommend(text)...おすすめメニュー
     free(text)...自由欄
 )
@@ -61,8 +61,6 @@ reviews(新)(
     review_num(int)...レビューの順番
     review(text)
 )
-reviews_recommend(おすすめメニュー)
-reviews_free(自由欄)
 shops(
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
