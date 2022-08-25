@@ -30,9 +30,7 @@ users(
     latitude(float)...緯度
     longitude(float)...経度
     追加
-    page_num...検索結果の現在のページ数
-    review_shop...レビュー中の店舗ID
-    shop_length...検索件数
+    
 )
 usershopdata(
     ★userid(bytea)
@@ -292,6 +290,9 @@ foreach ($events as $event) {
             createUser($event->getUserId(), 'location_set');
         }
 
+        //setting !
+
+
     }
 }
 
@@ -325,7 +326,7 @@ function searchShop($userId, $bot, $token, $page=0) {
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
-            'レビュー確認', 'まだ実装されていません。'));
+            'レビューを見る', ''));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
