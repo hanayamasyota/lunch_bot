@@ -271,12 +271,12 @@ foreach ($events as $event) {
             }
 
         //reviewshop
-        } else if(strcmp($event->getText(), 'お店のレビュー') == 0) {
+        } else if(strcmp($event->getText(), 'レビュー登録') == 0) {
             createUser($event->getUserId(), 'shop_review');
             $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
             replyTextMessage($bot, $event->getReplyToken(),
             // ユーザ登録、レビューはwebでさせる
-            'お店のレビューをします。まずはお店のIDを入力して下さい。(IDは「お店を探す」で出てくるID欄を貼り付けて下さい。)');
+            'お店の番号を入力してください');
 
         //locationset
         } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
@@ -288,10 +288,18 @@ foreach ($events as $event) {
                 'キャンセル', 'キャンセル'),
             );
             createUser($event->getUserId(), 'location_set');
+
+        //setting
+        //あいさつメッセージでユーザ設定をさせる
+        } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'ユーザ設定',
+            'ユーザ設定をします。まずは位置情報の設定をお願いします。',
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '位置情報の設定・変更', 'line://nv/location'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'キャンセル', 'キャンセル'),
+            );
         }
-
-        //setting !
-
 
     }
 }
@@ -326,7 +334,7 @@ function searchShop($userId, $bot, $token, $page=0) {
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
-            'レビューを見る', ''));
+            'レビューを見る', 'https://'.$_SERVER['HTTP_HOST'].'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
