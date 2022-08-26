@@ -1,0 +1,10 @@
+ドキュメントルート(Procfile)について
+
+使用サーバ
+vendor/bin/heroku-php-nginx
+
+同ディレクトリ内のconfファイルを参照
+-C nginx_app.conf
+
+appフォルダをnginxサーバのルートにする
+app/

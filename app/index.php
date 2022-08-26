@@ -1,6 +1,5 @@
 <?php
 //web: vendor/bin/heroku-php-nginx -C nginx_app.conf
-//web: vendor/bin/heroku-php-nginx app/
 
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
