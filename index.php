@@ -1,6 +1,6 @@
 <?php
-//PythonやNode.jsに変える？
-//LINEのミニアプリを作る？
+//web: vendor/bin/heroku-php-nginx -C nginx_app.conf
+
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -30,7 +30,10 @@ users(
     latitude(float)...緯度
     longitude(float)...経度
     追加
-    
+    favolite_genre...お気に入りのジャンル
+    search_range...検索範囲
+    rest_start...休憩の始まる時間
+    rest_end...休憩の終わる時間
 )
 usershopdata(
     ★userid(bytea)
