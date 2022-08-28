@@ -177,18 +177,17 @@ foreach ($events as $event) {
             //navigationテーブルに番号が存在するか確認
             if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
                 $shop = checkShopByNavigation($event->getUserId, intval($event->getText()));
-                error_log($shop);
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
-                $shop['shopname'].': この店のレビューを書きますか？',
+                $shop[0]['shopname'].': この店のレビューを書きますか？',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'はい'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
-                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
+                updateUserShopData($event->getUserId(), 'review_shop', $shop[0]['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop[0]['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
