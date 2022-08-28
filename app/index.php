@@ -36,38 +36,28 @@ users(
     rest_end...休憩の終わる時間
 )
 usershopdata(
-    ★userid(bytea)
+    ☆★userid(bytea)
     page_num(integer)...検索結果の現在のページ数
     review_shop(text)...レビュー中の店舗ID
     shop_length(integer)...検索件数
 )
-reviews(あとから変更や削除ができるようにする。自分が書いたレビューを見れるようにする。
-    ★review_no(serial)...レビューを一意にするための番号
-    shopid(text)...登録された店舗のID
-    userid(bytea)...登録したユーザID
-    evaluation(integer)...全体の評価
-    recommend(text)...おすすめメニュー
-    free(text)...自由欄
-)
-reviewstock(レビューのデータをストックしておくテーブル、キャンセル時・コミット時には消去する)(
-    userid(bytea)...ユーザID
-    shopid(text)...店舗ID
-    review_1(integer)...全体の評価
-    review_2(text)...おすすめメニュー
-    review_3(text)...自由欄
-)
+追加
 reviews(新)(
-    userid(bytea)
+    ★review_no(serial)...レビュー番号
+    ☆userid(bytea)
     shopid(text)
     review_num(int)...レビューの順番
     review(text)
 )
-shops(
+追加
+useruseshops(
+    ☆★userid(text)...店舗
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
 )
+追加
 navigation(お店を探すとレビューで使用)(
-    ★userid(bytea)...ユーザIDと店舗IDの複合主キー
+    ☆★userid(bytea)...ユーザIDと店舗IDの複合主キー
     ★shopid(text)...
     shopnum(int)...店の表示順に番号を付ける
     shopname(text)...店名
@@ -283,7 +273,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 //店の検索
-                searchShop($event->getUserId(), $bot, $event->getReplyToken());
+                searchShop(getUserId($event->getUserId()), $bot, $event->getReplyToken());
             }
 
         //reviewshop
@@ -349,11 +339,11 @@ function searchShop($userId, $bot, $token, $page=0) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //レビューページへ
             'レビューを見る', 'https://'.$_SERVER['HTTP_HOST'].'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
+            'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shopInfo[$i]["name"],
             $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],

@@ -35,6 +35,12 @@ function getLocationByUserId($userId) {
         return $row;
     }
 }
+function getUserId($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select userid from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+}
 
 function registerUserShopData($userId, $searchRange, $page=0) {
     $dbh = dbConnection::getConnection();
