@@ -206,4 +206,10 @@ function checkShopByNavigation($userId, $shopNum) {
         return $row;
     }
 }
+function deleteNavigation($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'delete from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+}
 ?>

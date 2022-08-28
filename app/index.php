@@ -335,8 +335,8 @@ function searchShop($userId, $bot, $token, $page=0) {
     $columnArray = array();
     for($i = 0; $i < count($shopInfo); $i++) {
         //for文内でnavigationテーブルへのデータ追加をする
-        if (get) {
-
+        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+            deleteNavigation($userId);
         }
         registerNavigation(
             $userId,
