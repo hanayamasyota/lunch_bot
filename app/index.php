@@ -102,14 +102,16 @@ foreach ($events as $event) {
 
     // 位置情報メッセージ
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\LocationMessage) {
-        if (getBeforeMessageByUserId($event->getUserId()) === 'location_set') {
+        if (getBeforeMessageByUserId($event->getUserId()) === 'setting_location') {
             // usersテーブルに緯度経度を設定
             $lat = $event->getLatitude();
             $lon = $event->getLongitude();
             updateLocation($event->getUserId(), $lat, $lon);
-            updateUser($event->getUserId(), null);
-            replyTextMessage($bot, $event->getReplyToken(),
-            '位置情報を設定しました。');
+            updateUser($event->getUserId(), 'setting_start_rest');
+            replyMultiMessage($bot, $event->getReplyToken(),
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('位置情報を登録しました。'),
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('続いて昼休憩(昼休み)の開始時刻を入力してください。(例12:00)'),
+            );
         }
     }
 
@@ -231,6 +233,7 @@ foreach ($events as $event) {
             }
         }
 
+        //次、前の5件表示
         else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {
@@ -255,6 +258,18 @@ foreach ($events as $event) {
                 }
             }
         }
+
+        //setting
+        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_start_rest') {
+            updateRestTime($event->getUserId(), 'rest_start', $event->getText());
+            replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
+            updateUser($event->getUserId(), 'setting_end_rest');
+        }
+        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_end_rest') {
+            updateRestTime($event->getUserId(), 'rest_end', $event->getText());
+            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定が完了しました。');
+            updateUser($event->getUserId(), null);
+        }
         
     } 
 
@@ -262,46 +277,40 @@ foreach ($events as $event) {
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
-            // 登録された位置情報周辺のお店を探す
-            // 位置情報が設定されているかチェック
-            if(getLocationByUserId($event->getUserId()) != PDO::PARAM_NULL) {
-                searchShop($event->getUserId(), $bot, $event->getReplyToken());
+            //設定チェック
+            $userData = checkUsers($event->getUserId());
+            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
+                inductionUserSetting($bot, $event->getReplyToken());
             } else {
-                replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定へ',
-                '位置情報が設定されていません。位置情報の設定をお願いします。',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('位置情報の設定へ', '位置情報の設定'),
-                );
+                //店の検索
+                searchShop($event->getUserId(), $bot, $event->getReplyToken());
             }
 
         //reviewshop
         } else if(strcmp($event->getText(), 'レビュー登録') == 0) {
-            createUser($event->getUserId(), 'shop_review');
-            $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
-            replyTextMessage($bot, $event->getReplyToken(),
-            // ユーザ登録、レビューはwebでさせる
-            'お店の番号を入力してください');
-
-        //locationset
-        } else if(strcmp($event->getText(), '位置情報の設定') == 0) {
-            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報の設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', '位置情報の設定',
-            '位置情報の設定をします。下のボタンより位置情報を送って下さい。',
-            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '位置情報の設定・変更', 'line://nv/location'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'キャンセル', 'キャンセル'),
-            );
-            createUser($event->getUserId(), 'location_set');
+            //設定チェック
+            $userData = checkUsers($event->getUserId());
+            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
+                inductionUserSetting($bot, $event->getReplyToken());
+            } else {
+                $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
+                replyTextMessage($bot, $event->getReplyToken(),
+                // ユーザ登録、レビューはwebでさせる
+                'お店の番号を入力してください');
+                updateUser($event->getUserId(), 'shop_review');
+            }
 
         //setting
         //あいさつメッセージでユーザ設定をさせる
         } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/nuko.png', 'ユーザ設定',
-            'ユーザ設定をします。まずは位置情報の設定をお願いします。',
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/setting.png', 'ユーザ設定',
+            'ユーザ設定をします。まずは以下のボタンから位置情報の設定をお願いします。',
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
+            createUser($event->getUserId(), 'setting_location');
         }
 
     }
@@ -337,6 +346,7 @@ function searchShop($userId, $bot, $token, $page=0) {
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder (
+            //レビューページへ
             'レビューを見る', 'https://'.$_SERVER['HTTP_HOST'].'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             'レビューを書く', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));

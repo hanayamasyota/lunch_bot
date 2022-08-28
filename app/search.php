@@ -1,9 +1,7 @@
 <?php
-function get_restaurant_information($lat, $lon, $page) {
+function get_restaurant_information($lat, $lon, $page, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
-    //範囲も変えられるようにする？
-    $range = 2;
     $start = $page * PAGE_COUNT;
 
     // クエリをまとめる

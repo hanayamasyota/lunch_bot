@@ -112,6 +112,27 @@ function updateLocation($userId, $lat, $lon) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($lat, $lon, $userId));
 }
+// 位置情報の設定・更新
+function updateRestTime($userId, $column, $time) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERS . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($time, $userId));
+}
+// ユーザ設定が完了しているかチェック
+function checkUsers($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select latitude, longitude, rest_start, rest_end from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return shopname
+        return $row;
+    }
+}
 
 // delete userinfo
 function deleteUser($userId, $table) {
