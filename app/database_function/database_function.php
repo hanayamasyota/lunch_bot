@@ -56,7 +56,7 @@ function getDataByUserShopData($userId, $column) {
 }
 function updateUserShopData($userId, $column, $data) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_USERSHOPDATA . ' set '.$column.' = ? where ? userid';
+    $sql = 'update ' . TABLE_NAME_USERSHOPDATA . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($data, $userId));
 }

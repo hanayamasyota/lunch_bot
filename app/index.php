@@ -327,17 +327,19 @@ function createUser($userId, $beforeSend) {
     }
 }
 
+//0件だった場合に店が無かったと表示させる !
 function searchShop($userId, $bot, $token, $page=0) {
     $location = getLocationByUserId($userId);
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録？)
     $shopInfo = get_restaurant_information($location['latitude'], $location['longitude'], $page);
     $columnArray = array();
+    //現状だと5件までしかnavigationに登録できない !
+    if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+        deleteNavigation($userId);
+    }
     for($i = 0; $i < count($shopInfo); $i++) {
         //for文内でnavigationテーブルへのデータ追加をする
-        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
-            deleteNavigation($userId);
-        }
         registerNavigation(
             $userId,
             $shopInfo[$i]["id"],
