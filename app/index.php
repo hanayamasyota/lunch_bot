@@ -12,18 +12,20 @@ require_once __DIR__ . '/database_function/database_function.php';
 define('TABLE_NAME_USERS', 'users');
 //ユーザの検索結果のデータを保持する
 define('TABLE_NAME_USERSHOPDATA', 'usershopdata');
-//ユーザの感想テーブル名
+//ユーザの感想テーブル名(更新予定)
 define('TABLE_NAME_REVIEWS', 'reviews');
 //レビューの内容を一時的にストックするテーブル名
 define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 //店の情報テーブル名(テストで3件のみ)
-define('TABLE_NAME_SHOPS', 'shops');
+define('TABLE_NAME_USERVISITEDSHOPS', 'uservisitedshops');
 //個人の検索結果データ
-define('TABLE_NAME_NAVIGATION', 'navigation');//未実装
+define('TABLE_NAME_NAVIGATION', 'navigation');
 
 //1ページ当たりの表示件数(後から変更できるように)
 define('PAGE_COUNT', 5);
 /*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
+//useridを暗号化して格納しているため、外部キーとして使うことができない
+//質問する必要あり
 users(
     ★userid(bytea)...ユーザID
     before_send(text)...直前のメッセージ
@@ -50,16 +52,17 @@ reviews(新)(
     review(text)
 )
 追加
-useruseshops(
-    ☆★userid(text)...店舗
+uservistedshops(
+    ☆★userid(bytea)...店舗
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
+    shopnum
 )
 追加
 navigation(お店を探すとレビューで使用)(
     ☆★userid(bytea)...ユーザIDと店舗IDの複合主キー
     ★shopid(text)...
-    shopnum(int)...店の表示順に番号を付ける
+    shopnum(integer)...店の表示順に番号を付ける
     shopname(text)...店名
     shop_lat(float)...店の緯度(apiから取得)
     shop_lng(float)...店の経度    
@@ -171,9 +174,9 @@ foreach ($events as $event) {
     if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
         //shop_review
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
-            //shopsテーブルにIDが存在するか確認
-            if (getShopNameByShopId($event->getText()) != PDO::PARAM_NULL) {
-                $shop = getShopNameByShopId($event->getText());
+            //navigationテーブルに番号が存在するか確認
+            if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
+                $shop = checkShopByNavigation($event->getUserId, intval($event->getText()));
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shop['shopname'].': この店のレビューを書きますか？',
@@ -183,22 +186,26 @@ foreach ($events as $event) {
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
+                updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
                 registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。正しいIDを入力して下さい。');
+                '店が見つかりませんでした。正しい番号を入力して下さい。');
             }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
             // ボタンは4件までしかできないので入力してもらう
+            //100
             replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
+            //200
             replyTextMessage($bot, $event->getReplyToken(),
             '食べたメニューまたはおすすめのメニューを入力して下さい。');
         //shop_review_3
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
+            //300
             replyTextMessage($bot, $event->getReplyToken(),
             '備考等があれば入力して下さい。ない場合は「なし」と入力してください。');
         //shop_review_confirm(レビュー内容の確認)
@@ -286,7 +293,7 @@ foreach ($events as $event) {
                 $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
                 replyTextMessage($bot, $event->getReplyToken(),
                 // ユーザ登録、レビューはwebでさせる
-                'お店の番号を入力してください');
+                'お店の検索件数の番号を入力してください');
                 updateUser($event->getUserId(), 'shop_review');
             }
 
@@ -303,7 +310,7 @@ foreach ($events as $event) {
             createUser($event->getUserId(), 'setting_location');
         //テスト用
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
-            replyTextMessage($bot, $event->getUserId(), 'ユーザ設定を削除しました。');
+            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
 
@@ -328,14 +335,17 @@ function searchShop($userId, $bot, $token, $page=0) {
     $columnArray = array();
     for($i = 0; $i < count($shopInfo); $i++) {
         //for文内でnavigationテーブルへのデータ追加をする
-        // registerNavigation(
-        //     $event->getUserId(),
-        //     $shopInfo[$i]["id"],
-        //     $shopInfo[$i]["number"],
-        //     $shopInfo[$i]["name"],
-        //     $shopInfo[$i]["latitude"],
-        //     $shopInfo[$i]["longitude"]
-        // );
+        if (get) {
+
+        }
+        registerNavigation(
+            $userId,
+            $shopInfo[$i]["id"],
+            $shopInfo[$i]["number"],
+            $shopInfo[$i]["name"],
+            $shopInfo[$i]["latitude"],
+            $shopInfo[$i]["longitude"]
+        );
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
