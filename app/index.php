@@ -107,7 +107,7 @@ foreach ($events as $event) {
             $lat = $event->getLatitude();
             $lon = $event->getLongitude();
             updateLocation($event->getUserId(), $lat, $lon);
-            updateUser($event->getUserId(), 'setting_start_rest');
+            updateUser($event->getUserId(), 'setting_rest_start');
             replyMultiMessage($bot, $event->getReplyToken(),
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('位置情報を登録しました。'),
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('続いて昼休憩(昼休み)の開始時刻を入力してください。(例12:00)'),
@@ -260,12 +260,12 @@ foreach ($events as $event) {
         }
 
         //setting
-        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_start_rest') {
+        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_rest_start') {
             updateRestTime($event->getUserId(), 'rest_start', $event->getText());
             replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
-            updateUser($event->getUserId(), 'setting_end_rest');
+            updateUser($event->getUserId(), 'setting_rest_end');
         }
-        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_end_rest') {
+        else if (getBeforeMessageByUserId($event->getUserId()) === 'setting_rest_end') {
             updateRestTime($event->getUserId(), 'rest_end', $event->getText());
             replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定が完了しました。');
             updateUser($event->getUserId(), null);
@@ -304,13 +304,17 @@ foreach ($events as $event) {
         //あいさつメッセージでユーザ設定をさせる
         } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
             replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/setting.png', 'ユーザ設定',
-            'ユーザ設定をします。まずは以下のボタンから位置情報の設定をお願いします。',
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+            'ユーザの初期設定をします。まずは以下のボタンから位置情報の設定をお願いします。',
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
             createUser($event->getUserId(), 'setting_location');
+        //テスト用
+        } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
+            replyTextMessage($bot, $event->getUserId(), 'ユーザ設定を削除しました。');
+            deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
 
     }

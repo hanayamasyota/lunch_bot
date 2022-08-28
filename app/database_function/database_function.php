@@ -122,7 +122,7 @@ function updateRestTime($userId, $column, $time) {
 // ユーザ設定が完了しているかチェック
 function checkUsers($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select latitude, longitude, rest_start, rest_end from ' . TABLE_NAME_SHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select latitude, longitude, rest_start, rest_end from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
