@@ -35,16 +35,10 @@ function getLocationByUserId($userId) {
         return $row;
     }
 }
-function getUserId($userId) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select userid from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
-}
 
 function registerUserShopData($userId, $searchRange, $page=0) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERSHOPDATA . ' (userid, page_num, shop_length) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?) ';
+    $sql = 'insert into '. TABLE_NAME_USERSHOPDATA . ' (userid, page_num, shop_length) values (?, ?, ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $page, $searchRange));
 }
@@ -62,7 +56,7 @@ function getDataByUserShopData($userId, $column) {
 }
 function updateUserShopData($userId, $column, $data) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_USERSHOPDATA . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'update ' . TABLE_NAME_USERSHOPDATA . ' set '.$column.' = ? where ? userid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($data, $userId));
 }
@@ -70,7 +64,7 @@ function updateUserShopData($userId, $column, $data) {
 // テーブル内にユーザIDが存在するかを調べる
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select userid from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select userid from '.$table.' where ? = userid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record

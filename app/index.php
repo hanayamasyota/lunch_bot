@@ -273,7 +273,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 //店の検索
-                searchShop(getUserId($event->getUserId()), $bot, $event->getReplyToken());
+                searchShop($event->getUserId(), $bot, $event->getReplyToken());
             }
 
         //reviewshop
