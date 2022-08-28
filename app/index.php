@@ -177,6 +177,7 @@ foreach ($events as $event) {
             //navigationテーブルに番号が存在するか確認
             if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
                 $shop = checkShopByNavigation($event->getUserId, intval($event->getText()));
+                error_log($shop);
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shop['shopname'].': この店のレビューを書きますか？',
