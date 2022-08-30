@@ -1,6 +1,8 @@
 <?php
 //web: vendor/bin/heroku-php-nginx -C nginx_app.conf
 
+define('SERVER_ROOT', 'https://'.$_SERVER['HTTP_HOST']);
+
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
@@ -179,15 +181,15 @@ foreach ($events as $event) {
                 $shop = checkShopByNavigation($event->getUserId, intval($event->getText()));
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
-                $shop[0]['shopname'].': この店のレビューを書きますか？',
+                $shop['shopname'].': この店のレビューを書きますか？',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'はい', 'はい'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'キャンセル', 'キャンセル')
                 );
                 //entry review data
-                updateUserShopData($event->getUserId(), 'review_shop', $shop[0]['shopid']);
-                registerReviewDataFirst($event->getUserId(), $shop[0]['shopid']);
+                updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
+                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -274,6 +276,7 @@ foreach ($events as $event) {
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
+            error_log($_SERVER['HTTP_HOST']);
             //設定チェック
             $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
