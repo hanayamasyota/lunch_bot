@@ -152,6 +152,7 @@ foreach ($events as $event) {
             '「'.$mode.'」がキャンセルされました。');
         }
 
+
     // レビューを書くかの場面で「はい」と送信された場合
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
         updateUser($event->getUserId(), 'shop_review_1');
@@ -276,7 +277,6 @@ foreach ($events as $event) {
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
-            error_log($_SERVER['HTTP_HOST']);
             //設定チェック
             $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
@@ -303,7 +303,7 @@ foreach ($events as $event) {
         //setting
         //あいさつメッセージでユーザ設定をさせる
         } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/setting.png', 'ユーザ設定',
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
             'ユーザの初期設定をします。まずは以下のボタンから位置情報の設定をお願いします。',
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
@@ -356,7 +356,7 @@ function searchShop($userId, $bot, $token, $page=0) {
             '店舗情報', $shopInfo[$i]["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //レビューページへ
-            'レビューを見る', 'https://'.$_SERVER['HTTP_HOST'].'/web/hello.html'));
+            'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
