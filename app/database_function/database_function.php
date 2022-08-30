@@ -64,7 +64,7 @@ function updateUserShopData($userId, $column, $data) {
 // テーブル内にユーザIDが存在するかを調べる
 function getUserIdCheck($userId, $table) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select userid from '.$table.' where ? = userid';
+    $sql = 'select userid from '.$table.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
@@ -196,7 +196,7 @@ function registerNavigation($userId, $shopId, $shopNum, $shopName, $lat, $lng) {
 }
 function checkShopByNavigation($userId, $shopNum) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopnum';
+    $sql = 'select shopid, shopname from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopnum';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopNum));
     // if no record

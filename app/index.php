@@ -179,7 +179,7 @@ foreach ($events as $event) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review') {
             //navigationテーブルに番号が存在するか確認
             if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
-                $shop = checkShopByNavigation($event->getUserId, intval($event->getText()));
+                $shop = checkShopByNavigation($event->getUserId(), intval($event->getText()));
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー確認',
                 $shop['shopname'].': この店のレビューを書きますか？',
@@ -194,7 +194,7 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。正しい番号を入力して下さい。');
+                '店が見つかりませんでした。正しい番号を入力して下さい。お店の検索をしていない場合は先に検索をしてください。　');
             }
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
