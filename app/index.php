@@ -20,8 +20,6 @@ define('TABLE_NAME_USERS', 'users');
 define('TABLE_NAME_USERSHOPDATA', 'usershopdata');
 //ユーザの感想テーブル名(更新予定)
 define('TABLE_NAME_REVIEWS', 'reviews');
-//レビューの内容を一時的にストックするテーブル名
-define('TABLE_NAME_REVIEWSTOCK', 'reviewstock');
 //店の情報テーブル名(テストで3件のみ)
 define('TABLE_NAME_USERVISITEDSHOPS', 'uservisitedshops');
 //個人の検索結果データ
@@ -136,9 +134,10 @@ foreach ($events as $event) {
             $mode = '';
             // shop_reviewを含む場合
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
-                if (getUserIdCheck($event->getUserId(), TABLE_NAME_REVIEWSTOCK) != PDO::PARAM_NULL) {
-                    //reset reviewstock
-                    deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
+                //現在レビュー中の店を取り出す
+                $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+                if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                    deleteReview($event->getUserId(), $shopId);
                 }
                 $mode = 'お店のレビュー';
             }
@@ -162,18 +161,24 @@ foreach ($events as $event) {
         updateUser($event->getUserId(), 'shop_review_1');
     // 総合の評価を入力する場面で1~5の数字が送信された場合
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
-        // insert reviewstock
-        $evaluation = intval($event->getText());
-        updateReviewData($event->getUserId(), 'review_1', $evaluation);
+        // insert reviews
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 100, $event->getText());
         // update before_send
         updateUser($event->getUserId(), 'shop_review_2');
-    // おすすめメニューを仮のテーブル(reviewstock)に登録
+    // おすすめメニューを登録
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2')) {
-        updateReviewData($event->getUserId(), 'review_2', $event->getText());
+        // insert reviews
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 100, $event->getText());
+        // update before_send
         updateUser($event->getUserId(), 'shop_review_3');
     // 自由欄を登録
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3')) {
-        updateReviewData($event->getUserId(), 'review_3', $event->getText());
+        // insert reviews
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 100, $event->getText());
+        // update before_send
         updateUser($event->getUserId(), 'shop_review_confirm');
     }
 
@@ -203,16 +208,7 @@ foreach ($events as $event) {
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
             // ボタンは4件までしかできないので入力してもらう
-            if (preg_match('/^[1-5]{1}/', $event->getText())) {
-                // insert reviewstock
-                $evaluation = intval($event->getText());
-                updateReviewData($event->getUserId(), 'review_1', $evaluation);
-                // update before_send
-                updateUser($event->getUserId(), 'shop_review_2');
-            } else {
-                replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
-            }
-            //no.100
+            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
             //200
@@ -226,13 +222,8 @@ foreach ($events as $event) {
         //shop_review_confirm(レビュー内容の確認)
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_confirm') {
             if (strcmp($event->getText(), 'はい') == 0) {
-                //reviewsテーブルにreviewstockテーブルのデータを入れ、reviewstockのデータを削除
-                $row = getReviewStockData($event->getUserId());
-                registerReview($row['shopid'], $row['userid'], $row['review_1'], $row['review_2'], $row['review_3']);
-                deleteUser($event->getUserId(), TABLE_NAME_REVIEWSTOCK);
-                updateUser($event->getUserId(), null);
                 replyTextMessage($bot, $event->getReplyToken(),
-                'レビューを登録しました。');
+                'レビュー登録が完了しました。');
             } else {
                 replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー最終確認',
