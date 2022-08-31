@@ -199,7 +199,6 @@ foreach ($events as $event) {
                 );
                 //entry review data
                 updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
-                registerReviewDataFirst($event->getUserId(), $shop['shopid']);
                 updateUser($event->getUserId(), 'shop_review_0');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
