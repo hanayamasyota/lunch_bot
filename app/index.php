@@ -7,7 +7,11 @@ define('SERVER_ROOT', 'https://'.$_SERVER['HTTP_HOST']);
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
 require_once __DIR__ . '/search.php';
-require_once __DIR__ . '/database_function/database_function.php';
+$pattern = __DIR__ . '/database_function/*.php';
+foreach ( glob( $pattern ) as $filename )
+{
+    include $filename;
+}
 
 // テーブル名を定義
 //ユーザデータテーブル名(直前に送信したデータを取り込んでおく)
@@ -199,8 +203,16 @@ foreach ($events as $event) {
         //shop_review_1
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
             // ボタンは4件までしかできないので入力してもらう
-            //100
-            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
+            if (preg_match('/^[1-5]{1}/', $event->getText())) {
+                // insert reviewstock
+                $evaluation = intval($event->getText());
+                updateReviewData($event->getUserId(), 'review_1', $evaluation);
+                // update before_send
+                updateUser($event->getUserId(), 'shop_review_2');
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
+            }
+            //no.100
         //shop_review_2
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
             //200
