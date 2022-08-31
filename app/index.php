@@ -139,7 +139,7 @@ foreach ($events as $event) {
                 if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     deleteReview($event->getUserId(), $shopId);
                 }
-                $mode = 'お店のレビュー';
+                $mode = 'レビュー登録';
             }
             // location_setを含む場合
             else if (strpos(getBeforeMessageByUserId($event->getUserId()), 'location_set') !== false) {
