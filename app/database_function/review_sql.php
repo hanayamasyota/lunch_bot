@@ -8,7 +8,7 @@ function registerReview($userId, $shopId, $reviewNum, $review) {
 
 function checkExistsReview($userId, $shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select userid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid';
+    $sql = 'select review_no from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
     // if no record
@@ -16,7 +16,7 @@ function checkExistsReview($userId, $shopId) {
         return PDO::PARAM_NULL;
     } else {
         //return before_send
-        return $row;
+        return $row['review_no'];
     }
 }
 

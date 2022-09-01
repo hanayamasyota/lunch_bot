@@ -133,10 +133,10 @@ foreach ($events as $event) {
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
                 //現在レビュー中の店を取り出す
                 $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-                // if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
-                //     deleteReview($event->getUserId(), $shopId);
-                // }
-                deleteReview($event->getUserId(), $shopId);
+                if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                    deleteReview($event->getUserId(), $shopId);
+                }
+                // deleteReview($event->getUserId(), $shopId);
                 $mode = 'レビュー登録';
             }
             // location_setを含む場合
@@ -168,14 +168,14 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2')) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        registerReview($event->getUserId(), $shopId, 100, $event->getText());
+        registerReview($event->getUserId(), $shopId, 200, $event->getText());
         // update before_send
         updateUser($event->getUserId(), 'shop_review_3');
     // 自由欄を登録
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3')) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        registerReview($event->getUserId(), $shopId, 100, $event->getText());
+        registerReview($event->getUserId(), $shopId, 300, $event->getText());
         // update before_send
         updateUser($event->getUserId(), 'shop_review_confirm');
     }
