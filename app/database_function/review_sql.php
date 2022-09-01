@@ -31,7 +31,7 @@ function deleteReview($userId, $shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'delete from '. TABLE_NAME_REVIEWS .' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $reviewNum, $review));
+    $sth->execute(array($userId, $shopId));
 }
  
 ?>
