@@ -28,8 +28,7 @@ define('TABLE_NAME_NAVIGATION', 'navigation');
 //1ページ当たりの表示件数(後から変更できるように)
 define('PAGE_COUNT', 5);
 /*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
-//useridを暗号化して格納しているため、外部キーとして使うことができない
-//質問する必要あり
+//useridを暗号化して格納しているため、外部キーとして使うことができない！
 users(
     ★userid(bytea)...ユーザID
     before_send(text)...直前のメッセージ
@@ -47,7 +46,6 @@ usershopdata(
     review_shop(text)...レビュー中の店舗ID
     shop_length(integer)...検索件数
 )
-追加
 reviews(新)(
     ★review_no(serial)...レビュー番号
     ☆userid(bytea)
@@ -55,14 +53,13 @@ reviews(新)(
     review_num(int)...レビューの順番
     review(text)
 )
-追加
 uservistedshops(
     ☆★userid(bytea)...店舗
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
-    shopnum
+    追加
+    shopnum()
 )
-追加
 navigation(お店を探すとレビューで使用)(
     ☆★userid(bytea)...ユーザIDと店舗IDの複合主キー
     ★shopid(text)...
@@ -136,9 +133,10 @@ foreach ($events as $event) {
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
                 //現在レビュー中の店を取り出す
                 $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-                if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
-                    deleteReview($event->getUserId(), $shopId);
-                }
+                // if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                //     deleteReview($event->getUserId(), $shopId);
+                // }
+                deleteReview($event->getUserId(), $shopId);
                 $mode = 'レビュー登録';
             }
             // location_setを含む場合
