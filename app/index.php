@@ -131,12 +131,11 @@ foreach ($events as $event) {
             $mode = '';
             // shop_reviewを含む場合
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
-                //現在レビュー中の店を取り出す
+                //現在レビュー中の店のデータを削除
                 $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
                 if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     deleteReview($event->getUserId(), $shopId);
                 }
-                // deleteReview($event->getUserId(), $shopId);
                 $mode = 'レビュー登録';
             }
             // location_setを含む場合
@@ -155,24 +154,24 @@ foreach ($events as $event) {
 
 
     // レビューを書くかの場面で「はい」と送信された場合
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_0') && (strcmp($event->getText(), 'はい') == 0)) {
-        updateUser($event->getUserId(), 'shop_review_1');
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_000') && (strcmp($event->getText(), 'はい') == 0)) {
+        updateUser($event->getUserId(), 'shop_review_100');
     // 総合の評価を入力する場面で1~5の数字が送信された場合
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_100') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
         registerReview($event->getUserId(), $shopId, 100, $event->getText());
         // update before_send
-        updateUser($event->getUserId(), 'shop_review_2');
+        updateUser($event->getUserId(), 'shop_review_200');
     // おすすめメニューを登録
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2')) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_200')) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
         registerReview($event->getUserId(), $shopId, 200, $event->getText());
         // update before_send
-        updateUser($event->getUserId(), 'shop_review_3');
+        updateUser($event->getUserId(), 'shop_review_300');
     // 自由欄を登録
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3')) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_300')) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
         registerReview($event->getUserId(), $shopId, 300, $event->getText());
@@ -187,32 +186,37 @@ foreach ($events as $event) {
             //navigationテーブルに番号が存在するか確認
             if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
                 $shop = checkShopByNavigation($event->getUserId(), intval($event->getText()));
-                replyConfirmTemplate($bot, $event->getReplyToken(),
-                'レビュー確認',
-                $shop['shopname'].': この店のレビューを書きますか？',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'はい', 'はい'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'キャンセル', 'キャンセル')
-                );
-                //entry review data
-                updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
-                updateUser($event->getUserId(), 'shop_review_0');
+                //該当の店のレビューがすでに存在するかをチェック
+                if (checkExistsReview($event->getUserId(), $shop['shopid']) != PDO::PARAM_NULL) {
+                    replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
+                } else {
+                    replyConfirmTemplate($bot, $event->getReplyToken(),
+                    'レビュー確認',
+                    $shop['shopname'].': この店のレビューを書きますか？',
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'はい', 'はい'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'キャンセル', 'キャンセル')
+                    );
+                    //entry review data
+                    updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
+                    updateUser($event->getUserId(), 'shop_review_000');
+                }
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しい番号を入力して下さい。お店の検索をしていない場合は先に検索をしてください。　');
             }
         //shop_review_1
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_1') {
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_100') {
             // ボタンは4件までしかできないので入力してもらう
             replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
         //shop_review_2
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_2') {
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_200') {
             //200
             replyTextMessage($bot, $event->getReplyToken(),
             '食べたメニューまたはおすすめのメニューを入力して下さい。');
         //shop_review_3
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_3') {
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_300') {
             //300
             replyTextMessage($bot, $event->getReplyToken(),
             '備考等があれば入力して下さい。ない場合は「なし」と入力してください。');
@@ -298,8 +302,10 @@ foreach ($events as $event) {
                 replyTextMessage($bot, $event->getReplyToken(),
                 // ユーザ登録、レビューはwebでさせる
                 'お店の検索件数の番号を入力してください');
-                updateUser($event->getUserId(), 'shop_review');
+                updateUser($event->getUserId(), 'shop_review_entry');
             }
+
+        //review
 
         //setting
         //あいさつメッセージでユーザ設定をさせる
