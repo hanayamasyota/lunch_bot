@@ -219,6 +219,7 @@ foreach ($events as $event) {
         //shop_review_confirm(レビュー内容の確認)
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_review_confirm') {
             if (strcmp($event->getText(), 'はい') == 0) {
+                updateUser($event->getUserId(), null);
                 replyTextMessage($bot, $event->getReplyToken(),
                 'レビュー登録が完了しました。');
             } else {
