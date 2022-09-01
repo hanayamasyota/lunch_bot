@@ -20,7 +20,32 @@ function checkExistsReview($userId, $shopId) {
     }
 }
 
-function getReviewData($userId) {
+function getShopIdByReviews($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return before_send
+        return $row['shopid'];
+    }
+}
+
+function getReviewData($userId, $shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return before_send
+        return $row['review'];
+    }
 }
 
 function updateReview($userId) {
