@@ -365,20 +365,17 @@ foreach ($events as $event) {
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
-                $buttonArray = array(
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        '自分のレビュー確認(html)', 'レビュー確認'),
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'レビュー登録(html)', 'レビュー登録'),
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'レビュー更新(未実装)', 'レビュー更新'),
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'レビュー削除(未実装)', 'レビュー削除'),
-                );
                 updateUser($event->getUserId(), 'shop_review');
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
                 'レビューのメニューです。',
-                $buttonArray,
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    '自分のレビュー確認(html)', 'レビュー確認'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'レビュー登録(html)', 'レビュー登録'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'レビュー更新(未実装)', 'レビュー更新'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'レビュー削除(未実装)', 'レビュー削除'),
                 );
             }
 
