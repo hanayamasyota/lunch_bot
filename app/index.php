@@ -204,7 +204,9 @@ foreach ($events as $event) {
             //レビュー確認
             } else if (strcmp($text, 'レビュー確認') == 0) {
                 $reviewShopId = getShopIdByReviews($event->getUserId());
-                //とちゅう
+                foreach($reviewShopId as $shopId) {
+                    
+                }
             } else if (strcmp($text, 'レビュー更新') == 0) {
 
             } else if (strcmp($text, 'レビュー削除') == 0) {
@@ -327,17 +329,20 @@ foreach ($events as $event) {
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
+                $buttons = [
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        '自分のレビュー確認', 'レビュー確認'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー登録', 'レビュー登録'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー更新(未実装)', 'レビュー更新'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー削除(未実装)', 'レビュー削除'),
+                ]
                 updateUser($event->getUserId(), 'shop_review');
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
-                'ユーザのメニューです。',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    '自分のレビュー確認', 'レビュー確認'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー登録', 'レビュー登録'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー更新(未実装)', 'レビュー更新'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー削除(未実装)', 'レビュー削除'),
+                'レビューのメニューです。',
+                $buttons
                 );
             }
 
