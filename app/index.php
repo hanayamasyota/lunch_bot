@@ -176,7 +176,7 @@ foreach ($events as $event) {
             }
             // location_setを含む場合
             else if (strpos($beforeMessage, 'setting') !== false) {
-                else if (strpos($beforeMessage, '_rest') !== false) {
+                if (strpos($beforeMessage, '_rest') !== false) {
                     $mode = '休憩時間の設定';
                 }
             }
