@@ -115,16 +115,11 @@ foreach ($events as $event) {
                     '他に更新したい設定がある場合はユーザ設定へ戻ってください。'
                 ];
             }
-            replyMultiMessage($bot, $event->getReplyToken(),
-            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($messages[0]),
+            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報設定完了', SERVER_ROOT.'/imgs/setting.png', '位置情報設定完了',
             //現在はボタンだが、リッチメニューで対応させる予定
-            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-                'ユーザ設定へ',
-                $messages[1],
-                SERVER_ROOT.'/imgs/setting.png',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'ユーザ設定へ', 'ユーザ設定'
-                )
+            $messages[0]$messages[1],
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'ユーザ設定へ', 'ユーザ設定'
             )
             );
             // usersテーブルに緯度経度を設定
