@@ -117,7 +117,7 @@ foreach ($events as $event) {
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報設定完了', SERVER_ROOT.'/imgs/setting.png', '位置情報設定完了',
             //現在はボタンだが、リッチメニューで対応させる予定
-            $messages[0]$messages[1],
+            $messages[0].$messages[1],
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'ユーザ設定へ', 'ユーザ設定'
             )
