@@ -53,7 +53,8 @@ reviews(
     review_num(int)...レビューの順番
     review(text)
     追加
-    time(timestamp[Asia/Tokyo])...レビューした時間
+    shopname(text)
+    time(timestamp)...レビューした時間
 )
 uservistedshops(
     ☆★userid(bytea)...店舗
@@ -133,6 +134,7 @@ foreach ($events as $event) {
             // shop_reviewを含む場合
             if (strpos(getBeforeMessageByUserId($event->getUserId()), 'shop_review') !== false) {
                 //レビュー
+                $mode = 'レビュー'
                 if (strpos(getBeforeMessageByUserId($event->getUserId()), '_entry') !== false) {
                     //現在レビュー中の店のデータを削除
                     $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
@@ -140,13 +142,13 @@ foreach ($events as $event) {
                         deleteReview($event->getUserId(), $shopId);
                         updateUserShopData($event->getUserId(), 'review_shop', null);
                     }
-                    $mode = 'レビュー登録';
+                    $mode .= '登録';
                 } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_comfirm') !== false) {
-                    $mode = 'レビュー確認';            
+                    $mode .= '確認';            
                 } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_update') !== false) {
-                    $mode = 'レビュー更新';
+                    $mode .= '更新';
                 } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_delete') !== false) {
-                    $mode = 'レビュー削除';
+                    $mode .= '削除';
                 }
             }
             // location_setを含む場合
@@ -207,6 +209,7 @@ foreach ($events as $event) {
                 foreach($reviewShopId as $shopId) {
                     
                 }
+                updateUser($event->getUserId(), 'shop_review_list');
             } else if (strcmp($text, 'レビュー更新') == 0) {
 
             } else if (strcmp($text, 'レビュー削除') == 0) {
@@ -329,17 +332,20 @@ foreach ($events as $event) {
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
+                $buttons = (
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        '自分のレビュー確認', 'レビュー確認'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー登録', 'レビュー登録'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー更新(未実装)', 'レビュー更新'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'レビュー削除(未実装)', 'レビュー削除'),
+                );
                 updateUser($event->getUserId(), 'shop_review');
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
                 'レビューのメニューです。',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    '自分のレビュー確認', 'レビュー確認'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー登録', 'レビュー登録'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー更新(未実装)', 'レビュー更新'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー削除(未実装)', 'レビュー削除'),
+                $buttons,
                 );
             }
 
