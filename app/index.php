@@ -412,7 +412,7 @@ foreach ($events as $event) {
 function searchShop($userId, $bot, $token, $page=0) {
     $location = getLocationByUserId($userId);
     $shopInfo = getRestaurantData($location['latitude'], $location['longitude']);
-    if (count($shopINfo) < 1) {
+    if (is_null($shopInfo)) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
         $columnArray = array();
