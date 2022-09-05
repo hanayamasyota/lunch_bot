@@ -53,7 +53,7 @@ reviews(
     review_num(int)...レビューの順番
     review(text)
     追加
-    shopname(text)
+    shopname(text)...レビュー一覧で表示させる用
     time(timestamp)...レビューした時間
 )
 uservistedshops(
@@ -70,8 +70,8 @@ navigation(お店を探すとレビューで使用)(
     shopname(text)...店名
     shop_lat(float)...店の緯度(apiから取得)
     shop_lng(float)...店の経度
-    追加
     arrival_time(integer)...到着予想時間
+    genre(text)...ジャンル
 )
 
 */
@@ -409,17 +409,18 @@ foreach ($events as $event) {
 }
 
 //0件だった場合に店が無かったと表示させる
-function searchShop($userId, $bot, $token, $page=0) {
+function searchShop($userId, $bot, $token) {
     $location = getLocationByUserId($userId);
     $shopInfo = getRestaurantData($location['latitude'], $location['longitude']);
-    if (is_null($shopInfo)) {
+    if (!($shopInfo)) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
-        $columnArray = array();
         if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
             deleteNavigation($userId);
         }
         for($i = 0; $i < count($shopInfo); $i++) {
+            //到着時間を計算する
+            //arrivalTime = 
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
                 $userId,
@@ -427,7 +428,9 @@ function searchShop($userId, $bot, $token, $page=0) {
                 $shopInfo[$i]["number"],
                 $shopInfo[$i]["name"],
                 $shopInfo[$i]["latitude"],
-                $shopInfo[$i]["longitude"]
+                $shopInfo[$i]["longitude"],
+                //$arrivalTime,
+                $shopInfo[$i]["genre"],
             );
         }
     }
@@ -448,22 +451,24 @@ function showShop($page) {
     
     $shopData = getShopDataByNavigation($lat, $lng, ($page*5+1));
 
-
-    $actionArray = array();
-    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-        '店舗情報', $shopInfo[$i]["url"]));
-    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-        //レビューページへ
-        'レビューを見る', SERVER_ROOT.'/web/hello.html'));
-    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-        'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
-    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-        $shopInfo[$i]["name"],
-        $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
-        $shopInfo[$i]["image"],
-        $actionArray
-    );
-    array_push($columnArray, $column);
+    $columnArray = array();
+    for ($i=0; $i < PAGE_COUNT; $i++) {
+        $actionArray = array();
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            '店舗情報', $shopInfo[$i]["url"]));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            //レビューページへ
+            'レビューを見る', SERVER_ROOT.'/web/hello.html'));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+            'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
+        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+            $shopInfo[$i]["name"],
+            $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
+            $shopInfo[$i]["image"],
+            $actionArray
+        );
+        array_push($columnArray, $column);
+    }
 }
 
 //CLASS//-----------------------------------------------------------

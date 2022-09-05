@@ -68,11 +68,11 @@ function getRestaurantData($lat, $lon) {
     $response = file_get_contents($url);
 
     $json = json_decode($response);
-    $data_array = renderJson($json, $start);
+    $data_array = renderJson($json);
 
     return $data_array;
 }
-function renderJson($json, $start) {
+function renderJson($json) {
     $resultLength = $json->{"results"}->{"results_available"};
     if ($resultLength < 1) {
         return false;
@@ -80,8 +80,8 @@ function renderJson($json, $start) {
     $temp = $json->{"results"};
 
     $data_array = array();
-    for ($i = 0; $i < PAGE_COUNT; $i++) {
-        if ($resultLength-$start <= $i) {
+    for ($i = 0; $i < $resultLength; $i++) {
+        if ($resultLength <= $i) {
             break;
         }
         $array = array($i => array(
