@@ -69,7 +69,9 @@ navigation(お店を探すとレビューで使用)(
     shopnum(integer)...店の表示順に番号を付ける
     shopname(text)...店名
     shop_lat(float)...店の緯度(apiから取得)
-    shop_lng(float)...店の経度    
+    shop_lng(float)...店の経度
+    追加
+    arrival_time(integer)...到着予想時間
 )
 
 */
@@ -171,6 +173,7 @@ foreach ($events as $event) {
             }
             // location_setを含む場合
             else if (strpos($beforeMessage, 'setting') !== false) {
+                $mode = '設定';
                 if (strpos($beforeMessage, '_rest') !== false) {
                     $mode = '休憩時間の設定';
                 }
@@ -259,7 +262,7 @@ foreach ($events as $event) {
                 }
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。正しい番号を入力して下さい。お店の検索をしていない場合は先に検索をしてください。　');
+                '店が見つかりませんでした。正しい番号を入力して下さい。お店の検索をしていない場合は先に検索をしてください。');
             }
         //shop_review_1
         } else if ($beforeMessage === 'shop_review_entry_100') {
@@ -293,11 +296,9 @@ foreach ($events as $event) {
             }
         }
 
-        else if (strpos($beforeMessage, 'setting') != false) {
-            if ($event->getText() === '個人設定') {
-                updateUser($event->getUserId(), 'setting_rest_first');
+        else if (strpos($beforeMessage, 'setting') !== false) {
+                updateUser($event->getUserId(), 'setting_rest_start');
                 replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
-            }
         }
 
         //次、前の5件表示
@@ -351,6 +352,8 @@ foreach ($events as $event) {
             } else {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
+
+                showShop($getDataByUserShopData());
             }
 
         //review
@@ -408,47 +411,59 @@ foreach ($events as $event) {
 //0件だった場合に店が無かったと表示させる
 function searchShop($userId, $bot, $token, $page=0) {
     $location = getLocationByUserId($userId);
-    //カルーセルは5件まで
-    //1ページに5店表示(現在のページはデータベースに登録？)
-    $shopInfo = get_restaurant_information($location['latitude'], $location['longitude'], $page);
-    $columnArray = array();
-    //現状だと5件までしかnavigationに登録できない !
-    if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
-        deleteNavigation($userId);
+    $shopInfo = getRestaurantData($location['latitude'], $location['longitude']);
+    if (count($shopINfo) < 1) {
+        replyTextMessage($bot, $token, '店が見つかりませんでした。');
+    } else {
+        $columnArray = array();
+        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+            deleteNavigation($userId);
+        }
+        for($i = 0; $i < count($shopInfo); $i++) {
+            //for文内でnavigationテーブルへのデータ追加をする
+            registerNavigation(
+                $userId,
+                $shopInfo[$i]["id"],
+                $shopInfo[$i]["number"],
+                $shopInfo[$i]["name"],
+                $shopInfo[$i]["latitude"],
+                $shopInfo[$i]["longitude"]
+            );
+        }
     }
-    for($i = 0; $i < count($shopInfo); $i++) {
-        //for文内でnavigationテーブルへのデータ追加をする
-        registerNavigation(
-            $userId,
-            $shopInfo[$i]["id"],
-            $shopInfo[$i]["number"],
-            $shopInfo[$i]["name"],
-            $shopInfo[$i]["latitude"],
-            $shopInfo[$i]["longitude"]
-        );
-        $actionArray = array();
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            '店舗情報', $shopInfo[$i]["url"]));
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            //レビューページへ
-            'レビューを見る', SERVER_ROOT.'/web/hello.html'));
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
-        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-            $shopInfo[$i]["name"],
-            $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
-            $shopInfo[$i]["image"],
-            $actionArray
-        );
-        array_push($columnArray, $column);
-    }
+
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
     updateUser($userId, 'shop_search');
     if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-        updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
+        updateUserShopData($userId, 'length', $shopInfo[0]["length"]);
     } else {
-        registerUserShopData($userId, $shopInfo[0]["shoplength"]);
+        registerUserShopData($userId, $shopInfo[0]["length"]);
     }
+}
+function showShop($page) {
+    //カルーセルは5件まで
+    //1ページに5店表示(現在のページはデータベースに登録)
+    $location = getLocationByUserId($userId);
+    $showData = getShowData($lat, $lng, $page);
+    
+    $shopData = getShopDataByNavigation($lat, $lng, ($page*5+1));
+
+
+    $actionArray = array();
+    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+        '店舗情報', $shopInfo[$i]["url"]));
+    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+        //レビューページへ
+        'レビューを見る', SERVER_ROOT.'/web/hello.html'));
+    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+        'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
+    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+        $shopInfo[$i]["name"],
+        $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
+        $shopInfo[$i]["image"],
+        $actionArray
+    );
+    array_push($columnArray, $column);
 }
 
 //CLASS//-----------------------------------------------------------
