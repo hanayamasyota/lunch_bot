@@ -433,14 +433,11 @@ function searchShop($userId, $bot, $token) {
                 $shopInfo[$i]["genre"],
             );
         }
-    }
-
-    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
-    updateUser($userId, 'shop_search');
-    if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-        updateUserShopData($userId, 'length', $shopInfo[0]["length"]);
-    } else {
-        registerUserShopData($userId, $shopInfo[0]["length"]);
+        if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
+            updateUserShopData($userId, 'length', $shopInfo[0]["length"]);
+        } else {
+            registerUserShopData($userId, $shopInfo[0]["length"]);
+        }
     }
 }
 function showShop($page) {
@@ -469,6 +466,8 @@ function showShop($page) {
         );
         array_push($columnArray, $column);
     }
+    updateUser($userId, 'shop_search');
+    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
 
 //CLASS//-----------------------------------------------------------
