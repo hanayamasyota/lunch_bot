@@ -296,7 +296,7 @@ foreach ($events as $event) {
             }
         }
 
-        else if (strpos($beforeMessage, 'setting') !== false) {
+        else if (strcmp($beforeMessage, 'setting_rest') == 0) {
                 updateUser($event->getUserId(), 'setting_rest_start');
                 replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
         }
