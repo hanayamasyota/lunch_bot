@@ -47,7 +47,7 @@ function renderJsonShowData($json, $shopLength) {
 }
 
 //検索結果分取り出す
-function getRestaurantData($lat, $lon) {
+function getRestaurantData($lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
 

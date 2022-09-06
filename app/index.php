@@ -412,7 +412,7 @@ foreach ($events as $event) {
 function searchShop($userId, $bot, $token) {
     $location = getLocationByUserId($userId);
     $shopInfo = getRestaurantData($location['latitude'], $location['longitude']);
-    if (!($shopInfo)) {
+    if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
         if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
