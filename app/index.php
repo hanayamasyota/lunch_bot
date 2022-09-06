@@ -72,6 +72,9 @@ navigation(お店を探すとレビューで使用)(
     shop_lng(float)...店の経度
     arrival_time(integer)...到着予想時間
     genre(text)...ジャンル
+    追加
+    image(bytea)...画像
+    url(text)...ホットペッパーURL
 )
 
 */
@@ -431,6 +434,8 @@ function searchShop($userId, $bot, $token) {
                 $shopInfo[$i]["longitude"],
                 //$arrivalTime,
                 $shopInfo[$i]["genre"],
+                $shopInfo[$i]["image"],
+                $shopInfo[$i]["url"],
             );
         }
         if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
