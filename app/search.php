@@ -2,7 +2,6 @@
 function getRestaurantInfomation($lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
-    $start = $page * PAGE_COUNT;
 
     // クエリをまとめる
     $query = [
@@ -42,7 +41,7 @@ function renderJson($json) {
             "genre" => $temp->{'shop'}[$i]->{'genre'}->{'name'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
-            "number" => $start+($i+1),
+            "number" => $i,
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
             "shoplength" => $resultLength,

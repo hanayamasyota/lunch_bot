@@ -356,7 +356,7 @@ foreach ($events as $event) {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getUserShopData($event->getUserId(), );
-                showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()));
+                showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()), $page);
             }
 
         //review
