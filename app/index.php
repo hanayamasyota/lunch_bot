@@ -355,8 +355,8 @@ foreach ($events as $event) {
             } else {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
-                $page = getDataByUserShopData($event->getUserId(), "page_num");
-                showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()), $page);
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
             }
 
         //review
@@ -445,12 +445,12 @@ function searchShop($userId, $bot, $token) {
         }
     }
 }
-function showShop($page) {
+function showShop($page, $userId, $bot, $token) {
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録)
     $location = getLocationByUserId($userId);
     
-    $shopData = getShopDataByNavigation($lat, $lng, ($page*5+1));
+    $shopData = getShopDataByNavigation($location['latitude'], $location['longitude'], ($page*5+1));
     $shopLength = getUserShopData($userId, 'shop_length');
 
     $columnArray = array();
