@@ -23,9 +23,9 @@ function checkShopByNavigation($userId, $shopNum) {
 }
 function getShopDataByNavigation($userId, $shopNum) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname, shopnum, shoplat, shoplng from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND BETEWEEN+';
+    $sql = 'select shopid, shopname, shopnum, shoplat, shoplng, image,  from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND shopnum BETEWEEN ? AND ?';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopNum));
+    $sth->execute(array($userId, $shopNum, ($shopNum+4)));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;

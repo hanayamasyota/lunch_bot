@@ -355,8 +355,8 @@ foreach ($events as $event) {
             } else {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
-
-                showShop($getDataByUserShopData());
+                $page = getUserShopData($event->getUserId(), );
+                showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()));
             }
 
         //review
@@ -423,7 +423,7 @@ function searchShop($userId, $bot, $token) {
         }
         for($i = 0; $i < count($shopInfo); $i++) {
             //到着時間を計算する
-            //arrivalTime = 
+            //arrivalTime = 関数
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
                 $userId,
@@ -449,12 +449,12 @@ function showShop($page) {
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録)
     $location = getLocationByUserId($userId);
-    $showData = getShowData($lat, $lng, $page);
     
     $shopData = getShopDataByNavigation($lat, $lng, ($page*5+1));
+    $shopLength = getUserShopData($userId, 'shop_length');
 
     $columnArray = array();
-    for ($i=0; $i < PAGE_COUNT; $i++) {
+    for ($i=0; $i < count; $i++) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
@@ -465,7 +465,8 @@ function showShop($page) {
             'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shopInfo[$i]["name"],
-            $shopInfo[$i]["number"].'/'.$shopInfo[$i]["shoplength"].'件:'.$shopInfo[$i]["genre"],
+            //何分かかるかを表示
+            $shopInfo[$i]["number"].'/'.$shopLength.'件:'.$shopInfo[$i]["genre"],
             $shopInfo[$i]["image"],
             $actionArray
         );
