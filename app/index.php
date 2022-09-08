@@ -439,7 +439,7 @@ function searchShop($userId, $bot, $token) {
             );
         }
         if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-            updateUserShopData($userId, 'length', $shopInfo[0]["length"]);
+            updateUserShopData($userId, 'shop_length', $shopInfo[0]["length"]);
         } else {
             registerUserShopData($userId, $shopInfo[0]["length"]);
         }
