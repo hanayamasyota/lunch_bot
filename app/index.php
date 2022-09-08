@@ -355,7 +355,7 @@ foreach ($events as $event) {
             } else {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
-                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                $page = getDataByUserShopData($event->getUserId(), "page_num")['page_num'];
                 showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()), $page);
             }
 
