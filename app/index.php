@@ -355,7 +355,7 @@ foreach ($events as $event) {
             } else {
                 //店の検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
-                $page = getUserShopData($event->getUserId(), );
+                $page = getUserShopData($event->getUserId(), 'page_num');
                 showShop(getDataByUserShopData($event->getUserId(), $bot, $event->getReplyToken()), $page);
             }
 
@@ -439,9 +439,9 @@ function searchShop($userId, $bot, $token) {
             );
         }
         if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-            updateUserShopData($userId, 'shop_length', $shopInfo[0]["length"]);
+            updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
         } else {
-            registerUserShopData($userId, $shopInfo[0]["length"]);
+            registerUserShopData($userId, $shopInfo[0]["shoplength"]);
         }
     }
 }
