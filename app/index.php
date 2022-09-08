@@ -414,7 +414,7 @@ foreach ($events as $event) {
 //0件だった場合に店が無かったと表示させる
 function searchShop($userId, $bot, $token) {
     $location = getLocationByUserId($userId);
-    $shopInfo = getRestaurantData($location['latitude'], $location['longitude']);
+    $shopInfo = get_restaurant_infomation($location['latitude'], $location['longitude']);
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
