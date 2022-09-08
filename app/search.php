@@ -1,5 +1,5 @@
 <?php
-function getRestaurantInfomation($lat, $lon, $page, $range=2) {
+function getRestaurantInfomation($lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
     $start = $page * PAGE_COUNT;
