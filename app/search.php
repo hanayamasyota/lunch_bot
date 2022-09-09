@@ -40,7 +40,7 @@ function renderJson($json) {
             "id" => $temp->{'shop'}[$i]->{'id'},
             "genre" => $temp->{'shop'}[$i]->{'genre'}->{'name'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
-            "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
+            "image" => bytea_import($temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'}),
             "number" => $i,
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
