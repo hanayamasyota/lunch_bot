@@ -448,12 +448,14 @@ function searchShop($userId, $bot, $token) {
 function showShop($page, $userId, $bot, $token) {
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録)
-    
-    $shopData = getShopDataByNavigation($userId, ($page*5+1));
+    $start = $page*5;
+    $shopData = getShopDataByNavigation($userId, ($start+1));
     $shopLength = getDataByUserShopData($userId, 'shop_length');
 
+    $showLength = $shopLength-$start;
+
     $columnArray = array();
-    for ($i=0; $i < count; $i++) {
+    for ($i=0; $i < count($showLength); $i++) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
