@@ -430,8 +430,8 @@ function searchShop($userId, $bot, $token) {
                 $shopInfo[$i]["id"],
                 $shopInfo[$i]["number"],
                 $shopInfo[$i]["name"],
-                intval($shopInfo[$i]["latitude"]),
-                intval($shopInfo[$i]["longitude"]),
+                floatval($shopInfo[$i]["latitude"]),
+                floatval($shopInfo[$i]["longitude"]),
                 //$arrivalTime,
                 $shopInfo[$i]["genre"],
                 $shopInfo[$i]["image"],
@@ -448,10 +448,9 @@ function searchShop($userId, $bot, $token) {
 function showShop($page, $userId, $bot, $token) {
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録)
-    $location = getLocationByUserId($userId);
     
-    $shopData = getShopDataByNavigation($location['latitude'], $location['longitude'], ($page*5+1));
-    $shopLength = getUserShopData($userId, 'shop_length');
+    $shopData = getShopDataByNavigation($userId, ($page*5+1));
+    $shopLength = getDataByUserShopData($userId, 'shop_length');
 
     $columnArray = array();
     for ($i=0; $i < count; $i++) {
