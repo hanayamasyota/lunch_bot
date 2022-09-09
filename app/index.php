@@ -178,11 +178,12 @@ foreach ($events as $event) {
             else if (strpos($beforeMessage, 'setting') !== false) {
                 $mode = '設定';
                 if (strpos($beforeMessage, '_rest') !== false) {
-                    $mode = '休憩時間の設定';
+                    $mode .= '休憩時間の'.$mode;
                 }
             }
             // shop_searchを含む場合
             else if (strpos($beforeMessage, 'shop_search') !== false) {
+                updateUserShopData($event->getUserId(), 'page_num', 0);
                 $mode = 'お店を探す';
             }
             // 共通部分
@@ -324,7 +325,7 @@ foreach ($events as $event) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
                     updateUserShopData($userId, 'page_num', ($page-1));
-                    showShop($userId, $bot, $event->getReplyToken(), ($page-1));
+                    showShop(($page-1), $userId, $bot, $event->getReplyToken());
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
