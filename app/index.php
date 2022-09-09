@@ -461,17 +461,17 @@ function showShop($page, $userId, $bot, $token) {
     for ($i=0; $i < $showLength; $i++) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            '店舗情報', $shopInfo[$i]["url"]));
+            '店舗情報', $shopData[$i]["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //レビューページへ
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'ここに行く!', 'review_write_'.$shopInfo[$i]["number"].'_'.$shopInfo[$i]["id"]));
+            'ここに行く!', 'review_write_'.$shopData[$i]["number"].'_'.$shopData[$i]["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-            $shopInfo[$i]["name"],
+            $shopData[$i]["name"],
             //何分かかるかを表示
-            $shopInfo[$i]["number"].'/'.$shopLength.'件:'.$shopInfo[$i]["genre"],
-            $shopInfo[$i]["image"],
+            $shopData[$i]["number"].'/'.$shopLength.'件:'.$shopData[$i]["genre"],
+            $shopData[$i]["image"],
             $actionArray
         );
         array_push($columnArray, $column);
