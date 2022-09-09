@@ -34,7 +34,6 @@ users(
     before_send(text)...直前のメッセージ
     latitude(float)...緯度
     longitude(float)...経度
-    追加
     favolite_genre...お気に入りのジャンル
     search_range...検索範囲
     rest_start...休憩の始まる時間
@@ -54,7 +53,7 @@ reviews(
     review(text)
     追加
     shopname(text)...レビュー一覧で表示させる用
-    time(timestamp)...レビューした時間
+    time(timestamp)...レビューした時間(新しいレビューほど評価を重くする)
 )
 uservistedshops(
     ☆★userid(bytea)...店舗
@@ -72,7 +71,6 @@ navigation(お店を探すとレビューで使用)(
     shop_lng(float)...店の経度
     arrival_time(integer)...到着予想時間
     genre(text)...ジャンル
-    追加
     image(bytea)...画像
     url(text)...ホットペッパーURL
 )
@@ -148,7 +146,7 @@ foreach ($events as $event) {
         }
     }
 
-    // キャンセル
+    // 今行っている動きをキャンセルする
     if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
@@ -192,7 +190,7 @@ foreach ($events as $event) {
             '「'.$mode.'」がキャンセルされました。');
         }
 
-
+    //レビュー処理
     // レビューを書くかの場面で「はい」と送信された場合
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_000') && (strcmp($event->getText(), 'はい') == 0)) {
         updateUser($event->getUserId(), 'shop_review_entry_100');
@@ -219,7 +217,7 @@ foreach ($events as $event) {
         updateUser($event->getUserId(), 'shop_review_entry_confirm');
     }
 
-    // usersテーブルのbefore_sendに設定されているメッセージに対する処理
+    // before_sendが設定されている場合 //
     if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //shop_review
@@ -346,7 +344,7 @@ foreach ($events as $event) {
         
     } 
 
-    //前のメッセージが登録されていない場合
+    // 前のメッセージが登録されていない場合 //
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
@@ -383,15 +381,15 @@ foreach ($events as $event) {
             }
 
         //setting
-        //あいさつメッセージでユーザ設定をさせる
+        //あいさつメッセージでユーザ設定を促す
         } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
             $userData = checkUsers($event->getUserId());
             $message = 'ユーザ設定メニューです。';
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
-                $message = '初期設定の登録をお願いします。';
+                $message .= '初期設定の登録をお願いします。';
                 createUser($event->getUserId(), 'setting_initial');
             } else {
-                $message = '更新したい設定を選んでください。';
+                $message .= '更新したい設定を選んでください。';
                 createUser($event->getUserId(), 'setting_update');
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
@@ -411,79 +409,6 @@ foreach ($events as $event) {
         }
 
     }
-}
-
-//0件だった場合に店が無かったと表示させる
-function searchShop($userId, $bot, $token) {
-    $location = getLocationByUserId($userId);
-    $shopInfo = getRestaurantInfomation($location['latitude'], $location['longitude']);
-    if (($shopInfo) == false) {
-        replyTextMessage($bot, $token, '店が見つかりませんでした。');
-    } else {
-        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
-            deleteNavigation($userId);
-        }
-        for($i = 0; $i < count($shopInfo); $i++) {
-            //到着時間を計算する
-            //arrivalTime = 関数
-            //for文内でnavigationテーブルへのデータ追加をする
-            registerNavigation(
-                $userId,
-                $shopInfo[$i]["id"],
-                $shopInfo[$i]["number"],
-                $shopInfo[$i]["name"],
-                floatval($shopInfo[$i]["latitude"]),
-                floatval($shopInfo[$i]["longitude"]),
-                //$arrivalTime,
-                $shopInfo[$i]["genre"],
-                $shopInfo[$i]["image"],
-                $shopInfo[$i]["url"],
-            );
-        }
-        if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-            updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
-        } else {
-            registerUserShopData($userId, $shopInfo[0]["shoplength"]);
-        }
-    }
-}
-function showShop($page, $userId, $bot, $token) {
-    //カルーセルは5件まで
-    //1ページに5店表示(現在のページはデータベースに登録)
-    $start = $page*5;
-    $shopData = getShopDataByNavigation($userId, ($start+1));
-    //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
-    if ($shopData == PDO::PARAM_NULL) {
-        error_log('でーたがないよ！！！'.$shopData);
-    }
-    $shopLength = getDataByUserShopData($userId, 'shop_length');
-
-    $showLength = $shopLength-$start;
-    if ($showLength > 5) {
-        $showLength = 5;
-    }
-
-    $columnArray = array();
-    foreach ($shopData as $shop) {
-        $actionArray = array();
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            '店舗情報', $shop['url']));
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            //レビューページへ
-            'レビューを見る', SERVER_ROOT.'/web/hello.html'));
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'ここに行く!', 'review_write_'.$shop['shopnum'].'_'.$shop['shopid']));
-        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-            $shop['shopname'],
-            //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'],
-            $shop['image'],
-            $actionArray
-        );
-        array_push($columnArray, $column);
-    }
-    updateUser($userId, 'shop_search');
-    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
 
 //CLASS//-----------------------------------------------------------

@@ -1,4 +1,5 @@
 <?php
+//店データ取得
 function getRestaurantInfomation($lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
@@ -49,4 +50,79 @@ function renderJson($json) {
         $data_array += $array;
     }
     return $data_array;
+}
+
+//テーブルへ店を登録
+function searchShop($userId, $bot, $token) {
+    $location = getLocationByUserId($userId);
+    $shopInfo = getRestaurantInfomation($location['latitude'], $location['longitude']);
+    //0件だった場合に店が無かったと表示させる
+    if (($shopInfo) == false) {
+        replyTextMessage($bot, $token, '店が見つかりませんでした。');
+    } else {
+        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+            deleteNavigation($userId);
+        }
+        for($i = 0; $i < count($shopInfo); $i++) {
+            //到着時間を計算する
+            //arrivalTime = 関数
+            //for文内でnavigationテーブルへのデータ追加をする
+            registerNavigation(
+                $userId,
+                $shopInfo[$i]["id"],
+                $shopInfo[$i]["number"],
+                $shopInfo[$i]["name"],
+                floatval($shopInfo[$i]["latitude"]),
+                floatval($shopInfo[$i]["longitude"]),
+                //$arrivalTime,
+                $shopInfo[$i]["genre"],
+                $shopInfo[$i]["image"],
+                $shopInfo[$i]["url"],
+            );
+        }
+        if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
+            updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
+        } else {
+            registerUserShopData($userId, $shopInfo[0]["shoplength"]);
+        }
+    }
+}
+//登録済みの店を表示
+function showShop($page, $userId, $bot, $token) {
+    //カルーセルは5件まで
+    //1ページに5店表示(現在のページはデータベースに登録)
+    $start = $page*5;
+    $shopData = getShopDataByNavigation($userId, ($start+1));
+    //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
+    if ($shopData == PDO::PARAM_NULL) {
+        error_log('でーたがないよ！！！'.$shopData);
+    }
+    $shopLength = getDataByUserShopData($userId, 'shop_length');
+
+    $showLength = $shopLength-$start;
+    if ($showLength > 5) {
+        $showLength = 5;
+    }
+
+    $columnArray = array();
+    foreach ($shopData as $shop) {
+        $actionArray = array();
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            '店舗情報', $shop['url']));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            //レビューページへ
+            'レビューを見る', SERVER_ROOT.'/web/hello.html'));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+            'ここに行く!', 'review_write_'.$shop['shopnum'].'_'.$shop['shopid']));
+        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+            $shop['shopname'],
+            //何分かかるかを表示
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'],
+            $shop['image'],
+            $actionArray
+        );
+        array_push($columnArray, $column);
+    }
+    updateUser($userId, 'shop_search');
+    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
