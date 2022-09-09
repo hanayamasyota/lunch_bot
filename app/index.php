@@ -453,9 +453,12 @@ function showShop($page, $userId, $bot, $token) {
     $shopLength = getDataByUserShopData($userId, 'shop_length');
 
     $showLength = $shopLength-$start;
+    if ($showLength > 5) {
+        $showLength = 5;
+    }
 
     $columnArray = array();
-    for ($i=0; $i < count($showLength); $i++) {
+    for ($i=0; $i < $showLength; $i++) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shopInfo[$i]["url"]));
