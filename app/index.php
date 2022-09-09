@@ -475,7 +475,7 @@ function showShop($page, $userId, $bot, $token) {
             $shop['shopname'],
             //何分かかるかを表示
             $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'],
-            pg_unescape_bytea($shop['image']),
+            pg_escape_bytea($shop['image']),
             $actionArray
         );
         array_push($columnArray, $column);
