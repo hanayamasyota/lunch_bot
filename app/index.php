@@ -450,6 +450,9 @@ function showShop($page, $userId, $bot, $token) {
     //1ページに5店表示(現在のページはデータベースに登録)
     $start = $page*5;
     $shopData = getShopDataByNavigation($userId, ($start+1));
+    if ($shopData == PDO::PARAM_NULL) {
+        error_log('でーたがないよ！！！'.$shopData);
+    }
     $shopLength = getDataByUserShopData($userId, 'shop_length');
 
     $showLength = $shopLength-$start;
