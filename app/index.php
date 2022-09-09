@@ -306,14 +306,15 @@ foreach ($events as $event) {
 
         //次、前の5件表示
         else if ($beforeMessage === 'shop_search') {
+            $userId = $event->getUserId();
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {
-                $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                $range = getDataByUserShopData($event->getUserId(), 'shop_length');
+                $page = getDataByUserShopData($userId, 'page_num');
+                $range = getDataByUserShopData($userId, 'shop_length');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page <= ceil(floatval($range)/floatval(PAGE_COUNT))) {
-                    updateUserShopData($event->getUserId(), 'page_num', ($page+1));
-                    searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page+1));
+                    updateUserShopData($userId, 'page_num', ($page+1));
+                    showShop(($page+1), $userId, $bot, $event->getReplyToken());
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
                 }
@@ -322,8 +323,8 @@ foreach ($events as $event) {
             else if (strcmp($event->getText(), '前へ') == 0) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
-                    updateUserShopData($event->getUserId(), 'page_num', ($page-1));
-                    searchShop($event->getUserId(), $bot, $event->getReplyToken(), ($page-1));
+                    updateUserShopData($userId, 'page_num', ($page-1));
+                    showShop($userId, $bot, $event->getReplyToken(), ($page-1));
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
@@ -480,24 +481,6 @@ function showShop($page, $userId, $bot, $token) {
         );
         array_push($columnArray, $column);
     }
-    // for ($i=0; $i < $showLength; $i++) {
-    //     $actionArray = array();
-    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-    //         '店舗情報', $shopData[$i]["url"]));
-    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-    //         //レビューページへ
-    //         'レビューを見る', SERVER_ROOT.'/web/hello.html'));
-    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-    //         'ここに行く!', 'review_write_'.$shopData[$i]["number"].'_'.$shopData[$i]["id"]));
-    //     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-    //         $shopData[$i]["name"],
-    //         //何分かかるかを表示
-    //         $shopData[$i]["number"].'/'.$shopLength.'件:'.$shopData[$i]["genre"],
-    //         $shopData[$i]["image"],
-    //         $actionArray
-    //     );
-    //     array_push($columnArray, $column);
-    // }
     updateUser($userId, 'shop_search');
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
