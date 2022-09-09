@@ -27,10 +27,10 @@ function getShopDataByNavigation($userId, $shopNum) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopNum, ($shopNum+4)));
     // if no record
-    if (!($row = $sth->fetch())) {
+    if (!($data = $sth->fetchAll())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row;
+        return $data;
     }
 }
 function deleteNavigation($userId) {
