@@ -450,6 +450,7 @@ function showShop($page, $userId, $bot, $token) {
     //1ページに5店表示(現在のページはデータベースに登録)
     $start = $page*5;
     $shopData = getShopDataByNavigation($userId, ($start+1));
+    //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
     if ($shopData == PDO::PARAM_NULL) {
         error_log('でーたがないよ！！！'.$shopData);
     }
@@ -464,17 +465,17 @@ function showShop($page, $userId, $bot, $token) {
     foreach ($shopData as $shop) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            '店舗情報', $shop["url"]));
+            '店舗情報', $shop['url']));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //レビューページへ
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'ここに行く!', 'review_write_'.$shop["number"].'_'.$shop["id"]));
+            'ここに行く!', 'review_write_'.$shop['shopnum'].'_'.$shop['shopid']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-            $shopData[$i]["name"],
+            $shop['shopname'],
             //何分かかるかを表示
-            $shop["number"].'/'.$shopLength.'件:'.$shop["genre"],
-            $shop["image"],
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genge'],
+            $shop['image'],
             $actionArray
         );
         array_push($columnArray, $column);
