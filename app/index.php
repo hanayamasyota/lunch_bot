@@ -458,24 +458,42 @@ function showShop($page, $userId, $bot, $token) {
     }
 
     $columnArray = array();
-    for ($i=0; $i < $showLength; $i++) {
+    foreach ($shopData as $shop) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            '店舗情報', $shopData[$i]["url"]));
+            '店舗情報', $shop["url"]));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //レビューページへ
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            'ここに行く!', 'review_write_'.$shopData[$i]["number"].'_'.$shopData[$i]["id"]));
+            'ここに行く!', 'review_write_'.$shop["number"].'_'.$shop["id"]));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shopData[$i]["name"],
             //何分かかるかを表示
-            $shopData[$i]["number"].'/'.$shopLength.'件:'.$shopData[$i]["genre"],
-            $shopData[$i]["image"],
+            $shop["number"].'/'.$shopLength.'件:'.$shop["genre"],
+            $shop["image"],
             $actionArray
         );
         array_push($columnArray, $column);
     }
+    // for ($i=0; $i < $showLength; $i++) {
+    //     $actionArray = array();
+    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+    //         '店舗情報', $shopData[$i]["url"]));
+    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+    //         //レビューページへ
+    //         'レビューを見る', SERVER_ROOT.'/web/hello.html'));
+    //     array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+    //         'ここに行く!', 'review_write_'.$shopData[$i]["number"].'_'.$shopData[$i]["id"]));
+    //     $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+    //         $shopData[$i]["name"],
+    //         //何分かかるかを表示
+    //         $shopData[$i]["number"].'/'.$shopLength.'件:'.$shopData[$i]["genre"],
+    //         $shopData[$i]["image"],
+    //         $actionArray
+    //     );
+    //     array_push($columnArray, $column);
+    // }
     updateUser($userId, 'shop_search');
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
