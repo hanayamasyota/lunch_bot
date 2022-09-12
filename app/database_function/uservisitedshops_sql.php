@@ -1,6 +1,4 @@
 <?php
-//DATABASE_FUNCTIONS//--------------------------------------------------------------
-
 //uservistedshopsテーブルへのデータ挿入
 function registerUserVistedShops($userId, $shopName, $shopId, $shopNum) {
     $dbh = dbConnection::getConnection();

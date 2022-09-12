@@ -95,7 +95,7 @@ function showShop($page, $userId, $bot, $token) {
     $shopData = getShopDataByNavigation($userId, ($start+1));
     //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
     if ($shopData == PDO::PARAM_NULL) {
-        error_log('でーたがないよ！！！'.$shopData);
+        error_log('エラー：店のデータがありません');
     }
     $shopLength = getDataByUserShopData($userId, 'shop_length');
 
@@ -110,7 +110,7 @@ function showShop($page, $userId, $bot, $token) {
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shop['url']));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-            //レビューページへ
+            //みんなのレビューを表示するページへ移動
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             'ここに行く!', 'review_write_'.$shop['shopnum'].'_'.$shop['shopid']));
