@@ -113,11 +113,12 @@ function showShop($page, $userId, $bot, $token) {
             //みんなのレビューを表示するページへ移動
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+            //店までのナビゲーションを出したい
             'ここに行く!', 'review_write_'.$shop['shopnum'].'_'.$shop['shopid']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'],
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre']. ' 分',
             $shop['image'],
             $actionArray
         );

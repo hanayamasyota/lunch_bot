@@ -59,8 +59,7 @@ uservistedshops(
     ☆★userid(bytea)...店舗
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
-    追加
-    shopnum()
+    visittime(timestamp)...「ここに行く」ボタンを押下した時間
 )
 navigation(お店を探すとレビューで使用)(
     ☆★userid(bytea)...ユーザIDと店舗IDの複合主キー
