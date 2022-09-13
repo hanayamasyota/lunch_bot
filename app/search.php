@@ -114,7 +114,7 @@ function showShop($page, $userId, $bot, $token) {
             'レビューを見る', SERVER_ROOT.'/web/hello.html'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //店までのナビゲーションを出したい
-            'ここに行く!', 'visited_'.$shop['shopid']));
+            'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示

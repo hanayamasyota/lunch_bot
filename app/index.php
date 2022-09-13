@@ -27,6 +27,7 @@ define('TABLE_NAME_NAVIGATION', 'navigation');
 
 //1ページ当たりの表示件数(後から変更できるように)
 define('PAGE_COUNT', 5);
+
 /*テーブルデータ(★:PRIMARY KEY, ☆:FOREIGN)
 //useridを暗号化して格納しているため、外部キーとして使うことができない！
 users(
@@ -34,10 +35,10 @@ users(
     before_send(text)...直前のメッセージ
     latitude(float)...緯度
     longitude(float)...経度
-    favolite_genre...お気に入りのジャンル
-    search_range...検索範囲
-    rest_start...休憩の始まる時間
-    rest_end...休憩の終わる時間
+    favolite_genre(text)...お気に入りのジャンル
+    search_range(integer)...検索範囲
+    rest_start(text)...休憩の始まる時間
+    rest_end(text)...休憩の終わる時間
 )
 usershopdata(
     ☆★userid(bytea)
@@ -53,13 +54,14 @@ reviews(
     review(text)
     追加
     shopname(text)...レビュー一覧で表示させる用
-    time(timestamp)...レビューした時間(新しいレビューほど評価を重くする)
+    time(timestamp)...レビューした時間(新しいレビューほど評価を重くする?)
 )
-uservistedshops(
+uservisitedshops(
     ☆★userid(bytea)...店舗
     ★shopid(text)...店舗のID
     shopname(text)...店舗名
     visittime(timestamp)...「ここに行く」ボタンを押下した時間
+    shopnum(integer)
 )
 navigation(お店を探すとレビューで使用)(
     ☆★userid(bytea)...ユーザIDと店舗IDの複合主キー
@@ -135,12 +137,23 @@ foreach ($events as $event) {
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...
-            if (strpos($event->getPostbackData(), 'review_write_') !== false) {
+            if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
-                $shopNum = intval(explode('_', $event->getPostbackData())[2]);
-                $id = explode('_', $event->getPostbackData())[3];
-                updateUserShopData($event->getUserId(), 'review_shop', $id);
-                replyTextMessage($bot, $event->getReplyToken(), $shopNum);
+                $shopId = intval(explode('_', $event->getPostbackData())[1]);
+                $shopName = intval(explode('_', $event->getPostbackData())[2]);
+                $shopNum = intval(explode('_', $event->getPostbackData())[3]);
+                //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
+                //https://www.php.net/manual/ja/function.date.php
+                $nowTime = time();
+                if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                    updateUserVisitedShops($event->getUserId(), $shopId, $nowTime);
+                } else {
+                    if (countVisitedShops($event->getUserId()) >= 10) {
+                        deleteOldUserVisitedShop($userId);
+                    }
+                    registerUserVistedShops($event->getUserId(), $shopId, $shopName, $nowTime);
+                }
+                replyTextMessage($bot, $event->replyToken(), '訪れた店一覧に登録しました。');
             }
         }
     }
@@ -224,7 +237,15 @@ foreach ($events as $event) {
             $text = $event->getText();
             //レビュー登録
             if (strcmp($text, 'レビュー登録') == 0) {
-                $id = getUserIdCheck($event->getUserId(), TABLE_NAME_USERS);
+                //「ここに行く」を押した店の番号と店名の一覧を表示する
+                $replyMessage = 'レビューするお店の番号を下記の中から選択してください。
+                
+';
+                $visitedShops = getUserVisitedShopData($event->getUserId());
+                foreach ($visitedShops as $visitedShop) {
+                    $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname'] '
+';
+                }
                 replyTextMessage($bot, $event->getReplyToken(),
                 'お店の検索件数の番号を入力してください');
                 updateUser($event->getUserId(), 'shop_review_entry');
