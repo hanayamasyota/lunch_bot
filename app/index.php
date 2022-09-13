@@ -351,7 +351,7 @@ foreach ($events as $event) {
         }
 
         //setting
-        else if ($beforeMessage === 'setting_rest_start') {
+        else if ($event->getText() === '個人設定') {
             updateRestTime($event->getUserId(), 'rest_start', $event->getText());
             replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
             updateUser($event->getUserId(), 'setting_rest_end');
