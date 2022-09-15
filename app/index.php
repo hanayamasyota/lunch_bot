@@ -70,7 +70,7 @@ navigation(お店を探すとレビューで使用)(
     shopname(text)...店名
     shop_lat(float)...店の緯度(apiから取得)
     shop_lng(float)...店の経度
-    arrival_time(integer)...到着予想時間
+    arrival_time(text)...到着予想時間
     genre(text)...ジャンル
     image(text)...画像
     url(text)...ホットペッパーURL
