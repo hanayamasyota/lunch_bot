@@ -85,6 +85,7 @@ function searchShop($userId, $bot, $token) {
         } else {
             registerUserShopData($userId, $shopInfo[0]["shoplength"]);
         }
+        error_log('店の数:'.$shopInfo[0]["shoplength"]);
     }
 }
 //登録済みの店を表示

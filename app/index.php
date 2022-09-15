@@ -72,7 +72,7 @@ navigation(お店を探すとレビューで使用)(
     shop_lng(float)...店の経度
     arrival_time(integer)...到着予想時間
     genre(text)...ジャンル
-    image(bytea)...画像
+    image(text)...画像
     url(text)...ホットペッパーURL
 )
 
@@ -331,7 +331,7 @@ foreach ($events as $event) {
                 $page = getDataByUserShopData($userId, 'page_num');
                 $range = getDataByUserShopData($userId, 'shop_length');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
-                if ($page <= ceil(floatval($range)/floatval(PAGE_COUNT))) {
+                if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($userId, 'page_num', ($page+1));
                     showShop(($page+1), $userId, $bot, $event->getReplyToken());
                 } else {
