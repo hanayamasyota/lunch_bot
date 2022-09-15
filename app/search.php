@@ -42,7 +42,7 @@ function renderJson($json) {
             "genre" => $temp->{'shop'}[$i]->{'genre'}->{'name'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
             "image" => ($temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'}),
-            "number" => $i,
+            "number" => ($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
             "shoplength" => $resultLength,
