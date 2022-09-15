@@ -429,6 +429,12 @@ foreach ($events as $event) {
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
 
+        else if(strcmp($event->getText(), 'あ') == 0) {
+            $minute = getTImeInfo();
+            replyTextMessage($bot, $event->getReplyToken(), $minute.'分で確定');
+        } 
+        
+
     }
 }
 

@@ -128,3 +128,48 @@ function showShop($page, $userId, $bot, $token) {
     updateUser($userId, 'shop_search');
     replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
 }
+
+require 'vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+
+function getTimeInfo() {
+    $http_client = new Client();
+    $url = 'https://maps.googleapis.com/maps/api/directions/json';
+    $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
+
+    $org_lat = '36.06360390797388';
+    $org_lng = '136.22272814008792';
+    $org_latlng = $org_lat . ',' . $org_lng;
+
+    $dst_lat = '36.06680044924675';
+    $dst_lng = '136.2253642115382';
+    $dst_latlng = $dst_lat . ',' . $dst_lng;
+
+    try {
+        $response = $http_client->request('GET', $url, [
+            'headers' => [ 'application/json',
+        ],
+            'query' => [
+                'key' => $api_key,
+                'language' => 'ja',
+                'origin' => $org_latlng,
+                'destination' => $dst_latlng,
+                'mode' => 'walking',
+            ],
+            'verify' => false,
+        ]);
+    } catch (ClientException $e) {
+        throw $e;
+    }
+    $body = $response->getBody();
+    $json = json_decode($body);
+
+    return $json->{"routes"}[0]->{"legs"}[0]->{"duration"}->{"text"};
+
+}
+
+
+?>
+
