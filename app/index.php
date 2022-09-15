@@ -318,7 +318,7 @@ foreach ($events as $event) {
             }
         }
 
-        else if (strcmp($beforeMessage, 'setting_rest') == 0) {
+        else if (strcmp($event->getText(), '個人設定') == 0) {
                 updateUser($event->getUserId(), 'setting_rest_start');
                 replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
         }
@@ -351,7 +351,8 @@ foreach ($events as $event) {
         }
 
         //setting
-        else if ($event->getText() === '個人設定') {
+        //個人設定
+        else if ($beforeMessage === 'setting_rest_start') {
             updateRestTime($event->getUserId(), 'rest_start', $event->getText());
             replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
             updateUser($event->getUserId(), 'setting_rest_end');

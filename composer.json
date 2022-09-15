@@ -2,6 +2,7 @@
     "require": {
         "linecorp/line-bot-sdk": "^3.6",
         "fabpot/goutte": "^4.0",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "guzzlehttp/guzzle": "^7.5"
     }
 }
