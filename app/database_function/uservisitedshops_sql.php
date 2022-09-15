@@ -30,7 +30,7 @@ function updateUserVisitedShops($userId, $shopId, $time) {
 
 function checkUserVisitedShops($userId, $shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select * from'. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sql = 'select * from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
     // if no record
