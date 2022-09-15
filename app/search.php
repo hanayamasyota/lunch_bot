@@ -65,6 +65,7 @@ function searchShop($userId, $bot, $token) {
         }
         for($i = 0; $i < count($shopInfo); $i++) {
             //到着時間を計算する
+            $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shopInfo['latitude'], $shopInfo['longitude']);
             //arrivalTime = 関数
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
@@ -74,7 +75,7 @@ function searchShop($userId, $bot, $token) {
                 $shopInfo[$i]["name"],
                 floatval($shopInfo[$i]["latitude"]),
                 floatval($shopInfo[$i]["longitude"]),
-                //$arrivalTime,
+                $arrivalTime,
                 $shopInfo[$i]["genre"],
                 $shopInfo[$i]["image"],
                 $shopInfo[$i]["url"],
@@ -119,7 +120,7 @@ function showShop($page, $userId, $bot, $token) {
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre']. ' 分',
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre']. ' ' . $shop['arrival_time'],
             $shop['image'],
             $actionArray
         );
@@ -134,18 +135,14 @@ require 'vendor/autoload.php';
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 
-function getTimeInfo() {
+function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     $http_client = new Client();
     $url = 'https://maps.googleapis.com/maps/api/directions/json';
     $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
 
-    $org_lat = '36.06360390797388';
-    $org_lng = '136.22272814008792';
-    $org_latlng = $org_lat . ',' . $org_lng;
+    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
 
-    $dst_lat = '36.06680044924675';
-    $dst_lng = '136.2253642115382';
-    $dst_latlng = $dst_lat . ',' . $dst_lng;
+    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
 
     try {
         $response = $http_client->request('GET', $url, [

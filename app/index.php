@@ -431,7 +431,7 @@ foreach ($events as $event) {
 
         else if(strcmp($event->getText(), 'あ') == 0) {
             $minute = getTImeInfo();
-            replyTextMessage($bot, $event->getReplyToken(), $minute.'分で確定');
+            replyTextMessage($bot, $event->getReplyToken(), $minute.'で確定');
         } 
         
 
