@@ -331,7 +331,7 @@ foreach ($events as $event) {
                 $page = getDataByUserShopData($userId, 'page_num');
                 $range = getDataByUserShopData($userId, 'shop_length');
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
-                if ($page <= ceil(floatval($range)/floatval(PAGE_COUNT))) {
+                if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($userId, 'page_num', ($page+1));
                     showShop(($page+1), $userId, $bot, $event->getReplyToken());
                 } else {
