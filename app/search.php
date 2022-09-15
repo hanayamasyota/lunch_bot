@@ -75,7 +75,7 @@ function searchShop($userId, $bot, $token) {
                 $shopInfo[$i]["name"],
                 floatval($shopInfo[$i]["latitude"]),
                 floatval($shopInfo[$i]["longitude"]),
-                $arrivalTime[0],
+                $arrivalTime,
                 $shopInfo[$i]["genre"],
                 $shopInfo[$i]["image"],
                 $shopInfo[$i]["url"],
