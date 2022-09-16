@@ -46,7 +46,7 @@ function countVisitedShops($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select count(*) from'. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $shopName, $time));
+    $sth->execute(array($userId));
     // if no record
     if ($sth->fetch() < 0) {
         return PDO::PARAM_NULL;
@@ -57,8 +57,8 @@ function countVisitedShops($userId) {
 
 function deleteOldUserVisitedShop($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'delete from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') 
-        and time = (select min(time) from  '. TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'delete from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') 
+        and time = (select min(time) from  '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
 }
