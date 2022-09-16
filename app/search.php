@@ -59,6 +59,7 @@ function searchShop($userId, $bot, $token) {
     }
     $location = getLocationByUserId($userId);
     $shopInfo = getRestaurantInfomation($location['latitude'], $location['longitude']);
+    error_log('TYPE:'. gettype($location['latitude']));
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
