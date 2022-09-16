@@ -55,6 +55,7 @@ function renderJson($json) {
 //テーブルへ店を登録
 function searchShop($userId, $bot, $token) {
     if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+        //
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);

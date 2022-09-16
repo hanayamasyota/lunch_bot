@@ -145,8 +145,9 @@ foreach ($events as $event) {
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
                 //https://www.php.net/manual/ja/function.date.php
                 $nowTime = time();
+                $nowTimeString = date('Y-m-d H:i:s');
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
-                    updateUserVisitedShops($event->getUserId(), $shopId, $nowTime);
+                    updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
                     if (countVisitedShops($event->getUserId()) >= 10) {
                         deleteOldUserVisitedShop($userId);
