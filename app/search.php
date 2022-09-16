@@ -54,31 +54,30 @@ function renderJson($json) {
 
 //テーブルへ店を登録
 function searchShop($userId, $bot, $token) {
+    if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+        deleteNavigation($userId);
+    }
     $location = getLocationByUserId($userId);
     $shopInfo = getRestaurantInfomation($location['latitude'], $location['longitude']);
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
-        if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
-            deleteNavigation($userId);
-        }
-        for($i = 0; $i < count($shopInfo); $i++) {
+        foreach($shopInfo as $shop) {
             //到着時間を計算する
-            $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shopInfo['latitude'], $shopInfo['longitude']);
-            //arrivalTime = 関数
+            $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
                 $userId,
-                $shopInfo[$i]["id"],
-                $shopInfo[$i]["number"],
-                $shopInfo[$i]["name"],
-                floatval($shopInfo[$i]["latitude"]),
-                floatval($shopInfo[$i]["longitude"]),
+                $shop["id"],
+                $shop["number"],
+                $shop["name"],
+                floatval($shop["latitude"]),
+                floatval($shop["longitude"]),
                 $arrivalTime,
-                $shopInfo[$i]["genre"],
-                $shopInfo[$i]["image"],
-                $shopInfo[$i]["url"],
+                $shop["genre"],
+                $shop["image"],
+                $shop["url"],
             );
         }
         if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
@@ -140,9 +139,9 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     $url = 'https://maps.googleapis.com/maps/api/directions/json';
     $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
 
-    $org_latlng = (string) $org_lat . ',' . (string) $org_lng;
+    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
 
-    $dst_latlng = (string) $dst_lat . ',' . (string) $dst_lng;
+    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
 
     try {
         $response = $http_client->request('GET', $url, [
