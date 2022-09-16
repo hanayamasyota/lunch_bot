@@ -119,7 +119,7 @@ function showShop($page, $userId, $bot, $token) {
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre']. ' ' . $shop['arrival_time'],
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'],
             $shop['image'],
             $actionArray
         );
@@ -138,9 +138,6 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     $http_client = new Client();
     $url = 'https://maps.googleapis.com/maps/api/directions/json';
     $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
-
-    error_log('org_lat'. is_float($org_lat));
-    error_log('org_lng'. is_float($dst_lat));
 
     $org_latlng = $org_lat . ',' . $org_lng;
     $dst_latlng = $dst_lat . ',' . $dst_lng;
