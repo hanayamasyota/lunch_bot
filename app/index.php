@@ -152,7 +152,7 @@ foreach ($events as $event) {
                     if (countVisitedShops($event->getUserId()) >= 10) {
                         deleteOldUserVisitedShop($userId);
                     }
-                    registerUserVistedShops($event->getUserId(), $shopId, $shopName, $nowTime, $shopNum);
+                    registerUserVistedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
                 replyTextMessage($bot, $event->replyToken(), '訪れた店一覧に登録しました。');
             }
