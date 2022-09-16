@@ -58,15 +58,14 @@ function searchShop($userId, $bot, $token) {
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);
-    $shopInfo = getRestaurantInfomation($location['latitude'], $location['longitude']);
-    error_log('TYPE:'. gettype($location['latitude']));
+    $shopInfo = getRestaurantInfomation(floatval($location['latitude']), floatval($location['longitude']));
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
         foreach($shopInfo as $shop) {
             //到着時間を計算する
-            $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shop['latitude'], $shop['longitude']);
+            $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
                 $userId,
