@@ -139,11 +139,11 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     $url = 'https://maps.googleapis.com/maps/api/directions/json';
     $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
 
-    $org_latlng = $org_lat . ',' . $org_lng;
-    $dst_latlng = $dst_lat . ',' . $dst_lng;
+    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
+    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
 
     try {
-        $response = $http_client->request('GET', $url, [
+        $response = $http_client->request('POST', $url, [
             'headers' => [ 'application/json',
         ],
             'query' => [
