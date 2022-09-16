@@ -23,7 +23,7 @@ function checkShopByNavigation($userId, $shopNum) {
 }
 function getShopDataByNavigation($userId, $shopNum) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND shopnum BETWEEN ? AND ?';
+    $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND shopnum BETWEEN ? AND ?';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopNum, ($shopNum+4)));
     // if no record
