@@ -66,6 +66,7 @@ function searchShop($userId, $bot, $token) {
         for($i = 0; $i < count($shopInfo); $i++) {
             //到着時間を計算する
             $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shopInfo['latitude'], $shopInfo['longitude']);
+            error_log($arrivalTime);
             //arrivalTime = 関数
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
