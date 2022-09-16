@@ -4,7 +4,7 @@ function registerUserVistedShops($userId, $shopId, $shopName, $time, $shopNum) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_USERVISITEDSHOPS . ' (userid, shopid, shopname, visittime, shopnum) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $shopName, $time));
+    $sth->execute(array($userId, $shopId, $shopName, $time, $shopNum));
 }
 
 function getUserVisitedShopData($userId) {
