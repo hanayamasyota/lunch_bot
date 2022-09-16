@@ -66,7 +66,6 @@ function searchShop($userId, $bot, $token) {
         for($i = 0; $i < count($shopInfo); $i++) {
             //到着時間を計算する
             $arrivalTime = getTimeInfo($location['latitude'], $location['longitude'], $shopInfo['latitude'], $shopInfo['longitude']);
-            error_log($arrivalTime);
             //arrivalTime = 関数
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
@@ -141,9 +140,9 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     $url = 'https://maps.googleapis.com/maps/api/directions/json';
     $api_key = 'AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk';
 
-    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
+    $org_latlng = (string) $org_lat . ',' . (string) $org_lng;
 
-    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
+    $dst_latlng = (string) $dst_lat . ',' . (string) $dst_lng;
 
     try {
         $response = $http_client->request('GET', $url, [
