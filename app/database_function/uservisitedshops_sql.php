@@ -23,7 +23,7 @@ function getUserVisitedShopData($userId) {
 //すでに登録されている場合はtimestampを更新する
 function updateUserVisitedShops($userId, $shopId, $time) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_USERVISITEDSHOPS . ' set time = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sql = 'update ' . TABLE_NAME_USERVISITEDSHOPS . ' set visittime = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($time, $userId, $shopId));
 }
