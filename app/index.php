@@ -154,7 +154,7 @@ foreach ($events as $event) {
                     }
                     registerUserVistedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
-                replyTextMessage($bot, $event->replyToken(), '訪れた店一覧に登録しました。');
+                replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
         }
     }
