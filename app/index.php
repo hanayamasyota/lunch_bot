@@ -243,8 +243,7 @@ foreach ($events as $event) {
                 $replyMessage = 'レビューするお店の番号を下記の中から入力してください。';
                 $visitedShops = getUserVisitedShopData($event->getUserId());
                 foreach ($visitedShops as $visitedShop) {
-                    // $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname'];
-                    $replyMessage .= $visitedShop;
+                    $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname'];
                 }
                 replyTextMessage($bot, $event->getReplyToken(),
                 $replyMessage);
