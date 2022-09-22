@@ -57,6 +57,6 @@ function deleteOldUserVisitedShop($userId) {
     $sql = 'delete from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') 
         and visittime = (select min(visittime) from  '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($userId, $userId));
 }
 ?>
