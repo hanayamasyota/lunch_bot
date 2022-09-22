@@ -146,7 +146,7 @@ foreach ($events as $event) {
                 //https://www.php.net/manual/ja/function.date.php
                 $nowTime = time();
                 $nowTimeString = date('Y-m-d H:i:s', $nowTime);
-                //UTCで登録してるので+9時間
+                //UTCで登録してるので+9時間すること
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {

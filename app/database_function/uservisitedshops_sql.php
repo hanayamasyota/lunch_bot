@@ -44,15 +44,12 @@ function checkUserVisitedShops($userId, $shopId) {
 //10件以上の場合古いものから消去
 function countVisitedShops($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(*) from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select count(userid) from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
-    if ($sth->fetch() < 0) {
-        return PDO::PARAM_NULL;
-    } else {
-        return $count;
-    }
+    $count = $sth->fetch();
+    return $count;
 }
 
 function deleteOldUserVisitedShop($userId) {
