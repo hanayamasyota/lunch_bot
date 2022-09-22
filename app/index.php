@@ -151,7 +151,7 @@ foreach ($events as $event) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
                     if (countVisitedShops($event->getUserId()) >= 10) {
-                        deleteOldUserVisitedShop($userId);
+                        deleteOldUserVisitedShop($event->getUserId());
                     }
                     registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
