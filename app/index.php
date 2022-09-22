@@ -139,20 +139,21 @@ foreach ($events as $event) {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
-                $shopId = intval(explode('_', $event->getPostbackData())[1]);
-                $shopName = intval(explode('_', $event->getPostbackData())[2]);
+                $shopId = explode('_', $event->getPostbackData())[1];
+                $shopName = explode('_', $event->getPostbackData())[2];
                 $shopNum = intval(explode('_', $event->getPostbackData())[3]);
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
                 //https://www.php.net/manual/ja/function.date.php
                 $nowTime = time();
                 $nowTimeString = date('Y-m-d H:i:s', $nowTime);
+                //UTCで登録してるので+9時間
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
                     if (countVisitedShops($event->getUserId()) >= 10) {
                         deleteOldUserVisitedShop($userId);
                     }
-                    registerUserVistedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
+                    registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
@@ -178,7 +179,7 @@ foreach ($events as $event) {
                     }
                     $mode .= '登録';
                 } else if (strpos($beforeMessage, '_comfirm') !== false) {
-                    $mode .= '確認';            
+                    $mode .= '確認';
                 } else if (strpos($beforeMessage, '_update') !== false) {
                     $mode .= '更新';
                 } else if (strpos($beforeMessage, '_delete') !== false) {
