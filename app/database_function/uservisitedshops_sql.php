@@ -7,11 +7,11 @@ function registerUserVisitedShops($userId, $shopId, $shopName, $time, $shopNum) 
     $sth->execute(array($userId, $shopId, $shopName, $time, $shopNum));
 }
 
-function getUserVisitedShopData($userId, $shopId) {
+function getUserVisitedShopData($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select shopname, visittime, shopnum from'. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId));
+    $sth->execute(array($userId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
