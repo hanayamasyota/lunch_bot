@@ -13,6 +13,11 @@ function replyTextMessage($bot, $replyToken, $text) {
     }
 }
 
+//メッセージを改行で表示できるようにする
+function replyTextMessageNewLine($bot, $replyToken, ...$texts) {
+    
+}
+
 // 位置情報を返信。引数はLINEBot、返信先、タイトル、
 // 住所、緯度、経度
 function replyLocationMessage($bot, $replyToken, $title, $address, $lat, $lon) {
