@@ -244,7 +244,7 @@ foreach ($events as $event) {
                 $visitedShops = getUserVisitedShopData($event->getUserId());
                 foreach ($visitedShops as $visitedShop) {
                     // $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname'];
-                    $replyMessage .= $visitedShop['shopname'];
+                    $replyMessage .= $visitedShop;
                 }
                 replyTextMessage($bot, $event->getReplyToken(),
                 $replyMessage);
