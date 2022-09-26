@@ -240,13 +240,12 @@ foreach ($events as $event) {
             //レビュー登録
             if (strcmp($text, 'レビュー登録') == 0) {
                 //「ここに行く」を押した店の番号と店名の一覧を表示する
-                $replyMessage = 'レビューするお店の番号を下記の中から入力してください。';
+                $replyMessage = ['レビューするお店の番号を下記の中から入力してください。'];
                 $visitedShops = getUserVisitedShopData($event->getUserId());
                 foreach ($visitedShops as $visitedShop) {
-                    $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname'].
-'';
+                    array_push($replyMessage, $visitedShop['shopnum'] . ': ' . $visitedShop['shopname']);
                 }
-                replyTextMessage($bot, $event->getReplyToken(),
+                replyTextMessageNewLine($bot, $event->getReplyToken(),
                 $replyMessage);
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認

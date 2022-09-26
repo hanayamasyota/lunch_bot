@@ -15,7 +15,11 @@ function replyTextMessage($bot, $replyToken, $text) {
 
 //メッセージを改行で表示できるようにする
 function replyTextMessageNewLine($bot, $replyToken, ...$texts) {
-    
+    $message = [];
+    foreach ($texts as $text) {
+        array_push($message, new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($text));
+    }
+    $response = $bot->replyMessage($replyToken, $message);
 }
 
 // 位置情報を返信。引数はLINEBot、返信先、タイトル、
