@@ -245,7 +245,7 @@ foreach ($events as $event) {
                 foreach ($visitedShops as $visitedShop) {
                     $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname']."\n";
                 }
-                replyTextMessageNewLine($bot, $event->getReplyToken(),
+                replyTextMessage($bot, $event->getReplyToken(),
                 $replyMessage);
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
