@@ -279,11 +279,11 @@ foreach ($events as $event) {
                     );
                     //entry review data
                     updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
-                    updateUser($event->getUserId(), 'shop_review_000');
+                    updateUser($event->getUserId(), 'shop_review_entry_000');
                 }
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。正しい番号を入力して下さい。お店の検索をしていない場合は先に検索をしてください。');
+                '店が見つかりませんでした。正しい番号を入力して下さい。');
             }
         //shop_review_1
         } else if ($beforeMessage === 'shop_review_entry_100') {
