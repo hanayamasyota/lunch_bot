@@ -263,8 +263,8 @@ foreach ($events as $event) {
         }
         if ($beforeMessage === 'shop_review_entry') {
             //navigationテーブルに番号が存在するか確認
-            if (checkShopByNavigation($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
-                $shop = checkShopByNavigation($event->getUserId(), intval($event->getText()));
+            if (checkShopByUserVisitedShops($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
+                $shop = checkShopByUserVisitedShops($event->getUserId(), intval($event->getText()));
                 //該当の店のレビューがすでに存在するかをチェック
                 if (checkExistsReview($event->getUserId(), $shop['shopid']) != PDO::PARAM_NULL) {
                     replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
