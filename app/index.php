@@ -243,9 +243,9 @@ foreach ($events as $event) {
                 $replyMessage = "レビューするお店の番号を下記の中から入力してください。\n\n";
                 $visitedShops = getUserVisitedShopData($event->getUserId());
                 foreach ($visitedShops as $visitedShop) {
-                    array_push($replyMessage, $visitedShop['shopnum'] . ": " . $visitedShop['shopname']). "\n";
+                    $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname']."\n";
                 }
-                replyTextMessage($bot, $event->getReplyToken(),
+                replyTextMessageNewLine($bot, $event->getReplyToken(),
                 $replyMessage);
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
