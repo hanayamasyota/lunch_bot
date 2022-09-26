@@ -101,15 +101,12 @@ try {
 //main//----------------------------------------------------------------
 foreach ($events as $event) {
 
-    $userId = $event->getUserId();
-    $token = $token->getReplyToken();
-
     // 位置情報メッセージ
     if ($event instanceof \LINE\LINEBot\Event\MessageEvent\LocationMessage) {
-        $beforeMessage = getBeforeMessageByUserId($userId);
+        $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         if (strpos($beforeMessage, 'setting') !== false) {
             $message = '';
-            updateUser($userId, null);
+            updateUser($event->getUserId(), null);
             //初期設定の場合
             if (strpos($beforeMessage, '_initial') !== false) {
                 $messages = [
@@ -122,7 +119,7 @@ foreach ($events as $event) {
                     '他に更新したい設定がある場合はユーザ設定へ戻ってください。'
                 ];
             }
-            replyButtonsTemplate($bot, $token, '位置情報設定完了', SERVER_ROOT.'/imgs/setting.png', '位置情報設定完了',
+            replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報設定完了', SERVER_ROOT.'/imgs/setting.png', '位置情報設定完了',
             //現在はボタンだが、リッチメニューで対応させる予定
             $messages[0].$messages[1],
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
@@ -132,13 +129,13 @@ foreach ($events as $event) {
             // usersテーブルに緯度経度を設定
             $lat = $event->getLatitude();
             $lon = $event->getLongitude();
-            updateLocation($userId, $lat, $lon);
+            updateLocation($event->getUserId(), $lat, $lon);
         } 
     }
 
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
-        if (getBeforeMessageByUserId($userId) === 'shop_search') {
+        if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
@@ -150,15 +147,15 @@ foreach ($events as $event) {
                 $nowTime = time();
                 $nowTimeString = date('Y-m-d H:i:s', $nowTime);
                 //UTCで登録してるので+9時間すること
-                if (checkUserVisitedShops($userId, $shopId) != PDO::PARAM_NULL) {
-                    updateUserVisitedShops($userId, $shopId, $nowTimeString);
+                if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                    updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
-                    if (countVisitedShops($userId) >= 10) {
-                        deleteOldUserVisitedShop($userId);
+                    if (countVisitedShops($event->getUserId()) >= 10) {
+                        deleteOldUserVisitedShop($event->getUserId());
                     }
-                    registerUserVisitedShops($userId, $shopId, $shopName, $nowTimeString, $shopNum);
+                    registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
-                replyTextMessage($bot, $token, '訪れた店一覧に登録しました。');
+                replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
         }
     }
@@ -166,19 +163,19 @@ foreach ($events as $event) {
     // 今行っている動きをキャンセルする
     if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
-        if ((getBeforeMessageByUserId($userId) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($userId) != null)) {
+        if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
-            $beforeMessage = getBeforeMessageByUserId($userId);
+            $beforeMessage = getBeforeMessageByUserId($event->getUserId());
             // shop_reviewを含む場合
             if (strpos($beforeMessage, 'shop_review') !== false) {
                 //レビュー
                 $mode = 'レビュー';
                 if (strpos($beforeMessage, '_entry') !== false) {
                     //現在レビュー中の店のデータを削除
-                    $shopId = getDataByUsershopdata($userId, 'review_shop');
-                    if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
-                        deleteReview($userId, $shopId);
-                        updateUserShopData($userId, 'review_shop', null);
+                    $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+                    if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                        deleteReview($event->getUserId(), $shopId);
+                        updateUserShopData($event->getUserId(), 'review_shop', null);
                     }
                     $mode .= '登録';
                 } else if (strpos($beforeMessage, '_comfirm') !== false) {
@@ -198,45 +195,45 @@ foreach ($events as $event) {
             }
             // shop_searchを含む場合
             else if (strpos($beforeMessage, 'shop_search') !== false) {
-                updateUserShopData($userId, 'page_num', 0);
+                updateUserShopData($event->getUserId(), 'page_num', 0);
                 $mode = 'お店を探す';
             }
             // 共通部分
-            updateUser($userId, null);
-            replyTextMessage($bot, $token,
+            updateUser($event->getUserId(), null);
+            replyTextMessage($bot, $event->getReplyToken(),
             '「'.$mode.'」がキャンセルされました。');
         }
 
     //レビュー処理
     // レビューを書くかの場面で「はい」と送信された場合
-    } else if ((getBeforeMessageByUserId($userId) === 'shop_review_entry_000') && (strcmp($event->getText(), 'はい') == 0)) {
-        updateUser($userId, 'shop_review_entry_100');
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_000') && (strcmp($event->getText(), 'はい') == 0)) {
+        updateUser($event->getUserId(), 'shop_review_entry_100');
     // 総合の評価を入力する場面で1~5の数字が送信された場合
-    } else if ((getBeforeMessageByUserId($userId) === 'shop_review_entry_100') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_100') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
         // insert reviews
-        $shopId = getDataByUsershopdata($userId, 'review_shop');
-        registerReview($userId, $shopId, 100, $event->getText());
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 100, $event->getText());
         // update before_send
-        updateUser($userId, 'shop_review_entry_200');
+        updateUser($event->getUserId(), 'shop_review_entry_200');
     // おすすめメニューを登録
-    } else if ((getBeforeMessageByUserId($userId) === 'shop_review_entry_200')) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_200')) {
         // insert reviews
-        $shopId = getDataByUsershopdata($userId, 'review_shop');
-        registerReview($userId, $shopId, 200, $event->getText());
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 200, $event->getText());
         // update before_send
-        updateUser($userId, 'shop_review_entry_300');
+        updateUser($event->getUserId(), 'shop_review_entry_300');
     // 自由欄を登録
-    } else if ((getBeforeMessageByUserId($userId) === 'shop_review_entry_300')) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_300')) {
         // insert reviews
-        $shopId = getDataByUsershopdata($userId, 'review_shop');
-        registerReview($userId, $shopId, 300, $event->getText());
+        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
+        registerReview($event->getUserId(), $shopId, 300, $event->getText());
         // update before_send
-        updateUser($userId, 'shop_review_entry_confirm');
+        updateUser($event->getUserId(), 'shop_review_entry_confirm');
     }
 
     // before_sendが設定されている場合 //
-    if ((getBeforeMessageByUserId($userId) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($userId) != null)) {
-        $beforeMessage = getBeforeMessageByUserId($userId);
+    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+        $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //shop_review
         if ($beforeMessage === 'shop_review') {
             $text = $event->getText();
@@ -244,20 +241,20 @@ foreach ($events as $event) {
             if (strcmp($text, 'レビュー登録') == 0) {
                 //「ここに行く」を押した店の番号と店名の一覧を表示する
                 $replyMessage = "レビューするお店の番号を下記の中から入力してください。\n\n";
-                $visitedShops = getUserVisitedShopData($userId);
+                $visitedShops = getUserVisitedShopData($event->getUserId());
                 foreach ($visitedShops as $visitedShop) {
                     $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname']."\n";
                 }
-                replyTextMessage($bot, $token,
+                replyTextMessage($bot, $event->getReplyToken(),
                 $replyMessage);
-                updateUser($userId, 'shop_review_entry');
+                updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
             } else if (strcmp($text, 'レビュー確認') == 0) {
-                $reviewShopId = getShopIdByReviews($userId);
+                $reviewShopId = getShopIdByReviews($event->getUserId());
                 foreach($reviewShopId as $shopId) {
                     
                 }
-                updateUser($userId, 'shop_review_list');
+                updateUser($event->getUserId(), 'shop_review_list');
             } else if (strcmp($text, 'レビュー更新') == 0) {
 
             } else if (strcmp($text, 'レビュー削除') == 0) {
@@ -266,13 +263,13 @@ foreach ($events as $event) {
         }
         if ($beforeMessage === 'shop_review_entry') {
             //navigationテーブルに番号が存在するか確認
-            if (checkShopByUserVisitedShops($userId, intval($event->getText())) != PDO::PARAM_NULL) {
-                $shop = checkShopByUserVisitedShops($userId, intval($event->getText()));
+            if (checkShopByUserVisitedShops($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
+                $shop = checkShopByUserVisitedShops($event->getUserId(), intval($event->getText()));
                 //該当の店のレビューがすでに存在するかをチェック
-                if (checkExistsReview($userId, $shop['shopid']) != PDO::PARAM_NULL) {
-                    replyTextMessage($bot, $token, 'この店のレビューはすでに存在します。');
+                if (checkExistsReview($event->getUserId(), $shop['shopid']) != PDO::PARAM_NULL) {
+                    replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
                 } else {
-                    replyConfirmTemplate($bot, $token,
+                    replyConfirmTemplate($bot, $event->getReplyToken(),
                     'レビュー確認',
                     $shop['shopname'].': この店のレビューを書きますか？',
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
@@ -281,35 +278,35 @@ foreach ($events as $event) {
                         'キャンセル', 'キャンセル')
                     );
                     //entry review data
-                    updateUserShopData($userId, 'review_shop', $shop['shopid']);
-                    updateUser($userId, 'shop_review_entry_000');
+                    updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
+                    updateUser($event->getUserId(), 'shop_review_entry_000');
                 }
             } else {
-                replyTextMessage($bot, $token,
+                replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しい番号を入力して下さい。');
             }
         //shop_review_1
         } else if ($beforeMessage === 'shop_review_entry_100') {
             // ボタンは4件までしかできないので入力してもらう
-            replyTextMessage($bot, $token, '総合の評価を1~5の5段階で入力してください。');
+            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
         //shop_review_2
         } else if ($beforeMessage === 'shop_review_entry_200') {
             //200
-            replyTextMessage($bot, $token,
+            replyTextMessage($bot, $event->getReplyToken(),
             '食べたメニューまたはおすすめのメニューを入力して下さい。');
         //shop_review_3
         } else if ($beforeMessage === 'shop_review_entry_300') {
             //300
-            replyTextMessage($bot, $token,
+            replyTextMessage($bot, $event->getReplyToken(),
             '備考等があれば入力して下さい。ない場合は「なし」と入力してください。');
         //shop_review_confirm(レビュー内容の確認)
         } else if ($beforeMessage === 'shop_review_entry_confirm') {
             if (strcmp($event->getText(), 'はい') == 0) {
-                updateUser($userId, null);
-                replyTextMessage($bot, $token,
+                updateUser($event->getUserId(), null);
+                replyTextMessage($bot, $event->getReplyToken(),
                 'レビュー登録が完了しました。');
             } else {
-                replyConfirmTemplate($bot, $token,
+                replyConfirmTemplate($bot, $event->getReplyToken(),
                 'レビュー最終確認',
                 'レビューを登録しますか？',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
@@ -321,13 +318,13 @@ foreach ($events as $event) {
         }
 
         else if (strcmp($event->getText(), '個人設定') == 0) {
-                updateUser($userId, 'setting_rest_start');
-                replyTextMessage($bot, $token, '昼休み(昼休憩)の開始時刻を入力してください。');
+                updateUser($event->getUserId(), 'setting_rest_start');
+                replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
         }
 
         //次、前の5件表示
         else if ($beforeMessage === 'shop_search') {
-            $userId = $userId;
+            $userId = $event->getUserId();
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {
                 $page = getDataByUserShopData($userId, 'page_num');
@@ -335,19 +332,19 @@ foreach ($events as $event) {
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($userId, 'page_num', ($page+1));
-                    showShop(($page+1), $userId, $bot, $token);
+                    showShop(($page+1), $userId, $bot, $event->getReplyToken());
                 } else {
-                    replyTextMessage($bot, $token, 'これ以上次へは進めません。');
+                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
                 }
             }
             //0ページよりも前にいけないようにする
             else if (strcmp($event->getText(), '前へ') == 0) {
-                $page = getDataByUserShopData($userId, 'page_num');
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
                     updateUserShopData($userId, 'page_num', ($page-1));
-                    showShop(($page-1), $userId, $bot, $token);
+                    showShop(($page-1), $userId, $bot, $event->getReplyToken());
                 } else {
-                    replyTextMessage($bot, $token, 'これ以上前には戻れません。');
+                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
             }
         }
@@ -355,14 +352,14 @@ foreach ($events as $event) {
         //setting
         //個人設定
         else if ($beforeMessage === 'setting_rest_start') {
-            updateRestTime($userId, 'rest_start', $event->getText());
-            replyTextMessage($bot, $token, '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
-            updateUser($userId, 'setting_rest_end');
+            updateRestTime($event->getUserId(), 'rest_start', $event->getText());
+            replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
+            updateUser($event->getUserId(), 'setting_rest_end');
         }
         else if ($beforeMessage === 'setting_rest_end') {
-            updateRestTime($userId, 'rest_end', $event->getText());
-            replyTextMessage($bot, $token, 'ユーザ設定が完了しました。');
-            updateUser($userId, null);
+            updateRestTime($event->getUserId(), 'rest_end', $event->getText());
+            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定が完了しました。');
+            updateUser($event->getUserId(), null);
         }
         
     } 
@@ -372,25 +369,25 @@ foreach ($events as $event) {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             //設定チェック
-            $userData = checkUsers($userId);
+            $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
-                inductionUserSetting($bot, $token);
+                inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 //店の検索
-                searchShop($userId, $bot, $token);
-                $page = getDataByUserShopData($userId, 'page_num');
-                showShop($page, $userId, $bot, $token);
+                searchShop($event->getUserId(), $bot, $event->getReplyToken());
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
             }
 
         //review
         } else if(strcmp($event->getText(), 'レビュー') == 0) {
             //設定チェック
-            $userData = checkUsers($userId);
+            $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
-                inductionUserSetting($bot, $token);
+                inductionUserSetting($bot, $event->getReplyToken());
             } else {
-                updateUser($userId, 'shop_review');
-                replyButtonsTemplate($bot, $token, 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
+                updateUser($event->getUserId(), 'shop_review');
+                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
                 'レビューのメニューです。',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     '自分のレビュー確認(html)', 'レビュー確認'),
@@ -406,16 +403,16 @@ foreach ($events as $event) {
         //setting
         //あいさつメッセージでユーザ設定を促す
         } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
-            $userData = checkUsers($userId);
+            $userData = checkUsers($event->getUserId());
             $message = 'ユーザ設定メニューです。';
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 $message .= '初期設定の登録をお願いします。';
-                createUser($userId, 'setting_initial');
+                createUser($event->getUserId(), 'setting_initial');
             } else {
                 $message .= '更新したい設定を選んでください。';
-                createUser($userId, 'setting_update');
+                createUser($event->getUserId(), 'setting_update');
             }
-            replyButtonsTemplate($bot, $token, 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
             $message,
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
@@ -427,13 +424,13 @@ foreach ($events as $event) {
 
         //テスト用
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
-            replyTextMessage($bot, $token, 'ユーザ設定を削除しました。');
-            deleteUser($userId, TABLE_NAME_USERS);
+            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
+            deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
 
         else if(strcmp($event->getText(), 'あ') == 0) {
             $minute = getTImeInfo();
-            replyTextMessage($bot, $token, $minute.'で確定');
+            replyTextMessage($bot, $event->getReplyToken(), $minute.'で確定');
         } 
         
 
