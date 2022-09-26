@@ -120,7 +120,7 @@ function showShop($page, $userId, $bot, $token) {
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' ' . $shop['arrival_time'],
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' 徒歩' . $shop['arrival_time'],
             $shop['image'],
             $actionArray
         );
