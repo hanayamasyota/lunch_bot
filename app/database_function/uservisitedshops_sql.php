@@ -20,6 +20,19 @@ function getUserVisitedShopData($userId) {
     }
 }
 
+function checkShopByUserVisitedShops($userId, $shopNum) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shopid, shopname from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopnum';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopNum));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row;
+    }
+}
+
 //すでに登録されている場合はtimestampを更新する
 function updateUserVisitedShops($userId, $shopId, $time) {
     $dbh = dbConnection::getConnection();

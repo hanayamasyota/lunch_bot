@@ -9,18 +9,7 @@ function registerNavigation($userId, $shopId, $shopNum, $shopName, $lat, $lng, $
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId, $shopNum, $shopName, $lat, $lng, $arrivalTime, $genre, $image, $url));
 }
-function checkShopByNavigation($userId, $shopNum) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopnum';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopNum));
-    // if no record
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        return $row;
-    }
-}
+
 function getShopDataByNavigation($userId, $shopNum) {
     $dbh = dbConnection::getConnection();
     $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND shopnum BETWEEN ? AND ?';
