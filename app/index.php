@@ -161,9 +161,11 @@ foreach ($events as $event) {
         } else if (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
             $number = intval(explode('_', $event->getPostbackData())[2]);
             $num = <<<EOM
+            <html>
             <form method=post action=web/test.php>
                 <input type='hidden' name='number' value=<?= $number ?>>
             </form>
+            </html>
             EOM;
             echo $num;
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
