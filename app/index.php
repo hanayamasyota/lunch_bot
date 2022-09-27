@@ -163,7 +163,7 @@ foreach ($events as $event) {
                 $num = <<<EOM
                 <html>
                 <body onload="document.FRM.submit();">
-                <form method="post" action="/web/test.php">
+                <form method="post" action="/web/test.php" name="FRM">
                     <input type='hidden' name='number' value=1>
                 </form>
                 </html>
