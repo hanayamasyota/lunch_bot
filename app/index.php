@@ -158,7 +158,7 @@ foreach ($events as $event) {
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
-        } else (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
             $number = intval(explode('_', $event->getPostbackData())[2]);
             $num = <<<EOM
             <form method=post action=web/test.php>
