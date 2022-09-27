@@ -162,6 +162,7 @@ foreach ($events as $event) {
                 $number = intval(explode('_', $event->getPostbackData())[2]);
                 $num = <<<EOM
                 <html>
+                <body onload="document.FRM.submit();">
                 <form method=post action=web/test.php>
                     <input type='hidden' name='number' value=<?= $number ?>>
                 </form>
