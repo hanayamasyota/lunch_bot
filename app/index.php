@@ -157,8 +157,8 @@ foreach ($events as $event) {
                     registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
-            }
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+                
+            } else if (strpos($event->getPostbackData(), 'review_list') !== false) {
             $number = intval(explode('_', $event->getPostbackData())[2]);
             $num = <<<EOM
             <html>
