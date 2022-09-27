@@ -324,10 +324,10 @@ foreach ($events as $event) {
             }
         }
 
-        else if (strcmp($event->getText(), '個人設定') == 0) {
-                updateUser($event->getUserId(), 'setting_rest_start');
-                replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
-        }
+        // else if (strcmp($event->getText(), '個人設定') == 0) {
+        //         updateUser($event->getUserId(), 'setting_rest_start');
+        //         replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
+        // }
 
         //次、前の5件表示
         else if ($beforeMessage === 'shop_search') {
