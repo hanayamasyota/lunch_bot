@@ -168,7 +168,7 @@ foreach ($events as $event) {
     }
 
     // 今行っている動きをキャンセルする
-    if (strcmp($event->getText(), 'キャンセル') == 0) {
+    else if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
