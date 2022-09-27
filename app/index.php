@@ -166,7 +166,7 @@ foreach ($events as $event) {
                 <script language="JavaScript">
                 document.FRM.submit();
                 </script>
-                <form method="post" action="/web/test.php" name="FRM">
+                <form method="post" action="https://database-connect-restaurant.herokuapp.com/web/test.php" name="FRM">
                     <input type='hidden' name='number' value=1>
                     <input type="submit">
                 </form>
