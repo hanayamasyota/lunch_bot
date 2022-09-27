@@ -161,17 +161,9 @@ foreach ($events as $event) {
             } else if (strpos($event->getPostbackData(), 'review_list') !== false) {
                 $number = intval(explode('_', $event->getPostbackData())[2]);
                 $num = <<<EOM
-                <html>
-                <body>
                 <script language="JavaScript">
                 document.FRM.submit();
                 </script>
-                <form method="post" action="https://database-connect-restaurant.herokuapp.com/web/test.php" name="FRM">
-                    <input type='hidden' name='number' value=1>
-                    <input type="submit">
-                </form>
-                </body>
-                </html>
                 EOM;
                 echo $num;
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
@@ -460,3 +452,12 @@ foreach ($events as $event) {
     }
 }
 ?>
+
+<html>
+    <body>
+        <form method="post" action="https://database-connect-restaurant.herokuapp.com/web/test.php" name="FRM">
+            <input type='hidden' name='number' value=1>
+            <input type="submit">
+        </form>
+    </body>
+</html>
