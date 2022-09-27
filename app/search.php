@@ -65,8 +65,8 @@ function searchShop($userId, $bot, $token) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
         foreach($shopInfo as $shop) {
-            //到着時間を計算する
-            $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
+            //到着時間を計算する(必要なときのみ表示)
+            // $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             registerNavigation(
                 $userId,
@@ -75,7 +75,10 @@ function searchShop($userId, $bot, $token) {
                 $shop["name"],
                 floatval($shop["latitude"]),
                 floatval($shop["longitude"]),
-                $arrivalTime,
+
+                // $arrivalTime,
+                "分",
+
                 $shop["genre"],
                 $shop["image"],
                 $shop["url"],
