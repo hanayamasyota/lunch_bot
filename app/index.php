@@ -158,6 +158,7 @@ foreach ($events as $event) {
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
         }
     }
 
