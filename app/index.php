@@ -73,7 +73,7 @@ navigation(お店を探すとレビューで使用)(
     shop_lng(float)...店の経度
     arrival_time(text)...到着予想時間
     genre(text)...ジャンル
-    image(text)...画像
+    image(text)...画像(url)
     url(text)...ホットペッパーURL
 )
 
@@ -158,6 +158,18 @@ foreach ($events as $event) {
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
+        } else (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
+            $number = intval(explode('_', $event->getPostbackData())[2]);
+            echo <<< EOM
+            <form method=post action=web/test.php>
+                <input type='hidden' name='number' value=<?= $number ?>>
+            </form>
+            EOM;
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
+            'こちらからレビューをご覧ください。',
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                'レビューの一覧', SERVER_ROOT.'/web/test.php'),
+            );
         }
     }
 
