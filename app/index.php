@@ -158,7 +158,21 @@ foreach ($events as $event) {
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
+        } else if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+            $number = intval(explode('_', $event->getPostbackData())[2]);
+            $num = <<<EOM
+            <html>
+            <form method=post action=web/test.php>
+                <input type='hidden' name='number' value=<?= $number ?>>
+            </form>
+            </html>
+            EOM;
+            echo $num;
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
+            'こちらからレビューをご覧ください。',
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                'レビューの一覧', SERVER_ROOT.'/web/test.php'),
+            );
         }
     }
 
