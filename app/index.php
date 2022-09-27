@@ -158,17 +158,11 @@ foreach ($events as $event) {
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
-        } else if (getBeforeMessageByUserId($event->getUserId()) === 'review_list') {
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
-            'こちらからレビューをご覧ください。',
-            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                'レビューの一覧', SERVER_ROOT.'/web/test.php'),
-            );
         }
     }
 
     // 今行っている動きをキャンセルする
-    else if (strcmp($event->getText(), 'キャンセル') == 0) {
+    if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
@@ -324,10 +318,10 @@ foreach ($events as $event) {
             }
         }
 
-        // else if (strcmp($event->getText(), '個人設定') == 0) {
-        //         updateUser($event->getUserId(), 'setting_rest_start');
-        //         replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
-        // }
+        else if (strcmp($event->getText(), '個人設定') == 0) {
+                updateUser($event->getUserId(), 'setting_rest_start');
+                replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
+        }
 
         //次、前の5件表示
         else if ($beforeMessage === 'shop_search') {
