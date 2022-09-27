@@ -168,6 +168,7 @@ foreach ($events as $event) {
                 </script>
                 <form method="post" action="/web/test.php" name="FRM">
                     <input type='hidden' name='number' value=1>
+                    <input type="submit">
                 </form>
                 </body>
                 </html>
