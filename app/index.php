@@ -160,6 +160,7 @@ foreach ($events as $event) {
 
             } else if (strpos($event->getPostbackData(), 'review_list') !== false) {
                 $number = intval(explode('_', $event->getPostbackData())[2]);
+                error_log('$number='.$number);
                 $num = <<<EOM
                 <html>
                 <body onload="document.FRM.submit();">
