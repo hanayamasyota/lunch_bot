@@ -77,7 +77,7 @@ function searchShop($userId, $bot, $token) {
                 floatval($shop["longitude"]),
 
                 // $arrivalTime,
-                "分",
+                " 〇〇分",
 
                 $shop["genre"],
                 $shop["image"],
