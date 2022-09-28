@@ -50,7 +50,7 @@ function getOwnReviewData($userId, $shopId) {
 
 function getReviewData($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num from ' .TABLE_NAME_REVIEWS. ' where ? = shopid';
+    $sql = 'select review, review_num from reviews where ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId));
     // if no record
