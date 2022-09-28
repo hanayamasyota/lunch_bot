@@ -1,8 +1,4 @@
 <?php
-require_once '../DBConnection.php';
-?>
-
-<?php
 function registerReview($userId, $shopId, $reviewNum, $review) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?) ';

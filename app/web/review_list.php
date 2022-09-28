@@ -1,4 +1,5 @@
 <?php 
+require_once '../index.php';
 require_once '../vendor/autoload.php';
 require_once '../reply.php';
 require_once '../search.php';
