@@ -164,7 +164,7 @@ foreach ($events as $event) {
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー一覧', SERVER_ROOT.'/imgs/nuko.png', 'レビュー一覧',
                 'こちらからレビューをご覧ください。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    'レビューの一覧', SERVER_ROOT.'/web/test.php?shopId='.$number),
+                    'レビューの一覧', SERVER_ROOT.'/web/test.php?number='.$number),
                 );
             }
         }
