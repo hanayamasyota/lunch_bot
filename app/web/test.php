@@ -1,6 +1,6 @@
 <?php 
 
-$num = $_POST['number'];
+$num = $_GET["number"];
 
 echo $num;
 echo "aiueo";
