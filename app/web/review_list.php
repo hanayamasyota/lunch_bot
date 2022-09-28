@@ -17,7 +17,7 @@ foreach ( glob( $pattern ) as $filename )
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>APPTITLE|レビュー一覧<?php  ?></title>
+        <title>APPTITLE|レビュー一覧</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -45,44 +45,7 @@ foreach ( glob( $pattern ) as $filename )
             </div>
         </header>
 
-        <?php
-            $shopId = $_GET["shopid"];
-            echo $shopId;
-            $reviewData = getReviewData($shopId);
-            $reviewArray_1 = array();
-            $reviewArray_2 = array();
-            $reviewArray_3 = array();
-            foreach ($reviewData as $review) {
-                if ($review["review_num"] == 100) {
-                    $reviewArray_1 += $review[["review"]]
-                }
-                else if ($review["review_num"] == 200) {
-                    $reviewArray_2 += $review[["review"]]
-                }
-                else if ($review["review_num"] == 300) {
-                    $reviewArray_3 += $review[["review"]]
-                }
-            }
-        ?>
 
-        <!-- CONTENTS -->
-        <div class="container dy-3">
-            <div class="row">
-                <?php for($i = 0; $i <= count($reviewArray_1); $i++) { ?>
-                    <ul class="ul">
-                        <li class="li">
-                            <?php echo $reviewArray_1[$i] ?>
-                        </li>
-                        <li class="li">
-                            <?php echo $reviewArray_2[$i] ?>
-                        </li>
-                        <li class="li">
-                            <?php echo $reviewArray_3[$i] ?>
-                        </li>
-                    </ul>
-                <?php } ?>
-            </div>
-        </div>
 
         <!-- Footer-->
         <footer class="bg-black text-center py-2">
