@@ -114,9 +114,12 @@ function showShop($page, $userId, $bot, $token) {
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shop['url']));
+        // array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+        //     //みんなのレビューを表示するページへ移動
+        //     'レビューを見る', 'review_list_1'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //みんなのレビューを表示するページへ移動
-            'レビューを見る', 'review_list_1'));
+            'レビューを見る', SERVER_ROOT.'/web/review_list.php?shopid='.$shop['shopid']));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //店までのナビゲーションを出したい
             'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));

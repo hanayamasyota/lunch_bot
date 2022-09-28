@@ -34,7 +34,7 @@ function getShopIdByReviews($userId) {
     }
 }
 
-function getReviewData($userId, $shopId) {
+function getOwnReviewData($userId, $shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select review from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
@@ -45,6 +45,20 @@ function getReviewData($userId, $shopId) {
     } else {
         //return before_send
         return $row['review'];
+    }
+}
+
+function getReviewData($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review, review_num from ' .TABLE_NAME_REVIEWS. ' where ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return before_send
+        return $row;
     }
 }
 
