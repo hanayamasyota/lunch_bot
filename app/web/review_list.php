@@ -53,13 +53,13 @@ foreach ( glob( $pattern ) as $filename )
             $reviewArray_3 = array();
             foreach ($reviewData as $review) {
                 if ($review["review_num"] == 100) {
-                    $reviewArray_1 += $review["review"]
+                    $reviewArray_1 += $review["review"];
                 }
                 else if ($review["review_num"] == 200) {
-                    $reviewArray_2 += $review["review"]
+                    $reviewArray_2 += $review["review"];
                 }
                 else if ($review["review_num"] == 300) {
-                    $reviewArray_3 += $review["review"]
+                    $reviewArray_3 += $review["review"];
                 }
             }
         ?>
@@ -70,13 +70,13 @@ foreach ( glob( $pattern ) as $filename )
                 <?php for($i = 0; $i <= count($reviewArray_1); $i++) { ?>
                     <ul class="ul">
                         <li class="li">
-                            <?php echo $reviewArray_1[$i] ?>
+                            <?php echo $reviewArray_1[$i]; ?>
                         </li>
                         <li class="li">
-                            <?php echo $reviewArray_2[$i] ?>
+                            <?php echo $reviewArray_2[$i]; ?>
                         </li>
                         <li class="li">
-                            <?php echo $reviewArray_3[$i] ?>
+                            <?php echo $reviewArray_3[$i]; ?>
                         </li>
                     </ul>
                 <?php } ?>
