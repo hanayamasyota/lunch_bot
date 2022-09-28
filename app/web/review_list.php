@@ -40,12 +40,48 @@ foreach ( glob( $pattern ) as $filename )
         <header class="masthead">
             <div class="container px-5">
                 <div class="row">
-                    <h1>レビュー登録</h1>
+                    <h1>レビュー一覧</h1>
                 </div>
             </div>
         </header>
 
+        <?php
+            $shopId = $_GET["shopid"];
+            $reviewData = getReviewData($shopId);
+            $reviewArray_1 = array();
+            $reviewArray_2 = array();
+            $reviewArray_3 = array();
+            foreach ($reviewData as $review) {
+                if ($review["review_num"] == 100) {
+                    $reviewArray_1 += $review["review"]
+                }
+                else if ($review["review_num"] == 200) {
+                    $reviewArray_2 += $review["review"]
+                }
+                else if ($review["review_num"] == 300) {
+                    $reviewArray_3 += $review["review"]
+                }
+            }
+        ?>
 
+        <!-- CONTENTS -->
+        <div class="container dy-3">
+            <div class="row">
+                <?php for($i = 0; $i <= count($reviewArray_1); $i++) { ?>
+                    <ul class="ul">
+                        <li class="li">
+                            <?php echo $reviewArray_1[$i] ?>
+                        </li>
+                        <li class="li">
+                            <?php echo $reviewArray_2[$i] ?>
+                        </li>
+                        <li class="li">
+                            <?php echo $reviewArray_3[$i] ?>
+                        </li>
+                    </ul>
+                <?php } ?>
+            </div>
+        </div>
 
         <!-- Footer-->
         <footer class="bg-black text-center py-2">
