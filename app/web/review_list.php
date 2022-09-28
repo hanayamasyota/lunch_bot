@@ -44,6 +44,7 @@ foreach ( glob( $pattern ) as $filename )
 
         <?php
             $shopId = $_GET["shopid"];
+            echo $shopId;
             $reviewData = getReviewData($shopId);
             $reviewArray_1 = [];
             $reviewArray_2 = [];
