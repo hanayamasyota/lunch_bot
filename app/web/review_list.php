@@ -1,7 +1,4 @@
 <?php 
-require_once '../vendor/autoload.php';
-require_once '../reply.php';
-require_once '../search.php';
 require_once '../DBConnection.php';
 $pattern = '../database_function/*.php';
 foreach ( glob( $pattern ) as $filename )
