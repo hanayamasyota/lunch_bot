@@ -52,7 +52,7 @@ function getReviewData($shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select review, review_num from reviews where ? = shopid';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId));
+    $sth->execute(array($shopId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
