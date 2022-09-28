@@ -1,5 +1,4 @@
 <?php 
-require_once '../index.php';
 require_once '../vendor/autoload.php';
 require_once '../reply.php';
 require_once '../search.php';
@@ -12,7 +11,7 @@ foreach ( glob( $pattern ) as $filename )
 ?>
 
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
