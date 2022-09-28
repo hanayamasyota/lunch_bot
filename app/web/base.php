@@ -1,6 +1,6 @@
 <?php 
-require_once __DIR__ . '/DBConnection.php';
-$pattern = __DIR__ . '/database_function/*.php';
+require_once __DIR__ . '../DBConnection.php';
+$pattern = __DIR__ . '../database_function/*.php';
 foreach ( glob( $pattern ) as $filename )
 {
     include $filename;
