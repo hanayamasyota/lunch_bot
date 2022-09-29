@@ -71,7 +71,7 @@ require_once '../database_function/review_sql.php';
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3">
+    <div class="container mt-5 text-center">
         <div class="ps-4">
             <?php if (gettype($avarageScore) == 'double') { ?>
                 <p class="fw-bold mt-3">平均の評価： <strong><?php printf("%.1f", $avarageScore); ?>点</strong></p>
@@ -81,7 +81,7 @@ require_once '../database_function/review_sql.php';
             <?php } ?> 
         </div>
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
-            <table class="table-bordered col-12 px-3 bg-lightbrown">
+            <table class="table-bordered col-11">
                 <thead>レビュー投稿時の日付が入ります</thead>
                 <tr>
                     <th class="col-5 py-3">
