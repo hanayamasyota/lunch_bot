@@ -82,7 +82,7 @@ require_once '../database_function/review_sql.php';
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
             <table class="table table-bordered px-3">
                 <tr>
-                    <th class="col-4 py-3 bg-brown text-light">
+                    <th class="col-4 py-3 bg-brown">
                         レビュー項目１
                     </th>
                     <td class="col-8 py-3 bg-lightbrown text-dark">
