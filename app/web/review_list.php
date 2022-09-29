@@ -81,7 +81,7 @@ require_once '../database_function/review_sql.php';
             <?php } ?> 
         </div>
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
-            <table class="table-bordered px-3 bg-lightbrown text-dark">
+            <table class="table-bordered col-12 px-3 bg-lightbrown">
                 <thead>レビュー投稿時の日付が入ります</thead>
                 <tr>
                     <th class="col-5 py-3">
