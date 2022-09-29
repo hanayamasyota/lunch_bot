@@ -60,7 +60,7 @@ require_once '../database_function/review_sql.php';
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="masthead">
+    <header class="masthead my-0">
         <div class="container px-5">
             <div class="row">
                 <h1>みんなのレビュー</h1>
@@ -70,12 +70,12 @@ require_once '../database_function/review_sql.php';
 
     <!-- CONTENTS -->
     <div class="container dx-3">
-        <div class="px-2">
+        <div class="px-2 mt-3">
             <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
         </div>
         <div class="px-2">
             <?php if (gettype($avarageScore) == 'double') { ?>
-                <p class="fw-bold mt-3">平均の評価： <strong><?php printf("%.1f", $avarageScore); ?>点</strong></p>
+                <p class="fw-bold mt-2">平均の評価： <strong><?php printf("%.1f", $avarageScore); ?>点</strong></p>
                 <hr>
             <?php } else { ?>
                 <p class="fw-normal"><?php echo $avarageScore ?></p>
