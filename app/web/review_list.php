@@ -3,8 +3,6 @@ require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -60,6 +58,25 @@ require_once '../database_function/review_sql.php';
                 }
             }
         ?>
+
+        <!-- CONTENTS -->
+        <div class="container dy-3">
+            <div class="row">
+                <?php for($i = 0; $i <= count($reviewArray_1); $i++) { ?>
+                    <ul class="ul">
+                        <li class="li">
+                            <?php echo $reviewArray_1[$i]; ?>
+                        </li>
+                        <li class="li">
+                            <?php echo $reviewArray_2[$i]; ?>
+                        </li>
+                        <li class="li">
+                            <?php echo $reviewArray_3[$i]; ?>
+                        </li>
+                    </ul>
+                <?php } ?>
+            </div>
+        </div>
 
         <!-- Footer-->
         <footer class="bg-black text-center py-2">
