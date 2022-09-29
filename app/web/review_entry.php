@@ -38,10 +38,10 @@
         <!-- CONTENTS -->
         <div class="container mt-5 text-center">
             <form method="post" action="#">
-            <table class="table table-bordered bg-brown text-light">
+            <table class="table table-bordered">
                 <thead class="border border-start">フォームの入力をお願いします。</thead>
                 <tr>
-                    <th class="col-4 py-4">
+                    <th class="col-4 py-4 bg-color=#ffffff">
                         Form1
                     </th>
                     <td class="col-8 py-4">
@@ -49,7 +49,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4">
+                    <th class="col-4 py-4 bg-color=#ffffff">
                         Form2
                     </th>
                     <td class="col-8 py-4">
@@ -57,7 +57,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4">
+                    <th class="col-4 py-4 bg-color=#ffffff">
                         Form3
                     </th>
                     <td class="col-8 py-4">
