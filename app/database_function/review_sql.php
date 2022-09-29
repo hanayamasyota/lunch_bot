@@ -54,7 +54,7 @@ function getReviewData($shopId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // if no record
-    if (!($row = $sth->fetch())) {
+    if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
         //return before_send
