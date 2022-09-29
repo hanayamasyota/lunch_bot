@@ -41,7 +41,7 @@
             <table class="table table-bordered">
                 <thead class="border border-start">フォームの入力をお願いします。</thead>
                 <tr>
-                    <th class="col-4 py-4 bg-color=#ffffff">
+                    <th class="col-4 py-4 bg-color=#cccccc">
                         Form1
                     </th>
                     <td class="col-8 py-4">
@@ -49,7 +49,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4 bg-color=#ffffff">
+                    <th class="col-4 py-4 bg-color=#cccccc">
                         Form2
                     </th>
                     <td class="col-8 py-4">
@@ -57,7 +57,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4 bg-color=#ffffff">
+                    <th class="col-4 py-4 bg-color=#cccccc">
                         Form3
                     </th>
                     <td class="col-8 py-4">
