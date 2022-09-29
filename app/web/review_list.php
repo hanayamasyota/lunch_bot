@@ -1,20 +1,17 @@
 <?php 
 require_once '../DBConnection.php';
+require_once '../vendor/autoload.php';
+require_once '../database_function/review_sql.php';
 
-function getReviewData($shopId) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num from reviews where ? = shopid';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
-    // if no record
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        //return before_send
-        return $row;
-    }
-}
+// アクセストークンを使いCurlHTTPClientをインスタンス化
+$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
+// CurlHTTPClientとシークレットを使いLINEBotをインスタンス化
+$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_SECRET')]);
+// LINE Messaging APIがリクエストに付与した署名を取得
+$signature = $_SERVER['HTTP_' . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
