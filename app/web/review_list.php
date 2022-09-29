@@ -74,7 +74,7 @@ require_once '../database_function/review_sql.php';
     <div class="container dx-3">
         <div class="ps-4">
             <?php if (gettype($avarageScore) == 'double') { ?>
-                <p class="fw-bold mt-3">へいきんのひょうか：<?php printf("%.1fn", $avarageScore); ?>てん</p>
+                <p class="fw-bold mt-3">平均の評価： <strong><?php printf("%.1f", $avarageScore); ?>点</strong></p>
             <?php } else { ?>
                 <p class="fw-normal"><?php echo $avarageScore ?></p>
             <?php } ?> 
@@ -83,25 +83,25 @@ require_once '../database_function/review_sql.php';
             <table class="table table-bordered px-3 bg-brown text-light">
                 <tr>
                     <th class="col-4 py-3">
-                        ひょうか
+                        レビュー項目１
                     </th>
-                    <td class="col-8 py-3 bg-white">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_1[$i] . '点'; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3text-light">
-                        おすすめめにゅー
+                    <th class="col-4 py-3">
+                        レビュー項目２
                     </th>
-                    <td class="col-8 py-3">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_2[$i]; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3 text-light">
-                        びこう
+                    <th class="col-4 py-3">
+                        レビュー項目３
                     </th>
-                    <td class="col-8 py-3">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_3[$i]; ?>
                     </td>
                 </tr>
