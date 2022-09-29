@@ -112,13 +112,13 @@ function showShop($page, $userId, $bot, $token) {
     $columnArray = array();
     foreach ($shopData as $shop) {
         //urlのクエリを作成
+        error_log($shop["shopname"]);
         $data = array(
             'shopid' => $shop["shopid"],
-            'shopname' => 'あ',
+            'shopname' => $encodeName,
         );
         $query = http_build_query($data);
         $url = SERVER_ROOT."/web/review_list.php?".$query;
-        urlencode($url);
 
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
