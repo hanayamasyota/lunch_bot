@@ -1,9 +1,18 @@
 <?php 
 require_once '../DBConnection.php';
-$pattern = '../database_function/*.php';
-foreach ( glob( $pattern ) as $filename )
-{
-    include $filename;
+
+function getReviewData($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review, review_num from reviews where ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return before_send
+        return $row;
+    }
 }
 ?>
 
