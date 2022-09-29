@@ -112,10 +112,9 @@ function showShop($page, $userId, $bot, $token) {
     $columnArray = array();
     foreach ($shopData as $shop) {
         //urlのクエリを作成
-        error_log($shop["shopname"]);
         $data = array(
             'shopid' => $shop["shopid"],
-            'shopname' => 15,
+            'shopname' => $shop["shopname"],
         );
         $query = http_build_query($data);
         $url = SERVER_ROOT."/web/review_list.php?".$query;

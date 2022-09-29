@@ -63,8 +63,8 @@ require_once '../database_function/review_sql.php';
     <header class="masthead">
         <div class="container px-5">
             <div class="row">
-                <h2>みんなのレビュー<?php echo $_GET["shopname"] ?></h2>
-
+                <h2>みんなのレビュー</h2>
+                <h1><?php echo $_GET["shopname"] ?></h1>
             </div>
         </div>
     </header>
@@ -111,7 +111,7 @@ require_once '../database_function/review_sql.php';
     </div>
 
     <!-- Footer-->
-    <footer class="bg-black text-center py-4 ">
+    <footer class="bg-black text-center py-4 fixed-bottom">
         <div class="container px-5">
             <div class="text-white-50 small">
                 <div class="mb-2"></a></div>
