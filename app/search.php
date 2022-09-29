@@ -115,7 +115,7 @@ function showShop($page, $userId, $bot, $token) {
         error_log($shop["shopname"]);
         $data = array(
             'shopid' => $shop["shopid"],
-            'shopname' => $encodeName,
+            'shopname' => 15,
         );
         $query = http_build_query($data);
         $url = SERVER_ROOT."/web/review_list.php?".$query;
