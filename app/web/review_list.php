@@ -35,14 +35,14 @@ require_once '../database_function/review_sql.php';
     <header class="masthead">
         <div class="container px-5">
             <div class="row">
-                <h1><?php echo $_GET["shopname"] ?>のレビュー一覧</h1>
+                <h2>みんなのレビュー</h2>
+                <h1><?php echo $_GET["shopname"] ?></h1>
             </div>
         </div>
     </header>
 
     <?php
     $shopId = $_GET["shopid"];
-    echo $shopId;
     $reviewData = getReviewData($shopId);
     $reviewArray_1 = array();
     $reviewArray_2 = array();
@@ -60,29 +60,29 @@ require_once '../database_function/review_sql.php';
 
     <!-- CONTENTS -->
     <div class="container dx-3">
-        <?php for ($i = 0; $i <= count($reviewArray_1); $i++) { ?>
+        <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
             <table class="table table-bordered bg-brown text-light px-3">
                 <tr>
-                    <th class="col-4 py-4">
+                    <th class="col-4 py-3">
                         ひょうか
                     </th>
-                    <td class="col-8 py-4">
+                    <td class="col-8 py-3">
                         <?php echo $reviewArray_1[$i] . '点'; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4">
-                        おすすめ
+                    <th class="col-4 py-3">
+                        おすすめめにゅー
                     </th>
-                    <td class="col-8 py-4">
+                    <td class="col-8 py-3">
                         <?php echo $reviewArray_2[$i]; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-4">
+                    <th class="col-4 py-3">
                         びこう
                     </th>
-                    <td class="col-8 py-4">
+                    <td class="col-8 py-3">
                         <?php echo $reviewArray_3[$i]; ?>
                     </td>
                 </tr>
@@ -94,7 +94,7 @@ require_once '../database_function/review_sql.php';
     <footer class="bg-black text-center py-4 fixed-bottom">
         <div class="container px-5">
             <div class="text-white-50 small">
-                <div class="mb-2">Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパー Webサービス</a></div>
+                <div class="mb-2"></a></div>
                 <!-- <a href="#!">Privacy</a>
                     <span class="mx-1">&middot;</span>
                     <a href="#!">Terms</a>
