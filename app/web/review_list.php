@@ -45,7 +45,21 @@ foreach ( glob( $pattern ) as $filename )
         <?php
             $shopId = $_GET["shopid"];
             echo $shopId;
-
+            $reviewData = getReviewData($shopId);
+            $reviewArray_1 = array();
+            $reviewArray_2 = array();
+            $reviewArray_3 = array();
+            foreach ($reviewData as $review) {
+                if ($review["review_num"] == 100) {
+                    $reviewArray_1 += $review["review"];
+                }
+                else if ($review["review_num"] == 200) {
+                    $reviewArray_2 += $review["review"];
+                }
+                else if ($review["review_num"] == 300) {
+                    $reviewArray_3 += $review["review"];
+                }
+            }
         ?>
 
         <!-- Footer-->
