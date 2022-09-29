@@ -74,7 +74,7 @@ require_once '../database_function/review_sql.php';
     <div class="container dx-3">
         <div class="ps-4">
             <?php if (gettype($avarageScore) == 'double') { ?>
-                <p class="fw-bold">へいきんのひょうか：<?php echo $avarageScore ?>てん</p>
+                <p class="fw-bold mt-3">へいきんのひょうか：<?php echo $avarageScore ?>てん</p>
             <?php } else { ?>
                 <p class="fw-normal"><?php echo $avarageScore ?></p>
             <?php } ?> 
@@ -82,7 +82,7 @@ require_once '../database_function/review_sql.php';
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
             <table class="table table-bordered px-3">
                 <tr>
-                    <th class="col-4 py-3 bg-brown text-light">
+                    <th class="col-4 py-3 bg-color=#cccccc text-light">
                         ひょうか
                     </th>
                     <td class="col-8 py-3">
@@ -90,7 +90,7 @@ require_once '../database_function/review_sql.php';
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3 bg-brown text-light">
+                    <th class="col-4 py-3 bg-color=#cccccc text-light">
                         おすすめめにゅー
                     </th>
                     <td class="col-8 py-3">
@@ -98,7 +98,7 @@ require_once '../database_function/review_sql.php';
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3 bg-brown text-light">
+                    <th class="col-4 py-3 bg-color=#cccccc text-light">
                         びこう
                     </th>
                     <td class="col-8 py-3">
