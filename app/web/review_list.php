@@ -82,26 +82,31 @@ require_once '../database_function/review_sql.php';
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
             <table class="table table-bordered px-3">
                 <tr>
-                    <th class="col-4 py-3 bg-brown">
+                    <th class="col-12 py-2">
+                        レビューをかいた時間が入ります。
+                    </th>
+                </tr>
+                <tr>
+                    <th class="col-5 py-3 bg-brown">
                         レビュー項目１
                     </th>
-                    <td class="col-8 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_1[$i] . '点'; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-5 py-3">
                         レビュー項目２
                     </th>
-                    <td class="col-8 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_2[$i]; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-5 py-3">
                         レビュー項目３
                     </th>
-                    <td class="col-8 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_3[$i]; ?>
                     </td>
                 </tr>
