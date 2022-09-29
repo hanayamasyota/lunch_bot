@@ -63,14 +63,16 @@ require_once '../database_function/review_sql.php';
     <header class="masthead">
         <div class="container px-5">
             <div class="row">
-                <h2>みんなのレビュー</h2>
-                <h1><?php echo $_GET["shopname"] ?></h1>
+                <h1>みんなのレビュー</h1>
             </div>
         </div>
     </header>
 
     <!-- CONTENTS -->
     <div class="container dx-3">
+        <div class="px-2">
+            <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
+        </div>
         <div class="px-2">
             <?php if (gettype($avarageScore) == 'double') { ?>
                 <p class="fw-bold mt-3">平均の評価： <strong><?php printf("%.1f", $avarageScore); ?>点</strong></p>
