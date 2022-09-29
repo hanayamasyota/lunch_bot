@@ -80,12 +80,12 @@ require_once '../database_function/review_sql.php';
             <?php } ?> 
         </div>
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
-            <table class="table table-bordered px-3 bg-brown text-light">
+            <table class="table table-bordered px-3">
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-4 py-3 bg-brown text-light">
                         レビュー項目１
                     </th>
-                    <td class="col-8 py-3 bg-color=#ccc5b8 text-dark">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_1[$i] . '点'; ?>
                     </td>
                 </tr>
@@ -93,7 +93,7 @@ require_once '../database_function/review_sql.php';
                     <th class="col-4 py-3">
                         レビュー項目２
                     </th>
-                    <td class="col-8 py-3 bg-color=#ccc5b8 text-dark">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_2[$i]; ?>
                     </td>
                 </tr>
@@ -101,7 +101,7 @@ require_once '../database_function/review_sql.php';
                     <th class="col-4 py-3">
                         レビュー項目３
                     </th>
-                    <td class="col-8 py-3 bg-color=#ccc5b8 text-dark">
+                    <td class="col-8 py-3 bg-lightbrown text-dark">
                         <?php echo $reviewArray_3[$i]; ?>
                     </td>
                 </tr>
