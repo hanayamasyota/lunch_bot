@@ -113,20 +113,7 @@ require_once '../database_function/review_sql.php';
             <?php } 
                 }?>
     </div>
-
-    <!-- Footer-->
-    <footer class="bg-black text-center py-4 fixed-bottom">
-        <div class="container px-5">
-            <div class="text-white-50 small">
-                <div class="mb-2"></a></div>
-                <!-- <a href="#!">Privacy</a>
-                    <span class="mx-1">&middot;</span>
-                    <a href="#!">Terms</a>
-                    <span class="mx-1">&middot;</span>
-                    <a href="#!">FAQ</a> -->
-            </div>
-        </div>
-    </footer>
+    
     <!-- Feedback Modal-->
     <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
