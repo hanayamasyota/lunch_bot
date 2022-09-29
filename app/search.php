@@ -119,9 +119,9 @@ function showShop($page, $userId, $bot, $token) {
         //     'レビューを見る', 'review_list_1'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //みんなのレビューを表示するページへ移動
-            'レビューを見る', SERVER_ROOT.'/web/review_list.php?shopid='.$shop['shopid']));
+            'レビューを見る', SERVER_ROOT.'/web/review_list.php?shopid='.$shop['shopid'].'&shopname='.$shop['shopname']));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-            //店までのナビゲーションを出したい
+            //おしたときにナビゲーションをしたい !
             'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],

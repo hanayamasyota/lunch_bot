@@ -24,7 +24,7 @@ function getShopIdByReviews($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId));
+    $sth->execute(array($userId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;

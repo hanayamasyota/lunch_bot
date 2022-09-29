@@ -438,12 +438,3 @@ foreach ($events as $event) {
     }
 }
 ?>
-
-<html>
-    <body>
-        <form method="post" action="https://database-connect-restaurant.herokuapp.com/web/test.php" name="FRM">
-            <input type='hidden' name='number' value=1>
-            <input type="submit">
-        </form>
-    </body>
-</html>
