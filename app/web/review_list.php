@@ -3,6 +3,34 @@ require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 ?>
 
+<?php
+    $shopId = $_GET["shopid"];
+    $reviewData = getReviewData($shopId);
+    $avarageScore = 0.0;
+    //レビューが登録されていない場合
+    if ($reviewData != PDO::PARAM_NULL) {
+        $reviewArray_1 = array();
+        $reviewArray_2 = array();
+        $reviewArray_3 = array();
+        foreach ($reviewData as $review) {
+            if ($review["review_num"] == 100) {
+                array_push($reviewArray_1, $review["review"]);
+            } else if ($review["review_num"] == 200) {
+                array_push($reviewArray_2, $review["review"]);
+            } else if ($review["review_num"] == 300) {
+                array_push($reviewArray_3, $review["review"]);
+            }
+        }
+        $totalScore = 0;
+        for ($i = 0; $i < count($reviewArray_1); $i++) {
+            $totalScore += intval($reviewArray_1[$i]);
+        }
+        $avarageScore = floatval($totalScore/count($reviewArray_1));
+    } else {
+        $avarageScore = 'まだレビューが登録されていません。';
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +56,7 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <a class="navbar-brand fw-bold" href="#page-top">ひるまち・ぶらり(仮)</a>
+            <p class="navbar-brand fw-bold">ひるまち・ぶらり(仮)</p>
         </div>
     </nav>
     <!-- Mashead header-->
@@ -37,33 +65,24 @@ require_once '../database_function/review_sql.php';
             <div class="row">
                 <h2>みんなのレビュー</h2>
                 <h1><?php echo $_GET["shopname"] ?></h1>
+                
             </div>
         </div>
     </header>
 
-    <?php
-    $shopId = $_GET["shopid"];
-    $reviewData = getReviewData($shopId);
-    $reviewArray_1 = array();
-    $reviewArray_2 = array();
-    $reviewArray_3 = array();
-    foreach ($reviewData as $review) {
-        if ($review["review_num"] == 100) {
-            array_push($reviewArray_1, $review["review"]);
-        } else if ($review["review_num"] == 200) {
-            array_push($reviewArray_2, $review["review"]);
-        } else if ($review["review_num"] == 300) {
-            array_push($reviewArray_3, $review["review"]);
-        }
-    }
-    ?>
-
     <!-- CONTENTS -->
     <div class="container dx-3">
+        <div class="ps-4">
+            <?php if (gettype($avarageScore) == 'double') { ?>
+                <p class="fw-bold">へいきんのひょうか：<?php echo $avarageScore ?>てん</p>
+            <?php } else { ?>
+                <p class="fw-normal"><?php echo $avarageScore ?></p>
+            <?php } ?> 
+        </div>
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
-            <table class="table table-bordered bg-brown text-light px-3">
+            <table class="table table-bordered px-3">
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-4 py-3 bg-brown text-light">
                         ひょうか
                     </th>
                     <td class="col-8 py-3">
@@ -71,7 +90,7 @@ require_once '../database_function/review_sql.php';
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-4 py-3 bg-brown text-light">
                         おすすめめにゅー
                     </th>
                     <td class="col-8 py-3">
@@ -79,7 +98,7 @@ require_once '../database_function/review_sql.php';
                     </td>
                 </tr>
                 <tr>
-                    <th class="col-4 py-3">
+                    <th class="col-4 py-3 bg-brown text-light">
                         びこう
                     </th>
                     <td class="col-8 py-3">
