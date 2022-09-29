@@ -44,7 +44,6 @@ require_once '../database_function/review_sql.php';
             $shopId = $_GET["shopid"];
             echo $shopId;
             $reviewData = getReviewData($shopId);
-            error_log("しょぷID：".$reviewData);
             echo $reviewData;
             $reviewArray_1 = array();
             $reviewArray_2 = array();
