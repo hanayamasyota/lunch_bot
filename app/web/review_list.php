@@ -81,16 +81,12 @@ require_once '../database_function/review_sql.php';
         </div>
         <?php for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
             <table class="table table-bordered px-3">
+                <thead>レビュー投稿時の日付が入ります</thead>
                 <tr>
-                    <th class="col-12 py-2">
-                        レビューをかいた時間が入ります。
-                    </th>
-                </tr>
-                <tr>
-                    <th class="col-5 py-3 bg-brown">
+                    <th class="col-5 py-3">
                         レビュー項目１
                     </th>
-                    <td class="col-7 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3">
                         <?php echo $reviewArray_1[$i] . '点'; ?>
                     </td>
                 </tr>
@@ -98,7 +94,7 @@ require_once '../database_function/review_sql.php';
                     <th class="col-5 py-3">
                         レビュー項目２
                     </th>
-                    <td class="col-7 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3">
                         <?php echo $reviewArray_2[$i]; ?>
                     </td>
                 </tr>
@@ -106,7 +102,7 @@ require_once '../database_function/review_sql.php';
                     <th class="col-5 py-3">
                         レビュー項目３
                     </th>
-                    <td class="col-7 py-3 bg-lightbrown text-dark">
+                    <td class="col-7 py-3">
                         <?php echo $reviewArray_3[$i]; ?>
                     </td>
                 </tr>
