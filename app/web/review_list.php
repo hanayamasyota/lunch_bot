@@ -1,14 +1,6 @@
 <?php 
 require_once '../DBConnection.php';
-require_once '../vendor/autoload.php';
 require_once '../database_function/review_sql.php';
-
-// アクセストークンを使いCurlHTTPClientをインスタンス化
-$httpClient = new \LINE\LINEBot\HTTPClient\CurlHTTPClient(getenv('CHANNEL_ACCESS_TOKEN'));
-// CurlHTTPClientとシークレットを使いLINEBotをインスタンス化
-$bot = new \LINE\LINEBot($httpClient, ['channelSecret' => getenv('CHANNEL_SECRET')]);
-// LINE Messaging APIがリクエストに付与した署名を取得
-$signature = $_SERVER['HTTP_' . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATURE];
 ?>
 
 
@@ -52,6 +44,7 @@ $signature = $_SERVER['HTTP_' . \LINE\LINEBot\Constant\HTTPHeader::LINE_SIGNATUR
             $shopId = $_GET["shopid"];
             echo $shopId;
             $reviewData = getReviewData($shopId);
+            error_log("しょぷID：".$reviewData);
             echo $reviewData;
             $reviewArray_1 = array();
             $reviewArray_2 = array();
