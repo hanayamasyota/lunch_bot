@@ -114,7 +114,7 @@ function showShop($page, $userId, $bot, $token) {
         //urlのクエリを作成
         $data = array(
             'shopid' => $shop["shopid"],
-            'shopname' => $shop["shopname"],
+            'shopname' => 'あ',
         );
         $query = http_build_query($data);
         $url = SERVER_ROOT."/web/review_list.php?".$query;
