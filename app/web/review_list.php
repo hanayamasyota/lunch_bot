@@ -47,13 +47,13 @@ require_once '../database_function/review_sql.php';
             $reviewArray_3 = array();
             foreach ($reviewData as $review) {
                 if ($review["review_num"] == 100) {
-                    $reviewArray_1 += $review["review"];
+                    array_push($reviewArray_1, $review["review"]);
                 }
                 else if ($review["review_num"] == 200) {
-                    $reviewArray_2 += $review["review"];
+                    array_push($reviewArray_2, $review["review"]);
                 }
                 else if ($review["review_num"] == 300) {
-                    $reviewArray_3 += $review["review"];
+                    array_push($reviewArray_3, $review["review"]);
                 }
             }
         ?>
