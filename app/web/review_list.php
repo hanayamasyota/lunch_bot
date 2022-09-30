@@ -56,12 +56,12 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="navbar-brand fw-bold">ひるまち・ぶらり(仮)</p>
+            <p class="navbar-brand fw-bold">chinchin・ぶらり(仮)</p>
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="pt-5 pb-2">
-        <div class="container px-5 pt-5">
+    <header class="mt-6 mb-2">
+        <div class="container px-3 pt-5">
             <div class="row">
                 <h1>みんなのレビュー</h1>
             </div>
