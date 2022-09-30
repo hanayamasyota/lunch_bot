@@ -6878,7 +6878,7 @@ textarea.form-control-lg {
 }
 .border-bottom-3 {
   border-color: var(--bs-imagecolor-rgb);
-  border-bottom: 3px solid !important;
+  border-bottom: 3px solid;
 }
 
 .border-bottom-0 {
