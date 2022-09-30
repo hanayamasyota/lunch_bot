@@ -54,7 +54,7 @@ require_once '../database_function/review_sql.php';
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top bg-brown">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -63,7 +63,7 @@ require_once '../database_function/review_sql.php';
     </nav>
     <!-- Mashead header-->
     <header class="mt-5">
-        <div class="container px-3 pt-5 text-imagecolor bg-lightbrown">
+        <div class="container px-3 pt-5 bg-lightbrown text-imagecolor">
             <h2>みんなのレビュー</h2>
         </div>
     </header>
