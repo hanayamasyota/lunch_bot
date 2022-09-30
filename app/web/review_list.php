@@ -57,7 +57,7 @@ require_once '../database_function/review_sql.php';
 <body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
-        <div class="container px-5">
+        <div class="container px-5 pb-3">
             <p class="navbar-brand fw-bold">ひるまちぶらり</p>
         </div>
     </nav>
