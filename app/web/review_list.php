@@ -12,7 +12,6 @@ require_once '../database_function/review_sql.php';
         $reviewArray_1 = array();
         $reviewArray_2 = array();
         $reviewArray_3 = array();
-        $reviewArray_3 = 
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 100) {
                 array_push($reviewArray_1, $review["review"]);
