@@ -45,7 +45,7 @@
   --bs-imagecolor-rgb: 255, 158, 44;
   --bs-navy-rgb: 0, 39, 73;
   --bs-brown-rgb: 153, 138, 119;
-  --bs-lightbrown: #ccc5b8;
+  --bs-lightbrown-rgb: 204, 197, 184;
   --bs-primary-rgb: 41, 55, 240;
   --bs-secondary-rgb: 159, 26, 226;
   --bs-success-rgb: 25, 135, 84;
@@ -7885,7 +7885,7 @@ textarea.form-control-lg {
 
 .bg-lightbrown {
   --bs-bg-opacity: 1;
-  background-color: var(--bs-lightbrown);
+  background-color: var(--bs-lightbrown-rgb);
 }
 
 .bg-imagecolor {
