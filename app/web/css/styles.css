@@ -7784,7 +7784,7 @@ textarea.form-control-lg {
 
 .text-lightorange {
   --bs-text-opacity: 1;
-  color: rgba(var(--bs-lightorange), var(--bs-text-opacity)) !important;
+  color: var(--bs-lightorange) !important;
 }
 
 .text-body {
