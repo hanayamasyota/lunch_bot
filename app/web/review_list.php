@@ -62,8 +62,8 @@ require_once '../database_function/review_sql.php';
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-5 bg-light">
-        <div class="container px-3 pt-5">
+    <header class="mt-5 bg-lightbrown">
+        <div class="container px-3 pt-5 text-imagecolor">
             <h2>みんなのレビュー</h2>
         </div>
     </header>
