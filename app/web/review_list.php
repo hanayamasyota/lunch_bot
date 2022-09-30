@@ -70,16 +70,18 @@ require_once '../database_function/review_sql.php';
 
     <!-- CONTENTS -->
     <div class="container dx-3 mt-5">
-        <div class="px-2 mt-3 col-10 border-bottom-3">
-            <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
-        </div>
-        <div class="px-2">
-            <?php if (gettype($avarageScore) == 'double') { ?>
-                <p class="fw-bold mt-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
-                <hr>
-            <?php } else { ?>
-                <p class="fw-normal"><?php echo $avarageScore ?></p>
-            <?php } ?> 
+        <div class="bg-navy">
+            <div class="px-2 mt-3 col-10 border-bottom-3">
+                <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
+            </div>
+            <div class="px-2">
+                <?php if (gettype($avarageScore) == 'double') { ?>
+                    <p class="fw-bold mt-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
+                    <hr>
+                <?php } else { ?>
+                    <p class="fw-normal"><?php echo $avarageScore ?></p>
+                <?php } ?> 
+            </div>
         </div>
             <?php if (gettype($avarageScore) == 'double') {
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
