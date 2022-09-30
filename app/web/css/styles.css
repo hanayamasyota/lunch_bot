@@ -7866,12 +7866,12 @@ textarea.form-control-lg {
 }
 
 .bg-brown {
-  --bs--bg-opacity: 1;
+  --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-brown-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-lightbrown {
-  --bs--bg-opacity: 1;
+  --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightbrown), var(--bs-bg-opacity)) !important;
 
 }
