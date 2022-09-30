@@ -107,25 +107,29 @@ foreach ($events as $event) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         if (strpos($beforeMessage, 'setting') !== false) {
             $message = '';
-            updateUser($event->getUserId(), null);
             //初期設定の場合
             if (strpos($beforeMessage, '_initial') !== false) {
                 $messages = [
                     '位置情報を登録しました。',
                     'まだ登録していない設定がある場合はユーザ設定へ戻ってください。'
                 ];
+                updateUser($event->getUserId(), 'setting_initial');
             } else if (strpos($beforeMessage, '_update') !== false) {
                 $messages = [
                     '位置情報を更新しました。',
                     '他に更新したい設定がある場合はユーザ設定へ戻ってください。'
                 ];
+                updateUser($event->getUserId(), 'setting_update');
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), '位置情報設定完了', SERVER_ROOT.'/imgs/setting.png', '位置情報設定完了',
             //現在はボタンだが、リッチメニューで対応させる予定
             $messages[0].$messages[1],
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'ユーザ設定へ', 'ユーザ設定'
-            )
+            ),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '戻る', 'キャンセル'
+            ),
             );
             // usersテーブルに緯度経度を設定
             $lat = $event->getLatitude();
@@ -227,7 +231,9 @@ foreach ($events as $event) {
     } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_300')) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        registerReview($event->getUserId(), $shopId, 300, $event->getText());
+        $nowTime = time();
+        $nowTimeString = date('Y-m-d', $nowTime);
+        registerReviewWithTime($event->getUserId(), $shopId, 300, $event->getText(), $nowTimeString);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_entry_confirm');
     }

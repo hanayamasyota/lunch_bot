@@ -5,6 +5,12 @@ function registerReview($userId, $shopId, $reviewNum, $review) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId, $reviewNum, $review));
 }
+function registerReviewWithTime($userId, $shopId, $reviewNum, $review, $time) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId, $reviewNum, $review, $time));
+}
 
 function checkExistsReview($userId, $shopId) {
     $dbh = dbConnection::getConnection();

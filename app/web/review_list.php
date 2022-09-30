@@ -56,7 +56,7 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="navbar-brand fw-bold">chinchin・ぶらり(仮)</p>
+            <p class="navbar-brand fw-bold">chinchinぶらりん(仮)</p>
         </div>
     </nav>
     <!-- Mashead header-->
