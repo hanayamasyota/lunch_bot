@@ -71,7 +71,7 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 mt-5">
         <div class="px-2 mt-3 col-10 border-bottom-3">
-            <h3><?php echo $_GET["shopname"] ?></h3>
+            <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
         </div>
         <div class="px-2">
             <?php if (gettype($avarageScore) == 'double') { ?>
@@ -87,7 +87,7 @@ require_once '../database_function/review_sql.php';
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
                     <thead class=""><?php echo $time ?></thead>
                     <tr>
-                        <th class="col-5 py-3">
+                        <th class="col-5 py-3 bg-imagecolor text-light">
                             レビュー項目１
                         </th>
                         <td class="col-7 py-3">
@@ -95,7 +95,7 @@ require_once '../database_function/review_sql.php';
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-3">
+                        <th class="col-5 py-3 bg-imagecolor text-light">
                             レビュー項目２
                         </th>
                         <td class="col-7 py-3">
@@ -103,7 +103,7 @@ require_once '../database_function/review_sql.php';
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-3">
+                        <th class="col-5 py-3 bg-imagecolor text-light">
                             レビュー項目３
                         </th>
                         <td class="col-7 py-3">
