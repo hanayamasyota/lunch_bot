@@ -12,6 +12,7 @@ require_once '../database_function/review_sql.php';
         $reviewArray_1 = array();
         $reviewArray_2 = array();
         $reviewArray_3 = array();
+        $timeArray = array();
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 100) {
                 array_push($reviewArray_1, $review["review"]);
@@ -19,6 +20,7 @@ require_once '../database_function/review_sql.php';
                 array_push($reviewArray_2, $review["review"]);
             } else if ($review["review_num"] == 300) {
                 array_push($reviewArray_3, $review["review"]);
+                array_push($timeArray, $review["time"]);
             }
         }
         $totalScore = 0;
@@ -81,7 +83,8 @@ require_once '../database_function/review_sql.php';
             <?php if (gettype($avarageScore) == 'double') {
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
-                    <thead><?php echo  ?></thead>
+                    <?php $time = explode(' ', $timeArray[$i])[0] ?>
+                    <thead><?php echo $time ?></thead>
                     <tr>
                         <th class="col-5 py-3">
                             レビュー項目１
