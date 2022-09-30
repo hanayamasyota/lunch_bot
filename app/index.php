@@ -232,7 +232,7 @@ foreach ($events as $event) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
         $nowTime = time();
-        $nowTimeString = date('Y-m-d H:i:s.', $nowTime);
+        $nowTimeString = date('Y-m-d', $nowTime);
         registerReviewWithTime($event->getUserId(), $shopId, 300, $event->getText(), $nowTimeString);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_entry_confirm');
