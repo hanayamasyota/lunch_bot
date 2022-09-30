@@ -89,7 +89,7 @@ require_once '../database_function/review_sql.php';
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
                     <thead class=""><?php echo $time ?></thead>
                     <tr>
-                        <th class="col-5 py-3 bg-lightbrown">
+                        <th class="col-5 py-3 bg-brown">
                             レビュー項目１
                         </th>
                         <td class="col-7 py-3">
