@@ -83,7 +83,7 @@ require_once '../database_function/review_sql.php';
                 <?php } ?> 
             </div>
         </div>
-        <div class="bg-light">
+        <div class="bg-light my-3">
             <?php if (gettype($avarageScore) == 'double') {
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
