@@ -60,7 +60,7 @@ require_once '../database_function/review_sql.php';
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="masthead">
+    <header class="pt-5 pb-2">
         <div class="container px-5 pt-5">
             <div class="row">
                 <h1>みんなのレビュー</h1>
