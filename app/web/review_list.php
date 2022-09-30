@@ -54,10 +54,10 @@ require_once '../database_function/review_sql.php';
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" class="bg-brown">
+<body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
-        <div class="container px-5">
+        <div class="container px-5 bg-brown">
             <p class="navbar-brand fw-bold">ひるまちぶらり</p>
         </div>
     </nav>
