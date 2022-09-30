@@ -56,7 +56,7 @@ function getOwnReviewData($userId, $shopId) {
 
 function getReviewData($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num from reviews where ? = shopid';
+    $sql = 'select review, review_num, time from reviews where ? = shopid order by ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // if no record

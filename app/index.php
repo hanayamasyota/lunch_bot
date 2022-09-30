@@ -232,7 +232,7 @@ foreach ($events as $event) {
         // insert reviews
         $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
         $nowTime = time();
-        $nowTimeString = date('Y-m-d', $nowTime);
+        $nowTimeString = date('Y-m-d H:i:s.', $nowTime);
         registerReviewWithTime($event->getUserId(), $shopId, 300, $event->getText(), $nowTimeString);
         // update before_send
         updateUser($event->getUserId(), 'shop_review_entry_confirm');
@@ -376,6 +376,7 @@ foreach ($events as $event) {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             //設定チェック
+            error_log('time'.time());
             $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
