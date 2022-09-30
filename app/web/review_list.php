@@ -64,11 +64,12 @@ require_once '../database_function/review_sql.php';
     <!-- Mashead header-->
     <header class="mt-6 mb-2 bg-lightbrown">
         <div class="container px-3 pt-5">
+            <h2>みんなのレビュー</h2>
         </div>
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3">
+    <div class="container dx-3 mt-5">
         <div class="px-2 mt-3 col-10 border-bottom-3">
             <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
         </div>
