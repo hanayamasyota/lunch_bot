@@ -40,7 +40,7 @@ require_once '../database_function/review_sql.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまち・ぶらり(仮)|レビュー一覧</title>
+    <title>ひるまちぶらり|レビュー一覧</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -57,7 +57,7 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="navbar-brand fw-bold">chinchinぶらりん(仮)</p>
+            <p class="navbar-brand fw-bold">ひるまちぶらり</p>
         </div>
     </nav>
     <!-- Mashead header-->
