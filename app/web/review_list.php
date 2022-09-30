@@ -69,8 +69,8 @@ require_once '../database_function/review_sql.php';
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 mt-5">
-        <div class="px-2 mt-3 col-10 border-bottom-3 bg-brown">
+    <div class="container dx-3 mt-5 bg-light">
+        <div class="px-2 mt-3 col-10 border-bottom-3">
             <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
         </div>
         <div class="px-2">
