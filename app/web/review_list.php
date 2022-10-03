@@ -58,13 +58,13 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="h2 pt-2 fw-bold">ひるまちぶらり</p>
+            <p class="h3 pt-3 fw-bold">ひるまちぶらり</p>
         </div>
     </nav>
     <!-- Mashead header-->
     <header class="mt-5">
-        <div class="container px-3 pt-5 text-lightorange bg-imagecolor">
-            <h2>みんなのレビュー</h2>
+        <div class="container px-3 pt-5 bg-imagecolor">
+            <h2 class="text-lightorange">みんなのレビュー</h2>
         </div>
     </header>
 
