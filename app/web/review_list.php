@@ -58,7 +58,7 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p>ひるまちぶらり</p>
+            <p class="pt-2 fw-bold">ひるまちぶらり</p>
         </div>
     </nav>
     <!-- Mashead header-->
