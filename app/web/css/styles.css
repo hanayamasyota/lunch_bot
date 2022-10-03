@@ -7886,12 +7886,15 @@ textarea.form-control-lg {
 }
 
 .bg-lightnavy {
-  background-color: #cfdfe6 !important;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-lightnavy-rgb), var(--bs-bg-opacity)) !important;
 }
+
 .bg-lightbrown {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightbrown-rgb), var(--bs-bg-opacity)) !important;
 }
+
 .bg-lightorange {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightorange-rgb), var(--bs-bg-opacity)) !important;
