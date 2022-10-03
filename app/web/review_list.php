@@ -54,7 +54,7 @@ require_once '../database_function/review_sql.php';
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" class="bg-navy">
+<body id="page-top" class="bg-lightnavy">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
