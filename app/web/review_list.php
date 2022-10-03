@@ -34,7 +34,7 @@ require_once '../database_function/review_sql.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 
 <head>
     <meta charset="utf-8" />
@@ -54,7 +54,7 @@ require_once '../database_function/review_sql.php';
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" class="bg-info">
+<body id="page-top" class="bg-base">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
