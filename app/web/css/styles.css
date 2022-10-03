@@ -7885,6 +7885,10 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-brown-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-lightnavy {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-lightnavy-rgb), var(--bs-bg-opacity)) !important;
+}
 .bg-lightbrown {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightbrown-rgb), var(--bs-bg-opacity)) !important;
@@ -7892,10 +7896,6 @@ textarea.form-control-lg {
 .bg-lightorange {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightorange-rgb), var(--bs-bg-opacity)) !important;
-}
-.bg-lightnavy {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-lightnavy-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-imagecolor {
