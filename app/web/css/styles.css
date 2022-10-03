@@ -7886,11 +7886,12 @@ textarea.form-control-lg {
 }
 
 .bg-lightnavy {
-  background-color: #cfdfe6;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-lightnavy-rgb), var(--bs-bg-opacity)) !important;
 }
 .bg-lightbrown {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-lightbrown-rgb), var(--bs-bg-opacity)) !important;
+  background-color: rgba(var(--bs-lightbrown-rgb), var(--bs-bg-opacity));
 }
 .bg-lightorange {
   --bs-bg-opacity: 1;
@@ -7898,12 +7899,12 @@ textarea.form-control-lg {
 }
 
 .bg-imagecolor {
-  --bs-text-opacity: 1;
-  background-color: rgba(var(--bs-imagecolor-rgb), var(--bs-text-opacity)) !important;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-imagecolor-rgb), var(--bs-bg-opacity)) !important;
 }
 .bg-navy {
-  --bs-text-opacity: 1;
-  background-color: rgba(var(--bs-navy-rgb), var(--bs-text-opacity)) !important;
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-navy-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-body {
