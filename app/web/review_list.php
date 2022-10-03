@@ -56,9 +56,9 @@ require_once '../database_function/review_sql.php';
 
 <body id="page-top">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
+    <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="navbar-brand fw-bold">ひるまちぶらり</p>
+            <p>ひるまちぶらり</p>
         </div>
     </nav>
     <!-- Mashead header-->
@@ -84,7 +84,8 @@ require_once '../database_function/review_sql.php';
             </div>
         </div>
         <div class="bg-light my-3">
-            <?php if (gettype($avarageScore) == 'double') {
+            
+            <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
