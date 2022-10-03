@@ -54,7 +54,7 @@ require_once '../database_function/review_sql.php';
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top" class="bg-black">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -69,7 +69,7 @@ require_once '../database_function/review_sql.php';
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 mt-5 bg-light">
+    <div class="container dx-3 mt-5">
         <div class="bg-navy text-light">
             <div class="px-2 pt-3 col-10 border-bottom-3">
                 <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
