@@ -42,6 +42,7 @@
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
   --bs-lightorange-rgb: 230, 218, 207;
+  --bs-lightnavy-rgb: 207, 223, 230;
   --bs-imagecolor-rgb: 255, 158, 44;
   --bs-navy-rgb: 0, 39, 73;
   --bs-brown-rgb: 153, 138, 119;
@@ -7890,6 +7891,10 @@ textarea.form-control-lg {
 .bg-lightorange {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-lightorange-rgb), var(--bs-bg-opacity)) !important;
+}
+.bg-lightnavy {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-lightnavy-rgb), var(--bs-bg-opacity)) !important;
 }
 
 .bg-imagecolor {

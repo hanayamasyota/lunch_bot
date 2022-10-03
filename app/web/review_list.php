@@ -76,15 +76,13 @@ require_once '../database_function/review_sql.php';
             </div>
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
-                    <p class="fw-bold mt-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
-                    <hr>
+                    <p class="fw-bold py-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
                 <?php } ?> 
             </div>
         </div>
-        <div class="bg-light my-3">
-            
+        <div class="bg-lightnavy my-3">
             <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
