@@ -82,7 +82,7 @@ require_once '../database_function/review_sql.php';
                 <?php } ?> 
             </div>
         </div>
-        <div class="bg-lightnavy py-3">
+        <div class="bg-light py-3">
             <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
