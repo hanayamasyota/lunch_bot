@@ -92,7 +92,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目１
                         </th>
-                        <td class="col-7 py-3">
+                        <td class="col-7 py-3 bg-white">
                             <?php echo $reviewArray_1[$i] . '点'; ?>
                         </td>
                     </tr>
@@ -100,7 +100,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目２
                         </th>
-                        <td class="col-7 py-3">
+                        <td class="col-7 py-3 bg-white">
                             <?php echo $reviewArray_2[$i]; ?>
                         </td>
                     </tr>
@@ -108,7 +108,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目３
                         </th>
-                        <td class="col-7 py-3">
+                        <td class="col-7 py-3 bg-white">
                             <?php echo $reviewArray_3[$i]; ?>
                         </td>
                     </tr>
