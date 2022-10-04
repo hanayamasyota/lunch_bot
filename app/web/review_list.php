@@ -69,7 +69,7 @@ require_once '../database_function/review_sql.php';
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 mt-5 bg-lightnavy">
+    <div class="container dx-3 my-5 bg-lightnavy">
         <div class="bg-navy text-light">
             <div class="px-2 pt-3 col-12 border-bottom-3">
                 <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
@@ -119,7 +119,7 @@ require_once '../database_function/review_sql.php';
     </div>
 
         <!-- Footer-->
-        <footer class="bg-black text-center py-2">
+        <footer class="bg-black text-center py-2 fixed-bottom">
             <div class="container px-5">
                 <div class="text-white-50 small">
                     <div class="mb-2">

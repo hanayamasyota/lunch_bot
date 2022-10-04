@@ -338,11 +338,6 @@ th {
   border-width: 0;
 }
 
-thead {
-  background-color: var(--bs-navy);
-  color: var(--bs-white);
-}
-
 label {
   display: inline-block;
 }
