@@ -82,7 +82,7 @@ require_once '../database_function/review_sql.php';
                 <?php } ?> 
             </div>
         </div>
-        <div class="py-3 bg-white">
+        <div class="bg-white">
             <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
@@ -122,7 +122,9 @@ require_once '../database_function/review_sql.php';
         <footer class="bg-black text-center py-2">
             <div class="container px-5">
                 <div class="text-white-50 small">
-                    <div class="mb-2">&copy; Your Website 2022. All Rights Reserved.</div>
+                    <div class="mb-2">
+                        ひるまちGO
+                    </div>
                     <!-- <a href="#!">Privacy</a>
                     <span class="mx-1">&middot;</span>
                     <a href="#!">Terms</a>
