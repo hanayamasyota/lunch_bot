@@ -41,6 +41,7 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #212529;
+  --bs-navy: #002749;
   --bs-lightnavy: #cfdfe6;
   --bs-lightorange-rgb: 230, 218, 207;
   --bs-lightnavy-rgb: 207, 223, 230;
@@ -6881,7 +6882,7 @@ textarea.form-control-lg {
   border-bottom: 1px solid #dee2e6 !important;
 }
 .border-bottom-3 {
-  border-bottom: 3px solid var(--bs-imagecolor-rgb) !important;
+  border-bottom: 3px solid var(--bs-dark) !important;
 }
 
 .border-bottom-0 {
