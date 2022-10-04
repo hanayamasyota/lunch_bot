@@ -336,6 +336,8 @@ th {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
+  background-color: var(--bs-navy);
+  color: var(--bs-white);
 }
 
 label {
