@@ -87,7 +87,7 @@ require_once '../database_function/review_sql.php';
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead class="bg-navy text-white"><?php echo $time ?></thead>
+                    <thead><?php echo $time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目１
@@ -117,6 +117,20 @@ require_once '../database_function/review_sql.php';
                 }?>
         </div>
     </div>
+
+        <!-- Footer-->
+        <footer class="bg-black text-center py-2">
+            <div class="container px-5">
+                <div class="text-white-50 small">
+                    <div class="mb-2">&copy; Your Website 2022. All Rights Reserved.</div>
+                    <!-- <a href="#!">Privacy</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">Terms</a>
+                    <span class="mx-1">&middot;</span>
+                    <a href="#!">FAQ</a> -->
+                </div>
+            </div>
+        </footer>
     
     <!-- Feedback Modal-->
     <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
