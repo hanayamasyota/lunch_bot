@@ -71,7 +71,7 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 mt-5 bg-lightnavy">
         <div class="bg-navy text-light">
-            <div class="px-2 pt-3 col-10 border-bottom-3">
+            <div class="px-2 pt-3 col-12 border-bottom-3">
                 <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
             </div>
             <div class="px-2">
@@ -82,7 +82,7 @@ require_once '../database_function/review_sql.php';
                 <?php } ?> 
             </div>
         </div>
-        <div class="py-3">
+        <div class="py-3 bg-white">
             <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
