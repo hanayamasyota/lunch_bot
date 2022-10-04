@@ -87,7 +87,7 @@ require_once '../database_function/review_sql.php';
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table table-bordered px-3">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><?php echo $time ?></thead>
+                    <thead class="bg-navy text-white"><?php echo $time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目１
