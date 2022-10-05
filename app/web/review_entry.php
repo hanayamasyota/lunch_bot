@@ -47,34 +47,34 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <form method="post" action="#">
-            <table class="table table-bordered bg-brown text-light">
-                    <thead class="border border-start">フォームの入力をお願いします。</thead>
+            <table class="table table-bordered">
+                    <thead class="border border-start text-center">フォーム入力</thead>
                     <tr>
-                        <th class="col-4 py-4">
+                        <th class="col-5 py-4 bg-lightbrown">
                             Form1
                         </th>
-                        <td class="col-8 py-4">
+                        <td class="col-7 py-4">
                             <input type="text">
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-4 py-4">
+                        <th class="col-5 py-4 bg-lightbrown">
                             Form2
                         </th>
-                        <td class="col-8 py-4">
+                        <td class="col-7 py-4">
                             <input type="datetime">
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-4 py-4">
+                        <th class="col-5 py-4 bg-lightbrown">
                             Form3
                         </th>
-                        <td class="col-8 py-4">
+                        <td class="col-7 py-4">
                             <input type="color">
                         </td>
                     </tr>
             </table>
-            <button type="submit" class="btn-dark mb-3">
+            <button type="submit" class="btn-dark mb-3 text-center">
                 送信する
             </button>
         </form>
