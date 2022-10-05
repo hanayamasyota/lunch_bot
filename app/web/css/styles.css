@@ -6899,7 +6899,7 @@ textarea.form-control-lg {
   border-bottom: 1px solid #dee2e6 !important;
 }
 .border-bottom-3 {
-  border-bottom: 3px solid var(--bs-dark) !important;
+  border-bottom: 3px solid #000 !important;
 }
 
 .border-bottom-0 {
