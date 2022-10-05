@@ -1,5 +1,11 @@
 <?php
-//phpはここ 
+require_once '../DBConnection.php';
+require_once '../database_function/review_sql.php'; 
+?>
+
+<?php
+    $shopId = $_GET["shopid"];
+    $userId = $_GET["userid"];
 ?>
 
 
@@ -11,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|PAGETITLE</title>
+    <title>ひるまちGO|レビュー登録</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -34,7 +40,7 @@
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">PAGETITLE</p>
+            <p class="text-light h3">レビュー登録</p>
         </div>
     </header>
 

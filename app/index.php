@@ -375,6 +375,7 @@ foreach ($events as $event) {
     else {
         //searchshop
         if(strcmp($event->getText(), 'お店を探す') == 0) {
+            error_log("userid:".$event->getUserId());
             //設定チェック
             error_log('time'.time());
             $userData = checkUsers($event->getUserId());
