@@ -86,15 +86,15 @@
 
 /* font */
 @font-face {
-  font-family: 'Syowa';
-  src: url(../fonts/syouwanonioi/Syouwanonioi.ttf);
+  font-family: 'Nicokaku';
+  src: url(../fonts/nicokaku-plus/nicokaku_v1.ttf);
 }
 
-.font-syowa {
-  font-family: Syowa;
+.font-nicokaku {
+  font-family: Nicokaku;
 }
-.font-logo {
-  font-family: 'MV Boli';
+.font-rc {
+  font-family: 'Rockwell Condensed';
 }
 
 body {
