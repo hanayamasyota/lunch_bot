@@ -47,7 +47,7 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <form method="post" action="#">
-            <table class="table table-bordered">
+            <table class="table table-bordered border-navy">
                     <thead class="border border-start text-center">フォーム入力</thead>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
@@ -74,9 +74,11 @@ require_once '../database_function/review_sql.php';
                         </td>
                     </tr>
             </table>
-            <button type="submit" class="btn-dark mb-3 text-center">
-                送信する
-            </button>
+            <div class="text-center">
+                <button type="submit" class="btn-dark mb-3 text-center">
+                    送信する
+                </button>
+            </div>
         </form>
     </div>
 
