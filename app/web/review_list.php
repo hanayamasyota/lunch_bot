@@ -86,11 +86,9 @@ require_once '../database_function/review_sql.php';
         <div class="bg-white">
             <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
-                <table class="table table-bordered border-4 border-dark px-3">
+                <table class="table table-bordered border-white px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <div class="bg-navy text-light">
-                        <thead><?php echo $time ?></thead>
-                    </div>
+                    <thead><?php echo $time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             レビュー項目１
