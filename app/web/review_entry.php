@@ -5,6 +5,7 @@ require_once '../database_function/review_sql.php';
 
 <?php
     $shopId = $_GET["shopid"];
+    $shopName = $_GET["shopname"];
     $userId = $_GET["userid"];
 ?>
 
@@ -46,9 +47,11 @@ require_once '../database_function/review_sql.php';
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
+        <div>
+            <p><?php echo $shopName ?>のレビュー</p>
+        </div>
         <form method="post" action="#">
             <table class="table table-bordered border-navy">
-                    <thead class="border border-start text-center">フォーム入力</thead>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             Form1
@@ -76,7 +79,7 @@ require_once '../database_function/review_sql.php';
             </table>
             <div class="text-center">
                 <button type="submit" class="btn-dark mb-3 text-center">
-                    送信する
+                    レビューを登録する
                 </button>
             </div>
         </form>
