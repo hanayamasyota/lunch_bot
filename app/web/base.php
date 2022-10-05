@@ -26,9 +26,9 @@
 
 <body id="page-top" class="bg-base">
     <!-- Navigation-->
-    <nav class="navbar navbar-expand-lg fixed-top shadow-sm" id="mainNav">
+    <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <p class="h3 pt-3 fw-bold">ひるまちGO</p>
+            <h1 class="pt-3 font-nicokaku pe-1" style="display: inline-block;">ひるまち</h1><h1 class="pt-3 font-rc" style="display: inline-block;">GO</h1>
         </div>
     </nav>
     <!-- Mashead header-->
