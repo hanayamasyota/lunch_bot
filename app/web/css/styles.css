@@ -93,12 +93,16 @@
   font-family: 'Rockwell Condensed';
   src: url(../fonts/ROCC.ttf);
 }
+@font-face {
+  font-family: 'Ngc';
+  src: url(../fonts/Ngc292Condensed-nRLWY.otf);
+}
 
 .font-nicokaku {
   font-family: Nicokaku;
 }
 .font-rc {
-  font-family: Rockwell Condensed;
+  font-family: Ngc;
 }
 
 body {
@@ -6948,6 +6952,10 @@ textarea.form-control-lg {
 
 .border-white {
   border-color: #fff !important;
+}
+
+.border-navy {
+  border-color: var(--bs-navy) !important;
 }
 
 .border-1 {
