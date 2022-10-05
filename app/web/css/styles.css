@@ -87,14 +87,18 @@
 /* font */
 @font-face {
   font-family: 'Nicokaku';
-  src: url(../fonts/nicokaku-plus/nicokaku_v1.ttf);
+  src: url(../fonts/nicokaku_v1.ttf);
+}
+@font-face {
+  font-family: 'Rockwell Condensed';
+  src: url(../fonts/ROCC.ttf);
 }
 
 .font-nicokaku {
   font-family: Nicokaku;
 }
 .font-rc {
-  font-family: 'Rockwell Condensed';
+  font-family: Rockwell Condensed;
 }
 
 body {
