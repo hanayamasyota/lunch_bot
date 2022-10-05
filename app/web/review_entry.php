@@ -53,7 +53,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-4 bg-lightbrown">
                             Form1
                         </th>
-                        <td class="col-7 py-4">
+                        <td class="col-7 py-4 bg-white">
                             <input type="text">
                         </td>
                     </tr>
@@ -61,7 +61,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-4 bg-lightbrown">
                             Form2
                         </th>
-                        <td class="col-7 py-4">
+                        <td class="col-7 py-4 bg-white">
                             <input type="datetime">
                         </td>
                     </tr>
@@ -69,7 +69,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-4 bg-lightbrown">
                             Form3
                         </th>
-                        <td class="col-7 py-4">
+                        <td class="col-7 py-4 bg-white">
                             <input type="color">
                         </td>
                     </tr>
