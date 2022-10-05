@@ -48,7 +48,7 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <div>
-            <p><?php echo $shopName ?>のレビュー</p>
+            <p class="fw-bold text-center"><?php echo $shopName ?>のレビュー</p>
         </div>
         <form method="post" action="#">
             <table class="table table-bordered border-navy">
@@ -65,7 +65,7 @@ require_once '../database_function/review_sql.php';
                             Form2
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="datetime">
+                            <input type="text">
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +73,7 @@ require_once '../database_function/review_sql.php';
                             Form3
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="color">
+                            <input type="text">
                         </td>
                     </tr>
             </table>
