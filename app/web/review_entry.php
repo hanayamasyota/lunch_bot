@@ -56,7 +56,7 @@ require_once '../database_function/review_sql.php';
             <table class="table border-navy border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger">*</div>Form1
+                            <div class="text-danger d-inline">*</div>Form1
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input class="w-100" type="text" name="review1">
