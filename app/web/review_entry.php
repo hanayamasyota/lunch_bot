@@ -47,8 +47,10 @@ require_once '../database_function/review_sql.php';
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <div>
-            <p class="fw-bold px-3"><?php echo $shopName ?>のレビュー</p>
+        <div class="bg-navy text-light">
+            <div class="px-2 pt-3 col-12 border-bottom-3">
+                <h3 class="h3"><?php echo $_GET["shopname"] ?>のレビュー</h3>
+            </div>
         </div>
         <form method="post" action="#">
             <table class="table border-navy border-navy">
