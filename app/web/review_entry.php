@@ -183,11 +183,8 @@ require_once '../database_function/review_sql.php';
 </html>
 
 <?php
-$review_1 = $_POST["review1"];
-$review_2 = $_POST["review2"];
-$review_3 = $_POST["review3"];
-
-echo $review_1;
-echo $review_2;
-echo $review_3;
+//postのテスト
+foreach($_POST as $key => $value) {
+    echo $key. " : " .$value. "<BR />";
+}
 ?>
