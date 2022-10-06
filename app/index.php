@@ -377,7 +377,6 @@ foreach ($events as $event) {
         if(strcmp($event->getText(), 'お店を探す') == 0) {
             error_log("userid:".$event->getUserId());
             //設定チェック
-            error_log('time'.time());
             $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());

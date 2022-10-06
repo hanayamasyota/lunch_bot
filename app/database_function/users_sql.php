@@ -71,7 +71,7 @@ function updateLocation($userId, $lat, $lon) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($lat, $lon, $userId));
 }
-// 位置情報の設定・更新
+// 休憩時間の設定・更新
 function updateRestTime($userId, $column, $time) {
     $dbh = dbConnection::getConnection();
     $sql = 'update ' . TABLE_NAME_USERS . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';

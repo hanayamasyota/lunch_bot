@@ -7,6 +7,8 @@ require_once '../database_function/review_sql.php';
     $shopId = $_GET["shopid"];
     $shopName = $_GET["shopname"];
     $userId = $_GET["userid"];
+
+    $message = "";
 ?>
 
 
@@ -86,6 +88,7 @@ require_once '../database_function/review_sql.php';
                 </button>
             </div>
         </form>
+        <p><?php echo $message; ?></p>
     </div>
 
         <!-- Footer-->
@@ -188,9 +191,19 @@ require_once '../database_function/review_sql.php';
 $num = 100;
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
-    //レビューを登録する
-    registerReview($userId, $shopId, $num, $value);
-    $num += 100;
+    //同じ店をレビューしていないか確認
+    if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
+        update
+        $message = "レビューが更新されました。";
+    } else {
+        if ($key == "review1") {
+            intval($value);
+        }
+        //レビューを登録する
+        registerReview($userId, $shopId, $num, $review);
+        $num += 100;
+        $message = "レビューが登録されました。";
+    }
 }
 ?>
 
