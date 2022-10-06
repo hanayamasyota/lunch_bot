@@ -62,7 +62,7 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>Form1
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review1" required>
+                            <input class="w-100" type="number" name="review1" required>
                         </td>
                     </tr>
                     <tr>
@@ -193,7 +193,7 @@ foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
     //同じ店をレビューしていないか確認
     if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
-        update
+        updateReview($userId, $shopId, $num, $review);
         $message = "レビューが更新されました。";
     } else {
         if ($key == "review1") {
