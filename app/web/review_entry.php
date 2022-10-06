@@ -194,7 +194,7 @@ foreach($_POST as $key => $value) {
     //同じ店をレビューしていないか確認
     if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
         updateReview($userId, $shopId, $num, $review);
-        $message = "レビューが更新されました。";
+        $num += 100;
     } else {
         if ($key == "review1") {
             intval($value);
@@ -202,9 +202,9 @@ foreach($_POST as $key => $value) {
         //レビューを登録する
         registerReview($userId, $shopId, $num, $review);
         $num += 100;
-        $message = "レビューが登録されました。";
     }
 }
+echo "レビューが登録されました。";
 ?>
 
 </html>
