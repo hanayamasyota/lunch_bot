@@ -57,7 +57,7 @@ require_once '../database_function/review_sql.php';
                             Form1
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="text" name="review1">
+                            <input class="w-25" type="text" name="review1">
                         </td>
                     </tr>
                     <tr>
@@ -65,7 +65,7 @@ require_once '../database_function/review_sql.php';
                             Form2
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="text" name="review2">
+                            <input class="w-25" type="text" name="review2">
                         </td>
                     </tr>
                     <tr>
@@ -73,7 +73,7 @@ require_once '../database_function/review_sql.php';
                             Form3
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="text" name="review3">
+                            <input class="w-25" type="text" name="review3">
                         </td>
                     </tr>
             </table>
