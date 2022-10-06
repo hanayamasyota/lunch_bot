@@ -54,13 +54,13 @@ require_once '../database_function/review_sql.php';
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <form method="post" action="#">
-            <table class="table border-navy border-navy">
+            <table class="table border-top border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>Form1
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review1">
+                            <input class="w-100" type="text" name="review1" required>
                         </td>
                     </tr>
                     <tr>
@@ -68,7 +68,7 @@ require_once '../database_function/review_sql.php';
                             Form2
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review2">
+                            <input class="w-100" type="text" name="review2" required>
                         </td>
                     </tr>
                     <tr>
@@ -76,7 +76,7 @@ require_once '../database_function/review_sql.php';
                             Form3
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review3">
+                            <input class="w-100" type="text" name="review3" required>
                         </td>
                     </tr>
             </table>
