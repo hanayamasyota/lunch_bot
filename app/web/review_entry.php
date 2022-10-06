@@ -51,7 +51,7 @@ require_once '../database_function/review_sql.php';
             <p class="fw-bold text-center"><?php echo $shopName ?>のレビュー</p>
         </div>
         <form method="post" action="#">
-            <table class="table table-bordered border-navy">
+            <table class="table border-navy border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             Form1
@@ -186,5 +186,6 @@ require_once '../database_function/review_sql.php';
 //postのテスト
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
+    
 }
 ?>
