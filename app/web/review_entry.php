@@ -52,7 +52,7 @@ require_once '../database_function/review_sql.php';
                 <h3 class="h3"><?php echo $_GET["shopname"] ?>のレビュー</h3>
             </div>
         </div>
-        <small><div class="text-danger">*</div>は必須項目です</small>
+        <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <form method="post" action="#">
             <table class="table border-navy border-navy">
                     <tr>
