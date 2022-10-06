@@ -35,7 +35,7 @@ require_once '../database_function/review_sql.php';
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <h1 class="pt-3 font-nicokaku pe-1" style="display: inline-block;">ひるまち</h1><h1 class="d-inline pt-3 font-rc">GO</h1>
+            <h1 class="d-inline pt-3 font-nicokaku pe-1">ひるまち</h1><h1 class="d-inline pt-3 font-rc">GO</h1>
         </div>
     </nav>
     <!-- Mashead header-->
@@ -48,7 +48,7 @@ require_once '../database_function/review_sql.php';
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <div>
-            <p class="fw-bold text-center"><?php echo $shopName ?>のレビュー</p>
+            <p class="fw-bold px-3"><?php echo $shopName ?>のレビュー</p>
         </div>
         <form method="post" action="#">
             <table class="table border-navy border-navy">
