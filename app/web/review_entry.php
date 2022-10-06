@@ -56,7 +56,7 @@ require_once '../database_function/review_sql.php';
             <table class="table border-navy border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            Form1
+                            <div class="text-danger">*</div>Form1
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input class="w-100" type="text" name="review1">
@@ -182,12 +182,15 @@ require_once '../database_function/review_sql.php';
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 
-</html>
-
 <?php
 //postのテスト
+$num = 100;
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
-    
+    //レビューを登録する
+    registerReview($userId, $shopId, $num, $value);
+    $num += 100;
 }
 ?>
+
+</html>
