@@ -68,7 +68,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         </th>
                         <td class="col-7 py-4 bg-white w-100">
                             <div class="review">
-			                    <small>星の数を選択してください。</small>
 	    		                <div class="stars">
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="5" required><label for="review01">★</label>
