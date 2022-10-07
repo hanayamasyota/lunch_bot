@@ -70,10 +70,10 @@ require_once '../database_function/review_sql.php';
 	    		                <div class="stars" style="margin: 0 0 0 12px;">
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="1"><label for="review01">★</label>
-		      			                <input id="review02" type="radio" name="review1" value="1"><label for="review02">★</label>
-		      			                <input id="review03" type="radio" name="review1" value="1"><label for="review03">★</label>
-		      			                <input id="review04" type="radio" name="review1" value="1"><label for="review04">★</label>
-		      			                <input id="review05" type="radio" name="review1" value="1"><label for="review05">★</label>
+		      			                <input id="review02" type="radio" name="review1" value="2"><label for="review02">★</label>
+		      			                <input id="review03" type="radio" name="review1" value="3"><label for="review03">★</label>
+		      			                <input id="review04" type="radio" name="review1" value="4"><label for="review04">★</label>
+		      			                <input id="review05" type="radio" name="review1" value="5"><label for="review05">★</label>
 		    		                </span>
 	  			                </div>
 			                </div>
@@ -83,7 +83,7 @@ require_once '../database_function/review_sql.php';
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
-                        <td class="col-7 py-4 bg-white">
+                        <td class="col-7 py-4 bg-white text-left w-100">
                             <select name="month" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
 				                <option hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
@@ -106,7 +106,27 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review3" required>
+                            <select name="month" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
+				                <option hidden>選択してください</option>
+				                <option value="1">0:00-3:00</option>
+				                <option value="2">3:00-6:00</option>
+				                <option value="3">6:00-9:00</option>
+				                <option value="4">9:00-11:00</option>
+				                <option value="5">11:00-13:00</option>
+				                <option value="6">13:00-16:00</option>
+				                <option value="7">16:00-19:00</option>
+				                <option value="8">19:00-21:00</option>
+				                <option value="9">21:00-24:00</option>
+			                </select><br>
+
+			                　 少　<input type="range" list="my-datalist" min="1" max="5">　多 　
+			                <datalist id="my-datalist">
+  				                <option value="1">
+  				                <option value="2">
+  				                <option value="3">
+  				                <option value="4">
+  				                <option value="5">
+			                </datalist>
                         </td>
                     </tr>
             </table>
