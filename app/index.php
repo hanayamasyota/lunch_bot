@@ -178,7 +178,7 @@ foreach ($events as $event) {
                 if (strpos($beforeMessage, '_entry') !== false) {
                     //現在レビュー中の店のデータを削除
                     $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-                    if (checkExistsReview($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
+                    if (checkExistsReview($event->getUserId(), $shopId, 100) != PDO::PARAM_NULL) {
                         deleteReview($event->getUserId(), $shopId);
                         updateUserShopData($event->getUserId(), 'review_shop', null);
                     }
