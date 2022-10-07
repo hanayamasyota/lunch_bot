@@ -106,20 +106,7 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <select name="month" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
-				                <option hidden>選択してください</option>
-				                <option value="1">0:00-3:00</option>
-				                <option value="2">3:00-6:00</option>
-				                <option value="3">6:00-9:00</option>
-				                <option value="4">9:00-11:00</option>
-				                <option value="5">11:00-13:00</option>
-				                <option value="6">13:00-16:00</option>
-				                <option value="7">16:00-19:00</option>
-				                <option value="8">19:00-21:00</option>
-				                <option value="9">21:00-24:00</option>
-			                </select><br>
-
-			                　 少　<input type="range" list="my-datalist" min="1" max="5">　多 　
+			                空　<input type="range" list="my-datalist" min="1" max="5">　混　
 			                <datalist id="my-datalist">
   				                <option value="1">
   				                <option value="2">
