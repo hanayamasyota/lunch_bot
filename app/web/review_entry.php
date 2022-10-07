@@ -31,6 +31,7 @@ require_once '../database_function/review_sql.php';
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/review.css" rel="stylesheet" />
 </head>
 
 <body id="page-top" class="bg-base">
@@ -61,15 +62,26 @@ require_once '../database_function/review_sql.php';
             <table class="table border-top border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger d-inline">*</div>Form1
+                            <div class="text-danger d-inline">*</div>味
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="number" name="review1" required>
+                            <div class="review">
+			                    <p>星の数を選択してください。</p>
+	    		                <div class="stars" style="margin: 0 0 0 12px;">
+		    		                <span>
+		      			                <input id="review01" type="radio" name="review"><label for="review01" value=1>★</label>
+		      			                <input id="review02" type="radio" name="review"><label for="review02" value=2>★</label>
+		      			                <input id="review03" type="radio" name="review"><label for="review03" value=3>★</label>
+		      			                <input id="review04" type="radio" name="review"><label for="review04" value=4>★</label>
+		      			                <input id="review05" type="radio" name="review"><label for="review05" value=5>★</label>
+		    		                </span>
+	  			                </div>
+			                </div>
                         </td>
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            Form2
+                            <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input class="w-100" type="text" name="review2" required>
@@ -77,7 +89,7 @@ require_once '../database_function/review_sql.php';
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            Form3
+                            <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input class="w-100" type="text" name="review3" required>
@@ -190,25 +202,29 @@ require_once '../database_function/review_sql.php';
 
 <?php
 //postのテスト
-$num = 100;
-$existCheck = checkExistsReview($userId, $shopId);
-error_log("value:".$existCheck);
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
-    //同じ店をレビューしていないか確認
-    if ($key == "review1") {
-        intval($value);
-    }
-    if ($existCheck != PDO::PARAM_NULL) {
-        updateReview($userId, $shopId, $num, $value);
-        $num += 100;
-    } else {
-        //レビューを登録する
-        registerReview($userId, $shopId, $num, $value);
-        $num += 100;
-    }
 }
-echo "レビューが登録されました。";
+
+
+// $num = 100;
+// error_log("value:".$existCheck);
+// foreach($_POST as $key => $value) {
+//     echo $key. " : " .$value. "<BR />";
+//     //同じ店をレビューしていないか確認
+//     if ($key == "review1") {
+//         intval($value);
+//     }
+//     if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
+//         updateReview($userId, $shopId, $num, $value);
+//         $num += 100;
+//     } else {
+//         //レビューを登録する
+//         registerReview($userId, $shopId, $num, $value);
+//         $num += 100;
+//     }
+// }
+// echo "レビューが登録されました。";
 ?>
 
 </html>

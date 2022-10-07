@@ -12,11 +12,11 @@ function registerReviewWithTime($userId, $shopId, $reviewNum, $review, $time) {
     $sth->execute(array($userId, $shopId, $reviewNum, $review, $time));
 }
 
-function checkExistsReview($userId, $shopId) {
+function checkExistsReview($userId, $shopId, $reviewNum) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review_no from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid';
+    $sql = 'select review_no from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid AND ? = review_num';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId));
+    $sth->execute(array($userId, $shopId, $reviewNum));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
