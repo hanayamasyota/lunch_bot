@@ -71,7 +71,7 @@ require_once '../database_function/review_sql.php';
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="5" required><label for="review01">★</label>
 		      			                <input id="review02" type="radio" name="review1" value="4"><label for="review02">★</label>
-		      			                <input id="review03" type="radio" name="review1" value="3" checked><label for="review03">★</label>
+		      			                <input id="review03" type="radio" name="review1" value="3" checked="checked"><label for="review03">★</label>
 		      			                <input id="review04" type="radio" name="review1" value="2"><label for="review04">★</label>
 		      			                <input id="review05" type="radio" name="review1" value="1"><label for="review05">★</label>
 		    		                </span>
