@@ -66,7 +66,7 @@ require_once '../database_function/review_sql.php';
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <div class="review">
-			                    <p>星の数を選択してください。</p>
+			                    <small>星の数を選択してください。</small>
 	    		                <div class="stars" style="margin: 0 0 0 12px;">
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="1"><label for="review01">★</label>
@@ -84,7 +84,7 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-100">
-                            <select name="month" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
+                            <select name="review2" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
 				                <option hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
 				                <option value="2">ゆったり</option>
@@ -106,7 +106,7 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white">
-			                空　<input type="range" list="my-datalist" min="1" max="5">　混　
+			                空　<input name="review3" type="range" list="my-datalist" min="1" max="5">　混　
 			                <datalist id="my-datalist">
   				                <option value="1">
   				                <option value="2">
