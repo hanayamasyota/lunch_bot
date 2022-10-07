@@ -66,8 +66,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>味
                         </th>
-                        <td class="col-7 py-4 bg-white w-100">
+                        <td class="col-7 py-4 bg-white w-80">
                             <div class="review">
+			                    <small>星の数を選択してください。</small>
 	    		                <div class="stars">
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="5" required><label for="review01">★</label>
@@ -84,7 +85,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
-                        <td class="col-7 py-4 bg-white text-left w-100">
+                        <td class="col-7 py-4 bg-white text-left w-80">
                             <select name="review2" required>
 				                <option value="" hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
@@ -106,7 +107,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
-                        <td class="col-7 py-4 bg-white w-100">
+                        <td class="col-7 py-4 bg-white w-80">
 			                空　<input name="review3" type="range" list="my-datalist" min="1" max="5">　混　
 			                <datalist id="my-datalist">
   				                <option value="1">
