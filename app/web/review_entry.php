@@ -85,7 +85,7 @@ require_once '../database_function/review_sql.php';
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-100">
                             <select name="review2" required>
-				                <option hidden>選択してください</option>
+				                <option value="" hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
 				                <option value="2">ゆったり</option>
 				                <option value="3">にぎやか</option>
