@@ -278,7 +278,7 @@ foreach ($events as $event) {
                 } else {
                     error_log('あ');
                     replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー登録確認', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビュー登録',
-                    $message,
+                    $shop['shopname'].'をしますか？',
                     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                         'はい', SERVER_ROOT.'/web/review_entry.php?shopid=' . $shop['shopid'] . '&userid=' . $event->getUserId() . '&shopname=' .  $shop['shopname']),
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
