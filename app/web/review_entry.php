@@ -69,11 +69,11 @@ require_once '../database_function/review_sql.php';
 			                    <p>星の数を選択してください。</p>
 	    		                <div class="stars" style="margin: 0 0 0 12px;">
 		    		                <span>
-		      			                <input id="review01" type="radio" name="review1"><label for="review01" value="1">★</label>
-		      			                <input id="review02" type="radio" name="review1"><label for="review02" value="2">★</label>
-		      			                <input id="review03" type="radio" name="review1"><label for="review03" value="3">★</label>
-		      			                <input id="review04" type="radio" name="review1"><label for="review04" value="4">★</label>
-		      			                <input id="review05" type="radio" name="review1"><label for="review05" value="5">★</label>
+		      			                <input id="review01" type="radio" name="review1" value="1"><label for="review01">★</label>
+		      			                <input id="review02" type="radio" name="review1" value="1"><label for="review02">★</label>
+		      			                <input id="review03" type="radio" name="review1" value="1"><label for="review03">★</label>
+		      			                <input id="review04" type="radio" name="review1" value="1"><label for="review04">★</label>
+		      			                <input id="review05" type="radio" name="review1" value="1"><label for="review05">★</label>
 		    		                </span>
 	  			                </div>
 			                </div>
@@ -84,7 +84,21 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input class="w-100" type="text" name="review2" required>
+                            <select name="month" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
+				                <option hidden>選択してください</option>
+				                <option value="1">おしゃれ</option>
+				                <option value="2">ゆったり</option>
+				                <option value="3">にぎやか</option>
+				                <option value="4">ごちゃごちゃ</option>
+				                <option value="5">a</option>
+				                <option value="6">i</option>
+				                <option value="7">u</option>
+				                <option value="8">e</option>
+				                <option value="9">o</option>
+				                <option value="10">7</option>
+				                <option value="11">0</option>
+				                <option value="12">0</option>
+			                </select>
                         </td>
                     </tr>
                     <tr>
