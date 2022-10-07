@@ -66,7 +66,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>味
                         </th>
-                        <td class="col-7 py-4 bg-white">
+                        <td class="col-7 py-4 bg-white w-100">
                             <div class="review">
 			                    <small>星の数を選択してください。</small>
 	    		                <div class="stars">
@@ -107,7 +107,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
-                        <td class="col-7 py-4 bg-white">
+                        <td class="col-7 py-4 bg-white w-100">
 			                空　<input name="review3" type="range" list="my-datalist" min="1" max="5">　混　
 			                <datalist id="my-datalist">
   				                <option value="1">
