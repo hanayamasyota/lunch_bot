@@ -61,9 +61,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         <form method="post" action="#">
             <input type="hidden" value=<?php echo $userId ?> name=>
             <input type="hidden" value=<?php echo $shopId ?>> 
-            <table class="table border-top border-navy">
+            <table class="table border-top border-navy vertical-middle">
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown vertical-center">
+                        <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>味
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
@@ -82,7 +82,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown vertical-center">
+                        <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-80">
@@ -104,11 +104,11 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown vertical-center">
+                        <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
-			                空　<input name="review3" type="range" list="my-datalist" min="1" max="5">　混　
+			                空 <input name="review3" type="range" list="my-datalist" min="1" max="5"> 混　
 			                <datalist id="my-datalist">
   				                <option value="1">
   				                <option value="2">
