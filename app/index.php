@@ -279,8 +279,8 @@ foreach ($events as $event) {
                     replyConfirmTemplate($bot, $event->getReplyToken(),
                     'レビュー確認',
                     $shop['shopname'].': この店のレビューを書きますか？',
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'はい', 'はい'),
+                    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                        'はい', SERVER_ROOT.'/web/review_entry.php?shopid=' . $shop['shopid'] . '&userid=' . $event->getUserId() . '&shopname=' .  $shop['shopname']),
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                         'キャンセル', 'キャンセル')
                     );
@@ -395,7 +395,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 updateUser($event->getUserId(), 'shop_review');
-                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/nuko.png', 'レビューメニュー',
+                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/img/hirumatiGO.png', 'レビューメニュー',
                 'レビューのメニューです。',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     '自分のレビュー確認(html)', 'レビュー確認'),

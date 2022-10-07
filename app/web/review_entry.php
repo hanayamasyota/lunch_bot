@@ -56,6 +56,8 @@ require_once '../database_function/review_sql.php';
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <form method="post" action="#">
+            <input type="hidden" value=<?php echo $userId ?> name=>
+            <input type="hidden" value=<?php echo $shopId ?>> 
             <table class="table border-top border-navy">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
