@@ -7717,6 +7717,7 @@ textarea.form-control-lg {
 }
 
 .vertical-middle {
+  display: inline-block;
   vertical-align: middle !important;
 }
 
