@@ -69,11 +69,11 @@ require_once '../database_function/review_sql.php';
 			                    <p>星の数を選択してください。</p>
 	    		                <div class="stars" style="margin: 0 0 0 12px;">
 		    		                <span>
-		      			                <input id="review01" type="radio" name="review"><label for="review01" value=1>★</label>
-		      			                <input id="review02" type="radio" name="review"><label for="review02" value=2>★</label>
-		      			                <input id="review03" type="radio" name="review"><label for="review03" value=3>★</label>
-		      			                <input id="review04" type="radio" name="review"><label for="review04" value=4>★</label>
-		      			                <input id="review05" type="radio" name="review"><label for="review05" value=5>★</label>
+		      			                <input id="review01" type="radio" name="review1"><label for="review01" value="1">★</label>
+		      			                <input id="review02" type="radio" name="review1"><label for="review02" value="2">★</label>
+		      			                <input id="review03" type="radio" name="review1"><label for="review03" value="3">★</label>
+		      			                <input id="review04" type="radio" name="review1"><label for="review04" value="4">★</label>
+		      			                <input id="review05" type="radio" name="review1"><label for="review05" value="5">★</label>
 		    		                </span>
 	  			                </div>
 			                </div>
