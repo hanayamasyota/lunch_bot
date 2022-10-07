@@ -67,11 +67,11 @@ require_once '../database_function/review_sql.php';
                         <td class="col-7 py-4 bg-white">
                             <div class="review">
 			                    <small>星の数を選択してください。</small>
-	    		                <div class="stars" style="margin: 0 0 0 12px;">
+	    		                <div class="stars">
 		    		                <span>
 		      			                <input id="review01" type="radio" name="review1" value="5"><label for="review01">★</label>
 		      			                <input id="review02" type="radio" name="review1" value="4"><label for="review02">★</label>
-		      			                <input id="review03" type="radio" name="review1" value="3"><label for="review03">★</label>
+		      			                <input id="review03" type="radio" name="review1" value="3" selected><label for="review03">★</label>
 		      			                <input id="review04" type="radio" name="review1" value="2"><label for="review04">★</label>
 		      			                <input id="review05" type="radio" name="review1" value="1"><label for="review05">★</label>
 		    		                </span>
@@ -84,7 +84,7 @@ require_once '../database_function/review_sql.php';
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-100">
-                            <select name="review2" style="padding: 0 50px 0 0; margin: 0 0 0 20px;">
+                            <select name="review2" required>
 				                <option hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
 				                <option value="2">ゆったり</option>
