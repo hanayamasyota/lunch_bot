@@ -223,29 +223,31 @@ require_once '../database_function/review_sql.php';
 
 <?php
 //postのテスト
-foreach($_POST as $key => $value) {
-    echo $key. " : " .$value. "<BR />";
-}
-
-
-// $num = 100;
-// error_log("value:".$existCheck);
 // foreach($_POST as $key => $value) {
 //     echo $key. " : " .$value. "<BR />";
-//     //同じ店をレビューしていないか確認
-//     if ($key == "review1") {
-//         intval($value);
-//     }
-//     if (checkExistsReview($userId, $shopId) != PDO::PARAM_NULL) {
-//         updateReview($userId, $shopId, $num, $value);
-//         $num += 100;
-//     } else {
-//         //レビューを登録する
-//         registerReview($userId, $shopId, $num, $value);
-//         $num += 100;
-//     }
 // }
-// echo "レビューが登録されました。";
+
+
+$num = 100;
+$message = '';
+foreach($_POST as $key => $value) {
+    echo $key. " : " .$value. "<BR />";
+    //同じ店をレビューしていないか確認
+    if ($key == "review1") {
+        intval($value);
+    }
+    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+        updateReview($userId, $shopId, $num, $value);
+        $num += 100;
+        $message = 'レビューを更新しました。';
+    } else {
+        //レビューを登録する
+        registerReview($userId, $shopId, $num, $value);
+        $num += 100;
+        $message = 'レビューを登録しました。';
+    }
+}
+echo $message;
 ?>
 
 </html>
