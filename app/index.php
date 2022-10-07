@@ -276,13 +276,12 @@ foreach ($events as $event) {
                 if (checkExistsReview($event->getUserId(), $shop['shopid'], 100) != PDO::PARAM_NULL) {
                     replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
                 } else {
-                    replyConfirmTemplate($bot, $event->getReplyToken(),
-                    'レビュー確認',
-                    $shop['shopname'].': この店のレビューを書きますか？',
+                    replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー登録確認', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビュー登録',
+                    $message,
                     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                         'はい', SERVER_ROOT.'/web/review_entry.php?shopid=' . $shop['shopid'] . '&userid=' . $event->getUserId() . '&shopname=' .  $shop['shopname']),
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'キャンセル', 'キャンセル')
+                        'キャンセル', 'キャンセル'),
                     );
                     //entry review data
                     updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
