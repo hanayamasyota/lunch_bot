@@ -10,6 +10,10 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     $shopName = $_GET["shopname"];
     $userId = $_GET["userid"];
 
+    error_log('$shopid='.$shopId);
+    error_log('$shopname='.$shopName);
+    error_log('$userid='.$userId);
+
     $message = "";
 ?>
 
