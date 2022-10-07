@@ -14,7 +14,7 @@ function registerReviewWithTime($userId, $shopId, $reviewNum, $review, $time) {
 
 function checkExistsReview($userId, $shopId, $reviewNum) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review_no from reviews where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid AND ? = review_num';
+    $sql = 'select review_no from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopid AND ? = review_num';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId, $reviewNum));
     // if no record
