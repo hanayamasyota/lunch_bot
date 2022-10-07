@@ -63,7 +63,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
             <input type="hidden" value=<?php echo $shopId ?>> 
             <table class="table border-top border-navy">
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown">
+                        <th class="col-5 py-4 bg-lightbrown vertical-center">
                             <div class="text-danger d-inline">*</div>味
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
@@ -82,7 +82,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown">
+                        <th class="col-5 py-4 bg-lightbrown vertical-center">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-80">
@@ -104,7 +104,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         </td>
                     </tr>
                     <tr>
-                        <th class="col-5 py-4 bg-lightbrown">
+                        <th class="col-5 py-4 bg-lightbrown vertical-center">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
@@ -235,9 +235,6 @@ $message = '';
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
     //同じ店をレビューしていないか確認
-    if ($key == "review1") {
-        intval($value);
-    }
     if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
         updateReview($userId, $shopId, $num, $value);
         $message = 'レビューを更新しました。';

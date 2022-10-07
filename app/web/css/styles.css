@@ -7716,6 +7716,10 @@ textarea.form-control-lg {
   text-align: center !important;
 }
 
+.vertical-center {
+  vertical-align: center !important;
+}
+
 .text-decoration-none {
   text-decoration: none !important;
 }
