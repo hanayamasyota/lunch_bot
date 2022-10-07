@@ -190,6 +190,7 @@ require_once '../database_function/review_sql.php';
 //postのテスト
 $num = 100;
 $existCheck = checkExistsReview($userId, $shopId);
+error_log("value:".$existCheck);
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
     //同じ店をレビューしていないか確認
