@@ -238,14 +238,13 @@ foreach($_POST as $key => $value) {
     }
     if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
         updateReview($userId, $shopId, $num, $value);
-        $num += 100;
         $message = 'レビューを更新しました。';
     } else {
         //レビューを登録する
         registerReview($userId, $shopId, $num, $value);
-        $num += 100;
         $message = 'レビューを登録しました。';
     }
+    $num += 100;
 }
 echo $message;
 ?>
