@@ -283,7 +283,7 @@ foreach ($events as $event) {
                         'shopname' => $shop["shopname"],
                     );
                     $query = http_build_query($data);
-                    $url = SERVER_ROOT . "/web/review_list.php?" . $query;
+                    $url = SERVER_ROOT . "/web/review_entry.php?" . $query;
                     replyButtonsTemplate(
                         $bot,
                         $event->getReplyToken(),
@@ -293,7 +293,7 @@ foreach ($events as $event) {
                         $shop['shopname'] . 'のレビューをしますか？',
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                             'はい',
-                            SERVER_ROOT . '/web/review_entry.php?shopid'
+                            $url
                         ),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                             'キャンセル',
