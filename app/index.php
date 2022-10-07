@@ -276,16 +276,35 @@ foreach ($events as $event) {
                 if (checkExistsReview($event->getUserId(), $shop['shopid'], 100) != PDO::PARAM_NULL) {
                     replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
                 } else {
-                    error_log('あ');
-                    replyButtonsTemplate($bot, $event->getReplyToken(), 'レビュー登録確認', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビュー登録',
-                    $shop['shopname'].'のレビューをしますか？',
-                    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                        'はい', SERVER_ROOT.'/web/review_entry.php?shopid=' . $shop['shopid'] . '&userid=' . $event->getUserId() . '&shopname=' .  $shop['shopname']),
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'キャンセル', 'キャンセル'),
+                    //urlのクエリを作成
+                    $data = array(
+                        'userid' => $shop["userid"],
+                        'shopid' => $shop["shopid"],
+                        'shopname' => $shop["shopname"],
+                    );
+                    $query = http_build_query($data);
+                    $url = SERVER_ROOT . "/web/review_list.php?" . $query;
+                    replyButtonsTemplate(
+                        $bot,
+                        $event->getReplyToken(),
+                        'レビュー登録確認',
+                        SERVER_ROOT . '/imgs/hirumatiGO.png',
+                        'レビュー登録',
+                        $shop['shopname'] . 'のレビューをしますか？',
+                        new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                            'はい',
+                            SERVER_ROOT . '/web/review_entry.php?shopid'
+                        ),
+                        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                            'キャンセル',
+                            'キャンセル'
+                        )
                     );
                     //entry review data
-                    updateUserShopData($event->getUserId(), 'review_shop', $shop['shopid']);
+                    updateUserShopData($event->getUserId(),
+                        'review_shop',
+                        $shop['shopid']
+                    );
                     updateUser($event->getUserId(), 'shop_review_entry_000');
                 }
             } else {
@@ -444,4 +463,3 @@ foreach ($events as $event) {
 
     }
 }
-?>
