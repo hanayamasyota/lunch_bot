@@ -59,8 +59,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <form method="post" action="#">
-            <input type="hidden" value=<?php echo $userId ?> name="userid">
-            <input type="hidden" value=<?php echo $shopId ?> name="shopid"> 
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
@@ -235,13 +233,13 @@ $message = '';
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
     //同じ店をレビューしていないか確認
-    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
-        updateReview($userId, $shopId, $num, $value);
-        $message = 'レビューを更新しました。';
+    if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
+        updateReview($_GET['userid'], $_GET['shopid'], $num, $value);
+        $message = 'レビュー更新が完了しました。';
     } else {
         //レビューを登録する
-        registerReview($userId, $shopId, $num, $value);
-        $message = 'レビューを登録しました。';
+        registerReview($_GET['userid'], $_GET['shopid'], $num, $value);
+        $message = 'レビュー登録が完了しました。';
     }
     $num += 100;
 }
