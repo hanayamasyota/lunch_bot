@@ -278,7 +278,7 @@ foreach ($events as $event) {
                 } else {
                     //urlのクエリを作成
                     $data = array(
-                        'userid' => $shop["userid"],
+                        'userid' => $event->getUserId(),
                         'shopid' => $shop["shopid"],
                         'shopname' => $shop["shopname"],
                     );
