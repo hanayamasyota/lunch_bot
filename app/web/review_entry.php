@@ -83,7 +83,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
-                        <td class="col-7 py-4 bg-white text-left w-100">
+                        <td class="col-7 py-4 bg-white text-left w-80">
                             <select name="ambi" required>
 				                <option value="" hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
@@ -226,14 +226,16 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 $num = 100;
 $message = '';
 foreach($_POST as $key => $value) {
-
+    //現在時刻
+    $nowTime = time();
+    $nowTimeString = date('Y-m-d H:i:s', $nowTime);
     //同じ店をレビューしていないか確認
     if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
-        updateReview($_GET['userid'], $_GET['shopid'], $num, $value);
+        updateReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
         $message = 'レビュー更新が完了しました。';
     } else {
         //レビューを登録する
-        registerReview($_GET['userid'], $_GET['shopid'], $num, $value);
+        registerReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
         $message = 'レビュー登録が完了しました。';
     }
     $num += 100;

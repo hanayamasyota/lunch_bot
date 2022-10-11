@@ -1,11 +1,5 @@
 <?php
-function registerReview($userId, $shopId, $reviewNum, $review) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?) ';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $reviewNum, $review));
-}
-function registerReviewWithTime($userId, $shopId, $reviewNum, $review, $time) {
+function registerReview($userId, $shopId, $reviewNum, $review, $time) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
@@ -56,7 +50,7 @@ function getOwnReviewData($userId, $shopId) {
 
 function getReviewData($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num, time from reviews where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select review, review_num, time from reviews where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num asc';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // if no record
