@@ -232,6 +232,7 @@ $num = 100;
 $message = '';
 foreach($_POST as $key => $value) {
     echo $key. " : " .$value. "<BR />";
+    echo "get_param=".$_GET['userid'];
     //同じ店をレビューしていないか確認
     if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
         updateReview($_GET['userid'], $_GET['shopid'], $num, $value);
