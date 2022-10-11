@@ -10,10 +10,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     $shopName = $_GET["shopname"];
     $userId = $_GET["userid"];
 
-    error_log('$shopid='.$shopId);
-    error_log('$shopname='.$shopName);
-    error_log('$userid='.$userId);
-
     $message = "";
 ?>
 
@@ -63,8 +59,8 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <form method="post" action="#">
-            <input type="hidden" value=<?php echo $userId ?> name=>
-            <input type="hidden" value=<?php echo $shopId ?>> 
+            <input type="hidden" value=<?php echo $userId ?> name="userid">
+            <input type="hidden" value=<?php echo $shopId ?> name="shopid"> 
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
@@ -96,8 +92,8 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 				                <option value="2">ゆったり</option>
 				                <option value="3">にぎやか</option>
 				                <option value="4">ごちゃごちゃ</option>
-				                <option value="5">a</option>
-				                <option value="6">i</option>
+				                <option value="5">いちゃいちゃ</option>
+				                <option value="6">めちゃめちゃ</option>
 				                <option value="7">u</option>
 				                <option value="8">e</option>
 				                <option value="9">o</option>
