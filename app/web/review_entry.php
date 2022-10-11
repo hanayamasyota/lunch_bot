@@ -87,17 +87,12 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                             <select name="review2" required>
 				                <option value="" hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
-				                <option value="2">ゆったり</option>
+				                <option value="2">たのしい</option>
 				                <option value="3">にぎやか</option>
-				                <option value="4">ごちゃごちゃ</option>
-				                <option value="5">いちゃいちゃ</option>
-				                <option value="6">めちゃめちゃ</option>
-				                <option value="7">u</option>
-				                <option value="8">e</option>
-				                <option value="9">o</option>
-				                <option value="10">7</option>
-				                <option value="11">0</option>
-				                <option value="12">0</option>
+				                <option value="4">おちつきがある</option>
+				                <option value="5">個性的</option>
+				                <option value="6">高級志向</option>
+				                <option value="7">テーマ性がある</option>
 			                </select>
                         </td>
                     </tr>
