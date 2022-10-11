@@ -227,7 +227,7 @@ $num = 100;
 $message = '';
 foreach($_POST as $key => $value) {
     //現在時刻
-    $nowTime = time();
+    $nowTime = time()+32400;
     $nowTimeString = date('Y-m-d H:i:s', $nowTime);
     //同じ店をレビューしていないか確認
     if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
