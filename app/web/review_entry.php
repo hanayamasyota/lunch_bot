@@ -83,7 +83,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
-                        <td class="col-7 py-4 bg-white text-left w-80">
+                        <td class="col-7 py-4 bg-white text-left w-100">
                             <select name="ambi" required>
 				                <option value="" hidden>選択してください</option>
 				                <option value="1">おしゃれ</option>
@@ -100,7 +100,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
-                        <td class="col-7 py-4 bg-white w-100">
+                        <td class="col-7 py-4 bg-white w-80">
 			                空 <input name="crowd" type="range" list="my-datalist" min="1" max="5"> 混　
 			                <datalist id="my-datalist">
   				                <option value="1">
