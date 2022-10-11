@@ -100,7 +100,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
-                        <td class="col-7 py-4 bg-white w-80">
+                        <td class="col-7 py-4 bg-white w-100">
 			                空 <input name="crowd" type="range" list="my-datalist" min="1" max="5"> 混　
 			                <datalist id="my-datalist">
   				                <option value="1">
@@ -226,8 +226,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 $num = 100;
 $message = '';
 foreach($_POST as $key => $value) {
-    echo $key. " : " .$value. "<BR />";
-    echo "get_param=".$_GET['userid'];
+
     //同じ店をレビューしていないか確認
     if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
         updateReview($_GET['userid'], $_GET['shopid'], $num, $value);
