@@ -113,7 +113,7 @@ function showShop($page, $userId, $bot, $token) {
     foreach ($shopData as $shop) {
         //urlのクエリを作成
         $data = array(
-            'userid' => $shop["userid"],
+            'userid' => $userId,
             'shopid' => $shop["shopid"],
             'shopname' => $shop["shopname"],
         );
