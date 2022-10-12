@@ -117,7 +117,7 @@ $crowd = [
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><?php echo $time ?></thead>
+                    <thead><?php echo $time ?><div class="text-right"><?php echo "休憩時間:".$restTImeArray[$i] ?></div></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
@@ -139,7 +139,6 @@ $crowd = [
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $restTImeArray[$i] ?>
                             <?php echo $crowd[$reviewArray_3[$i]]; ?>
                         </td>
                     </tr>
