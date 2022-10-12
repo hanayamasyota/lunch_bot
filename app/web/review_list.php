@@ -4,6 +4,7 @@ require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
+define('TABLE_NAME_USERS', 'users');
 
 $ambi = [
     "1" => "おしゃれ",
