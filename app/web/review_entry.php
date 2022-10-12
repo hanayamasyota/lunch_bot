@@ -58,6 +58,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
             </div>
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
+        <p><?php echo $message; ?></p>
         <form method="post" action="#">
             <table class="table border-top border-navy vertical-middle">
                     <tr>
@@ -118,7 +119,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                 </button>
             </div>
         </form>
-        <p><?php echo $message; ?></p>
     </div>
 
         <!-- Footer-->
@@ -240,7 +240,7 @@ foreach($_POST as $key => $value) {
     }
     $num += 100;
 }
-echo $message;
+updateUser($userId, null);
 ?>
 
 </html>
