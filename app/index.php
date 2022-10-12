@@ -139,7 +139,7 @@ foreach ($events as $event) {
     }
 
     // postbackイベント
-    if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
+    else if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
@@ -155,7 +155,6 @@ foreach ($events as $event) {
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
-                    error_log("count : ".countVisitedShops($event->getUserId()));
                     if (countVisitedShops($event->getUserId()) >= 10) {
                         deleteOldUserVisitedShop($event->getUserId());
                     }
@@ -167,7 +166,7 @@ foreach ($events as $event) {
     }
 
     // 今行っている動きをキャンセルする
-    if (strcmp($event->getText(), 'キャンセル') == 0) {
+    else if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
@@ -209,37 +208,8 @@ foreach ($events as $event) {
             '「'.$mode.'」がキャンセルされました。');
         }
 
-    //レビュー処理
-    // レビューを書くかの場面で「はい」と送信された場合
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_000') && (strcmp($event->getText(), 'はい') == 0)) {
-        updateUser($event->getUserId(), 'shop_review_entry_100');
-    // 総合の評価を入力する場面で1~5の数字が送信された場合
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_100') && (preg_match('/^[1-5]{1}/', $event->getText()))) {
-        // insert reviews
-        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        registerReview($event->getUserId(), $shopId, 100, $event->getText());
-        // update before_send
-        updateUser($event->getUserId(), 'shop_review_entry_200');
-    // おすすめメニューを登録
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_200')) {
-        // insert reviews
-        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        registerReview($event->getUserId(), $shopId, 200, $event->getText());
-        // update before_send
-        updateUser($event->getUserId(), 'shop_review_entry_300');
-    // 自由欄を登録
-    } else if ((getBeforeMessageByUserId($event->getUserId()) === 'shop_review_entry_300')) {
-        // insert reviews
-        $shopId = getDataByUsershopdata($event->getUserId(), 'review_shop');
-        $nowTime = time();
-        $nowTimeString = date('Y-m-d', $nowTime);
-        registerReviewWithTime($event->getUserId(), $shopId, 300, $event->getText(), $nowTimeString);
-        // update before_send
-        updateUser($event->getUserId(), 'shop_review_entry_confirm');
-    }
-
     // before_sendが設定されている場合 //
-    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+    else if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //shop_review
         if ($beforeMessage === 'shop_review') {
