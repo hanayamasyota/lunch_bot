@@ -2,6 +2,8 @@
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 
+define('TABLE_NAME_REVIEWS', 'reviews');
+
 $ambi = [
     "1" => "おしゃれ",
     "2" => "たのしい",

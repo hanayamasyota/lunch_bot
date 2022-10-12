@@ -66,7 +66,7 @@ function getOwnReviewData($userId, $shopId) {
 
 function getReviewData($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num, time from reviews where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
+    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
     // if no record
