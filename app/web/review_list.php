@@ -1,6 +1,24 @@
 <?php
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
+
+$ambi = [
+    "1" => "おしゃれ",
+    "2" => "たのしい",
+    "3" => "にぎやか",
+    "4" => "おちつきがある",
+    "5" => "個性的",
+    "6" => "高級志向",
+    "7" => "テーマ性がある",
+];
+
+$crowd = [
+    "1" => "空いていた",
+    "2" => "やや空いていた", 
+    "3" => "普通",
+    "4" => "やや混んでいた",
+    "5" => "混んていた",
+];
 ?>
 
 <?php
@@ -90,7 +108,7 @@ require_once '../database_function/review_sql.php';
                     <thead><?php echo $time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
-                            レビュー項目１
+                            評価
                         </th>
                         <td class="col-7 py-3 bg-white">
                             <?php echo $reviewArray_1[$i] . '点'; ?>
@@ -98,18 +116,18 @@ require_once '../database_function/review_sql.php';
                     </tr>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
-                            レビュー項目２
+                            雰囲気
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $reviewArray_2[$i]; ?>
+                            <?php echo $ambi[$reviewArray_2[$i]]; ?>
                         </td>
                     </tr>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
-                            レビュー項目３
+                            混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $reviewArray_3[$i]; ?>
+                            <?php echo $crowd[$reviewArray_3[$i]]; ?>
                         </td>
                     </tr>
                 </table>
