@@ -155,6 +155,7 @@ foreach ($events as $event) {
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
+                    error_log("count : ".countVisitedShops($event->getUserId()));
                     if (countVisitedShops($event->getUserId()) >= 10) {
                         deleteOldUserVisitedShop($event->getUserId());
                     }
