@@ -34,6 +34,22 @@ function getLocationByUserId($userId) {
         return $row;
     }
 }
+function getRestTimeByUserId($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select rest_start, rest_end from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        if (($row['rest_start'] === null) || ($row['rest_end'] === null)) {
+            return PDO::PARAM_NULL;
+        }
+        //return location
+        return $row;
+    }
+}
 
 // テーブル内にユーザIDが存在するかを調べる
 function getUserIdCheck($userId, $table) {

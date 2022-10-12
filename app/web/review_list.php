@@ -24,13 +24,16 @@ $crowd = [
 <?php
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
+    $allUserId = getAllUserIdByReviews($shopId);
     $avarageScore = 0.0;
     //レビューが登録されていない場合
     if ($reviewData != PDO::PARAM_NULL) {
         $reviewArray_1 = array();
         $reviewArray_2 = array();
         $reviewArray_3 = array();
+        //レビュー
         $timeArray = array();
+        $restTImeArray = array();
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 100) {
                 array_push($reviewArray_1, $review["review"]);
@@ -41,10 +44,15 @@ $crowd = [
                 array_push($timeArray, $review["time"]);
             }
         }
+        foreach ($allUserId as $userId) {
+            $restTime = getRestTimeByUserId($userId);
+            array_push($restTImeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
+        }
         $totalScore = 0;
         for ($i = 0; $i < count($reviewArray_1); $i++) {
             $totalScore += intval($reviewArray_1[$i]);
         }
+        
         $avarageScore = floatval($totalScore/count($reviewArray_1));
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
@@ -127,6 +135,7 @@ $crowd = [
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
+                            <?php echo $restTImeArray[$i] ?>
                             <?php echo $crowd[$reviewArray_3[$i]]; ?>
                         </td>
                     </tr>
