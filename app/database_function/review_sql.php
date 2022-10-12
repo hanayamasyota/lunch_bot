@@ -4,6 +4,8 @@ function registerReview($userId, $shopId, $reviewNum, $review, $time) {
     $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopId, $reviewNum, $review, $time));
+    
+    $dbh->commit();
 }
 
 function checkExistsReview($userId, $shopId, $reviewNum) {
@@ -67,6 +69,8 @@ function updateReview($userId, $shopId, $reviewNum, $review) {
     $sql = 'update ' . TABLE_NAME_REVIEWS . ' set (reviews) = (?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = review_num and ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($review, $userId, $reviewNum, $shopId));
+
+    $dbh->commit();
 }
 
 function deleteReview($userId, $shopId) {
