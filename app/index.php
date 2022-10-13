@@ -155,9 +155,11 @@ foreach ($events as $event) {
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
-                    // if (countVisitedShops($event->getUserId()) >= 10) {
-                    //     deleteOldUserVisitedShop($event->getUserId());
-                    // }
+                    $a = countVisitedShops($event->getUserId();
+                    error_log("count:".$a);
+                    if (countVisitedShops($event->getUserId()) >= 10) {
+                        deleteOldUserVisitedShop($event->getUserId());
+                    }
                     registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
@@ -425,10 +427,5 @@ foreach ($events as $event) {
             replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
-
-        else if(strcmp($event->getText(), 'あ') == 0) {
-            $minute = getTImeInfo();
-            replyTextMessage($bot, $event->getReplyToken(), $minute.'で確定');
-        } 
     }
 }
