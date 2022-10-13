@@ -26,11 +26,11 @@ define('TABLE_NAME_USERS', 'users');
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
         //同じ店をレビューしていないか確認
         if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
-            updateReview($userId, $shopId, $num, $value, $nowTimeString);
+            updateReview($userId, $shopId, $num, $data, $nowTimeString);
             $message = 'レビュー更新が完了しました。';
         } else {
             //レビューを登録する
-            registerReview($userId, $shopId, $num, $value, $nowTimeString);
+            registerReview($userId, $shopId, $num, $data, $nowTimeString);
             $message = 'レビュー登録が完了しました。';
         }
         $num += 100;
