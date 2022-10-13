@@ -54,7 +54,7 @@
         <p><?php echo $message; ?></p>
         <form method="post" action="review_entry_confirm.php">
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
-            <input type="hidden" name="userid" value="<?php echo $shopId; ?>">
+            <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
