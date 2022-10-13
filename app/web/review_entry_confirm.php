@@ -21,7 +21,6 @@ define('TABLE_NAME_USERS', 'users');
 
     $num = 100;
     foreach($postData as $data) {
-        error_log("data:".$data);
         $nowTime = time()+32400;
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
         //同じ店をレビューしていないか確認

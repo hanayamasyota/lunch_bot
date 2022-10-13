@@ -50,7 +50,6 @@ $crowd = [
             }
         }
         foreach ($allUserId as $userId) {
-            error_log("userId:".$userId);
             $restTime = getRestTimeByUserId($userId);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
@@ -115,7 +114,7 @@ $crowd = [
             </div>
         </div>
         <div class="bg-white">
-            <?php if (gettype($avarageScore) == 'double') { //視覚的にわかりやすく表示する
+            <?php if (gettype($avarageScore) == 'double') {
                 for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
