@@ -1,11 +1,4 @@
 <?php
-require_once '../DBConnection.php';
-require_once '../database_function/review_sql.php'; 
-
-define('TABLE_NAME_REVIEWS', 'reviews');
-?>
-
-<?php
     $shopId = $_GET["shopid"];
     $shopName = $_GET["shopname"];
     $userId = $_GET["userid"];
@@ -59,7 +52,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
         <p><?php echo $message; ?></p>
-        <form method="post" action="#">
+        <form method="post" action="review_entry_confirm.php">
+            <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+            <input type="hidden" name="userid" value="<?php echo $shopId; ?>">
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
@@ -216,31 +211,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 
-<?php
-//postのテスト
-// foreach($_POST as $key => $value) {
-//     echo $key. " : " .$value. "<BR />";
-// }
 
-
-$num = 100;
-$message = '';
-foreach($_POST as $key => $value) {
-    //現在時刻
-    $nowTime = time()+32400;
-    $nowTimeString = date('Y-m-d H:i:s', $nowTime);
-    //同じ店をレビューしていないか確認
-    if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
-        updateReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
-        $message = 'レビュー更新が完了しました。';
-    } else {
-        //レビューを登録する
-        registerReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
-        $message = 'レビュー登録が完了しました。';
-    }
-    $num += 100;
-}
-updateUser($userId, null);
-?>
 
 </html>
