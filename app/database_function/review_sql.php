@@ -22,17 +22,17 @@ function checkExistsReview($userId, $shopId, $reviewNum) {
 
 function getAllUserIdByReviews($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select distinct pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') from ' .TABLE_NAME_REVIEWS. 
+    $sql = 'select distinct pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') as  . '\') from ' .TABLE_NAME_REVIEWS. 
     ' where ? = shopid'.
     ' order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
         // if no record
-        if (!($row = $sth->fetch())) {
+        if (!($row = $sth->fetchall())) {
             return PDO::PARAM_NULL;
         } else {
             //return before_send
-            return $row;
+            return $row['userid'];
         }
 }
 
