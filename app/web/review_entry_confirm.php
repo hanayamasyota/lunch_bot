@@ -25,12 +25,12 @@ define('TABLE_NAME_USERS', 'users');
         $nowTime = time()+32400;
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
         //同じ店をレビューしていないか確認
-        if (checkExistsReview($_GET['userid'], $_GET['shopid'], $num) != PDO::PARAM_NULL) {
-            updateReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
+        if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+            updateReview($userId, $shopId, $num, $value, $nowTimeString);
             $message = 'レビュー更新が完了しました。';
         } else {
             //レビューを登録する
-            registerReview($_GET['userid'], $_GET['shopid'], $num, $value, $nowTimeString);
+            registerReview($userId, $shopId, $num, $value, $nowTimeString);
             $message = 'レビュー登録が完了しました。';
         }
         $num += 100;
@@ -47,7 +47,7 @@ define('TABLE_NAME_USERS', 'users');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|PAGETITLE</title>
+    <title>ひるまちGO|レビュー登録完了</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -70,7 +70,7 @@ define('TABLE_NAME_USERS', 'users');
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">PAGETITLE</p>
+            <p class="text-light h3">レビュー登録完了</p>
         </div>
     </header>
 
