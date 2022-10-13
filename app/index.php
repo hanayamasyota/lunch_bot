@@ -139,7 +139,7 @@ foreach ($events as $event) {
     }
 
     // postbackイベント
-    else if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
+    if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
@@ -166,7 +166,7 @@ foreach ($events as $event) {
     }
 
     // 今行っている動きをキャンセルする
-    else if (strcmp($event->getText(), 'キャンセル') == 0) {
+    if (strcmp($event->getText(), 'キャンセル') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
             $mode = '';
@@ -209,7 +209,7 @@ foreach ($events as $event) {
         }
 
     // before_sendが設定されている場合 //
-    else if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //shop_review
         if ($beforeMessage === 'shop_review') {
