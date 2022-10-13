@@ -57,7 +57,7 @@ function checkUserVisitedShops($userId, $shopId) {
 //10件以上の場合古いものから消去
 function countVisitedShops($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(userid) from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select count(userid) as shopcount from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
