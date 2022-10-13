@@ -163,6 +163,7 @@ foreach ($events as $event) {
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
             }
         }
+        continue;
     }
 
     // 今行っている動きをキャンセルする
