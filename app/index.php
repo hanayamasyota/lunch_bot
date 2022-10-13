@@ -155,9 +155,9 @@ foreach ($events as $event) {
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
-                    if (countVisitedShops($event->getUserId()) >= 10) {
-                        deleteOldUserVisitedShop($event->getUserId());
-                    }
+                    // if (countVisitedShops($event->getUserId()) >= 10) {
+                    //     deleteOldUserVisitedShop($event->getUserId());
+                    // }
                     registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
                 }
                 replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
