@@ -432,4 +432,5 @@ foreach ($events as $event) {
         
 
     }
+    }
 }
