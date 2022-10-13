@@ -209,7 +209,7 @@ foreach ($events as $event) {
         }
 
     // before_sendが設定されている場合 //
-    if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
+    } else if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //shop_review
         if ($beforeMessage === 'shop_review') {
@@ -429,8 +429,5 @@ foreach ($events as $event) {
             $minute = getTImeInfo();
             replyTextMessage($bot, $event->getReplyToken(), $minute.'で確定');
         } 
-        
-
-    }
     }
 }
