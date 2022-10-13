@@ -29,6 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
+    
     $avarageScore = 0.0;
     //レビューが登録されていない場合
     if ($reviewData != PDO::PARAM_NULL) {
@@ -37,7 +38,7 @@ $crowd = [
         $reviewArray_3 = array();
         //レビュー
         $timeArray = array();
-        $restTImeArray = array();
+        $restTimeArray = array();
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 100) {
                 array_push($reviewArray_1, $review["review"]);
@@ -49,9 +50,9 @@ $crowd = [
             }
         }
         foreach ($allUserId as $userId) {
-            error_log("userId:".$userId);
+            error_log("userId:".$userId['userid']);
             $restTime = getRestTimeByUserId($userId);
-            array_push($restTImeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
+            array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
         $totalScore = 0;
         for ($i = 0; $i < count($reviewArray_1); $i++) {
