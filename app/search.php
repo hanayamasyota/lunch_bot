@@ -52,7 +52,6 @@ function renderJson($userId, $json) {
             "number" => ($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
-            "open" => $open,
         )); 
         $data_array += $array;
     }
@@ -92,12 +91,6 @@ function searchShop($userId, $bot, $token) {
                 $shop["url"],
             );
         }
-        if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-            updateUserShopData($userId, 'shop_length', $shopInfo[0]["shoplength"]);
-        } else {
-            registerUserShopData($userId, $shopInfo[0]["shoplength"]);
-        }
-        error_log('店の数:'.$shopInfo[0]["shoplength"]);
     }
 }
 //登録済みの店を表示
