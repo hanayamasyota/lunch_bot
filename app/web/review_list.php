@@ -50,7 +50,7 @@ $crowd = [
             }
         }
         foreach ($allUserId as $userId) {
-            error_log($userId);
+            error_log($userId[0]);
             $restTime = getRestTimeByUserId($userId);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
