@@ -248,7 +248,6 @@ foreach ($events as $event) {
 
                 //該当の店のレビューがすでに存在するかをチェック
                 if (checkExistsReview($event->getUserId(), $shop['shopid'], 100) != PDO::PARAM_NULL) {
-                    replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
                     replyButtonsTemplate($bot, $event->getReplyToken(),
                         'レビュー更新確認',
                         SERVER_ROOT . '/imgs/hirumatiGO.png',
