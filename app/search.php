@@ -138,7 +138,7 @@ function showShop($page, $userId, $bot, $token) {
             //何分かかるかを表示
             $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' 徒歩' . $shop['arrival_time'],
             $shop['image'],
-            $actionArray
+            $actionArray,
         );
         array_push($columnArray, $column);
     }

@@ -27,6 +27,7 @@ $crowd = [
 
 <?php
     $shopId = $_GET["shopid"];
+    error_log('shopid:'.$shopId);
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
     
