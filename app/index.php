@@ -149,9 +149,8 @@ foreach ($events as $event) {
                 $shopNum = intval(explode('_', $event->getPostbackData())[3]);
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
                 //https://www.php.net/manual/ja/function.date.php
-                $nowTime = time();
+                $nowTime = time()+32400;
                 $nowTimeString = date('Y-m-d H:i:s', $nowTime);
-                //UTCで登録してるので+9時間すること
                 if (checkUserVisitedShops($event->getUserId(), $shopId) != PDO::PARAM_NULL) {
                     updateUserVisitedShops($event->getUserId(), $shopId, $nowTimeString);
                 } else {
@@ -227,17 +226,11 @@ foreach ($events as $event) {
                 $replyMessage);
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
-            } else if (strcmp($text, 'レビュー確認') == 0) {
+            } else if (strcmp($text, 'レビュー確認・編集') == 0) {
                 $reviewShopId = getShopIdByReviews($event->getUserId());
                 foreach($reviewShopId as $shopId) {
                     
                 }
-                updateUser($event->getUserId(), 'shop_review_list');
-            } else if (strcmp($text, 'レビュー更新') == 0) {
-
-            } else if (strcmp($text, 'レビュー削除') == 0) {
-
-            }
         }
         if ($beforeMessage === 'shop_review_entry') {
             //navigationテーブルに番号が存在するか確認
@@ -255,21 +248,15 @@ foreach ($events as $event) {
                     );
                     $query = http_build_query($data);
                     $url = SERVER_ROOT . "/web/review_entry.php?" . $query;
-                    replyButtonsTemplate(
-                        $bot,
-                        $event->getReplyToken(),
+                    replyButtonsTemplate($bot, $event->getReplyToken(),
                         'レビュー登録確認',
                         SERVER_ROOT . '/imgs/hirumatiGO.png',
                         'レビュー登録',
                         $shop['shopname'] . 'のレビューをしますか？',
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                            'はい',
-                            $url
-                        ),
+                            'はい', $url),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                            'キャンセル',
-                            'キャンセル'
-                        )
+                            'キャンセル', 'キャンセル')
                     );
                     //entry review data
                     updateUserShopData($event->getUserId(),
@@ -323,6 +310,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 //店の検索
+                //サーチ時に昼休みをいれて時間内に利用可能な店を表示
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
@@ -339,19 +327,15 @@ foreach ($events as $event) {
                 replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/img/hirumatiGO.png', 'レビューメニュー',
                 'レビューのメニューです。',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    '自分のレビュー確認(html)', 'レビュー確認'),
+                    'レビュー登録', 'レビュー登録'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー登録(html)', 'レビュー登録'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー更新(未実装)', 'レビュー更新'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー削除(未実装)', 'レビュー削除'),
+                    '自分のレビュー確認・編集', 'レビュー確認・編集'),
                 );
             }
 
         //setting
         //あいさつメッセージでユーザ設定を促す
-        } else if(strcmp($event->getText(), 'ユーザ設定') == 0) {
+        } else if(strcmp($event->getText(), '設定') == 0) {
             $userData = checkUsers($event->getUserId());
             $message = 'ユーザ設定メニューです。';
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){

@@ -34,6 +34,12 @@ function renderJson($json) {
     }
     $temp = $json->{"results"};
 
+    if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
+        updateUserShopData($userId, 'shop_length', $resultLength);
+    } else {
+        registerUserShopData($userId, $resultLength);
+    }
+
     $data_array = array();
     for ($i = 0; $i < $resultLength; $i++) {
         $array = array($i => array(
@@ -45,7 +51,7 @@ function renderJson($json) {
             "number" => ($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
-            "shoplength" => $resultLength,
+            "open" => $open,
         )); 
         $data_array += $array;
     }
@@ -68,6 +74,7 @@ function searchShop($userId, $bot, $token) {
             //到着時間を計算する(必要なときのみ表示)
             // $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
+            
             registerNavigation(
                 $userId,
                 $shop["id"],
