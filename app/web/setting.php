@@ -75,7 +75,7 @@ $userId = $_GET['userid'];
                             <div class="text-danger d-inline">*</div>終了時刻
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="time" name="end" min="09:00" max="15:00" step="300" required>
+                            <input type="time" name="end" min="09:00" max="15:00" required>
                         </td>
                     </tr>
                     <tr>

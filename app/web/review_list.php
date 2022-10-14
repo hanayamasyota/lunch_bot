@@ -29,6 +29,8 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
+    array_unique($allUserId);
+
     
     $avarageScore = 0.0;
     //レビューが登録されていない場合
