@@ -75,7 +75,7 @@ define('TABLE_NAME_USERS', 'users');
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <p>レビュー登録が完了しました。</p>
+        <p><?php echo $message; ?></p>
     </div>
 
         <!-- Footer-->

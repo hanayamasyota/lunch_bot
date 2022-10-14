@@ -237,25 +237,36 @@ foreach ($events as $event) {
             //navigationテーブルに番号が存在するか確認
             if (checkShopByUserVisitedShops($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
                 $shop = checkShopByUserVisitedShops($event->getUserId(), intval($event->getText()));
+
+                //urlのクエリを作成
+                $data = array(
+                'userid' => $event->getUserId(),
+                'shopid' => $shop["shopid"],
+                'shopname' => $shop["shopname"],
+                );
+                $query = http_build_query($data);
+
                 //該当の店のレビューがすでに存在するかをチェック
                 if (checkExistsReview($event->getUserId(), $shop['shopid'], 100) != PDO::PARAM_NULL) {
                     replyTextMessage($bot, $event->getReplyToken(), 'この店のレビューはすでに存在します。');
-                } else {
-                    //urlのクエリを作成
-                    $data = array(
-                        'userid' => $event->getUserId(),
-                        'shopid' => $shop["shopid"],
-                        'shopname' => $shop["shopname"],
+                    replyButtonsTemplate($bot, $event->getReplyToken(),
+                        'レビュー更新確認',
+                        SERVER_ROOT . '/imgs/hirumatiGO.png',
+                        'レビュー更新',
+                        "この店のレビューはすでに存在します。\n$shop['shopname'] . 'のレビューを更新しますか？",
+                        new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                            'はい', SERVER_ROOT . '/web/review_entry.php?' . $query),
+                        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                            'キャンセル', 'キャンセル'),
                     );
-                    $query = http_build_query($data);
-                    $url = SERVER_ROOT . "/web/review_entry.php?" . $query;
+                } else {
                     replyButtonsTemplate($bot, $event->getReplyToken(),
                         'レビュー登録確認',
                         SERVER_ROOT . '/imgs/hirumatiGO.png',
                         'レビュー登録',
                         $shop['shopname'] . 'のレビューをしますか？',
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                            'はい', $url),
+                            'はい', SERVER_ROOT . '/web/review_entry.php?' . $query),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                             'キャンセル', 'キャンセル')
                     );
