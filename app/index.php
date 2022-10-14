@@ -36,7 +36,7 @@ users(
     before_send(text)...直前のメッセージ
     latitude(float)...緯度
     longitude(float)...経度
-    favolite_genre(text)...お気に入りのジャンル
+    ambience(text)...お気に入りのジャンル
     search_range(integer)...検索範囲
     rest_start(text)...休憩の始まる時間
     rest_end(text)...休憩の終わる時間
@@ -282,41 +282,6 @@ foreach ($events as $event) {
                 replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しい番号を入力して下さい。');
             }
-        //shop_review_1
-        } else if ($beforeMessage === 'shop_review_entry_100') {
-            // ボタンは4件までしかできないので入力してもらう
-            replyTextMessage($bot, $event->getReplyToken(), '総合の評価を1~5の5段階で入力してください。');
-        //shop_review_2
-        } else if ($beforeMessage === 'shop_review_entry_200') {
-            //200
-            replyTextMessage($bot, $event->getReplyToken(),
-            '食べたメニューまたはおすすめのメニューを入力して下さい。');
-        //shop_review_3
-        } else if ($beforeMessage === 'shop_review_entry_300') {
-            //300
-            replyTextMessage($bot, $event->getReplyToken(),
-            '備考等があれば入力して下さい。ない場合は「なし」と入力してください。');
-        //shop_review_confirm(レビュー内容の確認)
-        } else if ($beforeMessage === 'shop_review_entry_confirm') {
-            if (strcmp($event->getText(), 'はい') == 0) {
-                updateUser($event->getUserId(), null);
-                replyTextMessage($bot, $event->getReplyToken(),
-                'レビュー登録が完了しました。');
-            } else {
-                replyConfirmTemplate($bot, $event->getReplyToken(),
-                'レビュー最終確認',
-                'レビューを登録しますか？',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'はい', 'はい'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'キャンセル', 'キャンセル')
-                );
-            }
-        }
-
-        else if (strcmp($event->getText(), '個人設定') == 0) {
-                updateUser($event->getUserId(), 'setting_rest_start');
-                replyTextMessage($bot, $event->getReplyToken(), '昼休み(昼休憩)の開始時刻を入力してください。');
         }
 
         //次、前の5件表示
@@ -345,20 +310,6 @@ foreach ($events as $event) {
                 }
             }
         }
-
-        //setting
-        //個人設定
-        else if ($beforeMessage === 'setting_rest_start') {
-            updateRestTime($event->getUserId(), 'rest_start', $event->getText());
-            replyTextMessage($bot, $event->getReplyToken(), '昼休憩(昼休み)の終了時刻を入力してください。(例13:00)');
-            updateUser($event->getUserId(), 'setting_rest_end');
-        }
-        else if ($beforeMessage === 'setting_rest_end') {
-            updateRestTime($event->getUserId(), 'rest_end', $event->getText());
-            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定が完了しました。');
-            updateUser($event->getUserId(), null);
-        }
-        
     } 
 
     // 前のメッセージが登録されていない場合 //
@@ -414,8 +365,8 @@ foreach ($events as $event) {
             $message,
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '個人用設定(html)', '個人設定'),
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '個人用設定(html)', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
