@@ -231,6 +231,7 @@ foreach ($events as $event) {
                 foreach($reviewShopId as $shopId) {
                     
                 }
+            }
         }
         if ($beforeMessage === 'shop_review_entry') {
             //navigationテーブルに番号が存在するか確認
