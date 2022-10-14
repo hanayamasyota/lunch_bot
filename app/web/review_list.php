@@ -29,9 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
-    foreach($allUserId['userid'] as $user) {
-        error_log('id:'.$user);
-    }
+    error_log('length:'.count($allUserId));
     $uniqueUserId = array_unique($allUserId);
 
     
