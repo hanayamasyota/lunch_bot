@@ -29,6 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
+    error_log('iiiii:'.$allUserId[0]);
     
     $avarageScore = 0.0;
     //レビューが登録されていない場合
@@ -50,7 +51,6 @@ $crowd = [
             }
         }
         foreach ($allUserId as $userId) {
-            error_log('userId:'.$userId);
             $restTime = getRestTimeByUserId($userId);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
@@ -58,7 +58,6 @@ $crowd = [
         for ($i = 0; $i < count($reviewArray_1); $i++) {
             $totalScore += intval($reviewArray_1[$i]);
         }
-        
         $avarageScore = floatval($totalScore/count($reviewArray_1));
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
