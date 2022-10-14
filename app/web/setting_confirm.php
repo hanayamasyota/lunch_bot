@@ -1,6 +1,6 @@
 <?php 
 require_once '../DBConnection.php';
-require_once '../users_sql.php';
+require_once '../database_function/users_sql.php';
 
 define('TABLE_NAME_USERS', 'users');
 ?>
