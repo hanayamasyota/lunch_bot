@@ -27,7 +27,7 @@ function getRestaurantInfomation($userId, $lat, $lon, $range=2) {
     return $data_array;
 }
 
-function renderJson($json) {
+function renderJson($userId, $json) {
     $resultLength = $json->{"results"}->{"results_available"};
     if ($resultLength < 1) {
         $result = false;
