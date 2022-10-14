@@ -50,8 +50,7 @@ $crowd = [
             }
         }
         foreach ($allUserId as $userId) {
-            error_log($userId[0]);
-            $restTime = getRestTimeByUserId($userId);
+            $restTime = getRestTimeByUserId($userId[0]);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
         $totalScore = 0;
