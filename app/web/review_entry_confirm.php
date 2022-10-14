@@ -18,6 +18,13 @@ define('TABLE_NAME_USERS', 'users');
     $userId = $_POST['userid'];
     $shopId = $_POST['shopid'];
 
+    $message = '';
+    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+        $message = 'レビュー更新';
+    } else {
+        $message = 'レビュー登録';
+    }
+
     $num = 100;
     foreach($postData as $data) {
         $nowTime = time()+32400;
@@ -32,13 +39,6 @@ define('TABLE_NAME_USERS', 'users');
         $num += 100;
     }
     updateUser($userId, null);
-
-    $message = '';
-    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
-        $message = 'レビュー更新';
-    } else {
-        $message = 'レビュー登録';
-    }
 ?>
 
 

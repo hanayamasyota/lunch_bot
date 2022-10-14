@@ -22,7 +22,7 @@ function getRestaurantInfomation($userId, $lat, $lon, $range=2) {
     $response = file_get_contents($url);
 
     $json = json_decode($response);
-    $data_array = renderJson($json);
+    $data_array = renderJson($userId, $json);
 
     return $data_array;
 }
