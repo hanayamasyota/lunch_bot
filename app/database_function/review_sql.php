@@ -22,7 +22,7 @@ function checkExistsReview($userId, $shopId, $reviewNum) {
 
 function getAllUserIdByReviews($shopId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select distinct pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS')  . '\') as userid from ' .TABLE_NAME_REVIEWS. 
+    $sql = 'select userid from ' .TABLE_NAME_REVIEWS. 
     ' where ? = shopid'.
     ' order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
