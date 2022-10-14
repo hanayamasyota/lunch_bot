@@ -29,7 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
-    array_unique($allUserId);
+    $uniqueUserId = array_unique($allUserId);
 
     
     $avarageScore = 0.0;
@@ -51,7 +51,7 @@ $crowd = [
                 array_push($timeArray, $review["time"]);
             }
         }
-        foreach ($allUserId as $userId) {
+        foreach ($uniqueUserId as $userId) {
             $restTime = getRestTimeByUserId($userId);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
