@@ -253,7 +253,7 @@ foreach ($events as $event) {
                         'レビュー更新確認',
                         SERVER_ROOT . '/imgs/hirumatiGO.png',
                         'レビュー更新',
-                        "この店のレビューはすでに存在します。\n$shop['shopname'] . 'のレビューを更新しますか？",
+                        "この店のレビューはすでに存在します。\n" . $shop['shopname'] . "のレビューを更新しますか？",
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                             'はい', SERVER_ROOT . '/web/review_entry.php?' . $query),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(

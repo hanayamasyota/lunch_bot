@@ -1,5 +1,6 @@
 <?php
 //店データ取得
+//昼休み中に利用可能な店は強調して表示させる
 function getRestaurantInfomation($userId, $lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
