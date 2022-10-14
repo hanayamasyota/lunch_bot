@@ -32,7 +32,7 @@ function getAllUserIdByReviews($shopId) {
             return PDO::PARAM_NULL;
         } else {
             //return before_send
-            return $row;
+            return $row['userid'];
         }
 }
 
