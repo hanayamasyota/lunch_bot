@@ -29,9 +29,10 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
-    error_log('userid0:'.$allUserId[0][0]);
+    foreach($allUserId['userid'] as $user) {
+        error_log('id:'.$user);
+    }
     $uniqueUserId = array_unique($allUserId);
-    error_log('length:'.count($uniqueUserId));
 
     
     $avarageScore = 0.0;
