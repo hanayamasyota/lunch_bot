@@ -1,6 +1,6 @@
 <?php
 //店データ取得
-function getRestaurantInfomation($lat, $lon, $range=2) {
+function getRestaurantInfomation($userId, $lat, $lon, $range=2) {
     $latitude = round($lat, 6);
     $longitude = round($lon, 6);
 
@@ -65,7 +65,7 @@ function searchShop($userId, $bot, $token) {
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);
-    $shopInfo = getRestaurantInfomation(floatval($location['latitude']), floatval($location['longitude']));
+    $shopInfo = getRestaurantInfomation($userid, floatval($location['latitude']), floatval($location['longitude']));
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
@@ -187,7 +187,4 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
     return $json->{"routes"}[0]->{"legs"}[0]->{"duration"}->{"text"};
 
 }
-
-
 ?>
-
