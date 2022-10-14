@@ -9,7 +9,6 @@ define('TABLE_NAME_USERS', 'users');
 
 <?php
     $num = 100;
-    $message = '';
 
     $postData = array();
     array_push($postData, $_POST['score']);
@@ -26,15 +25,20 @@ define('TABLE_NAME_USERS', 'users');
         //同じ店をレビューしていないか確認
         if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
             updateReview($userId, $shopId, $num, $data, $nowTimeString);
-            $message = 'レビュー更新が完了しました。';
         } else {
             //レビューを登録する
             registerReview($userId, $shopId, $num, $data, $nowTimeString);
-            $message = 'レビュー登録が完了しました。';
         }
         $num += 100;
     }
     updateUser($userId, null);
+
+    $message = '';
+    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+        $message = 'レビュー更新';
+    } else {
+        $message = 'レビュー登録';
+    }
 ?>
 
 
@@ -46,7 +50,7 @@ define('TABLE_NAME_USERS', 'users');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|レビュー登録完了</title>
+    <title>ひるまちGO|<?php echo $message; ?>完了</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -69,13 +73,13 @@ define('TABLE_NAME_USERS', 'users');
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">レビュー登録完了</p>
+            <p class="text-light h3"><?php echo $message; ?>完了</p>
         </div>
     </header>
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <p><?php echo $message; ?></p>
+        <p><?php echo $message.'が完了しました。'; ?></p>
     </div>
 
         <!-- Footer-->
