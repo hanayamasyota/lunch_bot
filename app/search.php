@@ -66,7 +66,7 @@ function searchShop($userId, $bot, $token) {
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);
-    $shopInfo = getRestaurantInfomation($userid, floatval($location['latitude']), floatval($location['longitude']));
+    $shopInfo = getRestaurantInfomation($userId, floatval($location['latitude']), floatval($location['longitude']));
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
