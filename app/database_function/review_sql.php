@@ -78,11 +78,11 @@ function getReviewData($shopId) {
     }
 }
 
-function updateReview($userId, $shopId, $reviewNum, $review) {
+function updateReview($userId, $shopId, $reviewNum, $review, $time) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_REVIEWS . ' set (reviews) = (?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = review_num and ? = shopid';
+    $sql = 'update ' . TABLE_NAME_REVIEWS . ' set (reviews, time) = (?, ?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = review_num and ? = shopid';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($review, $userId, $reviewNum, $shopId));
+    $sth->execute(array($review, $time, $userId, $reviewNum, $shopId));
 }
 
 function deleteReview($userId, $shopId) {
