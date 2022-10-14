@@ -30,6 +30,7 @@ $crowd = [
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
     $uniqueUserId = array_unique($allUserId);
+    error_log('length:'.count($uniqueUserId));
 
     
     $avarageScore = 0.0;
