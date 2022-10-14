@@ -88,11 +88,11 @@ function updateLocation($userId, $lat, $lon) {
     $sth->execute(array($lat, $lon, $userId));
 }
 // 休憩時間の設定・更新
-function updateRestTime($userId, $column, $time) {
+function updateRestTime($userId, $start, $end, $ambi) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_USERS . ' set '.$column.' = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'update ' . TABLE_NAME_USERS . ' set (rest_start, rest_end, ambience) = (?, ?, ?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($time, $userId));
+    $sth->execute(array($start, $end, $ambi, $userId));
 }
 // ユーザ設定が完了しているかチェック
 function checkUsers($userId) {
