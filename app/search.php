@@ -16,7 +16,6 @@ function getRestaurantInfomation($userId, $lat, $lon, $range=2) {
         'format' => 'json',
     ];
     // グルメサーチAPIからjsonを取得
-    $message = "";
     $url = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?';
     $url .= http_build_query($query);
     $response = file_get_contents($url);
