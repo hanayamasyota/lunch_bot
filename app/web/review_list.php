@@ -68,6 +68,7 @@ $crowdList = [
 
         //レビューから総合の店の雰囲気を取り出す
         $matchAmbi = return_max_count_item($ambiArray);
+        error_log('countambi:::'.count($matchAmbi));
         foreach ($matchAmbi as $ambi) {
             if ($ambi === end($matchAmbi)) {
                 $shopAmbiString .= $ambiList[$ambi];
