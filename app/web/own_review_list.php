@@ -124,9 +124,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         </td>
                     </tr>
                 </table>
-                <div class="float-end">
-                    <button type="button col-2">編集</button>
-                    <button type="button col-2">削除</button>
+                <div class="text-right">
+                    <button type="button col-2 float-right">編集</button>
+                    <button type="button col-2 float-right">削除</button>
                 </div>
             <?php } ?>
         </div>
