@@ -91,14 +91,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
-    <div>
+    <div class="bg-white">
             <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
-                <div class="bg-navy text-light mb-0">
+                <h4 class="bg-navy text-light mb-0">
                     <?php echo $shopNameArray[$i]; ?>
-                </div>
-                <table class="table border-navy px-3 bg-white">
+                </h4>
+                <table class="table border-navy px-3">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><?php echo "レビュー日：".$time ?></thead>
+                    <thead class="bg-dark"><?php echo "レビュー日：".$time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
