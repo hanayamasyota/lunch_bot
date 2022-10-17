@@ -123,6 +123,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             <?php echo $crowdList[$crowdArray[$i]]; ?>
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <button type="button">編集</button>
+                        </td>
+                        <td>
+                            <button type="button">削除</button>
+                        </td>
+                    </tr>
                 </table>
             <?php } ?>
         </div>
