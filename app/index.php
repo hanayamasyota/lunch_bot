@@ -233,7 +233,7 @@ foreach ($events as $event) {
                     'レビュー確認・編集',
                     "レビューの確認・編集をしますか？",
                     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?' . $event->getUserId()),
+                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?userid=' . $event->getUserId()),
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                         'キャンセル', 'キャンセル'),
                 );
