@@ -26,7 +26,32 @@ $crowdList = [
 ?>
 
 <?php
+$userId = $_GET['userid'];
+$ownReviewData = getDataByReviews($userId);
 
+if ($ownReviewData != PDO::PARAM_NULL) {
+    $scoreArray = array(); //評価点
+    $ambiArray = array(); //雰囲気
+    $crowdArray = array(); //混み具合
+    //レビュー
+    $timeArray = array();
+    $shopNameArray = array();
+    foreach ($ownReviewData as $review) {
+        if ($review["review_num"] == 100) {
+            array_push($scoreArray, $review["review"]);
+        } else if ($review["review_num"] == 200) {
+            array_push($ambiArray, $review["review"]);
+        } else if ($review["review_num"] == 300) {
+            array_push($crowdArray, $review["review"]);
+            array_push($timeArray, $review["time"]);
+            array_push($shopNameArray, $review['shopname']);
+        }
+    }
+
+//レビューが登録されていない場合
+} else {
+    $avarageScore = 'まだレビューが登録されていません。';
+}
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +62,7 @@ $crowdList = [
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|レビュー一覧</title>
+    <title>ひるまちGO|あなたのレビュー一覧</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -60,12 +85,44 @@ $crowdList = [
     <!-- Mashead header-->
     <header class="mt-5 col-12">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <h3 class="text-light">みんなのレビュー</h3>
+            <h3 class="text-light">あなたのレビュー一覧</h3>
         </div>
     </header>
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
+    <div class="bg-white">
+            <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
+                <table class="table border-navy px-3 bg-navy">
+                    <?php $time = explode(' ', $timeArray[$i])[0] ?>
+                    <thead><?php echo "レビュー日：".$time ?></thead>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            評価
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $scoreArray[$i] . '点'; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            雰囲気
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $ambiList[$ambiArray[$i]]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            混み具合
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $crowdList[$crowdArray[$i]]; ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php } ?>
+        </div>
     </div>
 
         <!-- Footer-->

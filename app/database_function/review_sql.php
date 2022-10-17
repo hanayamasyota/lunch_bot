@@ -1,9 +1,9 @@
 <?php
-function registerReview($userId, $shopId, $reviewNum, $review, $time) {
+function registerReview($userId, $shopId, $reviewNum, $review, $time, $shopName) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
+    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time, shopname) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $reviewNum, $review, $time));
+    $sth->execute(array($userId, $shopId, $reviewNum, $review, $time, $shopName));
 }
 
 function checkExistsReview($userId, $shopId, $reviewNum) {
@@ -66,6 +66,20 @@ function getReviewData($shopId) {
     $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($shopId));
+    // if no record
+    if (!($row = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return before_send
+        return $row;
+    }
+}
+
+function getDataByReviews($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
     // if no record
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;

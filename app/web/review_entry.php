@@ -47,7 +47,7 @@
     <div class="container dx-3 my-5 bg-lightnavy">
         <div class="bg-navy text-light">
             <div class="px-2 pt-3 col-12 border-bottom-3">
-                <h3 class="h3"><?php echo $_GET["shopname"] ?>のレビュー</h3>
+                <h3 class="h3"><?php echo $shopName ?>のレビュー</h3>
             </div>
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
@@ -55,6 +55,7 @@
         <form method="post" action="review_entry_confirm.php">
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
             <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
+            <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">

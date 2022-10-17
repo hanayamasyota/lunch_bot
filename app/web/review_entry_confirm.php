@@ -17,6 +17,7 @@ define('TABLE_NAME_USERS', 'users');
 
     $userId = $_POST['userid'];
     $shopId = $_POST['shopid'];
+    $shopName = $_POST['shopname'];
 
     $message = '';
     if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
@@ -31,10 +32,10 @@ define('TABLE_NAME_USERS', 'users');
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
         //同じ店をレビューしていないか確認
         if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
-            updateReview($userId, $shopId, $num, $data, $nowTimeString);
+            updateReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
         } else {
             //レビューを登録する
-            registerReview($userId, $shopId, $num, $data, $nowTimeString);
+            registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
         }
         $num += 100;
     }
