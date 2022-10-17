@@ -68,8 +68,6 @@ $crowdList = [
 
         //レビューから総合の店の雰囲気を取り出す
         $matchAmbi = return_max_count_item($ambiArray);
-        error_log('countambi:::'.$matchAmbi[0]);
-        error_log('countambi:::'.$matchAmbi[1]);
         foreach ($matchAmbi as $ambi) {
             if ($ambi === end($matchAmbi)) {
                 $shopAmbiString .= $ambiList[$ambi];
@@ -273,7 +271,6 @@ $crowdList = [
 
 <?php
 function return_max_count_item($list,&$count = null){
-    error_log(print_r($list, true));
     if(empty($list)){
         $count = 0;
         return null;
@@ -282,16 +279,13 @@ function return_max_count_item($list,&$count = null){
     //値を集計して降順に並べる
     $list = array_count_values($list);
     arsort($list);
-
-    error_log(print_r($list, true));
  
     //最初のキーを取り出す
     reset($list);
     $before_key = key($list);
-    error_log(key($list));
     $before_val = array_shift($list);
-    error_log(array_shift($list));
     $no1_list = array($before_key);
+    error_log('count:'.count($no1_list));
  
     //2番目以降の値との比較
     foreach ($list as $key => $val){
