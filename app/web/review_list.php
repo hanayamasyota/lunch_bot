@@ -132,9 +132,9 @@ $crowdList = [
             </div>
         </div>
 
-        <div>
+        <!-- <div>
             <p>あなたの昼休み時間では…<?php //ユーザの昼休み時間の混み具合をもとめて表示する ?></p>
-        </div>
+        </div> -->
 
         <div class="bg-white">
             <?php if (gettype($avarageScore) == 'double') {
@@ -167,7 +167,6 @@ $crowdList = [
                         </td>
                     </tr>
                 </table>
-                <hr>
             <?php } 
                 }?>
         </div>
