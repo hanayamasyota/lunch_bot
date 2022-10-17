@@ -29,7 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
-    error_log('USERID'.$allUserId[0]['pgp_sym_decrypt']);
+    error_log('USERID:'.$allUserId[0]['id']);
     $uniqueUserId = array_unique($allUserId);
 
     
