@@ -288,14 +288,16 @@ function return_max_count_item($list,&$count = null){
     //最初のキーを取り出す
     reset($list);
     $before_key = key($list);
+    error_log(key($list));
     $before_val = array_shift($list);
+    error_log(array_shift($list));
     $no1_list = array($before_key);
  
     //2番目以降の値との比較
     foreach ($list as $key => $val){
         if($before_val > $val){
             break;
-        }else{
+        }else {
             // 個数が同値の場合は配列に追加する
             array_push($no1_list,$key);
             $before_key = $key;
