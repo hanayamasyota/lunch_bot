@@ -30,7 +30,6 @@ $crowdList = [
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
     $userIdArray = array();
-    error_log('USERID:'.$allUserId[0]['id']);
     for ($i = 0; $i < count($allUserId); $i++) {
         array_push($userIdArray, $allUserId[$i]['id']);
     }
@@ -40,7 +39,7 @@ $crowdList = [
     //レビューが登録されていない場合
     if ($reviewData != PDO::PARAM_NULL) {
         $scoreArray = array(); //評価点
-        $amdiArray = array(); //雰囲気
+        $ambiArray = array(); //雰囲気
         $crowdArray = array(); //混み具合
         //レビュー
         $timeArray = array();
