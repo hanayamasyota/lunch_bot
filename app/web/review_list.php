@@ -167,6 +167,7 @@ $crowdList = [
                         </td>
                     </tr>
                 </table>
+                <hr>
             <?php } 
                 }?>
         </div>
