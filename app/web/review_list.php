@@ -29,6 +29,7 @@ $crowd = [
     $shopId = $_GET["shopid"];
     $reviewData = getReviewData($shopId);
     $allUserId = getAllUserIdByReviews($shopId);
+    error_log('USERID'.$allUserId[0]['pgp_sym_decrypt']);
     $uniqueUserId = array_unique($allUserId);
 
     
@@ -99,8 +100,6 @@ $crowd = [
             <h3 class="text-light">みんなのレビュー</h3>
         </div>
     </header>
-
-    <?php var_dump($allUserId); ?>
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
