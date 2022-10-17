@@ -36,7 +36,7 @@ $crowdList = [
     $uniqueUserId = array_unique($userIdArray);
     
     $avarageScore = 0.0;
-    //レビューが登録されていない場合
+    //レビューが登録されているか確認
     if ($reviewData != PDO::PARAM_NULL) {
         $scoreArray = array(); //評価点
         $ambiArray = array(); //雰囲気
@@ -64,6 +64,7 @@ $crowdList = [
         }
         $avarageScore = floatval($totalScore/count($scoreArray));
         $matchAmbi = return_max_count_item($ambiArray);
+    //レビューが登録されていない場合
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
     }
@@ -112,7 +113,7 @@ $crowdList = [
             </div>
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
-                    <p class="fw-bold pt-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
+                    <p class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
                     <p class="text-right pt-0">店の雰囲気： <?php echo $ambiList[$matchAmbi] ?></p>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
