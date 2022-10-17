@@ -273,6 +273,7 @@ $crowdList = [
 
 <?php
 function return_max_count_item($list,&$count = null){
+    error_log(print_r($list, true));
     if(empty($list)){
         $count = 0;
         return null;
@@ -281,6 +282,8 @@ function return_max_count_item($list,&$count = null){
     //値を集計して降順に並べる
     $list = array_count_values($list);
     arsort($list);
+
+    error_log(print_r($list, true));
  
     //最初のキーを取り出す
     reset($list);
