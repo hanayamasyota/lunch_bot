@@ -29,7 +29,6 @@ function getAllUserIdByReviews($shopId) {
         if (!($row = $sth->fetchall())) {
             return PDO::PARAM_NULL;
         } else {
-            //return before_send
             return $row;
         }
 }
