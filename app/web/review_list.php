@@ -281,11 +281,9 @@ function return_max_count_item($list,&$count = null){
     arsort($list);
  
     //最初のキーを取り出す
-    reset($list);
-    $before_key = key($list);
-    $before_val = array_shift($list);
-    $no1_list = array($before_key);
-    error_log('count:'.count($no1_list));
+    $before_key = '';
+    $before_val = 0;
+    $no1_list = array();
  
     //2番目以降の値との比較
     foreach ($list as $key => $val){
