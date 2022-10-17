@@ -227,10 +227,16 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
             } else if (strcmp($text, 'レビュー確認・編集') == 0) {
-                $reviewShopId = getShopIdByReviews($event->getUserId());
-                foreach($reviewShopId as $shopId) {
-                    
-                }
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                    'レビュー確認・編集',
+                    SERVER_ROOT . '/imgs/hirumatiGO.png',
+                    'レビュー確認・編集',
+                    "レビューの確認・編集をしますか？",
+                    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?' . $event->getUserId()),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                        'キャンセル', 'キャンセル'),
+                );
             }
         }
         if ($beforeMessage === 'shop_review_entry') {
