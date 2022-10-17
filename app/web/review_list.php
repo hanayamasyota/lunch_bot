@@ -295,6 +295,7 @@ function return_max_count_item($list,&$count = null){
  
     //2番目以降の値との比較
     foreach ($list as $key => $val){
+        error_log($key.'::'$val);
         if($before_val > $val){
             break;
         }else {
