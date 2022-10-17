@@ -124,7 +124,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         </td>
                     </tr>
                 </table>
-                <div class="d-inline text-end">
+                <div class="text-end">
                     <button type="button">編集</button>
                     <button type="button">削除</button>
                 </div>
