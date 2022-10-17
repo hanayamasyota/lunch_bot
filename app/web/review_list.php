@@ -1,5 +1,5 @@
 <?php
-require_once '../DBConnection.php';reviewArray_3
+require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
 
