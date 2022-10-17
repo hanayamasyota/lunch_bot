@@ -93,7 +93,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <div class="container dx-2 my-5 bg-lightnavy">
     <div class="bg-white">
             <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
-                <h5 class="bg-navy text-light mb-0 py-2">
+                <h5 class="bg-navy text-light mb-0 py-2 align-middle">
                     <?php echo $shopNameArray[$i]; ?>
                 </h5>
                 <table class="table border-navy px-3">
