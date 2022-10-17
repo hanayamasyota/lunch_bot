@@ -1,12 +1,12 @@
 <?php
-require_once '../DBConnection.php';
+require_once '../DBConnection.php';reviewArray_3
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
 
-$ambi = [
+$ambiList = [
     "1" => "おしゃれ",
     "2" => "たのしい",
     "3" => "にぎやか",
@@ -16,7 +16,7 @@ $ambi = [
     "7" => "テーマ性がある",
 ];
 
-$crowd = [
+$crowdList = [
     "1" => "空いていた",
     "2" => "やや空いていた", 
     "3" => "普通",
@@ -39,19 +39,19 @@ $crowd = [
     $avarageScore = 0.0;
     //レビューが登録されていない場合
     if ($reviewData != PDO::PARAM_NULL) {
-        $reviewArray_1 = array();
-        $reviewArray_2 = array();
-        $reviewArray_3 = array();
+        $scoreArray = array(); //評価点
+        $amdiArray = array(); //雰囲気
+        $crowdArray = array(); //混み具合
         //レビュー
         $timeArray = array();
         $restTimeArray = array();
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 100) {
-                array_push($reviewArray_1, $review["review"]);
+                array_push($scoreArray, $review["review"]);
             } else if ($review["review_num"] == 200) {
-                array_push($reviewArray_2, $review["review"]);
+                array_push($ambiArray, $review["review"]);
             } else if ($review["review_num"] == 300) {
-                array_push($reviewArray_3, $review["review"]);
+                array_push($crowdArray, $review["review"]);
                 array_push($timeArray, $review["time"]);
             }
         }
@@ -60,10 +60,11 @@ $crowd = [
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
         $totalScore = 0;
-        for ($i = 0; $i < count($reviewArray_1); $i++) {
-            $totalScore += intval($reviewArray_1[$i]);
+        for ($i = 0; $i < count($scoreArray); $i++) {
+            $totalScore += intval($scoreArray[$i]);
         }
-        $avarageScore = floatval($totalScore/count($reviewArray_1));
+        $avarageScore = floatval($totalScore/count($scoreArray));
+        $matchAmbi = return_max_count_item($ambiArray);
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
     }
@@ -112,15 +113,18 @@ $crowd = [
             </div>
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
-                    <p class="fw-bold py-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
+                    <p class="fw-bold py-2">平均の評価： <?php printf("%.1f", $avarageScore); ?>点<div class="text-right">店の雰囲気： <?php echo $ambiList[$matchAmbi] ?></div></p>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
                 <?php } ?> 
             </div>
         </div>
+        <div>
+
+        </div>
         <div class="bg-white">
             <?php if (gettype($avarageScore) == 'double') {
-                for ($i = 0; $i < count($reviewArray_1); $i++) { ?>
+                for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
                     <thead><?php echo "レビュー日：".$time ?><div class="text-right"><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
@@ -129,7 +133,7 @@ $crowd = [
                             評価
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $reviewArray_1[$i] . '点'; ?>
+                            <?php echo $scoreArray[$i] . '点'; ?>
                         </td>
                     </tr>
                     <tr>
@@ -137,7 +141,7 @@ $crowd = [
                             雰囲気
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $ambi[$reviewArray_2[$i]]; ?>
+                            <?php echo $ambiList[$ambiArray[$i]]; ?>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +149,7 @@ $crowd = [
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $crowd[$reviewArray_3[$i]]; ?>
+                            <?php echo $crowdList[$crowdArray[$i]]; ?>
                         </td>
                     </tr>
                 </table>
@@ -250,3 +254,41 @@ $crowd = [
 </body>
 
 </html>
+
+<?php
+function return_max_count_item($list,&$count = null){
+    if(empty($list)){
+        $count = 0;
+        return null;
+    }
+ 
+    //値を集計して降順に並べる
+    $list = array_count_values($list);
+    arsort($list);
+ 
+    //最初のキーを取り出す
+    reset($list);
+    $before_key = key($list);
+    $before_val = array_shift($list);
+    $no1_list = array($before_key);
+ 
+    //2番目以降の値との比較
+    foreach ($list as $key => $val){
+        if($before_val > $val){
+            break;
+        }else{
+            // 個数が同値の場合は配列に追加する
+            array_push($no1_list,$key);
+            $before_key = $key;
+            $before_val = $val;
+        }
+    }
+    $count = $before_val;
+    if(count($no1_list) > 1){
+        //同値の場合の処理があればここに書く、今回はarray_shiftで最初に追加したkeyを返した
+        return array_shift($no1_list);
+    }else{
+        return $before_key;
+    }
+}
+?>
