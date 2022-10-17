@@ -34,6 +34,8 @@ $crowdList = [
         array_push($userIdArray, $allUserId[$i]['id']);
     }
     $uniqueUserId = array_unique($userIdArray);
+
+    $shopAmbiString = '';
     
     $avarageScore = 0.0;
     //レビューが登録されているか確認
@@ -63,7 +65,16 @@ $crowdList = [
             $totalScore += intval($scoreArray[$i]);
         }
         $avarageScore = floatval($totalScore/count($scoreArray));
+
+        //レビューから総合の店の雰囲気を取り出す
         $matchAmbi = return_max_count_item($ambiArray);
+        foreach ($matchAmbi as $ambi) {
+            if ($ambi === end($matchAmbi)) {
+                $shopAmbiString .= $ambiList[$ambi];
+            } else {
+                $shopAmbiString .= $ambiList[$ambi].', ';
+            }
+        }
     //レビューが登録されていない場合
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
@@ -107,7 +118,7 @@ $crowdList = [
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
-        <div class="bg-navy text-light mb-2">
+        <div class="bg-navy text-light mb-3">
             <div class="px-2 pt-3 col-12 border-bottom-3">
                 <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
             </div>
@@ -120,9 +131,11 @@ $crowdList = [
                 <?php } ?> 
             </div>
         </div>
-        <div>
 
+        <div>
+            <p>あなたの昼休み時間では…<?php //ユーザの昼休み時間の混み具合をもとめて表示する ?></p>
         </div>
+
         <div class="bg-white">
             <?php if (gettype($avarageScore) == 'double') {
                 for ($i = 0; $i < count($scoreArray); $i++) { ?>
@@ -287,7 +300,7 @@ function return_max_count_item($list,&$count = null){
     $count = $before_val;
     if(count($no1_list) > 1){
         //同値の場合の処理があればここに書く、今回はarray_shiftで最初に追加したkeyを返した
-        return array_shift($no1_list);
+        return $no1_list;
     }else{
         return $before_key;
     }
