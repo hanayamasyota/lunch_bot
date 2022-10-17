@@ -113,8 +113,8 @@ $crowdList = [
             </div>
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
-                    <p class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</p>
-                    <p class="text-right pt-0">店の雰囲気： <?php echo $ambiList[$matchAmbi] ?></p>
+                    <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</div>
+                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $ambiList[$matchAmbi] ?></div>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
                 <?php } ?> 
