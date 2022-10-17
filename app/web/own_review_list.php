@@ -75,7 +75,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top" class="bg-base">
+<body id="page-top">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -123,15 +123,11 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             <?php echo $crowdList[$crowdArray[$i]]; ?>
                         </td>
                     </tr>
-                    <tr>
-                        <td>
-                            <button type="button">編集</button>
-                        </td>
-                        <td>
-                            <button type="button">削除</button>
-                        </td>
-                    </tr>
                 </table>
+                <div class="row text-right">
+                    <button type="button">編集</button>
+                    <button type="button">削除</button>
+                </div>
             <?php } ?>
         </div>
     </div>
