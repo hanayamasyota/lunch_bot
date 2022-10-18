@@ -62,12 +62,12 @@ $userId = $_GET['userid'];
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>ニックネーム
-                            <small><p>12文字以内</p></small>
+                            <small><p class="text-end">(12文字以内)</p></small>
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="text" name="name" max_length="10" required>
+                            <input type="text" name="name" max_length="12" required>
                             <small>
-                                <p>「みんなのレビュー」で表示されます</p>
+                                <p>※「みんなのレビュー」で表示されます</p>
                             </small>
                         </td>
                     </tr>
