@@ -21,8 +21,24 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
     $ambience = $setting['ambience'];
 }
 
-$selectBox = '';
+$ambiNum = intval($setting['ambience']);
+$selectBox = <<<EOD
+<select name="ambi">
+<option hidden>選択してください</option>
+EOD;
 
+for ($i = 0; $i < count(AMBIENCE_LIST); $i++) {
+    if (($i+1) == $ambiNum) {
+        $selectBox .= '<option value="'.$i.'" selected>'.AMBIENCE_LIST[$i].'</option>';
+    } else {
+        $selectBox .= '<option value="'.$i.'">'.AMBIENCE_LIST[$i].'</option>';
+    }
+}
+
+$selectBox .= <<<EOD
+<option value="">特になし</option>
+</select>
+EOD;
 ?>
 
 
@@ -98,7 +114,7 @@ $selectBox = '';
                         </th>
                         <td class="col-7 py-4 bg-white text-left">
                             <?php echo $selectBox; ?>
-                            <select name="ambi">
+                            <!-- <select name="ambi">
                                 <option hidden>選択してください</option>
                                 <option value="1">おしゃれ</option>
                                 <option value="2">たのしい</option>
@@ -108,7 +124,7 @@ $selectBox = '';
                                 <option value="6">高級志向</option>
                                 <option value="7">テーマ性がある</option>
                                 <option value="">特になし</option>
-                            </select>
+                            </select> -->
                         </td>
                     </tr>
             </table>
@@ -118,7 +134,6 @@ $selectBox = '';
                 </button>
             </div>
         </form>
-
     </div>
 
 
