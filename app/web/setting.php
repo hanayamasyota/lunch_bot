@@ -20,6 +20,9 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
     $restEnd = $setting['rest_end'];
     $ambience = $setting['ambience'];
 }
+
+$selectBox = '';
+for ($i = 0; $i < )
 ?>
 
 
@@ -103,6 +106,7 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
                             好みの雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left">
+                            <?php echo $selectBox; ?>
                             <select name="ambi">
                                 <option hidden>選択してください</option>
                                 <option value="1">おしゃれ</option>

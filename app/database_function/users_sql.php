@@ -112,7 +112,7 @@ function checkUsers($userId) {
 //個人設定が完了しているかチェック
 function getPersonalSetting($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select rest_start, rest_end, ambience nickname from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select rest_start, rest_end, ambience, nickname from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record

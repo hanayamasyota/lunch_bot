@@ -2,27 +2,10 @@
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
+require_once 'list.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
-
-$ambiList = [
-    "1" => "おしゃれ",
-    "2" => "たのしい",
-    "3" => "にぎやか",
-    "4" => "おちつきがある",
-    "5" => "個性的",
-    "6" => "高級志向",
-    "7" => "テーマ性がある",
-];
-
-$crowdList = [
-    "1" => "空いていた",
-    "2" => "やや空いていた", 
-    "3" => "普通",
-    "4" => "やや混んでいた",
-    "5" => "混んでいた",
-];
 ?>
 
 <?php
@@ -112,7 +95,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             雰囲気
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $ambiList[$ambiArray[$i]]; ?>
+                            <?php echo AMBIENCE_LIST[$ambiArray[$i]]; ?>
                         </td>
                     </tr>
                     <tr>
@@ -120,7 +103,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $crowdList[$crowdArray[$i]]; ?>
+                            <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
                         </td>
                     </tr>
                 </table>
