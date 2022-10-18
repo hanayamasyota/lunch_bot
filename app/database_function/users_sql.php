@@ -109,6 +109,21 @@ function checkUsers($userId) {
     }
 }
 
+//個人設定が完了しているかチェック
+function getPersonalSetting($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select rest_start, rest_end, ambience nickname from ' . TABLE_NAME_USERS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return shopname
+        return $row;
+    }
+
+
 // delete userinfo
 function deleteUser($userId, $table) {
     $dbh = dbConnection::getConnection();

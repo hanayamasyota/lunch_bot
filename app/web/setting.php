@@ -1,7 +1,25 @@
 <?php
-require_once '../index.php';
+require_once '../DBConnection.php';
+require_once '../database_function/users_sql.php';
+
+define('TABLE_NAME_USERS', 'users');
 
 $userId = $_GET['userid'];
+
+//デフォルトの値
+$nickName = null;
+$nowTime = date('D:i');
+$restStart = $nowTime;
+$restEnd = $nowTime;
+$ambience = null;
+//更新の場合は前の値をフォームにセットしておく
+$setting = getPersonalSetting($userId);
+if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($setting['nickname'] != null)) {
+    $nickName = $setting['nickname'];
+    $restStart = $setting['rest_start'];
+    $restEnd = $setting['rest_end'];
+    $ambience = $setting['ambience'];
+}
 ?>
 
 
@@ -65,7 +83,7 @@ $userId = $_GET['userid'];
                             <small><p class="text-end">(12文字以内)</p></small>
                         </th>
                         <td class="col-7 pt-2 pb-0 bg-white">
-                            <input type="text" name="nickname" max_length="12" required>
+                            <input type="text" name="nickname" max_length="12" value="<?php echo $nickName; ?>" required>
                             <small>
                                 <p>※「みんなのレビュー」で表示されます</p>
                             </small>
@@ -76,8 +94,8 @@ $userId = $_GET['userid'];
                             <div class="text-danger d-inline">*</div>昼休み時間
                         </th>
                         <td class="col-7 py-4 bg-white">
-                            <input type="time" name="start" min="09:00" max="15:00" required>~
-                            <input type="time" name="end" min="09:00" max="15:00" required>
+                            <input type="time" name="start" min="09:00" max="15:00" value="<?php echo $restStart; ?>" required>~
+                            <input type="time" name="end" min="09:00" max="15:00" value="<?php echo $restEnd; ?>" required>
                         </td>
                     </tr>
                     <tr>
