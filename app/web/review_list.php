@@ -128,7 +128,7 @@ define('TABLE_NAME_USERS', 'users');
                 for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><?php echo $nickNameArray[$i]; ?><?php echo "レビュー日：".$time ?><div class="text-right"><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
+                    <thead><div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：".$time ?><div><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
