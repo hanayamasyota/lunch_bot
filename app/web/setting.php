@@ -65,7 +65,7 @@ $userId = $_GET['userid'];
                             <small><p class="text-end">(12文字以内)</p></small>
                         </th>
                         <td class="col-7 pt-2 pb-0 bg-white">
-                            <input type="text" name="name" max_length="12" required>
+                            <input type="text" name="nickname" max_length="12" required>
                             <small>
                                 <p>※「みんなのレビュー」で表示されます</p>
                             </small>
@@ -87,7 +87,6 @@ $userId = $_GET['userid'];
                         <td class="col-7 py-4 bg-white text-left">
                             <select name="ambi">
                                 <option hidden>選択してください</option>
-                                <option value=""></option>
                                 <option value="1">おしゃれ</option>
                                 <option value="2">たのしい</option>
                                 <option value="3">にぎやか</option>
@@ -95,6 +94,7 @@ $userId = $_GET['userid'];
                                 <option value="5">個性的</option>
                                 <option value="6">高級志向</option>
                                 <option value="7">テーマ性がある</option>
+                                <option value="">特になし</option>
                             </select>
                         </td>
                     </tr>

@@ -151,7 +151,8 @@ $userId = $_POST['userid'];
 $start = $_POST['start'];
 $end = $_POST['end'];
 $ambi = $_POST['ambi'];
+$name = $_POST['nickname'];
 
-updateRestTime($userId, $start, $end, $ambi);
+updateRestTime($userId, $start, $end, $ambi, $name);
 updateUser($userId, null);
 ?>
