@@ -22,7 +22,6 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
 }
 
 $selectBox = '';
-for ($i = 0; $i < )
 ?>
 
 
