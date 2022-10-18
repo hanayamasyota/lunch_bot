@@ -50,9 +50,6 @@ $userId = $_GET['userid'];
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-
-        
-
         <div class="container dx-3 my-5 bg-lightnavy">
         <div>
             <p class="fw-bold text-center">
@@ -64,8 +61,11 @@ $userId = $_GET['userid'];
             <table class="table border-top border-navy vertical-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger d-inline">*</div>ニックネーム(「みんなのレビュー」で表示されます)
-                            <p>10文字以内</p>
+                            <div class="text-danger d-inline">*</div>ニックネーム
+                            <small>
+                                <p>「みんなのレビュー」で表示されます</p>
+                                <p>10文字以内</p>
+                            </small>
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input type="text" name="name" max_length="10" required>
