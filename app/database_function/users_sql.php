@@ -122,6 +122,7 @@ function getPersonalSetting($userId) {
         //return shopname
         return $row;
     }
+}
 
 
 // delete userinfo
