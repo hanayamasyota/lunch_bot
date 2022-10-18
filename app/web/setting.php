@@ -62,18 +62,18 @@ $userId = $_GET['userid'];
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>ニックネーム
-                            <small>
-                                <p>「みんなのレビュー」で表示されます</p>
-                                <p>10文字以内</p>
-                            </small>
+                            <small><p>12文字以内</p></small>
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input type="text" name="name" max_length="10" required>
+                            <small>
+                                <p>「みんなのレビュー」で表示されます</p>
+                            </small>
                         </td>
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger d-inline">*</div>開始時刻
+                            <div class="text-danger d-inline">*</div>昼休み開始時刻
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input type="time" name="start" min="09:00" max="15:00" required>
@@ -81,7 +81,7 @@ $userId = $_GET['userid'];
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger d-inline">*</div>終了時刻
+                            <div class="text-danger d-inline">*</div>昼休み終了時刻
                         </th>
                         <td class="col-7 py-4 bg-white">
                             <input type="time" name="end" min="09:00" max="15:00" required>
