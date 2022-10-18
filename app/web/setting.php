@@ -22,6 +22,7 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
 }
 
 $selectBox = '';
+
 ?>
 
 
@@ -60,17 +61,8 @@ $selectBox = '';
         </div>
     </header>
 
-
-    <?php
-    // function hanageFunction()
-    ?>
-
-
-
-
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <div class="container dx-3 my-5 bg-lightnavy">
         <div>
             <p class="fw-bold text-center">
                 <div class="text-danger d-inline">*</div>必要事項を入力してください。
@@ -126,7 +118,6 @@ $selectBox = '';
                 </button>
             </div>
         </form>
-    </div>
 
     </div>
 

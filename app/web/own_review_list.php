@@ -13,12 +13,14 @@ $userId = $_GET['userid'];
 $ownReviewData = getDataByReviews($userId);
 
 if ($ownReviewData != PDO::PARAM_NULL) {
+    //レビュー
     $scoreArray = array(); //評価点
     $ambiArray = array(); //雰囲気
     $crowdArray = array(); //混み具合
-    //レビュー
+
     $timeArray = array();
     $shopNameArray = array();
+    $shopIdArray = array();
     foreach ($ownReviewData as $review) {
         if ($review["review_num"] == 100) {
             array_push($scoreArray, $review["review"]);
@@ -108,8 +110,13 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     </tr>
                 </table>
                 <div class="text-end">
-                    <button type="button">編集</button>
-                    <button type="button">削除</button>
+                    <form method="POST" action="review_entry.php">
+                        <input type="hidden" >
+                        <button type="submit">編集</button>
+                    </form>
+                    <form method="POST" action="review_entry.php">
+                        <button type="submit">削除</button>
+                    </form>
                 </div>
             <?php } ?>
         </div>
