@@ -13,6 +13,12 @@ $nowTime = date('D:i');
 $restStart = $nowTime;
 $restEnd = $nowTime;
 $ambience = null;
+
+$selectBox = <<<EOD
+<select name="ambi">
+<option hidden>選択してください</option>
+EOD;
+
 //更新の場合は前の値をフォームにセットしておく
 $setting = getPersonalSetting($userId);
 if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($setting['nickname'] != null)) {
@@ -20,18 +26,18 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
     $restStart = $setting['rest_start'];
     $restEnd = $setting['rest_end'];
     $ambience = $setting['ambience'];
-}
 
-$ambiNum = intval($setting['ambience']);
-$selectBox = <<<EOD
-<select name="ambi">
-<option hidden>選択してください</option>
-EOD;
+    $ambiNum = intval($setting['ambience']);
 
-for ($i = 0; $i < count(AMBIENCE_LIST); $i++) {
-    if (($i+1) == $ambiNum) {
-        $selectBox .= '<option value="'.$i.'" selected>'.AMBIENCE_LIST[$i].'</option>';
-    } else {
+    for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
+        if (($i+1) == $ambiNum) {
+            $selectBox .= '<option value="'.$i.'" selected>'.AMBIENCE_LIST[$i].'</option>';
+        } else {
+            $selectBox .= '<option value="'.$i.'">'.AMBIENCE_LIST[$i].'</option>';
+        }
+    }
+} else {
+    for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
         $selectBox .= '<option value="'.$i.'">'.AMBIENCE_LIST[$i].'</option>';
     }
 }
@@ -40,6 +46,8 @@ $selectBox .= <<<EOD
 <option value="">特になし</option>
 </select>
 EOD;
+
+
 ?>
 
 
