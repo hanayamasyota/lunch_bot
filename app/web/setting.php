@@ -28,9 +28,10 @@ if (($setting['rest_start'] != null) && ($setting['rest_end'] != null) && ($sett
     $ambience = $setting['ambience'];
 
     $ambiNum = intval($setting['ambience']);
+    error_log('ambinum:'.$ambiNum);
 
     for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
-        if (($i+1) == $ambiNum) {
+        if ($i == $ambiNum) {
             $selectBox .= '<option value="'.$i.'" selected>'.AMBIENCE_LIST[$i].'</option>';
         } else {
             $selectBox .= '<option value="'.$i.'">'.AMBIENCE_LIST[$i].'</option>';
