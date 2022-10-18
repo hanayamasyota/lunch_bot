@@ -125,6 +125,6 @@ function inductionUserSetting($bot, $replyToken) {
     replyButtonsTemplate($bot, $replyToken, 'ユーザ設定へ', 'https://'.$_SERVER['HTTP_HOST'].'/imgs/setting.png', 'ユーザ設定へ',
     'ユーザ設定が完了していません。以下のボタンで設定して下さい',
     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-        'ユーザ設定へ', 'ユーザ設定'),
+        'ユーザ設定へ', '設定'),
     );
 }

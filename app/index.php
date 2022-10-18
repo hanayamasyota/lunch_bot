@@ -125,7 +125,7 @@ foreach ($events as $event) {
             //現在はボタンだが、リッチメニューで対応させる予定
             $messages[0].$messages[1],
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'ユーザ設定へ', 'ユーザ設定'
+                'ユーザ設定へ', '設定'
             ),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 '戻る', 'キャンセル'

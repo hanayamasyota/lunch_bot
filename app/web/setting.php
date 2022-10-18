@@ -103,7 +103,7 @@ EOD;
                             <small><p class="text-end">(12文字以内)</p></small>
                         </th>
                         <td class="col-7 pt-2 pb-0 bg-white">
-                            <input type="text" name="nickname" max_length="12" value="<?php echo $nickName; ?>" required>
+                            <input type="text" name="nickname" maxlength="12" value="<?php echo $nickName; ?>" required>
                             <small>
                                 <p>※「みんなのレビュー」で表示されます</p>
                             </small>

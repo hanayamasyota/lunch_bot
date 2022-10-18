@@ -18,7 +18,9 @@ define('TABLE_NAME_USERS', 'users');
     }
     $uniqueUserId = array_unique($userIdArray);
 
-    $shopAmbiString = '';
+    $nickNameArray = array();
+
+    $shopAmbi = '';
     
     $avarageScore = 0.0;
     //レビューが登録されているか確認
@@ -40,6 +42,8 @@ define('TABLE_NAME_USERS', 'users');
             }
         }
         foreach ($uniqueUserId as $userId) {
+            $nickName = getNickNameByUserId($userId);
+            array_push($nickNameArray, $nickName);
             $restTime = getRestTimeByUserId($userId);
             array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
@@ -53,9 +57,9 @@ define('TABLE_NAME_USERS', 'users');
         $matchAmbi = return_max_count_item($ambiArray);
         foreach ($matchAmbi as $ambi) {
             if ($ambi === end($matchAmbi)) {
-                $shopAmbiString .= AMBIENCE_LIST[$ambi];
+                $shopAmbi .= AMBIENCE_LIST[$ambi];
             } else {
-                $shopAmbiString .= AMBIENCE_LIST[$ambi].', ';
+                $shopAmbi .= AMBIENCE_LIST[$ambi].', ';
             }
         }
     //レビューが登録されていない場合
@@ -108,7 +112,7 @@ define('TABLE_NAME_USERS', 'users');
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
                     <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</div>
-                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbiString ?></div>
+                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi ?></div>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
                 <?php } ?> 
@@ -124,7 +128,7 @@ define('TABLE_NAME_USERS', 'users');
                 for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><?php echo "レビュー日：".$time ?><div class="text-right"><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
+                    <thead><?php echo $nickNameArray[$i]; ?><?php echo "レビュー日：".$time ?><div class="text-right"><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
