@@ -75,8 +75,8 @@ $userId = $_GET['userid'];
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>昼休み時間
                         </th>
-                        <td class="col-7 py-4 bg-white row">
-                            <input type="time" name="start" min="09:00" max="15:00" required>
+                        <td class="col-7 py-4 bg-white d-inline">
+                            <input type="time" name="start" min="09:00" max="15:00" required>~
                             <input type="time" name="end" min="09:00" max="15:00" required>
                         </td>
                     </tr>
