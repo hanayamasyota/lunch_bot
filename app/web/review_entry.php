@@ -20,6 +20,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $userId = $_POST["userid"];
         $status = '編集';
     }
+    error_log('userid:'.$userId);
+    error_log('shopid:'.$shopId);
+    error_log('shopname:'.$shopName);
 
     //デフォルト設定
     $score = '3';
@@ -28,9 +31,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 
     if (checkExistsReview($userId, $shopId, 100) != PDO::PARAM_NULL) {
         $reviewData = separateReviewData($userId, $shopId);
-        error_log('score:'.$score);
-        error_log('ambi:'.$ambi);
-        error_log('crowd:'.$crowd);
+        error_log('count:'.$count);
         $score = $reviewData[0];
         $ambi = $reviewData[1];
         $crowd = $reviewData[2];

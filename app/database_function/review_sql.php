@@ -90,10 +90,10 @@ function getShopIdByReviews($userId, $shopName) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopName));
     // if no record
-    if (!($row = $sth->fetch())) {
+    if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row;
+        return $row['shopid'];
     }
 }
 
