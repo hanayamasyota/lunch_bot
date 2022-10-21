@@ -93,7 +93,7 @@ function getShopIdByReviews($userId, $shopName) {
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row['shopid'];
+        return $row;
     }
 }
 
