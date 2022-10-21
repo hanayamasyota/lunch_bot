@@ -115,18 +115,18 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         </td>
                     </tr>
                 </table>
-                <div class="text-end pt-0 pe-3 d-flex">
+                <div class="mt-0 d-flex">
                     <form method="POST" action="review_entry.php">
                         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
                         <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
                         <input type="hidden" value="<?php echo $shopNameArray[$i]; ?>" name="shopname">
-                        <button type="submit">編集</button>
+                        <button type="submit" class="text-end">編集</button>
                     </form>
                     <form method="POST" action="review_delete.php">
                         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
                         <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
                         <input type="hidden" value="<?php echo $shopNameArray[$i]; ?>" name="shopname">
-                        <button type="submit">削除</button>
+                        <button type="submit" class="text-end">削除</button>
                     </form>
                 </div>
             <?php } ?>
