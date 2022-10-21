@@ -75,7 +75,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $ambiStr .= '<option value="'.$i.'"'.$additions.'>'.AMBIENCE_LIST[$i].'</option>';
     }
     $ambiStr .= <<<EOD
-    <option value="">特になし</option>
     </select>
     EOD;
 
@@ -151,16 +150,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
                         <td class="col-7 py-4 bg-white text-left w-80">
-                            <select name="ambi" required>
-				                <option value="" hidden>選択してください</option>
-				                <option value="1">おしゃれ</option>
-				                <option value="2">たのしい</option>
-				                <option value="3">にぎやか</option>
-				                <option value="4">おちつきがある</option>
-				                <option value="5">個性的</option>
-				                <option value="6">高級志向</option>
-				                <option value="7">テーマ性がある</option>
-			                </select>
+                            <?php echo $ambiStr; ?>
                         </td>
                     </tr>
                     <tr>
