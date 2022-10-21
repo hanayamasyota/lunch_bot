@@ -1,4 +1,11 @@
 <?php
+require_once '../DBConnection.php';
+require_once '../database_function/review_sql.php';
+
+define('TABLE_NAME_REVIEWS', 'reviews');
+?>
+
+<?php
     $userId = '';
     $shopId = '';
     $shopName = '';
