@@ -47,7 +47,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         if (($i+1) == 1) {
             $additions .= ' required';
         }
-        if (($i+1) == $score) {
+        if (5-($i+1) == $score) {
             $additions .= ' checked="checked"';
         }
         $scoreStr .= '<input id="review0'.($i+1).'" type="radio" name="score" value="'.(5-$i).'"'.$additions.'><label for="review0'.($i+1).'">★</label>';
