@@ -1,6 +1,7 @@
 <?php
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
+require_once 'list.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 ?>
@@ -29,6 +30,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     $ambi = '';
     $crowd = '3';
 
+    //すでに登録済みで編集をする場合は以前の値をもとに表示させる
     if (checkExistsReview($userId, $shopId, 100) != PDO::PARAM_NULL) {
         $reviewData = separateReviewData($userId, $shopId);
         $score = $reviewData[0]['review'];
@@ -59,9 +61,19 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     EOD;
 
     $ambiStr = <<<EOD
-    <select name="ambi">
+    <select name="ambi" required>
     <option hidden>選択してください</option>
     EOD;
+    for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
+        $additions = '';
+        if (($i+1) == 1) {
+            $additions .= ' required';
+        }
+        if ($i == $ambi) {
+            $additions .= ' selected';
+        }
+        $ambiStr .= '<option value="'.$i.'"'.$additions.'>'.AMBIENCE_LIST[$i].'</option>';
+    }
     $ambiStr .= <<<EOD
     <option value="">特になし</option>
     </select>
