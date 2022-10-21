@@ -3,7 +3,6 @@ require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
 require_once 'list.php';
-require_once 'js/confirm.js';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
@@ -64,6 +63,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <script src="js/confirm.js"></script>
 </head>
 
 <body id="page-top">
