@@ -34,6 +34,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $reviewData = separateReviewData($userId, $shopId);
         $score = $reviewData[0]['review'];
         $ambi = $reviewData[1]['review'];
+        error_log('ambi:'.$ambi);
         $crowd = $reviewData[2]['review'];
         $status = '編集';
     }
