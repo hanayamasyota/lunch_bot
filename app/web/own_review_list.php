@@ -34,8 +34,8 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     }
 
     foreach ($shopNameArray as $shopName) {
+        error_log('shopname:'.$shopName);
         $shopId = getShopIdByReviews($userId, $shopName);
-        error_log(var_dump($shopId, true));
         array_push($shopIdArray, $shopId);
     }
 
