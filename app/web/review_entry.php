@@ -78,7 +78,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 
     $crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="'.$crowd.'"> 混'.
     '<datalist id="my-datalist">';
-    EOD;
     for ($i = 1; $i <= count(CROWD_LIST); $i++) {
         $additions = '';
         $crowdStr .= '<option value="'.$i.'">';
