@@ -19,7 +19,7 @@
     $ambi = '';
     $crowd = '3';
 
-    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+    if (checkExistsReview($userId, $shopId, 100) != PDO::PARAM_NULL) {
         $reviewData = separateReviewData($userId, $shopId);
         error_log('score:'.$score);
         error_log('ambi:'.$ambi);
