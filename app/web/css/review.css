@@ -22,3 +22,16 @@
 .stars input[type='radio']:checked ~ label{
     color: #F8C601;              /* 選択された星以降をすべて黄色にする */
 }
+
+.preview-star {
+    font-size: 30px;
+    padding: 0 5px; 
+    cursor: pointer;
+    color: #F8C601;
+}
+.preview-star-gray {
+    font-size: 30px;
+    padding: 0 5px;
+    cursor: pointer;
+    color: #D2D2D2;
+}
