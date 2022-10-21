@@ -31,7 +31,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 
     if (checkExistsReview($userId, $shopId, 100) != PDO::PARAM_NULL) {
         $reviewData = separateReviewData($userId, $shopId);
-        error_log('count:'.count($reviewData));
+        $score = $reviewData[0]['review'];
+        $ambi = $reviewData[1]['review'];
+        $crowd = $reviewData[2]['review'];
     }
 
     $scoreStr = <<<EOD

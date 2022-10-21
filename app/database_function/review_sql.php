@@ -67,7 +67,7 @@ function separateReviewData($userId, $shopId) {
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row['review'];
+        return $row;
     }
 }
 
