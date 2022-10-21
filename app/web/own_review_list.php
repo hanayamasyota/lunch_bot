@@ -105,9 +105,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
                             for ($n = 1; $n <= 5; $n++) {
                                 if ($n == intval($scoreArray[$i])) {
-                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" checked="checked" disabled="disabled"><label for="review'.$n.'">★</label>';
+                                    $scorePreview .= '<input id="review'.$i.$n.'" type="radio" name="score" checked="checked" disabled="disabled"><label for="review'.$i.$n.'">★</label>';
                                 } else {
-                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" disabled="disabled"><label for="review'.$n.'">★</label>';
+                                    $scorePreview .= '<input id="review0'.$i.$n.'" type="radio" name="score" disabled="disabled"><label for="review'.$i.$n.'">★</label>';
                                 }
                             }
 
