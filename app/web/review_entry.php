@@ -81,7 +81,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     <datalist id="my-datalist">
     EOD;
     for ($i = 1; $i <= count(CROWD_LIST); $i++) {
-        $crowdStr = '<option value="'.$i.'">';
+        $crowdStr .= '<option value="'.$i.'">';
     }
     $crowdStr .= <<<EOD
     </datalist>
