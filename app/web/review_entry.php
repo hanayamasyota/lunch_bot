@@ -7,6 +7,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
 ?>
 
 <?php
+    $status = '登録';
     $userId = '';
     $shopId = '';
     $shopName = '';
@@ -14,12 +15,10 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $shopId = $_GET["shopid"];
         $shopName = $_GET["shopname"];
         $userId = $_GET["userid"];
-        $status = '登録';
     } else {
         $shopId = $_POST["shopid"];
         $shopName = $_POST["shopname"];
         $userId = $_POST["userid"];
-        $status = '編集';
     }
     error_log('userid:'.$userId);
     error_log('shopid:'.$shopId);
@@ -36,6 +35,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $score = $reviewData[0]['review'];
         $ambi = $reviewData[1]['review'];
         $crowd = $reviewData[2]['review'];
+        $status = '編集';
     }
 
     $scoreStr = <<<EOD
