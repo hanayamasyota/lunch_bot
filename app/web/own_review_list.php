@@ -65,7 +65,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 
-<body id="page-top">
+<body id="page-top" class="bg-base">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
