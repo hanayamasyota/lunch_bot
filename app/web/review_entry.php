@@ -166,14 +166,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
-			                空 <input name="crowd" type="range" list="my-datalist" min="1" max="5"> 混　
-			                <datalist id="my-datalist">
-  				                <option value="1">
-  				                <option value="2">
-  				                <option value="3">
-  				                <option value="4">
-  				                <option value="5">
-			                </datalist>
+                            <?php echo $crowdStr; ?>
                         </td>
                     </tr>
             </table>
