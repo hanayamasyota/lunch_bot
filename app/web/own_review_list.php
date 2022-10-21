@@ -82,6 +82,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
+
+        <div class="bg-navy text-light mb-3">
+                <div class="px-2 pt-3 col-12 border-bottom-3">
+                    <h3 class="h3"><?php echo $shopNameArray[0] ?></h3>
+                </div>
+        </div>
+
+        <div class="bg-white">
             <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <h5 class="bg-navy text-light mb-0 py-2 align-middle">
                     <?php echo $shopNameArray[$i]; ?>
@@ -129,6 +137,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     </form>
                 </div>
             <?php } ?>
+        </div>
     </div>
 
         <!-- Footer-->
@@ -138,11 +147,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <div class="mb-2">
                         ひるまちGO
                     </div>
-                    <!-- <a href="#!">Privacy</a>
-                    <span class="mx-1">&middot;</span>
-                    <a href="#!">Terms</a>
-                    <span class="mx-1">&middot;</span>
-                    <a href="#!">FAQ</a> -->
                 </div>
             </div>
         </footer>
