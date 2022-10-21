@@ -44,15 +44,15 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     <div class="stars">
     <span>
     EOD;
-    for ($i = 0; $i < 5; $i++) {
+    for ($i = 1; $i <= 5; $i++) {
         $additions = '';
-        if (($i+1) == 1) {
+        if ($i == 1) {
             $additions .= ' required';
         }
-        if ((5-$i) == $score) {
+        if (5-($i-1) == $score) {
             $additions .= ' checked="checked"';
         }
-        $scoreStr .= '<input id="review0'.($i+1).'" type="radio" name="score" value="'.(5-$i).'"'.$additions.'><label for="review0'.($i+1).'">★</label>';
+        $scoreStr .= '<input id="review0'.$i.'" type="radio" name="score" value="'.(5-($i-1)).'"'.$additions.'><label for="review0'.$i.'">★</label>';
     }
     $scoreStr .= <<<EOD
     </span>
@@ -66,7 +66,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     EOD;
     for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
         $additions = '';
-        if (($i+1) == 1) {
+        if ($i == 1) {
             $additions .= ' required';
         }
         if ($i == $ambi) {
@@ -82,6 +82,16 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     空 <input name="crowd" type="range" list="my-datalist" min="1" max="5"> 混　
     <datalist id="my-datalist">
     EOD;
+    for ($i = 1; $i <= count(CROWD_LIST); $i++) {
+        $additions = '';
+        if ($i == 1) {
+            $additions .= ' required';
+        }
+        if ($i == $crowd) {
+            $additions .= ' selected';
+        }
+        $crowdStr = '<option value="'.$i.'"'.$additions.'>';
+    }
     $crowdStr .= <<<EOD
     </datalist>
     EOD;
