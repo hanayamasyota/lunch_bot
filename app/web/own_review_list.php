@@ -88,7 +88,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                 <h5 class="bg-navy text-light mb-0 py-2 align-middle">
                     <?php echo $shopNameArray[$i]; ?>
                 </h5>
-                <table class="table border-navy px-3 mb-0">
+                <table class="table border-navy px-3 mb-0 align-middle">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
                     <thead><?php echo "レビュー日：".$time ?></thead>
                     <tr>

@@ -65,7 +65,7 @@
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
             <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
             <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
-            <table class="table border-top border-navy vertical-middle">
+            <table class="table border-top border-navy align-middle">
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>味
