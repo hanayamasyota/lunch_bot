@@ -1,5 +1,7 @@
 <?php
-    $status = '';
+    $userId = '';
+    $shopId = '';
+    $shopName = '';
     if($_SERVER["REQUEST_METHOD"] != "POST") {
         $shopId = $_GET["shopid"];
         $shopName = $_GET["shopname"];
@@ -12,7 +14,59 @@
         $status = '編集';
     }
 
-    $message = "";
+    //デフォルト設定
+    $score = '3';
+    $ambi = '';
+    $crowd = '3';
+
+    if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
+        $reviewData = separateReviewData($userId, $shopId);
+        error_log('score:'.$score);
+        error_log('ambi:'.$ambi);
+        error_log('crowd:'.$crowd);
+        $score = $reviewData[0];
+        $ambi = $reviewData[1];
+        $crowd = $reviewData[2];
+    }
+
+    $scoreStr = <<<EOD
+    <div class="review">
+    <small>星の数を選択してください。</small>
+    <div class="stars">
+    <span>
+    EOD;
+    for ($i = 0; $i < 5; $i++) {
+        $additions = '';
+        if (($i+1) == 1) {
+            $additions .= ' required';
+        }
+        if (($i+1) == $score) {
+            $additions .= ' checked="checked"';
+        }
+        $scoreStr .= '<input id="review0'.($i+1).'" type="radio" name="score" value="'.(5-$i).'"'.$additions.'><label for="review0'.($i+1).'">★</label>';
+    }
+    $scoreStr .= <<<EOD
+    </span>
+    </div>
+    </div>
+    EOD;
+
+    $ambiStr = <<<EOD
+    <select name="ambi">
+    <option hidden>選択してください</option>
+    EOD;
+    $ambiStr .= <<<EOD
+    <option value="">特になし</option>
+    </select>
+    EOD;
+
+    $crowdStr = <<<EOD
+    空 <input name="crowd" type="range" list="my-datalist" min="1" max="5"> 混　
+    <datalist id="my-datalist">
+    EOD;
+    $crowdStr .= <<<EOD
+    </datalist>
+    EOD;
 ?>
 
 
@@ -60,7 +114,6 @@
             </div>
         </div>
         <small><div class="text-danger d-inline">*</div>は必須項目です</small>
-        <p><?php echo $message; ?></p>
         <form method="post" action="review_entry_confirm.php">
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
             <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
@@ -71,18 +124,7 @@
                             <div class="text-danger d-inline">*</div>味
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
-                            <div class="review">
-			                    <small>星の数を選択してください。</small>
-	    		                <div class="stars">
-		    		                <span>
-		      			                <input id="review01" type="radio" name="score" value="5" required><label for="review01">★</label>
-		      			                <input id="review02" type="radio" name="score" value="4"><label for="review02">★</label>
-		      			                <input id="review03" type="radio" name="score" value="3" checked="checked"><label for="review03">★</label>
-		      			                <input id="review04" type="radio" name="score" value="2"><label for="review04">★</label>
-		      			                <input id="review05" type="radio" name="score" value="1"><label for="review05">★</label>
-		    		                </span>
-	  			                </div>
-			                </div>
+                            <?php echo $scoreStr; ?>
                         </td>
                     </tr>
                     <tr>
