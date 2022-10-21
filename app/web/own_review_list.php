@@ -3,6 +3,7 @@ require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
 require_once 'list.php';
+require_once 'js/confirm.js';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
@@ -31,6 +32,11 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             array_push($timeArray, $review["time"]);
             array_push($shopNameArray, $review['shopname']);
         }
+    }
+
+    foreach ($shopNameArray as $shopName) {
+        $shopId = getShopIdByReviews($userId, $shopName);
+        array_push($shopIdArray, $shopId);
     }
 
 //レビューが登録されていない場合
@@ -111,11 +117,13 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                 </table>
                 <div class="text-end">
                     <form method="POST" action="review_entry.php">
-                        <input type="hidden" >
+                        <input type="hidden" value="<?php echo $userId; ?>" name="userid">
+                        <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
+                        <input type="hidden" value="<?php echo $shopNameArray[$i]; ?>" name="shopname">
                         <button type="submit">編集</button>
                     </form>
-                    <form method="POST" action="review_entry.php">
-                        <button type="submit">削除</button>
+                    <form method="POST" action="review_delete.php">
+                        <button type="submit" onclick="return confirm_delete()">削除</button>
                     </form>
                 </div>
             <?php } ?>

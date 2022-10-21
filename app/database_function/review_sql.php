@@ -15,7 +15,6 @@ function checkExistsReview($userId, $shopId, $reviewNum) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        //return before_send
         return $row['review_no'];
     }
 }
@@ -33,20 +32,6 @@ function getAllUserIdByReviews($shopId) {
         }
 }
 
-function getShopIdByReviews($userId) {
-    $dbh = dbConnection::getConnection();
-    $sql = 'select shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
-    // if no record
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        //return before_send
-        return $row['shopid'];
-    }
-}
-
 function getOwnReviewData($userId, $shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select review from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
@@ -56,7 +41,6 @@ function getOwnReviewData($userId, $shopId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        //return before_send
         return $row['review'];
     }
 }
@@ -70,7 +54,6 @@ function getReviewData($shopId) {
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        //return before_send
         return $row;
     }
 }
@@ -84,7 +67,19 @@ function getDataByReviews($userId) {
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        //return before_send
+        return $row;
+    }
+}
+
+function getShopIdByReviews($userId, $shopName) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopname';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopName));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
         return $row;
     }
 }

@@ -1,7 +1,16 @@
 <?php
-    $shopId = $_GET["shopid"];
-    $shopName = $_GET["shopname"];
-    $userId = $_GET["userid"];
+    $status = '';
+    if($_SERVER["REQUEST_METHOD"] != "POST") {
+        $shopId = $_GET["shopid"];
+        $shopName = $_GET["shopname"];
+        $userId = $_GET["userid"];
+        $status = '登録';
+    } else {
+        $shopId = $_POST["shopid"];
+        $shopName = $_POST["shopname"];
+        $userId = $_POST["userid"];
+        $status = '編集';
+    }
 
     $message = "";
 ?>
@@ -15,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|レビュー登録</title>
+    <title>ひるまちGO|レビュー<?php echo $status; ?></title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -39,7 +48,7 @@
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">レビュー登録</p>
+            <p class="text-light h3">レビュー<?php echo $status; ?></p>
         </div>
     </header>
 
