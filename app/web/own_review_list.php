@@ -99,7 +99,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             <?php
                             $scorePreview = '';
                             for ($n = 0; $n <= 0; $n++) {
-                                if ($n < intval($scoreArray[$i]) {
+                                if ($n < intval($scoreArray[$i])) {
                                     $scorePreview .= '<div class="d-inline preview-star">★</div>';
                                 } else {
                                     $scorePreview .= '<div class="d-inline preview-star-gray">★</div>';
