@@ -115,7 +115,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         </td>
                     </tr>
                 </table>
-                <div class="text-end">
+                <div class="text-end d-inline">
                     <form method="POST" action="review_entry.php">
                         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
                         <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
