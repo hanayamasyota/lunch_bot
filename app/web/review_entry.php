@@ -85,7 +85,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         if ($i == $crowd) {
             $additions .= ' selected';
         }
-        $crowdStr = '<option value="'.$i.'"'.$additions.'>';
+        $crowdStr .= '<option value="'.$i.'"'.$additions.'>';
     }
     $crowdStr .= <<<EOD
     </datalist>
