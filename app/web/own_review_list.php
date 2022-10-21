@@ -63,7 +63,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
-    <script src="js/confirm.js"></script>
 </head>
 
 <body id="page-top">
@@ -84,7 +83,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <div class="container dx-2 my-5 bg-lightnavy">
         <div class="bg-white">
             <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
-                <h5 class="bg-navy text-light mb-0 py-2 align-middle">
+                <h5 class="bg-navy">
                     <?php echo $shopNameArray[$i]; ?>
                 </h5>
                 <table class="table border-navy px-3">
