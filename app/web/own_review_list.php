@@ -95,7 +95,30 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             評価
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $scoreArray[$i] . '点'; ?>
+                            <?php
+                            $scorePreview = <<<EOD
+                            <div class="review">
+                            <div class="stars">
+                            <span>
+                            EOD;
+
+                            for ($n = 1; $n <= 5; $n++) {
+                                if ($n == intval($scoreArray[$i])) {
+                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" disabled checked="checked"><label for="review'.$n.'">★</label>';
+                                } else {
+                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" disabled><label for="review'.$n.'">★</label>';
+                                }
+                            }
+
+                            $scorePreview .= <<<EOD
+                            </span>
+                            </div>
+                            </div>
+                            ?>
+                            EOD;
+
+                            echo $scorePreview;
+                            ?>
                         </td>
                     </tr>
                     <tr>
