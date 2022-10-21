@@ -20,9 +20,6 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $shopName = $_POST["shopname"];
         $userId = $_POST["userid"];
     }
-    error_log('userid:'.$userId);
-    error_log('shopid:'.$shopId);
-    error_log('shopname:'.$shopName);
 
     //デフォルト設定
     $score = '3';
@@ -34,8 +31,8 @@ define('TABLE_NAME_REVIEWS', 'reviews');
         $reviewData = separateReviewData($userId, $shopId);
         $score = $reviewData[0]['review'];
         $ambi = $reviewData[1]['review'];
-        error_log('ambi:'.$ambi);
         $crowd = $reviewData[2]['review'];
+        error_log('crowd:'.$crowd);
         $status = '編集';
     }
 
