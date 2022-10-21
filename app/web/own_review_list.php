@@ -63,6 +63,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/review.css" rel="stylesheet" />
     <script src="js/confirm.js"></script>
 </head>
 
@@ -104,7 +105,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
                             for ($n = 1; $n <= 5; $n++) {
                                 if ($n == intval($scoreArray[$i])) {
-                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" disabled checked="checked"><label for="review'.$n.'">★</label>';
+                                    $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" checked disabled><label for="review'.$n.'">★</label>';
                                 } else {
                                     $scorePreview .= '<input id="review'.$n.'" type="radio" name="score" disabled><label for="review'.$n.'">★</label>';
                                 }
