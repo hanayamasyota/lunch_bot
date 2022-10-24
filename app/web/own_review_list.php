@@ -35,6 +35,7 @@ $shopNameArray = array();
 $shopIdArray = array();
 
 $maxPage = 0;
+$pageRange = 0;
 
 if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
@@ -59,6 +60,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         $shopId = getShopIdByReviews($userId, $shopName)[0]['shopid'];
         array_push($shopIdArray, $shopId);
     }
+
+    $pageRange = getPageRange($page, $maxPage);
+    error_log('pagerange:'.$pageRange);
 
 //レビューが登録されていない場合
 } else {
@@ -166,10 +170,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         </div>
         
         <div class="pagination">
-            <?php if ($page >= 2) { 
-                $pageRange = getPageRange($page, $maxPage);
-                error_log('pagerange:'.$pageRange);
-            ?>
+            <?php if ($page >= 2) { ?>
                 <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
