@@ -189,6 +189,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
+                <a
                 <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
@@ -222,11 +223,10 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
 <?php
 function createFormTemp($num, $userId) {
-    $formTemp = '<form name="form'.$num.'" method="POST">';
+    $formTemp = '<form name="form'.$num.'" method="POST" action="">';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
     $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
-
     return $formTemp;
 }
 
