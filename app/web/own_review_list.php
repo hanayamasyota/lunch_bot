@@ -33,6 +33,8 @@ $timeArray = array();
 $shopNameArray = array();
 $shopIdArray = array();
 
+$maxPage = 0;
+
 if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
     $reviewCount = (getDataCountByReviews($userId) / 3);
@@ -166,7 +168,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php if ($page >= 2) { 
                 $pageRange = getPageRange($page, $maxPage);
             ?>
-                <a href="javascript:form<?php echo ($page-1); ?>.submit(); return false;">戻る</a>
+                <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp($page-1); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
@@ -184,7 +186,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="javascript:form<?php echo ($page+1); ?>.submit(); return false;" class="page_feed">&raquo;</a>
+                <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp($page+1); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>

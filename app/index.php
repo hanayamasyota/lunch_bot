@@ -134,6 +134,7 @@ foreach ($events as $event) {
             // usersテーブルに緯度経度を設定
             $lat = $event->getLatitude();
             $lon = $event->getLongitude();
+            updateUser($event->getUserId(), null);
             updateLocation($event->getUserId(), $lat, $lon);
         } 
         continue;
