@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         $page = $_GET["page"];
 } else {
         $userId = $_POST["userid"];
-        $page = $_POST["now_page"];
+        $page = intval($_POST["now_page"]);
 }
 $ownReviewData = getPageReviewData($userId, $page);
 
