@@ -162,7 +162,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         </div>
         
         <div class="pagination">
-            <?php if ($page >= 2) { ?>
+            <?php if ($page >= ONE_PAGE) { ?>
                 <a href="javascript:form1.submit(); return false;">戻る</a>
                 <form name="form1" method="POST" action="#">
                     <input type="hidden" name="userid" value="<?php echo $userId; ?>">
