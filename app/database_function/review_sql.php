@@ -62,8 +62,6 @@ function getReviewData($shopId) {
 function getPageReviewData($shopId, $page) {
     $start = $page * ONE_PAGE - ONE_PAGE;
     $dataLength = ONE_PAGE * 3;
-    error_log('start:'.$start);
-    error_log('datalength:'.$dataLength);
     $dbh = dbConnection::getConnection();
     $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num limit ? offset ?';
     $sth = $dbh->prepare($sql);
