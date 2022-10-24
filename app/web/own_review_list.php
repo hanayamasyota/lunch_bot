@@ -186,7 +186,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a
                 <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
