@@ -169,18 +169,18 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                 $pageRange = getPageRange($page, $maxPage);
             ?>
                 <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
-                <?php echo createFormTemp($page-1); ?>
+                <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
             <?php } ?>
             
             <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
-                <?php if (($i >= $page - $range) && ($i <= $page + $range)) { ?>
+                <?php if (($i >= $page - $pageRange) && ($i <= $page + $pageRange)) { ?>
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
                         <a href="javascript:form<?php echo $i; ?>.submit;" class="page_number"><?php echo $i; ?></a>
-                        <?php echo createFormTemp($i); ?>
+                        <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
@@ -188,7 +188,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php if($page < $maxPage) { ?>
                 <?php error_log('page:'.$page); ?>
                 <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
-                <?php echo createFormTemp($page+1); ?>
+                <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
             <?php } ?>
@@ -219,13 +219,11 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 </html>
 
 <?php
-function createFormTemp($num) {
+function createFormTemp($num, $userId) {
     $formTemp = '<form name="form'.$num.'" method="POST">';
-    $formTemp .= <<<EOD
-    <input type="hidden" name="userid" value="<?php echo $userId; ?>">
-    <input type="hidden" name="now_page" value="<?php echo $page; ?> 
-    </form>
-    EOD;
+    $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
+    $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
+    $formTemp .= '</form>';
 
     return $formTemp;
 }
