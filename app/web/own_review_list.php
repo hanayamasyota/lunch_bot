@@ -220,7 +220,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
 <?php
 function createFormTemp($num, $userId) {
-    $formTemp = '<form name="form'.$num.'" method="POST" action="?now_page='.$num.'">';
+    $formTemp = '<form name="form'.$num.'" method="POST" action="own_review_list.php?now_page='.$num.'">';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
     $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
