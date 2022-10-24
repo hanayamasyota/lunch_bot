@@ -227,13 +227,18 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'shop_review_entry');
             //レビュー確認
             } else if (strcmp($text, 'レビュー確認・編集') == 0) {
+                $data = array(
+                    'userid' => $event->getUserId(),
+                    'page' => 1;
+                    );
+                    $query = http_build_query($data);
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                     'レビュー確認・編集',
                     SERVER_ROOT . '/imgs/hirumatiGO.png',
                     'レビュー確認・編集',
                     "レビューの確認・編集をしますか？",
                     new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?userid=' . $event->getUserId()),
+                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?'. $query),
                     new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                         'キャンセル', 'キャンセル'),
                 );
@@ -249,6 +254,7 @@ foreach ($events as $event) {
                 'userid' => $event->getUserId(),
                 'shopid' => $shop["shopid"],
                 'shopname' => $shop["shopname"],
+                'page' => 1;
                 );
                 $query = http_build_query($data);
 
@@ -364,8 +370,9 @@ foreach ($events as $event) {
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
             $message,
+            // 'line://nv/location'
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '位置情報の設定・変更', 'line://nv/location'),
+                '位置情報の設定・変更', SERVER_ROOT.'/web/post_event_owner.php'),
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '個人用設定(html)', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(

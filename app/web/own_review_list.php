@@ -9,7 +9,13 @@ define('TABLE_NAME_USERS', 'users');
 ?>
 
 <?php
-$userId = $_GET['userid'];
+if($_SERVER["REQUEST_METHOD"] != "POST") {
+        $userId = $_GET["userid"];
+        $page = $_GET["page"];
+} else {
+        $userId = $_POST["userid"];
+        $page = $_POST["page"];
+}
 $ownReviewData = getDataByReviews($userId);
 
 if ($ownReviewData != PDO::PARAM_NULL) {

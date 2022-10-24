@@ -58,6 +58,19 @@ function getReviewData($shopId) {
     }
 }
 
+function getPageReviewData($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($shopId));
+    // if no record
+    if (!($row = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row;
+    }
+}
+
 function separateReviewData($userId, $shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select review from ' .TABLE_NAME_REVIEWS. ' where ? = shopid and ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by review_num';

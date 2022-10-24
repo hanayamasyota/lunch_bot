@@ -1,5 +1,7 @@
 <?php
-//phpはここ 
+$userId = $_POST['userid'];
+$shopId = $_POST['shopid'];
+$shopName = $_POST['shopname'];
 ?>
 
 
@@ -40,7 +42,23 @@
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        
+        <div class="bg-navy text-light">
+            <div class="px-2 pt-3 col-12 border-bottom-3">
+                <h3 class="h3"><?php echo $shopName ?></h3>
+            </div>
+        </div>
+        <div class="text-center bg-white by-2">
+            <p>レビューを削除しますか？</p>
+        </div>
+        <div>
+            <form>
+                <button type="" href="review_entry">はい</button>
+            </form>
+            <form>
+                <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+                <button type="submit" href="review_entry.php">キャンセル</button>
+            </form>
+        </div>
     </div>
 
     <!-- Footer-->
