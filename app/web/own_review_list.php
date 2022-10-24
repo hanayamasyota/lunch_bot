@@ -22,7 +22,6 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         $page = $_POST["page"];
 }
 $ownReviewData = getPageReviewData($userId, $page);
-error_log('count:'.count($ownReviewData));
 
 $reviewCount = 0;
 
@@ -42,6 +41,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     error_log('count:'.$reviewCount);
     //レビュー
     foreach ($ownReviewData as $review) {
+        error_log()
         if ($review["review_num"] == 100) {
             array_push($scoreArray, $review["review"]);
         } else if ($review["review_num"] == 200) {
