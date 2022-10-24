@@ -168,7 +168,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php if ($page >= 2) { 
                 $pageRange = getPageRange($page, $maxPage);
             ?>
-                <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
@@ -179,7 +178,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
                         <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
@@ -187,7 +185,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
             <?php if($page < $maxPage) { ?>
                 <?php error_log('page:'.$page); ?>
-                <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
@@ -221,6 +218,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 <?php
 function createFormTemp($num, $userId) {
     $formTemp = '<form name="form'.$num.'" method="POST">';
+    $formTemp = '<a href="javascript:form'.$num.'.submit();" class="page_feed">&raquo;</a>';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
     $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
