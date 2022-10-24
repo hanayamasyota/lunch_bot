@@ -22,6 +22,7 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         $page = $_POST["page"];
 }
 $ownReviewData = getPageReviewData($userId, $page);
+error_log('count:'.count($ownReviewData));
 
 $reviewCount = 0;
 
