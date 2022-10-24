@@ -136,6 +136,7 @@ foreach ($events as $event) {
             $lon = $event->getLongitude();
             updateLocation($event->getUserId(), $lat, $lon);
         } 
+        continue;
     }
 
     // postbackイベント
