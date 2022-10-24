@@ -55,6 +55,7 @@ define('TABLE_NAME_USERS', 'users');
 
         //レビューから総合の店の雰囲気を取り出す
         $matchAmbi = return_max_count_item($ambiArray);
+        error_log('shopAMBI:'.$matchAmbi);
         foreach ($matchAmbi as $ambi) {
             if ($ambi === end($matchAmbi)) {
                 $shopAmbi .= AMBIENCE_LIST[$ambi];
@@ -112,7 +113,7 @@ define('TABLE_NAME_USERS', 'users');
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
                     <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</div>
-                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi ?></div>
+                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi; ?></div>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
                 <?php } ?> 
