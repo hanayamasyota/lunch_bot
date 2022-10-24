@@ -40,6 +40,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
     $reviewCount = (getDataCountByReviews($userId) / 3);
     $maxPage = ceil($reviewCount / ONE_PAGE);
+    error_log('max_page:'.$maxPage);
     //2がでたらok
     //レビュー
     foreach ($ownReviewData as $review) {
@@ -167,6 +168,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         <div class="pagination">
             <?php if ($page >= 2) { 
                 $pageRange = getPageRange($page, $maxPage);
+                error_log('pagerange:'.$pageRange);
             ?>
                 <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
@@ -186,7 +188,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <?php error_log('page:'.$page); ?>
+                <a href="javascript:form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
@@ -220,7 +222,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 <?php
 function createFormTemp($num, $userId) {
     $formTemp = '<form name="form'.$num.'" method="POST">';
-    $formTemp .= '<a href="javascript:form'.$num.'.submit();" class="page_feed">&raquo;</a>';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
     $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
