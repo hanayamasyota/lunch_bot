@@ -229,8 +229,8 @@ foreach ($events as $event) {
             } else if (strcmp($text, 'レビュー確認・編集') == 0) {
                 $data = array(
                     'userid' => $event->getUserId(),
-                    'page' => 1;
-                    );
+                    'page' => 1
+                );
                     $query = http_build_query($data);
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                     'レビュー確認・編集',
