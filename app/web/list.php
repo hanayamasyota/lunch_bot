@@ -21,9 +21,5 @@ define(
         "4" => "やや混んでいた",
         "5" => "混んでいた",
     ]
-)
-
-function makeHttpBuildQuery($array) {
-
-}
+);
 ?>
