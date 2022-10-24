@@ -179,7 +179,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="javascript:form<?php echo $i; ?>.submit;" class="page_number"><?php echo $i; ?></a>
+                        <a href="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
                         <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
