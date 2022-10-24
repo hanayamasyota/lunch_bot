@@ -1,4 +1,7 @@
 <?php
+//1ページの表示件数
+define('ONE_PAGE', 2);
+
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
@@ -9,6 +12,8 @@ define('TABLE_NAME_USERS', 'users');
 ?>
 
 <?php
+$userId = "";
+$page = 1;
 if($_SERVER["REQUEST_METHOD"] != "POST") {
         $userId = $_GET["userid"];
         $page = $_GET["page"];
@@ -16,9 +21,16 @@ if($_SERVER["REQUEST_METHOD"] != "POST") {
         $userId = $_POST["userid"];
         $page = $_POST["page"];
 }
-$ownReviewData = getDataByReviews($userId);
+$ownReviewData = getDataByReviews($userId, $page);
+
+$reviewCount = 0;
 
 if ($ownReviewData != PDO::PARAM_NULL) {
+    //最大ページ数の計算
+    $reviewCount = (getDataCountByReviews($userId) / 3);
+    $maxPage = ceil($reviewCount / ONE_PAGE);
+    //2がでたらok
+    error_log('count:'.$reviewCount);
     //レビュー
     $scoreArray = array(); //評価点
     $ambiArray = array(); //雰囲気
@@ -70,7 +82,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/review.css" rel="stylesheet" />
-    <script src="js/confirm.js"></script>
 </head>
 
 <body id="page-top" class="bg-base">
@@ -147,6 +158,19 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     </form>
                 </div>
                 <hr>
+            <?php } ?>
+        </div>
+        
+        <div class="pagination">
+            <?php if ($page >= 2) { ?>
+                <a href="javascript:form1.submit(); return false;">戻る</a>
+                <form name="form1" method="POST" action="#">
+                    <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+                    <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
+                    <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
+                </form>
+            <?php } else { ?>
+                <span class="first_last_page">&laquo;</span>
             <?php } ?>
         </div>
     </div>

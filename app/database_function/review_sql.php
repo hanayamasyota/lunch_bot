@@ -1,4 +1,5 @@
 <?php
+
 function registerReview($userId, $shopId, $reviewNum, $review, $time, $shopName) {
     $dbh = dbConnection::getConnection();
     $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time, shopname) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?) ';
@@ -58,11 +59,13 @@ function getReviewData($shopId) {
     }
 }
 
-function getPageReviewData($shopId) {
+function getPageReviewData($shopId, $page) {
+    $start = $page * ONE_PAGE - ONE_PAGE;
+    $dataLength = ONE_PAGE * 3;
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
+    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num limit ? offset ?';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
+    $sth->execute(array($shopId, $dataLength, $start));
     // if no record
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
@@ -94,6 +97,18 @@ function getDataByReviews($userId) {
         return PDO::PARAM_NULL;
     } else {
         return $row;
+    }
+}
+function getDataCountByReviews($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select count(review) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row["review_count"];
     }
 }
 
