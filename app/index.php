@@ -371,9 +371,9 @@ foreach ($events as $event) {
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
             $message,
-            // 'line://nv/location'
+            // SERVER_ROOT.'/web/post_event_owner.php'
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '位置情報の設定・変更', SERVER_ROOT.'/web/post_event_owner.php'),
+                '位置情報の設定・変更', 'line://nv/location'),
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '個人用設定(html)', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
