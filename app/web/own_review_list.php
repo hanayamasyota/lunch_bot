@@ -163,15 +163,31 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         </div>
         
         <div class="pagination">
-            <?php if ($page >= 2) { ?>
-                <a href="javascript:form1.submit(); return false;">戻る</a>
-                <form name="form1" method="POST" action="#">
-                    <input type="hidden" name="userid" value="<?php echo $userId; ?>">
-                    <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
-                    <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
-                </form>
+            <?php if ($page >= 2) { 
+                $pageRange = getPageRange($page, $maxPage);
+            ?>
+                <a href="javascript:form<?php echo ($page-1); ?>.submit(); return false;">戻る</a>
+                <?php echo createFormTemp($page-1); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
+            <?php } ?>
+            
+            <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
+                <?php if (($i >= $page - $range) && ($i <= $page + $range)) { ?>
+                    <?php if ($i == $page) { ?>
+                        <span class="now_page_number"><?php echo $i; ?></span>
+                    <?php } else { ?>
+                        <a href="javascript:form<?php echo $i; ?>.submit;" class="page_number"><?php echo $i; ?></a>
+                        <?php echo createFormTemp($i); ?>
+                    <?php } ?>
+                <?php } ?>
+            <?php } ?>
+
+            <?php if($page < $maxPage) { ?>
+                <a href="javascript:form<?php echo ($page+1); ?>.submit(); return false;" class="page_feed">&raquo;</a>
+                <?php echo createFormTemp($page+1); ?>
+            <?php } else { ?>
+                <span class="first_last_page">&raquo;</span>
             <?php } ?>
         </div>
     </div>
@@ -198,3 +214,29 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
+
+<?php
+function createFormTemp($num) {
+    $formTemp = '<form name="form'.$num.'" method="POST" action="#">';
+    $formTemp .= <<<EOD
+    <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+    <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
+    <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
+    <input type="hidden" name="now_page" value="<?php echo $page; ?> 
+    </form>
+    EOD;
+
+    return $formTemp;
+}
+
+function getPageRange($page, $maxPage) {
+    if($page == 1 || $page == $maxPage) {
+        $range = 4;
+    } elseif ($page == 2 || $page == $maxPage - 1) {
+        $range = 3;
+    } else {
+        $range = 2;
+    }
+    return $range;
+}
+?>

@@ -63,9 +63,9 @@ function getPageReviewData($userId, $page) {
     $start = $page * ONE_PAGE - ONE_PAGE;
     $dataLength = ONE_PAGE * 3;
     $dbh = dbConnection::getConnection();
-    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, review_num limit 6 offset 0';
+    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, review_num limit ? offset ?';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($userId, $dataLength, $start));
     // if no record
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
