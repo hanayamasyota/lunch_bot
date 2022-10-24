@@ -16,11 +16,12 @@ $userId = "";
 $page = 1;
 if($_SERVER["REQUEST_METHOD"] != "POST") {
         $userId = $_GET["userid"];
-        $page = $_GET["page"];
+        $page = intval($_GET["now_page"]);
 } else {
         $userId = $_POST["userid"];
         $page = intval($_POST["now_page"]);
 }
+error_log('nowpage:'.$page);
 $ownReviewData = getPageReviewData($userId, $page);
 
 $reviewCount = 0;
@@ -40,7 +41,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     $reviewCount = (getDataCountByReviews($userId) / 3);
     $maxPage = ceil($reviewCount / ONE_PAGE);
     //2がでたらok
-    error_log('count:'.$reviewCount);
     //レビュー
     foreach ($ownReviewData as $review) {
         if ($review["review_num"] == 100) {

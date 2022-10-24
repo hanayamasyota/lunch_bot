@@ -256,7 +256,7 @@ foreach ($events as $event) {
                 'userid' => $event->getUserId(),
                 'shopid' => $shop["shopid"],
                 'shopname' => $shop["shopname"],
-                'page' => 1,
+                'now_page' => 1,
                 );
                 $query = http_build_query($data);
 
