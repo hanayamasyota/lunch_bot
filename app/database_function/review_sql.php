@@ -105,7 +105,7 @@ function getDataCountByReviews($userId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
-    if (!($row = $sth->fetchall())) {
+    if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
         return $row["review_count"];
