@@ -56,13 +56,18 @@ define('TABLE_NAME_USERS', 'users');
         //レビューから総合の店の雰囲気を取り出す
         $matchAmbi = return_max_count_item($ambiArray);
         error_log('shopAMBI:'.$matchAmbi);
-        foreach ($matchAmbi as $ambi) {
-            if ($ambi === end($matchAmbi)) {
-                $shopAmbi .= AMBIENCE_LIST[$ambi];
-            } else {
-                $shopAmbi .= AMBIENCE_LIST[$ambi].', ';
+        if (is_array($matchAmbi)) {
+            foreach ($matchAmbi as $ambi) {
+                if ($ambi === end($matchAmbi)) {
+                    $shopAmbi .= AMBIENCE_LIST[$ambi];
+                } else {
+                    $shopAmbi .= AMBIENCE_LIST[$ambi].', ';
+                }
             }
+        } else {
+            $shopAmbi = AMBIENCE_LIST[$matchAmbi];
         }
+
     //レビューが登録されていない場合
     } else {
         $avarageScore = 'まだレビューが登録されていません。';
