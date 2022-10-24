@@ -25,6 +25,14 @@ $ownReviewData = getPageReviewData($userId, $page);
 
 $reviewCount = 0;
 
+$scoreArray = array(); //評価点
+$ambiArray = array(); //雰囲気
+$crowdArray = array(); //混み具合
+
+$timeArray = array();
+$shopNameArray = array();
+$shopIdArray = array();
+
 if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
     $reviewCount = (getDataCountByReviews($userId) / 3);
@@ -32,13 +40,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     //2がでたらok
     error_log('count:'.$reviewCount);
     //レビュー
-    $scoreArray = array(); //評価点
-    $ambiArray = array(); //雰囲気
-    $crowdArray = array(); //混み具合
-
-    $timeArray = array();
-    $shopNameArray = array();
-    $shopIdArray = array();
     foreach ($ownReviewData as $review) {
         if ($review["review_num"] == 100) {
             array_push($scoreArray, $review["review"]);
