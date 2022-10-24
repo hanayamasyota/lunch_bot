@@ -13,15 +13,12 @@ define('TABLE_NAME_USERS', 'users');
 
 <?php
 $userId = "";
-$page = 1;
 if($_SERVER["REQUEST_METHOD"] != "POST") {
         $userId = $_GET["userid"];
-        $page = intval($_GET["now_page"]);
 } else {
         $userId = $_POST["userid"];
-        $page = intval($_POST["now_page"]);
 }
-error_log('nowpage:'.$page);
+$page = intval($_GET["now_page"]);
 $ownReviewData = getPageReviewData($userId, $page);
 
 $reviewCount = 0;
@@ -223,7 +220,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
 <?php
 function createFormTemp($num, $userId) {
-    $formTemp = '<form name="form'.$num.'" method="POST" action="">';
+    $formTemp = '<form name="form'.$num.'" method="POST" action="?now_page='.$num.'">';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
     $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
