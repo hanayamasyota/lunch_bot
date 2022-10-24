@@ -65,7 +65,7 @@ function getPageReviewData($shopId, $page) {
     $dbh = dbConnection::getConnection();
     $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num limit 2 offset 0';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId, $dataLength, $start));
+    $sth->execute(array($shopId));
     // if no record
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
