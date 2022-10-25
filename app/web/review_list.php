@@ -27,6 +27,7 @@ $visitTimeArray = array(); //来店時刻
 $crowdArray = array(); //混み具合
 $freeArray = array(); //自由欄
 
+$timeArray = array();
 $reviewTimeArray = array();
 
 $shopAmbi = '';
