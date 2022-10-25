@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|個人設定</title>
+    <title>ひるまちGO|オーナー用ログイン画面</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -20,6 +20,91 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
+
+    @import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+
+.form-wrapper {
+  background: #fafafa;
+  margin: 3em auto;
+  padding: 0 1em;
+  max-width: 370px;
+}
+
+.signup-h1 {
+  text-align: center;
+  padding: 2em 0;
+}
+
+.form-item {
+  margin-bottom: 0.75em;
+  width: 100%;
+}
+
+.signup-input {
+  background: #fafafa;
+  border: none;
+  border-bottom: 2px solid #e9e9e9;
+  color: #666;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1em;
+  height: 50px;
+  transition: border-color 0.3s;
+  width: 100%;
+}
+
+.signup-input:focus {
+  border-bottom: 2px solid #c0c0c0;
+  outline: none;
+}
+
+.button-panel {
+  margin: 2em 0 0;
+  width: 100%;
+}
+
+.button-panel .button {
+  background: #f16272;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  height: 50px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2em;
+  letter-spacing: 0.05em;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background 0.3s ease-in-out;
+  width: 100%;
+}
+
+.button:hover {
+  background: #ee3e52;
+}
+
+.form-footer {
+  font-size: 1em;
+  padding: 2em 0;
+  text-align: center;
+}
+
+.form-footer a {
+  color: #8c8c8c;
+  text-decoration: none;
+  transition: border-color 0.3s;
+}
+
+.form-footer a:hover {
+  border-bottom: 1px dotted #8c8c8c;
+}
+
+</style>
+
 <body id="page-top" class="bg-base">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
@@ -30,117 +115,38 @@
     <!-- Mashead header-->
     <header class="mt-4">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">〇〇を投稿する(イベント主催者様用)</p>
+            <p class="text-light h3">サインアップ</p>
         </div>
     </header>
 
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-center">
-        <form method="post" action="#">
-        <table class="table table-bordered bg-lightbrown text-light mb-4">
-            <thead class="border border-start">フォームの入力をしてください。</th>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        <div class="text-danger d-inline">*</div>イベント名
-                    </th>
-                    <td class="col-xs-8 py-4 align-middle">
-                        <input type="text" placeholder="イベント名を入力" required>
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        <div class="text-danger d-inline">*</div>開催日
-                    </th>
-                    <td class="col-xs-8 py-4 font-weight-normal align-middle">
-                        <input type="date" name="holddate" class="w-35" required>から<br>
-                        <input type="date" name="holddate" class="w-35" required>まで<br>
-                        ※1日だけの場合は同じ日にちを入力
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        <div class="text-danger d-inline">*</div>開催時間
-                    </th>
-                    <td class="col-xs-8 py-4 align-middle">
-                        <input type="time" name="holdstart" required>から
-                        <input type="time" name="holdend" required>まで
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-5 align-middle">
-                        写真
-                    </th>
-                    <td class="col-xs-8 py-1 align-middle">
-                        <input type="file" id="input1" class="pt-2"/><br>
-                        <img id="sample1" class="w-75 h-75 py-2">
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        <div class="text-danger d-inline">*</div>ジャンル
-                    </th>
-                    <td class="col-xs-8 py-4 align-middle">
-                        <select name="genre" requierd>
-                            <option hidden value="">選択してください</option>
-                            <option value="1">食事</option>
-                            <option value="2">あいうえおあいうえお</option>
-                            <option value="3">ﾝｱｰ</option>
-                            <option value="4">ぽゃぴぉ</option>
-                            <option value="5">ヌベジョン</option>
-                            <option value="6">はまがしらしゅんぺい</option>
-                        </select>
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        <div class="text-danger d-inline">*</div>特徴
-                    </th>
-                    <td class="col-xs-8 py-4 align-middle">
-                        <textarea name="feature" class="w-75" rows="5" placeholder="イベントの開催場所、詳しい日時を含め、催しの特徴を入力してください。" required></textarea>
-                    </td>
-                </tr>
-            </div>
-
-            <div class="row">
-                <tr>
-                    <th class="col-xs-4 py-4 align-middle">
-                        リンク
-                    </th>
-                    <td class="col-xs-8 py-4 align-middle">
-                        <input type="text" name="link" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
-                    </td>
-                </tr>
-            </div>
-            
-        </table>
-        </form>
-
-        <!--投稿ボタン-->
+    <div class="form-wrapper">
+        <div class="signup-h1">
+            <h1>サインアップ</h1>
+        </div>
         <form>
-            <input type="submit" value="投稿する">
-        </form> 
-
-
-
+            <div class="form-item">
+                <label for="email"></label>
+                <input class="signup-input" type="email" name="email" required="required" placeholder="メールアドレス" />
+            </div>
+            <div class="form-item">
+                <label for="password"></label>
+                <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード" />
+            </div>
+            <div class="form-item">
+                <label for="password"></label>
+                <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード(確認用)" />
+            </div>
+            <div class="button-panel">
+                <input type="submit" class="button" title="Log In" value="登録する" />
+            </div>
+        </form>
+        <div class="form-footer">
+            <p><a href="owner_login.php">すでにアカウントをお持ちの方はこちら</a></p>
+        </div>
+    </div>
 
 
 
@@ -240,58 +246,4 @@
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
-
-<script>
-        $("#input1").on("change", function (e) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#sample1").attr("src", e.target.result);
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        });
-
-        function Switch() {
-            const radio = document.getElementsByName('radio1');
-            const shop = document.getElementsByClassName('shopList');
-            const event = document.getElementsByClassName('eventList');
-            if (radio[0].checked) {
-                shop[0].style.display = '';
-                shop[1].style.display = '';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-                
-            }
-            else if (radio[1].checked) {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = '';
-                event[1].style.display = '';
-            }
-            else {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-            }
-        }
-
-        window.onload = Switch();
-
-
-        
-
-
-        // $('#myImage').on('change', function (e) {
-        //     var reader = new FileReader();
-        //     reader.onload = function (e) {
-        //         $("#preview").attr('src', e.target.result);
-        //     }
-        //     reader.readAsDataURL(e.target.files[0]);
-        // });
-
-</script>
-
-
-
-
 </html>
