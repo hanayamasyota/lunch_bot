@@ -13,11 +13,7 @@ define('TABLE_NAME_USERS', 'users');
 
 <?php
 $userId = "";
-if($_SERVER["REQUEST_METHOD"] != "POST") {
-        $userId = $_GET["userid"];
-} else {
-        $userId = $_POST["userid"];
-}
+$userId = $_GET["userid"];
 $page = intval($_GET["now_page"]);
 $ownReviewData = getPageReviewData($userId, $page);
 
@@ -168,8 +164,8 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         
         <div class="pagination">
             <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
-                <?php echo createFormTemp(($page-1), $userId); ?>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <!-- <?php echo createFormTemp(($page-1), $userId); ?> -->
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
             <?php } ?>
@@ -179,15 +175,15 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="own_review_list.php?now_page=<?php echo $i; ?>" onclick="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
-                        <?php echo createFormTemp($i, $userId); ?>
+                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" onclick="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
+                        <!-- <?php echo createFormTemp($i, $userId); ?> -->
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
-                <?php echo createFormTemp(($page+1), $userId); ?>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
+                <!-- <?php echo createFormTemp(($page+1), $userId); ?> -->
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
             <?php } ?>
