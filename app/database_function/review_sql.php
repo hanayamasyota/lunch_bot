@@ -120,7 +120,7 @@ function getDataCountByShopReviews($shopId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select count(review) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = shopid';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($shopId));
     // if no record
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
