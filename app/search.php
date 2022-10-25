@@ -119,7 +119,6 @@ function showShop($page, $userId, $bot, $token) {
             'page' => $shop["now_page"],
         );
         $query = http_build_query($data);
-        $url = .$query;
 
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
