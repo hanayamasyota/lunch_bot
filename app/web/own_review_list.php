@@ -163,8 +163,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         </div>
         
         <div class="pagination">
+        <!-- onclick="document.form<?php echo ($page+1); ?>.submit();" -->
             <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
                 <!-- <?php echo createFormTemp(($page-1), $userId); ?> -->
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
@@ -175,14 +176,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" onclick="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
+                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
                         <!-- <?php echo createFormTemp($i, $userId); ?> -->
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
                 <!-- <?php echo createFormTemp(($page+1), $userId); ?> -->
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
