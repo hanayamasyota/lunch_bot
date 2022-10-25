@@ -96,7 +96,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     </datalist>
     EOD;
 
-    $freeStr = '<textarea class="w-75 h-100 placeholder="感想や備考等あれば記入してください(150字まで)" maxlength="150">'.$free.'</textarea>';
+    $freeStr = '<textarea class="w-75 h-100 placeholder="感想や備考等あれば記入してください(150字まで)" name="free" maxlength="150">'.$free.'</textarea>';
 ?>
 
 
