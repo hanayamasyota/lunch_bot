@@ -48,7 +48,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px 10px;
   text-align: center;
-  background: #cdd7e9;
+  background: #f0e9e0;
   color: black;
 }
 .first_last_page {
@@ -56,7 +56,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px 10px;
   text-align: center;
-  background: #a1a3c5;
+  background: #b3a8a1;
   color: rgba(34, 32, 32, 0.63);;
 }
 
@@ -65,7 +65,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px;
   text-align: center;
-  background: #cdd7e9;
+  background: #f0e9e0;
   color: black;
 }
 .now_page_number {
@@ -73,7 +73,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px;
   text-align: center;
-  background: #a1a3c5;
+  background: #b3a8a1;
   color: rgba(34, 32, 32, 0.63);
   font-weight: bold;
 }
