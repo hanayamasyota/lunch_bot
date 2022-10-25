@@ -22,18 +22,25 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     }
 
     //デフォルト設定
-    $score = '3';
+    $score = '';
     $ambi = '';
-    $crowd = '3';
+    $time = '';
+    $crowd = '';
+    $free = '';
 
     //すでに登録済みで編集をする場合は以前の値をもとに表示させる
-    if (checkExistsReview($userId, $shopId, 100) != PDO::PARAM_NULL) {
+    if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
         $reviewData = separateReviewData($userId, $shopId);
         $score = $reviewData[0]['review'];
         $ambi = $reviewData[1]['review'];
-        $crowd = $reviewData[2]['review'];
-        error_log('crowd:'.$crowd);
+        $time = $reviewData[2]['review'];
+        $crowd = $reviewData[3]['review'];
+        $free = $reviewData[4]['review'];
         $status = '編集';
+    } else {
+        $score = '3';
+        $nowTime = time()+32400;
+        $crowd = '3';
     }
 
     $scoreStr = <<<EOD
@@ -76,9 +83,8 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     </select>
     EOD;
 
-    $timeStr = <<<EOD
-    <input type="time" required>
-    EOD;
+
+    $timeStr = '<input type="time" name="visit_time" value="'.$time.'" class="py-1 px-2" required>';
 
     $crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="'.$crowd.'"> 混'.
     '<datalist id="my-datalist">';
@@ -90,8 +96,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     </datalist>
     EOD;
 
-    $freeStr = <<<EOD
-    EOD;
+    $freeStr = '<textarea class="w-75 h-100 placeholder="感想や備考等あれば記入してください(150字まで)" maxlength="150">'.$free.'</textarea>';
 ?>
 
 
@@ -162,7 +167,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
-                            <div class="text-danger d-inline">*</div>利用時刻
+                            <div class="text-danger d-inline">*</div>来店時刻
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
                             <?php echo $timeStr; ?>
@@ -181,7 +186,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                             感想など
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
-                            <?php echo $crowdStr; ?>
+                            <?php echo $freeStr; ?>
                         </td>
                     </tr>
             </table>

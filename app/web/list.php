@@ -1,6 +1,6 @@
 <?php
 //1ページの表示件数
-define('ONE_PAGE', 2);
+define('ONE_PAGE', 5);
 //レビュー1件のrow
 define('REVIEW_KIND', 5);
 

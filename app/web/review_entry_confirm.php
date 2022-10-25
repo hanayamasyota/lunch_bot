@@ -13,7 +13,9 @@ define('TABLE_NAME_USERS', 'users');
     $postData = array();
     array_push($postData, $_POST['score']);
     array_push($postData, $_POST['ambi']);
+    array_push($postData, $_POST['visit_time']);
     array_push($postData, $_POST['crowd']);
+    array_push($postData, $_POST['free']);
 
     $userId = $_POST['userid'];
     $shopId = $_POST['shopid'];
@@ -26,7 +28,7 @@ define('TABLE_NAME_USERS', 'users');
         $message = 'レビュー登録';
     }
 
-    $num = 100;
+    $num = 1;
     foreach($postData as $data) {
         $nowTime = time()+32400;
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
@@ -37,7 +39,7 @@ define('TABLE_NAME_USERS', 'users');
             //レビューを登録する
             registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
         }
-        $num += 100;
+        $num += 1;
     }
     updateUser($userId, null);
 ?>

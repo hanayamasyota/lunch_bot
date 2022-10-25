@@ -40,8 +40,6 @@ define('TABLE_NAME_USERS', 'users');
         </div>
     </header>
 
-
-
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>設定が適用されました。</p>
@@ -70,8 +68,6 @@ define('TABLE_NAME_USERS', 'users');
 </body>
 
 </html>
-
-
 
 <?php
 $userId = $_POST['userid'];

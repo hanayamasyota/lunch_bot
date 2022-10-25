@@ -23,7 +23,9 @@ $reviewCount = 0;
 
 $scoreArray = array(); //評価点
 $ambiArray = array(); //雰囲気
+$visitTimeArray = array(); //来店時刻
 $crowdArray = array(); //混み具合
+$freeArray = array(); //自由欄
 
 $timeArray = array();
 $shopNameArray = array();
@@ -38,14 +40,18 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     $maxPage = ceil($reviewCount / ONE_PAGE);
     //レビュー
     foreach ($ownReviewData as $review) {
-        if ($review["review_num"] == 100) {
+        if ($review["review_num"] == 1) {
             array_push($scoreArray, $review["review"]);
-        } else if ($review["review_num"] == 200) {
+        } else if ($review["review_num"] == 2) {
             array_push($ambiArray, $review["review"]);
-        } else if ($review["review_num"] == 300) {
-            array_push($crowdArray, $review["review"]);
+        } else if ($review["review_num"] == 3) {
+            array_push($visitTimeArray, $review["review"]);
             array_push($timeArray, $review["time"]);
             array_push($shopNameArray, $review['shopname']);
+        } else if ($review["review_num"] == 4) {
+            array_push($crowdArray, $review["review"]);
+        } else if ($review["review_num"] == 5) {
+            array_push($freeArray, $review["review"]);
         }
     }
 
@@ -137,10 +143,26 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     </tr>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
+                            来店時刻
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $visitTimeArray[$i]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
                             <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            感想など
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $freeArray[$i]; ?>
                         </td>
                     </tr>
                 </table>
@@ -165,7 +187,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         <div class="pagination">
             <?php if ($page >= 2) { ?>
                 <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
-                <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
             <?php } ?>
@@ -176,14 +197,12 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
                         <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
-                        <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
                 <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
-                <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
             <?php } ?>
