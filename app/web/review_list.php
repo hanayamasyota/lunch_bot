@@ -9,46 +9,53 @@ define('TABLE_NAME_USERS', 'users');
 ?>
 
 <?php
-    $shopId = $_GET["shopid"];
-    $reviewData = getReviewData($shopId);
-    $allUserId = getAllUserIdByReviews($shopId);
-    $userIdArray = array();
-    for ($i = 0; $i < count($allUserId); $i++) {
-        array_push($userIdArray, $allUserId[$i]['id']);
-    }
-    $uniqueUserId = array_unique($userIdArray);
+$shopId = $_GET["shopid"];
+$reviewData = getReviewData($shopId);
 
-    $nickNameArray = array();
+//該当する店のレビューをしているユーザを取得
+$allUserId = getAllUserIdByReviews($shopId);
+$userIdArray = array();
+for ($i = 0; $i < count($allUserId); $i++) {
+    array_push($userIdArray, $allUserId[$i]['id']);
+}
+$uniqueUserId = array_unique($userIdArray);
 
-    $shopAmbi = '';
-    
-    $avarageScore = 0.0;
+$nickNameArray = array();
+$scoreArray = array(); //評価点
+$ambiArray = array(); //雰囲気
+$visitTimeArray = array(); //来店時刻
+$crowdArray = array(); //混み具合
+$freeArray = array(); //自由欄
+
+$reviewTimeArray = array();
+
+$shopAmbi = '';
+$avarageScore = 0.0;
+
     //レビューが登録されているか確認
     if ($reviewData != PDO::PARAM_NULL) {
-        $scoreArray = array(); //評価点
-        $ambiArray = array(); //雰囲気
-        $crowdArray = array(); //混み具合
-        //レビュー
-        $timeArray = array();
-        $restTimeArray = array();
         foreach ($reviewData as $review) {
-            if ($review["review_num"] == 100) {
+            if ($review["review_num"] == 1) {
                 array_push($scoreArray, $review["review"]);
-            } else if ($review["review_num"] == 200) {
+            } else if ($review["review_num"] == 2) {
                 array_push($ambiArray, $review["review"]);
-            } else if ($review["review_num"] == 300) {
-                array_push($crowdArray, $review["review"]);
+            } else if ($review["review_num"] == 3) {
+                array_push($visitTimeArray, $review["review"]);
                 array_push($timeArray, $review["time"]);
+            } else if ($review["review_num"] == 4) {
+                array_push($crowdArray, $review["review"]);
+            } else if ($review["review_num"] == 5) {
+                array_push($freeArray, $review["review"]);
             }
         }
         foreach ($uniqueUserId as $userId) {
+            //ニックネーム取得
             $nickName = getNickNameByUserId($userId);
             array_push($nickNameArray, $nickName);
-            $restTime = getRestTimeByUserId($userId);
-            array_push($restTimeArray, $restTime['rest_start'].'~'.$restTime['rest_end']);
         }
         $totalScore = 0;
         for ($i = 0; $i < count($scoreArray); $i++) {
+            //平均点を取得
             $totalScore += intval($scoreArray[$i]);
         }
         $avarageScore = floatval($totalScore/count($scoreArray));
@@ -66,6 +73,8 @@ define('TABLE_NAME_USERS', 'users');
         } else {
             $shopAmbi = AMBIENCE_LIST[$matchAmbi];
         }
+
+        $pageRange = getPageRange($page, $maxPage);
 
     //レビューが登録されていない場合
     } else {
@@ -159,6 +168,30 @@ define('TABLE_NAME_USERS', 'users');
             <?php } 
                 }?>
         </div>
+
+        <div class="pagination">
+            <?php if ($page >= 2) { ?>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
+            <?php } else { ?>
+                <span class="first_last_page">&laquo;</span>
+            <?php } ?>
+            
+            <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
+                <?php if (($i >= $page - $pageRange) && ($i <= $page + $pageRange)) { ?>
+                    <?php if ($i == $page) { ?>
+                        <span class="now_page_number"><?php echo $i; ?></span>
+                    <?php } else { ?>
+                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+                    <?php } ?>
+                <?php } ?>
+            <?php } ?>
+
+            <?php if($page < $maxPage) { ?>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
+            <?php } else { ?>
+                <span class="first_last_page">&raquo;</span>
+            <?php } ?>
+        </div>
     </div>
 
     <!-- Footer-->
@@ -219,5 +252,16 @@ function return_max_count_item($list,&$count = null){
     }else{
         return $before_key;
     }
+}
+
+function getPageRange($page, $maxPage) {
+    if($page == 1 || $page == $maxPage) {
+        $range = 4;
+    } elseif ($page == 2 || $page == $maxPage - 1) {
+        $range = 3;
+    } else {
+        $range = 2;
+    }
+    return $range;
 }
 ?>

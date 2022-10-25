@@ -61,7 +61,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     }
 
     $pageRange = getPageRange($page, $maxPage);
-    error_log('pagerange:'.$pageRange);
 
 //レビューが登録されていない場合
 } else {

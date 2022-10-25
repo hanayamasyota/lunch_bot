@@ -84,7 +84,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     EOD;
 
 
-    $timeStr = '<input type="time" name="visit_time" value="'.$time.'" class="py-1 px-2" required>';
+    $timeStr = '<input type="time" name="visit_time" value="'.$time.'" class="py-2 px-4" required>';
 
     $crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="'.$crowd.'"> 混'.
     '<datalist id="my-datalist">';
@@ -96,7 +96,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     </datalist>
     EOD;
 
-    $freeStr = '<textarea class="w-75 h-100 placeholder="感想や備考等あれば記入してください(150字まで)" name="free" maxlength="150">'.$free.'</textarea>';
+    $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれば記入してください(150字まで)" name="free" maxlength="150">'.$free.'</textarea>';
 ?>
 
 
@@ -153,7 +153,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>味
                         </th>
-                        <td class="col-7 py-4 bg-white w-80">
+                        <td class="col-7 py-4 bg-white">
                             <?php echo $scoreStr; ?>
                         </td>
                     </tr>
@@ -161,7 +161,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>雰囲気
                         </th>
-                        <td class="col-7 py-4 bg-white text-left w-80">
+                        <td class="col-7 py-4 bg-white text-left">
                             <?php echo $ambiStr; ?>
                         </td>
                     </tr>
@@ -169,7 +169,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>来店時刻
                         </th>
-                        <td class="col-7 py-4 bg-white w-80">
+                        <td class="col-7 py-4 bg-white">
                             <?php echo $timeStr; ?>
                         </td>
                     </tr>
@@ -177,7 +177,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
                         </th>
-                        <td class="col-7 py-4 bg-white w-80">
+                        <td class="col-7 py-4 bg-white">
                             <?php echo $crowdStr; ?>
                         </td>
                     </tr>
@@ -185,7 +185,7 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                         <th class="col-5 py-4 bg-lightbrown">
                             感想など
                         </th>
-                        <td class="col-7 py-4 bg-white w-80">
+                        <td class="col-7 py-4 bg-white h-3rem">
                             <?php echo $freeStr; ?>
                         </td>
                     </tr>

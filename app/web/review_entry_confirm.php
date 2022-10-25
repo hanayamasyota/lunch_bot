@@ -13,7 +13,9 @@ define('TABLE_NAME_USERS', 'users');
     $postData = array();
     array_push($postData, $_POST['score']);
     array_push($postData, $_POST['ambi']);
-    array_push($postData, $_POST['visit_time']);
+    $time = explode(':', $_POST['visit_time']);
+    $timeStr = $time[0].'時'.$time[1].'分';
+    array_push($postData, $timeStr);
     array_push($postData, $_POST['crowd']);
     array_push($postData, $_POST['free']);
 
