@@ -40,4 +40,17 @@ function deleteNavigation($userId) {
     $sth->execute(array($userId));
 }
 
+function getGenreByNavigation($userId, $shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select genre from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row;
+    }
+}
+
 ?>

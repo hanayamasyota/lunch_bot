@@ -3,6 +3,8 @@
 define('ONE_PAGE', 5);
 //レビュー1件のrow
 define('REVIEW_KIND', 5);
+//コンビニの場合
+defini('REVIEW_CONVENI', 3);
 
 define(
     'AMBIENCE_LIST',
