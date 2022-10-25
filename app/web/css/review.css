@@ -48,7 +48,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px 10px;
   text-align: center;
-  background: #c9a474;
+  background: #f7c78a;
   color: black;
 }
 .first_last_page {
@@ -65,7 +65,7 @@ a.page_number:visited {color: black; text-decoration:none }
   margin: 0 10px;
   padding: 5px;
   text-align: center;
-  background: #c9a474;
+  background: #f7c78a;
   color: black;
 }
 .now_page_number {
