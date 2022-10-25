@@ -60,7 +60,7 @@ function getReviewData($shopId) {
 }
 
 function getPageReviewData($userId, $page) {
-    $start = $page * ONE_PAGE - ONE_PAGE;
+    $start = ($page * 3 * ONE_PAGE) - ONE_PAGE;
     error_log('start:'.$start);
     $dataLength = ONE_PAGE * 3;
     $dbh = dbConnection::getConnection();
