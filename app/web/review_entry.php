@@ -76,6 +76,10 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     </select>
     EOD;
 
+    $timeStr = <<<EOD
+    <input type="time" required>
+    EOD;
+
     $crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="'.$crowd.'"> 混'.
     '<datalist id="my-datalist">';
     for ($i = 1; $i <= count(CROWD_LIST); $i++) {
@@ -84,6 +88,9 @@ define('TABLE_NAME_REVIEWS', 'reviews');
     }
     $crowdStr .= <<<EOD
     </datalist>
+    EOD;
+
+    $freeStr = <<<EOD
     EOD;
 ?>
 
@@ -155,7 +162,23 @@ define('TABLE_NAME_REVIEWS', 'reviews');
                     </tr>
                     <tr>
                         <th class="col-5 py-4 bg-lightbrown">
+                            <div class="text-danger d-inline">*</div>利用時刻
+                        </th>
+                        <td class="col-7 py-4 bg-white w-80">
+                            <?php echo $timeStr; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-4 bg-lightbrown">
                             <div class="text-danger d-inline">*</div>混み具合
+                        </th>
+                        <td class="col-7 py-4 bg-white w-80">
+                            <?php echo $crowdStr; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-4 bg-lightbrown">
+                            感想など
                         </th>
                         <td class="col-7 py-4 bg-white w-80">
                             <?php echo $crowdStr; ?>

@@ -1,6 +1,7 @@
 <?php
 //1ページの表示件数
 define('ONE_PAGE', 2);
+define('REVIEW_KIND', 5);
 
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
@@ -13,7 +14,12 @@ define('TABLE_NAME_USERS', 'users');
 
 <?php
 $userId = "";
-$userId = $_GET["userid"];
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST["userid"];
+} else {
+    $userId = $_GET["userid"];
+}
 $page = intval($_GET["now_page"]);
 $ownReviewData = getPageReviewData($userId, $page);
 
@@ -34,8 +40,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
     $reviewCount = (getDataCountByReviews($userId) / 3);
     $maxPage = ceil($reviewCount / ONE_PAGE);
-    error_log('max_page:'.$maxPage);
-    //2がでたらok
     //レビュー
     foreach ($ownReviewData as $review) {
         if ($review["review_num"] == 100) {
@@ -163,10 +167,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         </div>
         
         <div class="pagination">
-        <!-- onclick="document.form<?php echo ($page+1); ?>.submit();" -->
             <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
-                <!-- <?php echo createFormTemp(($page-1), $userId); ?> -->
+                <a href="own_review_list.php?now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
             <?php } ?>
@@ -176,15 +179,15 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
-                        <!-- <?php echo createFormTemp($i, $userId); ?> -->
+                        <a href="own_review_list.php?now_page=<?php echo $i; ?>" onclick="document.form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
+                        <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
-                <!-- <?php echo createFormTemp(($page+1), $userId); ?> -->
+                <a href="own_review_list.php?now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
+                <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
             <?php } ?>
