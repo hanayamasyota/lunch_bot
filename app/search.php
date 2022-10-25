@@ -116,7 +116,7 @@ function showShop($page, $userId, $bot, $token) {
             // 'userid' => $userId,
             'shopid' => $shop["shopid"],
             'shopname' => $shop["shopname"],
-            'page' => $shop["now_page"],
+            'now_page' => 1,
         );
         $query = http_build_query($data);
 
