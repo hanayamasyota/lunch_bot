@@ -168,7 +168,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         
         <div class="pagination">
             <?php if ($page >= 2) { ?>
-                <a href="javascript:form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <a href="" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
