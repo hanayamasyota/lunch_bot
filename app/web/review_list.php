@@ -32,66 +32,66 @@ $avarageScore = 0.0;
 $maxPage = 0;
 $pageRange = 0;
 
-    //レビューが登録されているか確認
-    if ($reviewData != PDO::PARAM_NULL) {
-        //該当する店のレビューをしているユーザを取得
-        $allUserId = getAllUserIdByReviews($shopId);
-        $userIdArray = array();
-        for ($i = 0; $i < count($allUserId); $i++) {
-            array_push($userIdArray, $allUserId[$i]['id']);
-        }
-        $uniqueUserId = array_unique($userIdArray);
-        
-        //最大ページ数の計算
-        $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
-        $maxPage = ceil($reviewCount / ONE_PAGE);
+//レビューが登録されているか確認
+if ($reviewData != PDO::PARAM_NULL) {
+    //該当する店のレビューをしているユーザを取得
+    $allUserId = getAllUserIdByReviews($shopId);
+    $userIdArray = array();
+    for ($i = 0; $i < count($allUserId); $i++) {
+        array_push($userIdArray, $allUserId[$i]['id']);
+    }
+    $uniqueUserId = array_unique($userIdArray);
 
-        foreach ($reviewData as $review) {
-            if ($review["review_num"] == 1) {
-                array_push($scoreArray, $review["review"]);
-            } else if ($review["review_num"] == 2) {
-                array_push($ambiArray, $review["review"]);
-            } else if ($review["review_num"] == 3) {
-                array_push($visitTimeArray, $review["review"]);
-                array_push($timeArray, $review["time"]);
-            } else if ($review["review_num"] == 4) {
-                array_push($crowdArray, $review["review"]);
-            } else if ($review["review_num"] == 5) {
-                array_push($freeArray, $review["review"]);
+    //最大ページ数の計算
+    $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
+    $maxPage = ceil($reviewCount / ONE_PAGE);
+
+    foreach ($reviewData as $review) {
+        if ($review["review_num"] == 1) {
+            array_push($scoreArray, $review["review"]);
+        } else if ($review["review_num"] == 2) {
+            array_push($ambiArray, $review["review"]);
+        } else if ($review["review_num"] == 3) {
+            array_push($visitTimeArray, $review["review"]);
+            array_push($timeArray, $review["time"]);
+        } else if ($review["review_num"] == 4) {
+            array_push($crowdArray, $review["review"]);
+        } else if ($review["review_num"] == 5) {
+            array_push($freeArray, $review["review"]);
+        }
+    }
+    foreach ($uniqueUserId as $userId) {
+        //ニックネーム取得
+        $nickName = getNickNameByUserId($userId);
+        array_push($nickNameArray, $nickName);
+    }
+    $totalScore = 0;
+    for ($i = 0; $i < count($scoreArray); $i++) {
+        //平均点を取得
+        $totalScore += intval($scoreArray[$i]);
+    }
+    $avarageScore = floatval($totalScore / count($scoreArray));
+
+    //レビューから総合の店の雰囲気を取り出す
+    $matchAmbi = return_max_count_item($ambiArray);
+    if (is_array($matchAmbi)) {
+        foreach ($matchAmbi as $ambi) {
+            if ($ambi === end($matchAmbi)) {
+                $shopAmbi .= AMBIENCE_LIST[$ambi];
+            } else {
+                $shopAmbi .= AMBIENCE_LIST[$ambi] . ', ';
             }
         }
-        foreach ($uniqueUserId as $userId) {
-            //ニックネーム取得
-            $nickName = getNickNameByUserId($userId);
-            array_push($nickNameArray, $nickName);
-        }
-        $totalScore = 0;
-        for ($i = 0; $i < count($scoreArray); $i++) {
-            //平均点を取得
-            $totalScore += intval($scoreArray[$i]);
-        }
-        $avarageScore = floatval($totalScore/count($scoreArray));
+    } else {
+        $shopAmbi = AMBIENCE_LIST[$matchAmbi];
+    }
 
-        //レビューから総合の店の雰囲気を取り出す
-        $matchAmbi = return_max_count_item($ambiArray);
-        if (is_array($matchAmbi)) {
-            foreach ($matchAmbi as $ambi) {
-                if ($ambi === end($matchAmbi)) {
-                    $shopAmbi .= AMBIENCE_LIST[$ambi];
-                } else {
-                    $shopAmbi .= AMBIENCE_LIST[$ambi].', ';
-                }
-            }
-        } else {
-            $shopAmbi = AMBIENCE_LIST[$matchAmbi];
-        }
-
-        $pageRange = getPageRange($page, $maxPage);
+    $pageRange = getPageRange($page, $maxPage);
 
     //レビューが登録されていない場合
-    } else {
-        $avarageScore = 'まだレビューが登録されていません。';
-    }
+} else {
+    $avarageScore = 'まだレビューが登録されていません。';
+}
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +120,8 @@ $pageRange = 0;
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <h1 class="d-inline pt-3 font-nicokaku pe-1">ひるまち</h1><h1 class="d-inline pt-3 font-rc">GO</h1>
+            <h1 class="d-inline pt-3 font-nicokaku pe-1">ひるまち</h1>
+            <h1 class="d-inline pt-3 font-rc">GO</h1>
         </div>
     </nav>
     <!-- Mashead header-->
@@ -142,85 +143,89 @@ $pageRange = 0;
                     <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi; ?></div>
                 <?php } else { ?>
                     <p class="fw-normal"><?php echo $avarageScore ?></p>
-                <?php } ?> 
+                <?php } ?>
             </div>
         </div>
 
         <div class="bg-white">
-            <?php if (gettype($avarageScore) == 'double') {
+            <?php if ($reviewData != PDO::PARAM_NULL) {
                 for ($i = 0; $i < count($scoreArray); $i++) { ?>
-                <table class="table border-navy px-3 bg-navy">
-                    <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：".$time ?></thead>
-                    <tr>
-                        <th class="col-5 py-3 bg-lightorange text-dark">
-                            評価
-                        </th>
-                        <td class="col-7 py-3 bg-white">
-                            <?php echo $scoreArray[$i] . '点'; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="col-5 py-3 bg-lightorange text-dark">
-                            雰囲気
-                        </th>
-                        <td class="col-7 py-3 bg-white">
-                            <?php echo AMBIENCE_LIST[$ambiArray[$i]]; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="col-5 py-3 bg-lightorange text-dark">
-                            行った時間
-                        </th>
-                        <td class="col-7 py-3 bg-white">
-                            <?php echo $visitTimeArray[$i]; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="col-5 py-3 bg-lightorange text-dark">
-                            混み具合
-                        </th>
-                        <td class="col-7 py-3 bg-white">
-                            <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="col-5 py-3 bg-lightorange text-dark">
-                            感想など
-                        </th>
-                        <td class="col-7 py-3 bg-white">
-                            <?php echo $freeArray[$i]; ?>
-                        </td>
-                    </tr>
-                </table>
-                <hr>
-            <?php } 
-                }?>
+                    <table class="table border-navy px-3 bg-navy">
+                        <?php $time = explode(' ', $timeArray[$i])[0] ?>
+                        <thead>
+                            <div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：" . $time ?>
+                        </thead>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                評価
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo $scoreArray[$i] . '点'; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                雰囲気
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo AMBIENCE_LIST[$ambiArray[$i]]; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                行った時間
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo $visitTimeArray[$i]; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                混み具合
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                感想など
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo $freeArray[$i]; ?>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr>
+            <?php }
+            } ?>
         </div>
 
-        <div class="pagination">
-            <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
-            <?php } else { ?>
-                <span class="first_last_page">&laquo;</span>
-            <?php } ?>
-            
-            <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
-                <?php if (($i >= $page - $pageRange) && ($i <= $page + $pageRange)) { ?>
-                    <?php if ($i == $page) { ?>
-                        <span class="now_page_number"><?php echo $i; ?></span>
-                    <?php } else { ?>
-                        <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+        <?php if ($reviewData != PDO::PARAM_NULL) { ?>
+            <div class="pagination">
+                <?php if ($page >= 2) { ?>
+                    <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
+                <?php } else { ?>
+                    <span class="first_last_page">&laquo;</span>
+                <?php } ?>
+
+                <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
+                    <?php if (($i >= $page - $pageRange) && ($i <= $page + $pageRange)) { ?>
+                        <?php if ($i == $page) { ?>
+                            <span class="now_page_number"><?php echo $i; ?></span>
+                        <?php } else { ?>
+                            <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+                        <?php } ?>
                     <?php } ?>
                 <?php } ?>
-            <?php } ?>
 
-            <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
-            <?php } else { ?>
-                <span class="first_last_page">&raquo;</span>
-            <?php } ?>
-        </div>
+                <?php if ($page < $maxPage) { ?>
+                    <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page + 1; ?>" class="page_feed">&raquo;</a>
+                <?php } else { ?>
+                    <span class="first_last_page">&raquo;</span>
+                <?php } ?>
+            </div>
+        <?php } ?>
     </div>
 
     <!-- Footer-->
@@ -233,7 +238,7 @@ $pageRange = 0;
             </div>
         </div>
     </footer>
-    
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
@@ -248,43 +253,45 @@ $pageRange = 0;
 </html>
 
 <?php
-function return_max_count_item($list,&$count = null){
-    if(empty($list)){
+function return_max_count_item($list, &$count = null)
+{
+    if (empty($list)) {
         $count = 0;
         return null;
     }
- 
+
     //値を集計して降順に並べる
     $list = array_count_values($list);
     arsort($list);
- 
+
     //最初のキーを取り出す
     $before_key = '';
     $before_val = 0;
     $no1_list = array();
- 
+
     //2番目以降の値との比較
-    foreach ($list as $key => $val){
-        if($before_val > $val){
+    foreach ($list as $key => $val) {
+        if ($before_val > $val) {
             break;
-        }else {
+        } else {
             // 個数が同値の場合は配列に追加する
-            array_push($no1_list,$key);
+            array_push($no1_list, $key);
             $before_key = $key;
             $before_val = $val;
         }
     }
     $count = $before_val;
-    if(count($no1_list) > 1){
+    if (count($no1_list) > 1) {
         //同値の場合の処理があればここに書く、今回はarray_shiftで最初に追加したkeyを返した
         return $no1_list;
-    }else{
+    } else {
         return $before_key;
     }
 }
 
-function getPageRange($page, $maxPage) {
-    if($page == 1 || $page == $maxPage) {
+function getPageRange($page, $maxPage)
+{
+    if ($page == 1 || $page == $maxPage) {
         $range = 4;
     } elseif ($page == 2 || $page == $maxPage - 1) {
         $range = 3;
