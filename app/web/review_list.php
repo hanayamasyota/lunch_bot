@@ -102,6 +102,7 @@ $avarageScore = 0.0;
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/review.css" rel="stylesheet" />
 </head>
 
 <body id="page-top" class="bg-base">
