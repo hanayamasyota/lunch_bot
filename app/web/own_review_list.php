@@ -168,7 +168,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         
         <div class="pagination">
             <?php if ($page >= 2) { ?>
-                <a href="" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <a href="own_review_list.php?now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
@@ -179,14 +179,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="" onclick="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
+                        <a href="own_review_list.php?now_page=<?php echo $i; ?>" onclick="javascript:form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
                         <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
+                <a href="own_review_list.php?now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
@@ -221,7 +221,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 function createFormTemp($num, $userId) {
     $formTemp = '<form name="form'.$num.'" method="POST" action="own_review_list.php?now_page='.$num.'">';
     $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
-    $formTemp .= '<input type="hidden" name="now_page" value="'.$num.'">';
     $formTemp .= '</form>';
     return $formTemp;
 }
