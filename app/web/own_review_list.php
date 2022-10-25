@@ -36,7 +36,7 @@ $pageRange = 0;
 
 if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
-    $reviewCount = (getDataCountByReviews($userId) / 3);
+    $reviewCount = (getDataCountByReviews($userId) / REVIEW_KIND);
     $maxPage = ceil($reviewCount / ONE_PAGE);
     //レビュー
     foreach ($ownReviewData as $review) {

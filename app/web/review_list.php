@@ -9,7 +9,9 @@ define('TABLE_NAME_USERS', 'users');
 ?>
 
 <?php
+$page = $_GET["now_page"];
 $shopId = $_GET["shopid"];
+$shopName = $_GET["shopname"];
 $reviewData = getReviewData($shopId);
 
 //該当する店のレビューをしているユーザを取得
@@ -33,8 +35,15 @@ $reviewTimeArray = array();
 $shopAmbi = '';
 $avarageScore = 0.0;
 
+$maxPage = 0;
+$pageRange = 0;
+
     //レビューが登録されているか確認
     if ($reviewData != PDO::PARAM_NULL) {
+        //最大ページ数の計算
+        $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
+        $maxPage = ceil($reviewCount / ONE_PAGE);
+
         foreach ($reviewData as $review) {
             if ($review["review_num"] == 1) {
                 array_push($scoreArray, $review["review"]);
@@ -123,7 +132,7 @@ $avarageScore = 0.0;
     <div class="container dx-2 my-5 bg-lightnavy">
         <div class="bg-navy text-light mb-3">
             <div class="px-2 pt-3 col-12 border-bottom-3">
-                <h3 class="h3"><?php echo $_GET["shopname"] ?></h3>
+                <h3 class="h3"><?php echo $shopName ?></h3>
             </div>
             <div class="px-2">
                 <?php if (gettype($avarageScore) == 'double') { ?>
@@ -140,7 +149,7 @@ $avarageScore = 0.0;
                 for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <table class="table border-navy px-3 bg-navy">
                     <?php $time = explode(' ', $timeArray[$i])[0] ?>
-                    <thead><div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：".$time ?><div><?php echo "昼やすみ　：".$restTimeArray[$i] ?></div></thead>
+                    <thead><div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：".$time ?></thead>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
@@ -159,10 +168,26 @@ $avarageScore = 0.0;
                     </tr>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
+                            行った時間
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $visitTimeArray[$i]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
                             <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            感想など
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $freeArray[$i]; ?>
                         </td>
                     </tr>
                 </table>
@@ -173,7 +198,7 @@ $avarageScore = 0.0;
 
         <div class="pagination">
             <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
+                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
             <?php } ?>
@@ -183,13 +208,13 @@ $avarageScore = 0.0;
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+                        <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
+                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
             <?php } ?>

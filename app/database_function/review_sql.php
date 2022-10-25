@@ -100,9 +100,25 @@ function getDataByReviews($userId) {
         return $row;
     }
 }
+
+//個人のレビュー数取得
 function getDataCountByReviews($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select count(review) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row["review_count"];
+    }
+}
+
+//店ごとのレビュー数取得
+function getDataCountByShopReviews($shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select count(review) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = shopid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record

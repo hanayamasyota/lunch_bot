@@ -113,12 +113,13 @@ function showShop($page, $userId, $bot, $token) {
     foreach ($shopData as $shop) {
         //urlのクエリを作成
         $data = array(
-            'userid' => $userId,
+            // 'userid' => $userId,
             'shopid' => $shop["shopid"],
             'shopname' => $shop["shopname"],
+            'page' => $shop["now_page"],
         );
         $query = http_build_query($data);
-        $url = SERVER_ROOT."/web/review_list.php?".$query;
+        $url = .$query;
 
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
@@ -128,7 +129,7 @@ function showShop($page, $userId, $bot, $token) {
         //     'レビューを見る', 'review_list_1'));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             //みんなのレビューを表示するページへ移動
-            'レビューを見る', $url));
+            'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //おしたときにナビゲーションをしたい !
             'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
