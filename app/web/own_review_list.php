@@ -143,7 +143,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     </tr>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
-                            来店時刻
+                            行った時間
                         </th>
                         <td class="col-7 py-3 bg-white">
                             <?php echo $visitTimeArray[$i]; ?>
