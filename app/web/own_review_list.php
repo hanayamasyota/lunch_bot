@@ -1,8 +1,4 @@
 <?php
-//1ページの表示件数
-define('ONE_PAGE', 2);
-define('REVIEW_KIND', 5);
-
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
@@ -168,7 +164,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         
         <div class="pagination">
             <?php if ($page >= 2) { ?>
-                <a href="own_review_list.php?now_page=<?php echo $page-1; ?>" onclick="document.form<?php echo ($page-1); ?>.submit();" class="page_feed">&laquo;</a>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
                 <?php echo createFormTemp(($page-1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&laquo;</span>
@@ -179,14 +175,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php if ($i == $page) { ?>
                         <span class="now_page_number"><?php echo $i; ?></span>
                     <?php } else { ?>
-                        <a href="own_review_list.php?now_page=<?php echo $i; ?>" onclick="document.form<?php echo $i; ?>.submit();" class="page_number"><?php echo $i; ?></a>
+                        <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
                         <?php echo createFormTemp($i, $userId); ?>
                     <?php } ?>
                 <?php } ?>
             <?php } ?>
 
             <?php if($page < $maxPage) { ?>
-                <a href="own_review_list.php?now_page=<?php echo $page+1; ?>" onclick="document.form<?php echo ($page+1); ?>.submit();" class="page_feed">&raquo;</a>
+                <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page+1; ?>" class="page_feed">&raquo;</a>
                 <?php echo createFormTemp(($page+1), $userId); ?>
             <?php } else { ?>
                 <span class="first_last_page">&raquo;</span>
@@ -218,13 +214,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 </html>
 
 <?php
-function createFormTemp($num, $userId) {
-    $formTemp = '<form name="form'.$num.'" method="POST" action="own_review_list.php?now_page='.$num.'">';
-    $formTemp .= '<input type="hidden" name="userid" value="'.$userId.'">';
-    $formTemp .= '</form>';
-    return $formTemp;
-}
-
 function getPageRange($page, $maxPage) {
     if($page == 1 || $page == $maxPage) {
         $range = 4;

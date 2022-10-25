@@ -1,4 +1,9 @@
 <?php
+//1ページの表示件数
+define('ONE_PAGE', 2);
+//レビュー1件のrow
+define('REVIEW_KIND', 5);
+
 define(
     'AMBIENCE_LIST',
     [
