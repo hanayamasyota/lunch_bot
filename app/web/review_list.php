@@ -14,13 +14,7 @@ $shopId = $_GET["shopid"];
 $shopName = $_GET["shopname"];
 $reviewData = getReviewData($shopId);
 
-//該当する店のレビューをしているユーザを取得
-$allUserId = getAllUserIdByReviews($shopId);
-$userIdArray = array();
-for ($i = 0; $i < count($allUserId); $i++) {
-    array_push($userIdArray, $allUserId[$i]['id']);
-}
-$uniqueUserId = array_unique($userIdArray);
+$uniqueUserId = array();
 
 $nickNameArray = array();
 $scoreArray = array(); //評価点
@@ -40,6 +34,14 @@ $pageRange = 0;
 
     //レビューが登録されているか確認
     if ($reviewData != PDO::PARAM_NULL) {
+        //該当する店のレビューをしているユーザを取得
+        $allUserId = getAllUserIdByReviews($shopId);
+        $userIdArray = array();
+        for ($i = 0; $i < count($allUserId); $i++) {
+            array_push($userIdArray, $allUserId[$i]['id']);
+        }
+        $uniqueUserId = array_unique($userIdArray);
+        
         //最大ページ数の計算
         $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
         $maxPage = ceil($reviewCount / ONE_PAGE);
