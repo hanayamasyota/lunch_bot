@@ -183,7 +183,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             <?php } ?>
         </div>
         
-        <div class="pagination">
+        <div class="pagination py-3">
             <?php if ($page >= 2) { ?>
                 <a href="own_review_list.php?userid=<?php echo $userId; ?>&now_page=<?php echo $page-1; ?>" class="page_feed">&laquo;</a>
             <?php } else { ?>
