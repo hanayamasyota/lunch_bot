@@ -303,7 +303,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
                 continue;
             }
-            
+
             if ($event->getText() === '1') {
                 //コンビニを検索
             } else if ($event->getText() === '2') {
@@ -351,7 +351,7 @@ foreach ($events as $event) {
     // 前のメッセージが登録されていない場合 //
     else {
         //search
-        if (strcmp($event->getText(), 'ひるまちGO') == 0) {
+        if (strcmp($event->getText(), 'さがす') == 0) {
             //設定チェック
             reqlyTextMessage($bot, $event->getReplyToken(), 
             "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニ\n2:飲食店\n3:イベント");
