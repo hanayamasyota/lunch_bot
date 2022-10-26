@@ -147,8 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <form method="POST" action="">
             <div class="form-item">
-                <label for="email"></label>
-                <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
+                <label for="name"></label>
+                <input class="signup-input" type="text" name="name" required="required"  placeholder="ニックネーム" />
             </div>
             <div class="form-item">
                 <label for="email"></label>
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード" />
             </div>
             <div class="form-item">
-                <label for="password"></label>
+                <label for="confirm"></label>
                 <input class="signup-input" type="password" name="confirm" oninput="CheckPassword(this)" required="required" placeholder="パスワード(確認用)" />
             </div>
             <div class="button-panel">
