@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     if ($status == 'first') {
     ?>
-    <div class="form-wrapper">
+    <div class="form-wrapper py-5">
         <div class="login-h1">
             <h1>ログイン</h1>
         </div>
