@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     if ($status === 'first') {
     ?>
-    <div class="form-wrapper">
+    <div class="form-wrapper py-5">
         <div class="signup-h1">
             <h1>サインアップ</h1>
         </div>
@@ -161,11 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <div class="form-item">
                 <label for="password"></label>
-                <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード" />
+                <input class="signup-input" type="password" name="password" id="password" required="required" placeholder="パスワード" />
             </div>
             <div class="form-item">
                 <label for="confirm"></label>
-                <input class="signup-input" type="password" name="confirm" oninput="CheckPassword(this)" required="required" placeholder="パスワード(確認用)" />
+                <input class="signup-input" type="password" name="confirm" id="confirm" oninput="CheckPassword(this)" placeholder="パスワード(確認用)" />
             </div>
             <div class="button-panel">
                 <input type="submit" class="button" title="Log In" value="登録する" />
@@ -185,8 +185,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <form method="POST" action="">
             <div class="form-item">
-                <label for="email"></label>
-                <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
+                <label for="name"></label>
+                <input class="signup-input" type="text" name="name" required="required"  placeholder="ニックネーム" />
             </div>
             <div class="form-item">
                 <label for="email"></label>
