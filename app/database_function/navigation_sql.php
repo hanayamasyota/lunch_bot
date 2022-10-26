@@ -49,7 +49,7 @@ function getGenreByNavigation($userId, $shopId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row;
+        return $row['genre'];
     }
 }
 

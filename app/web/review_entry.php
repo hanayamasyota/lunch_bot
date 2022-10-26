@@ -42,6 +42,7 @@ $assortmentStr = '';
 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
 
 <?php
+error_log("genre:".getGenreByNavigation($userId, $shopId));
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);
