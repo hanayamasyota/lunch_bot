@@ -299,6 +299,7 @@ foreach ($events as $event) {
         //次、前の5件表示
         else if ($beforeMessage === 'search') {
             //設定が完了しているかチェック
+            $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
                 continue;
@@ -308,7 +309,6 @@ foreach ($events as $event) {
                 //コンビニを検索
             } else if ($event->getText() === '2') {
                 //飲食店を検索
-                $userData = checkUsers($event->getUserId());
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
