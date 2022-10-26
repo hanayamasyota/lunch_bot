@@ -145,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="signup-h1">
             <h1>サインアップ</h1>
         </div>
-        <form>
+        <form method="POST" action="">
             <div class="form-item">
                 <label for="email"></label>
                 <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
@@ -174,10 +174,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else if ($status === 'failed') {
     ?>
         <div class="form-wrapper">
+            <div>そのメールアドレスはすでに登録されています。</div>
         <div class="signup-h1">
             <h1>サインアップ</h1>
         </div>
-        <form>
+        <form method="POST" action="">
             <div class="form-item">
                 <label for="email"></label>
                 <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
@@ -205,8 +206,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     } else if ($status == 'success') {
     ?>
-    <div class="">登録が完了しました。引き続きログインをお願いします。</div>
-    <a href="owner_login.php">ログインはこちら</a>
+    <div class="">
+        <p>登録が完了しました。引き続きログインをお願いします。</p>
+        <a href="owner_login.php">ログインはこちら</a>
+    </div>
     <?php } ?>
 
     <!-- Footer-->
