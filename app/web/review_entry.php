@@ -39,13 +39,13 @@ $freeStr = '';
 $assortmentStr = '';
 
 //コンビニかどうかの判定用フラグ
-$conveci = false;
+$conveni = false;
 ?>
 
 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
 
 <?php
-$conveci = true;
+$conveni = true;
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);
@@ -206,7 +206,7 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
             <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
             <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
-            <input type="hidden" name="conveni" value="<?php echo $conveci ?>">
+            <input type="hidden" name="conveni" value="<?php echo $conveni; ?>">
             <table class="table border-top border-navy align-middle">
                 <!-- コンビニかどうかの判定 -->
                 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
