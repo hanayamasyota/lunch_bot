@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|オーナー用ログイン画面</title>
+    <title>ひるまちGO|オーナー用サインアップ画面</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -178,8 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <?php
     } else if ($status === 'failed') {
     ?>
-        <div class="form-wrapper">
-            <div>そのメールアドレスはすでに登録されています。</div>
+    <div class="form-wrapper">
         <div class="signup-h1">
             <h1>サインアップ</h1>
         </div>
@@ -207,6 +206,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-footer">
             <p><a href="owner_login.php">すでにアカウントをお持ちの方はこちら</a></p>
         </div>
+
+        <div class="text-danger">※そのメールアドレスはすでに登録されています。</div>
     </div>
     <?php
     } else if ($status == 'success') {

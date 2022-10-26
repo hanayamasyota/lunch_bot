@@ -1,3 +1,23 @@
+<?php
+require_once '../../DBConnection.php';
+require_once '../../database_function/owner_sql.php';
+
+define('TABLE_NAME_OWNER', 'owner');
+
+//メールアドレスとパスワードの確認
+$email = '';
+$psword = '';
+
+$status = 'first';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST["email"];
+    $psword = $_POST["password"];
+
+    $status = checkEmailPsword($email, $psword);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -6,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|個人設定</title>
+    <title>ひるまちGO|オーナー用ログイン画面</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -122,6 +142,9 @@
 
 
     <!-- Contents-->
+    <?php
+    if ($status == 'first') {
+    ?>
     <div class="form-wrapper">
         <div class="login-h1">
             <h1>ログイン</h1>
@@ -144,6 +167,40 @@
             <p><a href="#">パスワードを忘れましたか？</a></p>
         </div>
     </div>
+    <?php
+    } else if ($status == 'failed') {
+    ?>
+    <div class="form-wrapper">
+        <div class="login-h1">
+            <h1>ログイン</h1>
+        </div>
+        <form>
+            <div class="form-item">
+                <label for="email"></label>
+                <input class="login-input" type="email" name="email" required="required" placeholder="メールアドレス" />
+            </div>
+            <div class="form-item">
+                <label for="password"></label>
+                <input class="login-input" type="password" name="password" required="required" placeholder="パスワード" />
+            </div>
+            <div class="button-panel">
+                <input type="submit" class="button" title="Log In" value="ログインする" />
+            </div>
+        </form>
+        <div class="form-footer">
+            <p><a href="owner_signup.php">アカウントの作成はこちら</a></p>
+            <p><a href="#">パスワードを忘れましたか？</a></p>
+        </div>
+        <div class="text-danger">※メールアドレスまたはパスワードが間違っています。</div>
+    </div>
+    <?php
+    } else if ($status == 'success') {
+    ?>
+    <div class="">
+        <p>ログインしました。</p>
+        <a href="owner_index.php">ホームへ</a>
+    </div>
+    <?php } ?>
 
 
 
