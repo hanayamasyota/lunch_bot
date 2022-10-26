@@ -149,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="login-h1">
             <h1>ログイン</h1>
         </div>
-        <form>
+        <form method="POST" action="">
             <div class="form-item">
                 <label for="email"></label>
                 <input class="login-input" type="email" name="email" required="required" placeholder="メールアドレス" />
@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="login-h1">
             <h1>ログイン</h1>
         </div>
-        <form>
+        <form method="POST" action="">
             <div class="form-item">
                 <label for="email"></label>
                 <input class="login-input" type="email" name="email" required="required" placeholder="メールアドレス" />

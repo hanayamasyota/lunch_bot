@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <?php
-    if ($status === 'first') {
+    if ($status == 'first') {
     ?>
     <div class="form-wrapper py-5">
         <div class="signup-h1">
@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
     <?php
-    } else if ($status === 'failed') {
+    } else if ($status == 'failed') {
     ?>
     <div class="form-wrapper">
         <div class="signup-h1">
