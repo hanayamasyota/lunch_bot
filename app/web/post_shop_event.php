@@ -89,8 +89,8 @@
                     開催日
                 </th>
                 <td class="col-9 py-4 font-weight-normal align-middle bg-lightbrown">
-                    <input type="date" name="holddate" class="w-35">から<br>
-                    <input type="date" name="holddate" class="w-35">まで<br>
+                    <input type="date" name="holddatestart" class="w-35">から<br>
+                    <input type="date" name="holddateend" class="w-35">まで<br>
                     ※1日だけの場合は同じ日にちを入力
                 </td>
             </tr>

@@ -1,3 +1,19 @@
+<?php
+$name = '';
+$email = '';
+$psword = '';
+
+$status = 'first';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $psword = $_POST["password"];
+
+    $status = checkExistsEmail($email);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -122,11 +138,18 @@
 
 
     <!-- Contents-->
+    <?php
+    if ($status === 'first') {
+    ?>
     <div class="form-wrapper">
         <div class="signup-h1">
             <h1>サインアップ</h1>
         </div>
         <form>
+            <div class="form-item">
+                <label for="email"></label>
+                <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
+            </div>
             <div class="form-item">
                 <label for="email"></label>
                 <input class="signup-input" type="email" name="email" required="required" placeholder="メールアドレス" />
@@ -137,7 +160,7 @@
             </div>
             <div class="form-item">
                 <label for="password"></label>
-                <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード(確認用)" />
+                <input class="signup-input" type="password" name="confirm" oninput="CheckPassword(this)" required="required" placeholder="パスワード(確認用)" />
             </div>
             <div class="button-panel">
                 <input type="submit" class="button" title="Log In" value="登録する" />
@@ -147,10 +170,44 @@
             <p><a href="owner_login.php">すでにアカウントをお持ちの方はこちら</a></p>
         </div>
     </div>
-
-
-
-
+    <?php
+    } else if ($status === 'failed') {
+    ?>
+        <div class="form-wrapper">
+        <div class="signup-h1">
+            <h1>サインアップ</h1>
+        </div>
+        <form>
+            <div class="form-item">
+                <label for="email"></label>
+                <input class="signup-input" type="email" name="name" required="required"  placeholder="ニックネーム" />
+            </div>
+            <div class="form-item">
+                <label for="email"></label>
+                <input class="signup-input" type="email" name="email" required="required" placeholder="メールアドレス" />
+            </div>
+            <div class="form-item">
+                <label for="password"></label>
+                <input class="signup-input" type="password" name="password" required="required" placeholder="パスワード" />
+            </div>
+            <div class="form-item">
+                <label for="password"></label>
+                <input class="signup-input" type="password" name="confirm" oninput="CheckPassword(this)" required="required" placeholder="パスワード(確認用)" />
+            </div>
+            <div class="button-panel">
+                <input type="submit" class="button" title="Log In" value="登録する" />
+            </div>
+        </form>
+        <div class="form-footer">
+            <p><a href="owner_login.php">すでにアカウントをお持ちの方はこちら</a></p>
+        </div>
+    </div>
+    <?php
+    } else if ($status == 'success') {
+    ?>
+    <div class="">登録が完了しました。引き続きログインをお願いします。</div>
+    <a href="owner_login.php">ログインはこちら</a>
+    <?php } ?>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
@@ -247,3 +304,17 @@
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
+
+<script>
+	function CheckPassword(confirm) {
+		// 入力値取得
+		var input1 = password.value;
+		var input2 = confirm.value;
+		// パスワード比較
+		if(input1 != input2){
+			confirm.setCustomValidity("入力値が一致しません。");
+		}else{
+			confirm.setCustomValidity('');
+		}
+	}
+</script>

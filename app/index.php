@@ -351,7 +351,7 @@ foreach ($events as $event) {
     // 前のメッセージが登録されていない場合 //
     else {
         //search
-        if (strcmp($event->getText(), 'さがす') == 0) {
+        if (strcmp($event->getText(), 'ひるまちGO') == 0) {
             //設定チェック
             replyTextMessage($bot, $event->getReplyToken(), 
             "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニ\n2:飲食店\n3:イベント");
@@ -396,6 +396,8 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
+
+        //
 
         //テスト用
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
