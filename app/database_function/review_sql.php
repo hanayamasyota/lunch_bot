@@ -1,10 +1,10 @@
 <?php
 
-function registerReview($userId, $shopId, $reviewNum, $review, $time, $shopName) {
+function registerReview($userId, $shopId, $reviewNum, $review, $time, $shopName, $conveni) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time, shopname) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?) ';
+    $sql = 'insert into '. TABLE_NAME_REVIEWS . ' (userid, shopid, review_num, review, time, shopname, convenience_store) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $reviewNum, $review, $time, $shopName));
+    $sth->execute(array($userId, $shopId, $reviewNum, $review, $time, $shopName, $conveni));
 }
 
 function checkExistsReview($userId, $shopId, $reviewNum) {

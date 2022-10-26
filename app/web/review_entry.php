@@ -39,13 +39,13 @@ $freeStr = '';
 $assortmentStr = '';
 
 //コンビニかどうかの判定用フラグ
-$conveni = false;
+$conveni = 0;
 ?>
 
 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
 
 <?php
-$conveni = true;
+$conveni = 1;
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);

@@ -9,9 +9,9 @@ define('TABLE_NAME_USERS', 'users');
 
 <?php
     $postData = array();
-    $conveni = $_POST['conveni'];
+    $conveni = intval($_POST['conveni']);
     error_log('flag:'.$conveni);
-    if ($conveni) {
+    if ($conveni == 1) {
         array_push($postData, $_POST['visit_time']);
         array_push($postData, $_POST['crowd']);
         array_push($postData, $_POST['assort']);
@@ -29,6 +29,7 @@ define('TABLE_NAME_USERS', 'users');
     $shopId = $_POST['shopid'];
     $shopName = $_POST['shopname'];
 
+    $num = 1;
     $message = '';
     if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
         $message = 'レビュー更新';
@@ -36,7 +37,7 @@ define('TABLE_NAME_USERS', 'users');
         $message = 'レビュー登録';
     }
 
-    $num = 1;
+
     foreach($postData as $data) {
         $nowTime = time()+32400;
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);
