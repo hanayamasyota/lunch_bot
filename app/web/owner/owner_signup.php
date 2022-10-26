@@ -2,6 +2,8 @@
 require_once '../../DBConnection.php';
 require_once '../../database_function/owner_sql.php';
 
+define('TABLE_NAME_OWNER', 'owner');
+
 $name = '';
 $email = '';
 $psword = '';
