@@ -9,7 +9,7 @@ function checkExistsEmail($email, $psword, $name) {
     $row = $sth->fetch();
     
     if (!isset($row['email'])) {
-        $sql = 'insert into ' .TABLE_NAME_OWNER. ' (owner_name, email, psword) value (?, ?, ?)';
+        $sql = 'insert into ' .TABLE_NAME_OWNER. ' (owner_name, email, psword) values (?, ?, ?)';
         $sth = $dbh->prepare($sql);
         $sth->execute(array($name, $email, $psword));
 
