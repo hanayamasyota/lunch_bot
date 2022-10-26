@@ -8,16 +8,22 @@ define('TABLE_NAME_USERS', 'users');
 ?>
 
 <?php
-    $num = 100;
-
     $postData = array();
-    array_push($postData, $_POST['score']);
-    array_push($postData, $_POST['ambi']);
-    $time = explode(':', $_POST['visit_time']);
-    $timeStr = $time[0].'時'.$time[1].'分';
-    array_push($postData, $timeStr);
-    array_push($postData, $_POST['crowd']);
-    array_push($postData, $_POST['free']);
+    $conveni = $_POST['conveni'];
+    error_log('flag:'.$conveni);
+    if ($conveni) {
+        array_push($postData, $_POST['visit_time']);
+        array_push($postData, $_POST['crowd']);
+        array_push($postData, $_POST['assort']);
+    } else {
+        array_push($postData, $_POST['score']);
+        array_push($postData, $_POST['ambi']);
+        $time = explode(':', $_POST['visit_time']);
+        $timeStr = $time[0].'時'.$time[1].'分';
+        array_push($postData, $timeStr);
+        array_push($postData, $_POST['crowd']);
+        array_push($postData, $_POST['free']);
+    }
 
     $userId = $_POST['userid'];
     $shopId = $_POST['shopid'];
@@ -39,7 +45,7 @@ define('TABLE_NAME_USERS', 'users');
             updateReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
         } else {
             //レビューを登録する
-            registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
+            registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName, $conveni);
         }
         $num += 1;
     }

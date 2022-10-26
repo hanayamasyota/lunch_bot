@@ -37,12 +37,15 @@ $timeStr = '';
 $crowdStr = '';
 $freeStr = '';
 $assortmentStr = '';
+
+//コンビニかどうかの判定用フラグ
+$conveci = false;
 ?>
 
 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
 
 <?php
-error_log("genre:".getGenreByNavigation($userId, $shopId));
+$conveci = true;
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);
@@ -56,8 +59,8 @@ if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
 
 $timeStr = '<input type="time" name="visit_time" value="' . $time . '" class="py-2 px-4" required>';
 
-$crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $crowd . '"> 混' .
-    '<datalist id="my-datalist">';
+$crowdStr = '空 <input name="crowd" type="range" list="my-crowdlist" min="1" max="5" value="' . $crowd . '"> 混' .
+    '<datalist id="my-crowdlist">';
 for ($i = 1; $i <= count(CROWD_LIST); $i++) {
     $additions = '';
     $crowdStr .= '<option value="' . $i . '">';
@@ -66,8 +69,8 @@ $crowdStr .= <<<EOD
     </datalist>
     EOD;
 
-$assortmentStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $assortment . '"> 混' .
-    '<datalist id="my-datalist">';
+$assortmentStr = '空 <input name="assort" type="range" list="my-assortlist" min="1" max="5" value="' . $assortment . '"> 混' .
+    '<datalist id="my-assortlist">';
 for ($i = 1; $i <= count(ASSORT_LIST); $i++) {
     $additions = '';
     $assortmentStr .= '<option value="' . $i . '">';
@@ -80,6 +83,7 @@ $assortmentStr .= <<<EOD
 <?php } else {?>
 
 <?php
+error_log("genre:".getGenreByNavigation($userId, $shopId));
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);
@@ -202,6 +206,7 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
             <input type="hidden" name="userid" value="<?php echo $userId; ?>">
             <input type="hidden" name="shopid" value="<?php echo $shopId; ?>">
             <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
+            <input type="hidden" name="conveni" value="<?php echo $conveci ?>">
             <table class="table border-top border-navy align-middle">
                 <!-- コンビニかどうかの判定 -->
                 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
