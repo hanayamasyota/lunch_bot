@@ -134,6 +134,18 @@ $ambiStr .= <<<EOD
     </select>
     EOD;
 
+$timeStr = '<input type="time" name="visit_time" value="' . $time . '" class="py-2 px-4" required>';
+
+$crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $crowd . '"> 混' .
+    '<datalist id="my-datalist">';
+for ($i = 1; $i <= count(CROWD_LIST); $i++) {
+    $additions = '';
+    $crowdStr .= '<option value="' . $i . '">';
+}
+$crowdStr .= <<<EOD
+    </datalist>
+    EOD;
+
 $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれば記入してください(150字まで)" name="free" maxlength="150">' . $free . '</textarea>';
 ?>
 
