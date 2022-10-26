@@ -1,4 +1,5 @@
 <?php
+require_once '../../DBConnection.php';
 require_once '../../database_function/owner_sql.php';
 
 $name = '';
