@@ -1,5 +1,5 @@
 <?php
-require_once '../../database_function.owner_sql.php';
+require_once '../../database_function/owner_sql.php';
 
 $name = '';
 $email = '';
