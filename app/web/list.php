@@ -4,7 +4,7 @@ define('ONE_PAGE', 5);
 //レビュー1件のrow
 define('REVIEW_KIND', 5);
 //コンビニの場合
-defini('REVIEW_CONVENI', 3);
+define('REVIEW_CONVENI', 3);
 
 define(
     'AMBIENCE_LIST',
@@ -27,6 +27,17 @@ define(
         "3" => "普通",
         "4" => "やや混んでいた",
         "5" => "混んでいた",
+    ]
+);
+
+define(
+    'ASSORT_LIST',
+    [
+        "1" => "あ",
+        "2" => "い",
+        "3" => "う",
+        "4" => "え",
+        "5" => "お",
     ]
 );
 ?>

@@ -29,6 +29,13 @@ $time = '';
 $crowd = '';
 $free = '';
 $assortment = '';
+
+$scoreStr = '';
+$ambiStr = '';
+$timeStr = '';
+$crowdStr = '';
+$freeStr = '';
+$assortmentStr = '';
 ?>
 
 <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
@@ -37,14 +44,35 @@ $assortment = '';
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
     $reviewData = separateReviewData($userId, $shopId);
-    $score = $reviewData[0]['review'];
-    $ambi = $reviewData[1]['review'];
     $time = $reviewData[2]['review'];
     $crowd = $reviewData[3]['review'];
     $status = '編集';
 } else {
     $crowd = '3';
+    $assortment = '3';
 }
+
+$timeStr = '<input type="time" name="visit_time" value="' . $time . '" class="py-2 px-4" required>';
+
+$crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $crowd . '"> 混' .
+    '<datalist id="my-datalist">';
+for ($i = 1; $i <= count(CROWD_LIST); $i++) {
+    $additions = '';
+    $crowdStr .= '<option value="' . $i . '">';
+}
+$crowdStr .= <<<EOD
+    </datalist>
+    EOD;
+
+$assortmentStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $assortment . '"> 混' .
+    '<datalist id="my-datalist">';
+for ($i = 1; $i <= count(ASSORT_LIST); $i++) {
+    $additions = '';
+    $assortmentStr .= '<option value="' . $i . '">';
+}
+$assortmentStr .= <<<EOD
+    </datalist>
+    EOD;
 ?>
 
 <?php } else {?>
@@ -102,19 +130,6 @@ for ($i = 1; $i <= count(AMBIENCE_LIST); $i++) {
 }
 $ambiStr .= <<<EOD
     </select>
-    EOD;
-
-
-$timeStr = '<input type="time" name="visit_time" value="' . $time . '" class="py-2 px-4" required>';
-
-$crowdStr = '空 <input name="crowd" type="range" list="my-datalist" min="1" max="5" value="' . $crowd . '"> 混' .
-    '<datalist id="my-datalist">';
-for ($i = 1; $i <= count(CROWD_LIST); $i++) {
-    $additions = '';
-    $crowdStr .= '<option value="' . $i . '">';
-}
-$crowdStr .= <<<EOD
-    </datalist>
     EOD;
 
 $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれば記入してください(150字まで)" name="free" maxlength="150">' . $free . '</textarea>';
@@ -175,7 +190,32 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
             <input type="hidden" name="shopname" value="<?php echo $shopName; ?>">
             <table class="table border-top border-navy align-middle">
                 <!-- コンビニかどうかの判定 -->
-                <?php if () { ?>
+                <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
+                <tr>
+                    <th class="col-5 py-4 bg-lightbrown">
+                        <div class="text-danger d-inline">*</div>来店時刻
+                    </th>
+                    <td class="col-7 py-4 bg-white">
+                        <?php echo $timeStr; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-5 py-4 bg-lightbrown">
+                        <div class="text-danger d-inline">*</div>混み具合
+                    </th>
+                    <td class="col-7 py-4 bg-white">
+                        <?php echo $crowdStr; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-5 py-4 bg-lightbrown">
+                        <div class="text-danger d-inline">*</div>商品の品ぞろえ状況
+                    </th>
+                    <td class="col-7 py-4 bg-white">
+                        <?php echo $assortmentStr; ?>
+                    </td>
+                </tr>
+                <?php } else {  ?>
                 <tr>
                     <th class="col-5 py-4 bg-lightbrown">
                         <div class="text-danger d-inline">*</div>味
@@ -216,6 +256,7 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
                         <?php echo $freeStr; ?>
                     </td>
                 </tr>
+                <?php } ?>
             </table>
             <div class="text-center">
                 <button type="submit" class="btn-dark mb-3 text-center">
