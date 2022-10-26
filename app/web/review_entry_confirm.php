@@ -12,14 +12,14 @@ define('TABLE_NAME_USERS', 'users');
     $conveni = intval($_POST['conveni']);
     error_log('flag:'.$conveni);
     if ($conveni == 1) {
-        array_push($postData, $_POST['visit_time']);
+        $time = explode(':', $_POST['visit_time']);
+        $timeStr = $time[0].'時'.$time[1].'分';
+        array_push($postData, $timeStr);
         array_push($postData, $_POST['crowd']);
         array_push($postData, $_POST['assort']);
     } else {
         array_push($postData, $_POST['score']);
         array_push($postData, $_POST['ambi']);
-        $time = explode(':', $_POST['visit_time']);
-        $timeStr = $time[0].'時'.$time[1].'分';
         array_push($postData, $timeStr);
         array_push($postData, $_POST['crowd']);
         array_push($postData, $_POST['free']);

@@ -297,6 +297,30 @@ foreach ($events as $event) {
         }
 
         //次、前の5件表示
+        else if ($beforeMessage === 'search') {
+            //設定が完了しているかチェック
+            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
+                inductionUserSetting($bot, $event->getReplyToken());
+                continue;
+            }
+            
+            if ($event->getText() === '1') {
+                //コンビニを検索
+            } else if ($event->getText() === '2') {
+                //飲食店を検索
+                $userData = checkUsers($event->getUserId());
+                searchShop($event->getUserId(), $bot, $event->getReplyToken());
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
+            } else if ($event->getText() === '3') {
+                //イベントを検索
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(),
+                    "無効な値です。入力しなおしてください。");
+                continue;
+            }
+        }
+
         else if ($beforeMessage === 'shop_search') {
             $userId = $event->getUserId();
             //件数を超えて次のページにいけないようにする
@@ -326,20 +350,12 @@ foreach ($events as $event) {
 
     // 前のメッセージが登録されていない場合 //
     else {
-        //searchshop
-        if(strcmp($event->getText(), 'お店を探す') == 0) {
-            error_log("userid:".$event->getUserId());
+        //search
+        if (strcmp($event->getText(), 'ひるまちGO') == 0) {
             //設定チェック
-            $userData = checkUsers($event->getUserId());
-            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
-                inductionUserSetting($bot, $event->getReplyToken());
-            } else {
-                //店の検索
-                //サーチ時に昼休みをいれて時間内に利用可能な店を表示
-                searchShop($event->getUserId(), $bot, $event->getReplyToken());
-                $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
-            }
+            reqlyTextMessage($bot, $event->getReplyToken(), 
+            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニ\n2:飲食店\n3:イベント");
+            updateUser($event->getUserId(), 'search');
 
         //review
         } else if(strcmp($event->getText(), 'レビュー') == 0) {
