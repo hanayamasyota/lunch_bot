@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST["email"];
     $psword = $_POST["password"];
 
-    $status = checkExistsEmail($email);
+    $status = checkExistsEmail($email, $psword, $name);
 }
 ?>
 
