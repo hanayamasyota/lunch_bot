@@ -34,13 +34,13 @@
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">PAGETITLE</p>
+            <p class="text-light h3">ホーム</p>
         </div>
     </header>
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <a href="post_event_owner.php">十店舗(固定店舗)の登録はこちら</a>
+        <a href="post_event_owner.php">十店舗(固定店舗)の登録はこちら</a><br>
         <a href="post_shop_owner.php">イベント・移動店舗の登録はこちら</a>
     </div>
 
