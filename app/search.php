@@ -130,7 +130,7 @@ function showShop($page, $userId, $bot, $token) {
             'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //おしたときにナビゲーションをしたい !
-            'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
+            'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum'].'_'.$shop['shop_lat'].'_'.$shop['shop_lng']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
