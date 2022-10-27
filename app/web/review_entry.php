@@ -7,6 +7,7 @@ require_once 'list.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_NAVIGATION', 'navigation');
+define('TABLE_NAME_USERVISITEDSHOPS', 'uservisitedshops');
 ?>
 
 <?php
