@@ -37,10 +37,10 @@
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-center">
+    <div class="container dx-2 my-5 bg-lightnavy">
         <form method="post" action="#">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
-            <thead class="border border-start">フォームの入力をしてください。</th>
+            <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
                 <th class="col-3 py-4 align-middle bg-gray">
                     <div class="text-danger d-inline">*</div>店名
@@ -94,9 +94,10 @@
                         <option value="3">工作・体験</option>
                         <option value="4">フリーマーケット</option>
                         <option value="5">芸術・音楽</option>
+                        <option value="999">その他</option>
                     </select>
-                    <input type="text" class="w-25 d-inline">
-                    <small>セレクトボックス内にない場合は右に入力してください</small>
+                    <input type="text" class="w-25 d-inline"><br>
+                    <small>セレクトボックス内にない場合はその他を選択し右欄に入力してください</small>
                 </td>
             </tr>
 
@@ -118,19 +119,8 @@
                 </td>
             </tr>
         </table>
+        <input type="submit" value="投稿する">
         </form>
-
-        <!--投稿ボタン-->
-        <form>
-            <input type="submit" value="投稿する">
-        </form> 
-
-
-
-
-
-
-
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">

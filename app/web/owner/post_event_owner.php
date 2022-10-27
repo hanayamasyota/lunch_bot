@@ -106,9 +106,10 @@
                             <option value="3">工作・体験</option>
                             <option value="4">フリーマーケット</option>
                             <option value="5">芸術・音楽</option>
+                            <option value="999">その他</option>
                         </select>
-                        <input type="text" class="w-25 d-inline">
-                        <small>セレクトボックス内にない場合は右に入力してください</small>
+                        <input type="text" class="w-25 d-inline"><br>
+                        <small>セレクトボックス内にない場合はその他を選択し右欄に入力してください</small>
                     </td>
                 </tr>
             </div>
