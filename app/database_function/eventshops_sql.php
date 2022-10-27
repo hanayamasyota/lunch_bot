@@ -1,6 +1,6 @@
 <?php
 
-function registerEventShopsByOwner($) {
+function registerEventShopsByOwner() {
 
 }
 
