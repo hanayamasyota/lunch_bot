@@ -224,16 +224,18 @@ function getConvenienceInfo($userId, $org_lat, $org_lng) {
 
     $info = [];
 
+    $count = 0;
     for ($i=0; $i<count($json->{"results"}); $i++){
         $name = $json->{"results"}[$i]->{"name"};
         $place_id = $json->{"results"}[$i]->{"place_id"};
         array_push($info, [$place_id, ($i+1), $name, $lat_list[$i], $lng_list[$i], $time_list[$i]]);
+        $count = $count+1;
     }
 
     if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
-        updateUserShopData($userId, 'shop_length', $resultLength);
+        updateUserShopData($userId, 'shop_length', $count);
     } else {
-        registerUserShopData($userId, $resultLength);
+        registerUserShopData($userId, $count);
     }
 
     return $info;
@@ -273,9 +275,9 @@ function searchConveni($userId, $bot, $token) {
 
 function showConveni($page, $bot, $token, $userId) {
     $start = $page*5;
-    $ConveniData = getShopDataByNavigation($userId, ($start+1));
+    $conveniData = getShopDataByNavigation($userId, ($start+1));
     //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
-    if ($shopData == PDO::PARAM_NULL) {
+    if ($conveniData == PDO::PARAM_NULL) {
         error_log('エラー：店のデータがありません');
     }
     $shopLength = getDataByUserShopData($userId, 'shop_length');
@@ -304,8 +306,8 @@ function showConveni($page, $bot, $token, $userId) {
             //おしたときにナビゲーションをしたい !
             'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-            $conveni[0],
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' 徒歩' . $shop['arrival_time'],
+            $conveni["shopname"],
+            $conveni['shopnum'].'/'.$shopLength.'件: 徒歩' . $shop['arrival_time'],
             SERVER_ROOT.'imgs/nuko.png',
             $actionArray,
         );
