@@ -72,4 +72,16 @@ function deleteOldUserVisitedShop($userId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $userId));
 }
+
+function judgeConveni($userId, $shopId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select conveni from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $shopId));
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row['conveni'];
+    }
+}
 ?>

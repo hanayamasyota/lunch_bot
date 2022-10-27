@@ -42,9 +42,9 @@ $assortmentStr = '';
 $conveni = 0;
 ?>
 
-<?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
+<?php if (judgeConveni($userId, $shopId)) { ?>
 
-<?php
+<?php 
 $conveni = 1;
 //すでに登録済みで編集をする場合は以前の値をもとに表示させる
 if (checkExistsReview($userId, $shopId, 1) != PDO::PARAM_NULL) {
@@ -209,7 +209,7 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
             <input type="hidden" name="conveni" value="<?php echo $conveni; ?>">
             <table class="table border-top border-navy align-middle">
                 <!-- コンビニかどうかの判定 -->
-                <?php if (getGenreByNavigation($userId, $shopId) === 'convenience') { ?>
+                <?php if (judgeConveni($userId, $shopId)) { ?>
                 <tr>
                     <th class="col-5 py-4 bg-lightbrown">
                         <div class="text-danger d-inline">*</div>来店時刻
