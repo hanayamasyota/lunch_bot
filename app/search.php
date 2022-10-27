@@ -273,8 +273,9 @@ function searchConveni($userId, $bot, $token) {
     }
 }
 
-function showConveni($page, $bot, $token, $userId) {
+function showConveni($page, $userId, $bot, $token) {
     $start = $page*5;
+    
     $conveniData = getShopDataByNavigation($userId, ($start+1));
     error_log('conveniData:'.$conveniData);
     //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
