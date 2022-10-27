@@ -58,7 +58,7 @@
                     <th class="py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>開催日
                     </th>
-                    <td class="col-8 py-2 font-weight-normal align-middle bg-lightbrown">
+                    <td class="col-8 py-2 font-weight-normal align-middle bg-white">
                         <input type="date" name="holddate" class="w-35" required>から<br>
                         <input type="date" name="holddate" class="w-35" required>まで<br>
                         ※1日だけの場合は同じ日にちを入力

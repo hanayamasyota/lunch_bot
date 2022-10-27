@@ -42,28 +42,28 @@
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>店名
                 </th>
-                <td class="col-9 py-4 align-middle bg-white">
+                <td class="col-9 py-2 align-middle bg-white">
                     <input type="text" name="shopname" placeholder="飲食店の名前を入力" required>
                 </td>
             </tr>
 
             
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>開店日
                 </th>
-                <td class="col-9 py-4 font-weight-normal align-middle bg-white">
+                <td class="col-9 py-2 font-weight-normal align-middle bg-white">
                     <input type="date" name="holddate" class="w-35" required>から
                 </td>
             </tr>
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
-                <td class="col-9 py-4 align-middle bg-white">
+                <td class="col-9 py-2 align-middle bg-white">
                     <input type="time" name="holdstart" required>から
                     <input type="time" name="holdend" required>まで
                 </td>
@@ -83,10 +83,10 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
-                <td class="col-9 py-4 align-middle bg-white">
+                <td class="col-9 py-2 align-middle bg-white">
                     <select name="genre" class="d-inline" requierd>
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
@@ -102,19 +102,19 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>特徴
                 </th>
-                <td class="col-9 py-4 align-middle bg-white">
+                <td class="col-9 py-2 align-middle bg-white">
                     <textarea name="feature" class="w-75" rows="5" placeholder="住所や定休日などの情報を含め、お店の特徴を入力してください。" required></textarea>
                 </td>
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-lightbrown">
+                <th class="col-3 py-2 align-middle bg-lightbrown">
                     リンク
                 </th>
-                <td class="col-9 py-4 align-middle bg-white">
+                <td class="col-9 py-2 align-middle bg-white">
                     <input type="text" name="link" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
                 </td>
             </tr>
