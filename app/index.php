@@ -177,7 +177,7 @@ foreach ($events as $event) {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 '道案内',
                 SERVER_ROOT . '/imgs/hirumatiGO.png',
-                '道案内ページ',
+                $shopName.'の道案内ページ',
                 "こちらから店までの道を確認できます。",
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                     '道案内を見る', $url),
