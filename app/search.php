@@ -230,6 +230,12 @@ function getConvenienceInfo($bot, $token, $userId) {
         array_push($info, [$place_id, ($i+1), $name, $lat_list[$i], $lng_list[$i], $time_list[$i]]);
     }
 
+    if (getDataByUserShopData($userId, 'userid') != PDO::PARAM_NULL) {
+        updateUserShopData($userId, 'shop_length', $resultLength);
+    } else {
+        registerUserShopData($userId, $resultLength);
+    }
+
     return $info;
 }
 
@@ -266,6 +272,19 @@ function searchConveni($userId, $bot, $token) {
 }
 
 function showConveni($page, $bot, $token, $userId) {
+    $start = $page*5;
+    $ConveniData = getShopDataByNavigation($userId, ($start+1));
+    //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
+    if ($shopData == PDO::PARAM_NULL) {
+        error_log('エラー：店のデータがありません');
+    }
+    $shopLength = getDataByUserShopData($userId, 'shop_length');
+
+    $showLength = $shopLength-$start;
+    if ($showLength > 5) {
+        $showLength = 5;
+    }
+
     $columnArray = array();
     foreach ($conveniData as $conveni) {
         //urlのクエリを作成
