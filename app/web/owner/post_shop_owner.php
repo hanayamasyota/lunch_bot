@@ -37,12 +37,12 @@
 
 
     <!-- Contents-->
-    <div class="container dx-2 my-5 bg-lightnavy">
+    <div class="container dx-2 my-5 bg-lightnavy text-center">
         <form method="post" action="#">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>店名
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
@@ -52,7 +52,7 @@
 
             
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>開店日
                 </th>
                 <td class="col-9 py-4 font-weight-normal align-middle bg-lightbrown">
@@ -60,7 +60,7 @@
                 </td>
             </tr>
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
@@ -70,7 +70,7 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-5 align-middle bg-gray">
+                <th class="col-3 py-5 align-middle bg-lightbrown">
                     写真
                 </th>
                 <td class="col-9 py-1 align-middle bg-lightbrown">
@@ -83,7 +83,7 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
@@ -102,7 +102,7 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>特徴
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
@@ -111,7 +111,7 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     リンク
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">

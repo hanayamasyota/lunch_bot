@@ -37,7 +37,7 @@
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-center">
+    <div class="container dx-2 my-5 bg-lightnavy text-center">
         <form method="post" action="#">
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</th>
