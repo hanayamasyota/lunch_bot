@@ -2,6 +2,7 @@
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/navigation_sql.php';
+require_once '../database_function/uservisitedshops_sql.php';
 require_once 'list.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
