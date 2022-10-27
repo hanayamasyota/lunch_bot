@@ -153,6 +153,8 @@ foreach ($events as $event) {
                 }
                 $shopName = explode('_', $event->getPostbackData())[2];
                 $shopNum = intval(explode('_', $event->getPostbackData())[3]);
+                $lat = explode('_', $event->getPostbackData())[4];
+                $lng = explode('_', $event->getPostbackData())[5];
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
                 //https://www.php.net/manual/ja/function.date.php
                 $nowTime = time()+32400;
@@ -170,6 +172,9 @@ foreach ($events as $event) {
                         registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum, 1);
                     }
                 }
+
+                $location = getLocationByUserId($userId);
+                $url = makeMapURL($location["latitude"], $location["longitude"], $lat, $lng);
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 'レビュー確認・編集',
                 SERVER_ROOT . '/imgs/hirumatiGO.png',
