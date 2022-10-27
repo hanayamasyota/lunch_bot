@@ -185,6 +185,7 @@ foreach ($events as $event) {
                 );
             }
         }
+        continue;
     }
 
     // 今行っている動きをキャンセルする
