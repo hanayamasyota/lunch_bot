@@ -276,6 +276,7 @@ function searchConveni($userId, $bot, $token) {
 function showConveni($page, $bot, $token, $userId) {
     $start = $page*5;
     $conveniData = getShopDataByNavigation($userId, ($start+1));
+    error_log('conveniData:'.$conveniData);
     //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
     if ($conveniData == PDO::PARAM_NULL) {
         error_log('エラー：店のデータがありません');
