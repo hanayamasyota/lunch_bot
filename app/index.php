@@ -142,7 +142,7 @@ foreach ($events as $event) {
 
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
-        if (getBeforeMessageByUserId($event->getUserId()) === 'shop_search') {
+        if (strpos($event->getPostbackData(), '_search') !== false) {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
