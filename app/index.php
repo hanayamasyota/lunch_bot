@@ -146,7 +146,11 @@ foreach ($events as $event) {
             // review_write_...
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
+                $shopType = 0;
                 $shopId = explode('_', $event->getPostbackData())[1];
+                if (!(preg_match("/J[0-9]{9}$/", $shopId))) {
+                    $shopType = 1;
+                }
                 $shopName = explode('_', $event->getPostbackData())[2];
                 $shopNum = intval(explode('_', $event->getPostbackData())[3]);
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
@@ -159,9 +163,21 @@ foreach ($events as $event) {
                     if (countVisitedShops($event->getUserId())['shopcount'] >= 10) {
                         deleteOldUserVisitedShop($event->getUserId());
                     }
-                    registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum);
+
+                    if ($shopType == 0) {
+                        registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum, 0);
+                    } else if ($shopType == 1) {
+                        registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum, 1);
+                    }
                 }
-                replyTextMessage($bot, $event->getReplyToken(), '訪れた店一覧に登録しました。');
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                'レビュー確認・編集',
+                SERVER_ROOT . '/imgs/hirumatiGO.png',
+                'レビュー確認・編集',
+                "こちらから店までの道を確認できます。",
+                new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                    '道案内を見る'. $query),
+                );
             }
         }
         continue;

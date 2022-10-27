@@ -316,6 +316,19 @@ function showConveni($page, $userId, $bot, $token) {
         array_push($columnArray, $column);
     }
     updateUser($userId, 'conveni_search');
+    
+    
     replyCarouselTemplate($bot, $token, 'コンビニを探す:'.($page+1).'ページ目', $columnArray);
+}
+
+function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
+    $http_client = new Client();
+
+    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
+    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
+
+    $url = 'https:/www.google.com/maps/dir/?' . http_build_query(['api' => "1", 'origin' => $org_latlng, 'destination' => $dst_latlng]);
+
+    return $url;
 }
 ?>

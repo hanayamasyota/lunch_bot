@@ -1,10 +1,10 @@
 <?php
 //uservistedshopsテーブルへのデータ挿入
-function registerUserVisitedShops($userId, $shopId, $shopName, $time, $shopNum) {
+function registerUserVisitedShops($userId, $shopId, $shopName, $time, $shopNum, $conveni) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERVISITEDSHOPS . ' (userid, shopid, shopname, visittime, shopnum) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?) ';
+    $sql = 'insert into '. TABLE_NAME_USERVISITEDSHOPS . ' (userid, shopid, shopname, visittime, shopnum, conveni) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, ?, ?, ?, ?) ';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $shopId, $shopName, $time, $shopNum));
+    $sth->execute(array($userId, $shopId, $shopName, $time, $shopNum, $conveni));
 }
 
 function getUserVisitedShopData($userId) {
