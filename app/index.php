@@ -307,6 +307,9 @@ foreach ($events as $event) {
 
             if ($event->getText() === '1') {
                 //コンビニを検索
+                searchConveni($event->getUserId(), $bot, $event->getReplyToken());
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                showConveni($page, $event->getUserId(), $bot, $event->getReplyToken());
             } else if ($event->getText() === '2') {
                 //飲食店を検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
@@ -321,7 +324,7 @@ foreach ($events as $event) {
             }
         }
 
-        else if ($beforeMessage === 'shop_search') {
+        else if (strpos($beforeMessage, '_search') !== false) {
             $userId = $event->getUserId();
             //件数を超えて次のページにいけないようにする
             if (strcmp($event->getText(), '次へ') == 0) {
@@ -330,7 +333,11 @@ foreach ($events as $event) {
                 //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
                 if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($userId, 'page_num', ($page+1));
-                    showShop(($page+1), $userId, $bot, $event->getReplyToken());
+                    if ($beforeMessage === 'shop_search') {
+                        showShop(($page+1), $userId, $bot, $event->getReplyToken());
+                    } else if ($beforeMessage === 'conveni_search') {
+                        showConveni(($page+1), $userId, $bot, $event->getReplyToken());
+                    }
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
                 }
@@ -340,7 +347,11 @@ foreach ($events as $event) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 if ($page >= 1) {
                     updateUserShopData($userId, 'page_num', ($page-1));
-                    showShop(($page-1), $userId, $bot, $event->getReplyToken());
+                    if ($beforeMessage === 'shop_search') {
+                        showShop(($page-1), $userId, $bot, $event->getReplyToken());
+                    } else if ($beforeMessage === 'conveni_search') {
+                        showConveni(($page-1), $userId, $bot, $event->getReplyToken());
+                    }
                 } else {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }

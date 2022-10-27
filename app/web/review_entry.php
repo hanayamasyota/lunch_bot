@@ -209,7 +209,7 @@ $freeStr = '<textarea class="w-100 h-4rem placeholder="感想や備考等あれ�
             <input type="hidden" name="conveni" value="<?php echo $conveni; ?>">
             <table class="table border-top border-navy align-middle">
                 <!-- コンビニかどうかの判定 -->
-                <?php if (getGenreByNavigation($userId, $shopId) === 'convinience') { ?>
+                <?php if (getGenreByNavigation($userId, $shopId) === 'convenience') { ?>
                 <tr>
                     <th class="col-5 py-4 bg-lightbrown">
                         <div class="text-danger d-inline">*</div>来店時刻

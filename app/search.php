@@ -47,7 +47,7 @@ function renderJson($userId, $json) {
             "id" => $temp->{'shop'}[$i]->{'id'},
             "genre" => $temp->{'shop'}[$i]->{'genre'}->{'name'},
             "url" => $temp->{'shop'}[$i]->{'urls'}->{'pc'},
-            "image" => ($temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'}),
+            "image" => $temp->{'shop'}[$i]->{'photo'}->{'mobile'}->{'s'},
             "number" => ($i+1),
             "latitude" => $temp->{'shop'}[$i]->{'lat'},
             "longitude" => $temp->{'shop'}[$i]->{'lng'},
@@ -60,7 +60,6 @@ function renderJson($userId, $json) {
 //テーブルへ店を登録
 function searchShop($userId, $bot, $token) {
     if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
-        //
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);
@@ -179,5 +178,121 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
 
     return $json->{"routes"}[0]->{"legs"}[0]->{"duration"}->{"text"};
 
+}
+
+function getConvenienceInfo($bot, $token, $userId) {
+
+    $http_client = new Client();
+    $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
+    $api_key = "AIzaSyC2tnzNvq7H-AGrGdPrUdSpRTIASeim0nk";
+
+    $org_latlng = strval($org_lat) . ',' . strval($org_lng);
+
+    try {
+        $response = $http_client->request('POST', $url, [
+            'headers' => [ 'application/json',
+        ],
+            'query' => [
+                'key' => $api_key,
+                'language' => 'ja',
+                'location' => $org_latlng,
+                'types' => 'convenience_store',
+                'radius' => '300',
+            ],
+            'verify' => false,
+        ]);
+    } catch (ClientException $e) {
+        throw $e;
+    }
+    $body = $response->getBody();
+    $json = json_decode($body);
+
+
+    $lat_list = [];
+    $lng_list = [];
+    $time_list = [];
+    
+    for ($i=0; $i<count($json->{"results"}); $i++) {
+        $lat = $json->{"results"}[$i]->{"geometry"}->{"location"}->{"lat"};
+        array_push($lat_list, $lat);
+        $lng = $json->{"results"}[$i]->{"geometry"}->{"location"}->{"lng"};
+        array_push($lng_list, $lng);
+        $time = getTimeInfo($org_lat, $org_lng, $lat, $lng);
+        array_push($time_list, $time);
+    }
+
+
+    $info = [];
+
+    for ($i=0; $i<count($json->{"results"}); $i++){
+        $name = $json->{"results"}[$i]->{"name"};
+        $place_id = $json->{"results"}[$i]->{"place_id"};
+        array_push($info, [$place_id, ($i+1), $name, $lat_list[$i], $lng_list[$i], $time_list[$i]]);
+    }
+
+    return $info;
+}
+
+//テーブルへ店を登録
+function searchConveni($userId, $bot, $token) {
+    if (checkShopByNavigation($userId, 1) !== PDO::PARAM_NULL) {
+        deleteNavigation($userId);
+    }
+    $location = getLocationByUserId($userId);
+    $ConveniInfo = getConvenienceInfo($userId, floatval($location['latitude']), floatval($location['longitude']));
+    //0件だった場合に店が無かったと表示させる
+    if (($ConveniInfo) == false) {
+        replyTextMessage($bot, $token, '店が見つかりませんでした。');
+    } else {
+        foreach($conveniInfo as $conveni) {
+            
+            registerNavigation(
+                $userId,
+                $conveni[0],
+                $conveni[1],
+                $conveni[2],
+                floatval($conveni[3]),
+                floatval($conveni[4]),
+
+                $conveni[5],
+                // " 〇〇分",
+
+                'convenience',
+                null,
+                null,
+            );
+        }
+    }
+}
+
+function showConveni($page, $bot, $token, $userId) {
+    $columnArray = array();
+    foreach ($conveniData as $conveni) {
+        //urlのクエリを作成
+        $data = array(
+            // 'userid' => $userId,
+            'shopid' => $shop["shopid"],
+            'shopname' => $shop["shopname"],
+            'now_page' => 1,
+        );
+        $query = http_build_query($data);
+
+        $actionArray = array();
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+            //みんなのレビューを表示するページへ移動
+            'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+            //おしたときにナビゲーションをしたい !
+            'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
+        $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+            $conveni[0],
+            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' 徒歩' . $shop['arrival_time'],
+            SERVER_ROOT.'imgs/nuko.png',
+            $actionArray,
+        );
+        array_push($columnArray, $column);
+    }
+    updateUser($userId, 'conveni_search');
+    replyCarouselTemplate($bot, $token, 'コンビニを探す:'.($page+1).'ページ目', $columnArray);
 }
 ?>
