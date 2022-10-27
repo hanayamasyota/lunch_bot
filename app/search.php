@@ -247,9 +247,9 @@ function searchConveni($userId, $bot, $token) {
         deleteNavigation($userId);
     }
     $location = getLocationByUserId($userId);
-    $ConveniInfo = getConvenienceInfo($userId, floatval($location['latitude']), floatval($location['longitude']));
+    $conveniInfo = getConvenienceInfo($userId, floatval($location['latitude']), floatval($location['longitude']));
     //0件だった場合に店が無かったと表示させる
-    if (($ConveniInfo) == false) {
+    if (($conveniInfo) == false) {
         replyTextMessage($bot, $token, '店が見つかりませんでした。');
     } else {
         foreach($conveniInfo as $conveni) {
@@ -292,8 +292,8 @@ function showConveni($page, $bot, $token, $userId) {
         //urlのクエリを作成
         $data = array(
             // 'userid' => $userId,
-            'shopid' => $shop["shopid"],
-            'shopname' => $shop["shopname"],
+            'shopid' => $conveni["shopid"],
+            'shopname' => $conveni["shopname"],
             'now_page' => 1,
         );
         $query = http_build_query($data);
@@ -304,10 +304,10 @@ function showConveni($page, $bot, $token, $userId) {
             'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //おしたときにナビゲーションをしたい !
-            'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum']));
+            'ここに行く!', 'visited_'.$conveni['shopid'].'_'.$conveni['shopname'].'_'.$conveni['shopnum']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $conveni["shopname"],
-            $conveni['shopnum'].'/'.$shopLength.'件: 徒歩' . $shop['arrival_time'],
+            $conveni['shopnum'].'/'.$shopLength.'件: 徒歩' . $conveni['arrival_time'],
             SERVER_ROOT.'imgs/nuko.png',
             $actionArray,
         );
