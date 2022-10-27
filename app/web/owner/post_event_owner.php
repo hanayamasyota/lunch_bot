@@ -44,10 +44,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>イベント名
                     </th>
-                    <td class="col-sm-8 py-4 align-middle bg-white">
+                    <td class="col-sm-8 py-2 align-middle bg-white">
                         <input type="text" placeholder="イベント名を入力" required>
                     </td>
                 </tr>
@@ -55,10 +55,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>開催日
                     </th>
-                    <td class="col-sm-8 py-4 font-weight-normal align-middle bg-lightbrown">
+                    <td class="col-sm-8 py-2 font-weight-normal align-middle bg-lightbrown">
                         <input type="date" name="holddate" class="w-35" required>から<br>
                         <input type="date" name="holddate" class="w-35" required>まで<br>
                         ※1日だけの場合は同じ日にちを入力
@@ -68,10 +68,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>開催時間
                     </th>
-                    <td class="col-sm-8 py-4 align-middle bg-white">
+                    <td class="col-sm-8 py-2 align-middle bg-white">
                         <input type="time" name="holdstart" required>から
                         <input type="time" name="holdend" required>まで
                     </td>
@@ -95,10 +95,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>ジャンル
                     </th>
-                    <td class="col-sm-8 py-4 align-middle bg-white">
+                    <td class="col-sm-8 py-2 align-middle bg-white">
                         <select name="genre" requierd>
                             <option hidden value="">選択してください</option>
                             <option value="1">食事</option>
@@ -116,10 +116,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>特徴
                     </th>
-                    <td class="col-sm-8 py-4 align-middle bg-white">
+                    <td class="col-sm-8 py-2 align-middle bg-white">
                         <textarea name="feature" class="w-75" rows="5" placeholder="イベントの開催場所、詳しい日時を含め、催しの特徴を入力してください。" required></textarea>
                     </td>
                 </tr>
@@ -127,10 +127,10 @@
 
             <div class="row">
                 <tr>
-                    <th class="col-sm-4 py-4 align-middle bg-lightbrown">
+                    <th class="col-sm-4 py-2 align-middle bg-lightbrown">
                         リンク
                     </th>
-                    <td class="col-sm-8 py-4 align-middle bg-white">
+                    <td class="col-sm-8 py-2 align-middle bg-white">
                         <input type="text" name="link" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
                     </td>
                 </tr>
