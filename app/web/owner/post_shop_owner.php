@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|個人設定</title>
+    <title>ひるまちGO|固定店舗登録</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -30,7 +30,7 @@
     <!-- Mashead header-->
     <header class="mt-4">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">「たのしいこと」を投稿する(飲食店オーナー様用)</p>
+            <p class="text-light h3">宣伝したいことを登録</p>
         </div>
     </header>
 
@@ -46,7 +46,7 @@
                     <div class="text-danger d-inline">*</div>店名
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
-                    <input type="text" placeholder="飲食店の名前を入力" required>
+                    <input type="text" name="shopname" placeholder="飲食店の名前を入力" required>
                 </td>
             </tr>
 
@@ -76,7 +76,7 @@
                 <td class="col-9 py-1 align-middle bg-lightbrown">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
-                        <input type="file" id="input1" class="pt-2" style="display: none;" />
+                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none;" />
                     </label><br>
                     <img id="sample1" class="w-75 h-75 py-2">
                 </td>
@@ -87,15 +87,16 @@
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-lightbrown">
-                    <select name="genre" requierd>
+                    <select name="genre" class="d-inline" requierd>
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
-                        <option value="2">あいうえおあいうえお</option>
-                        <option value="3">ﾝｱｰ</option>
-                        <option value="4">ぽゃぴぉ</option>
-                        <option value="5">ヌベジョン</option>
-                        <option value="6">はまがしらしゅんぺい</option>
+                        <option value="2">学び</option>
+                        <option value="3">工作・体験</option>
+                        <option value="4">フリーマーケット</option>
+                        <option value="5">芸術・音楽</option>
                     </select>
+                    <input type="text" class="w-25 d-inline">
+                    <small>セレクトボックス内にない場合は右に入力してください</small>
                 </td>
             </tr>
 
