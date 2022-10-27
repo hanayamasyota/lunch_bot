@@ -142,9 +142,7 @@ foreach ($events as $event) {
 
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
-        error_log('iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii');
         if (strpos(getBeforeMessageByUserId($event->getUserId()), '_search') !== false) {
-            error_log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
             if (strpos($event->getPostbackData(), 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
                 $shopType = 0;
@@ -174,7 +172,7 @@ foreach ($events as $event) {
                     }
                 }
 
-                $location = getLocationByUserId($userId);
+                $location = getLocationByUserId($event->getUserId());
                 $url = makeMapURL($location["latitude"], $location["longitude"], $lat, $lng);
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 '道案内',
