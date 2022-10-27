@@ -180,7 +180,7 @@ function getTimeInfo($org_lat, $org_lng, $dst_lat, $dst_lng) {
 
 }
 
-function getConvenienceInfo($userId, $lar, $lng) {
+function getConvenienceInfo($userId, $org_lat, $org_lng) {
 
     $http_client = new Client();
     $url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json";
