@@ -176,12 +176,12 @@ foreach ($events as $event) {
                 $location = getLocationByUserId($userId);
                 $url = makeMapURL($location["latitude"], $location["longitude"], $lat, $lng);
                 replyButtonsTemplate($bot, $event->getReplyToken(),
-                'レビュー確認・編集',
+                '道案内',
                 SERVER_ROOT . '/imgs/hirumatiGO.png',
-                'レビュー確認・編集',
+                '道案内ページ',
                 "こちらから店までの道を確認できます。",
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    '道案内を見る'. $query),
+                    '道案内を見る'. $url),
                 );
             }
         }

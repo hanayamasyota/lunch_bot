@@ -306,7 +306,7 @@ function showConveni($page, $userId, $bot, $token) {
             'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
             //おしたときにナビゲーションをしたい !
-            'ここに行く!', 'visited_'.$conveni['shopid'].'_'.$conveni['shopname'].'_'.$conveni['shopnum'].'_'.$conveni['latitude'].'_'.$conveni['longitude']));
+            'ここに行く!', 'visited_'.$conveni['shopid'].'_'.$conveni['shopname'].'_'.$conveni['shopnum'].'_'.$conveni['shop_lat'].'_'.$conveni['shop_lng']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $conveni["shopname"],
             $conveni['shopnum'].'/'.$shopLength.'件: 徒歩' . $conveni['arrival_time'],
