@@ -1,3 +1,15 @@
+<?php
+$lat = 0.0;
+$lng = 0.0;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $lat = floatval($_POST['lat']);
+    $lng = floatval($_POST['lng']);
+} else {
+    $lat = null;
+    $lng = null;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -17,6 +29,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/form.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
@@ -38,7 +51,7 @@
 
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
-        <form method="post" action="#">
+        <form method="post" action="post_shop_owner_confirm.php">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
@@ -49,7 +62,6 @@
                     <input type="text" name="shopname" placeholder="飲食店の名前を入力" required>
                 </td>
             </tr>
-
             
             <tr>
                 <th class="col-3 py-2 align-middle bg-lightbrown">
@@ -64,8 +76,20 @@
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="time" name="holdstart" required>から
-                    <input type="time" name="holdend" required>まで
+                    <input type="time" name="holdstart" required><div class="px-1">から</div>
+                    <input type="time" name="holdend" required><div class="px-1">まで</div>
+                </td>
+            </tr>
+
+            <tr>
+                <th class="col-3 py-2 align-middle bg-lightbrown">
+                    <div class="text-danger d-inline">*</div>場所
+                </th>
+                <td class="col-9 py-2 align-middle bg-white">
+                    <!-- readonlyにする -->
+                    <a href="">こちらのページから設定</a>
+                    <input type="text" value="<?php echo $lat; ?>" class="d-inline" required>
+                    <input type="text" value="<?php echo $lng; ?>" class="d-inline" required>
                 </td>
             </tr>
 
