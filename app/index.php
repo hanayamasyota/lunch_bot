@@ -404,6 +404,15 @@ foreach ($events as $event) {
                     '自分のレビュー確認・編集', 'レビュー確認・編集'),
                 );
             }
+        
+        } else if (strcmp($event->getText(), '新規登録') == 0) {
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/img/hirumatiGO.png', '新規登録',
+            '新しい場所や過ごし方を登録するメニューです。',
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '新規登録', '新規登録'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '自分が登録したものを確認', '自分が登録したものを確認'),
+            );
 
         //setting
         //あいさつメッセージでユーザ設定を促す
