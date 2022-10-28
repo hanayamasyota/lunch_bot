@@ -38,35 +38,30 @@
 
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
-        <form method="post" action="#">
+        <form method="post" action="post_shop_owner_confirm.php">
+        <!-- emailは現在get -->
+        <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</th>
 
-            <div class="row">
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>イベント名
                     </th>
                     <td class="col-8 py-2 align-middle bg-white">
-                        <input type="text" placeholder="イベント名を入力" required>
+                        <input type="text" name="shopname" placeholder="イベント名を入力" required>
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
                 <tr>
                     <th class="py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>開催日
                     </th>
                     <td class="col-8 py-2 font-weight-normal align-middle bg-white">
-                        <input type="date" name="holddate" class="w-35" required>から<br>
-                        <input type="date" name="holddate" class="w-35" required>まで<br>
+                        <input type="date" name="opendate" class="w-35" required>から<br>
+                        <input type="date" name="closedate" class="w-35" required>まで<br>
                         ※1日だけの場合は同じ日にちを入力
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>開催時間
@@ -76,9 +71,17 @@
                         <input type="time" name="holdend" required>まで
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
+                <tr>
+                <th class="col-3 py-2 align-middle bg-lightbrown">
+                    <div class="text-danger d-inline">*</div>場所
+                </th>
+                <td class="col-9 py-2 align-middle bg-white">
+                    <!-- readonlyにしてフォームは見えないようにする予定 -->
+                    <a href="../getlatlng.php">こちらのリンクから設定してください</a>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-inline" required>
+                </td>
+                </tr>
                 <tr>
                     <th class="col-4 py-5 align-middle bg-lightbrown">
                         写真
@@ -86,14 +89,11 @@
                     <td class="col-8 py-1 align-middle bg-white">
                         <label for="input1" class="box px-2">
                             <small>+写真を選択</small>
-                            <input type="file" id="input1" class="pt-2" style="display: none;" />
+                            <input type="file" id="input1" class="pt-2" name="photo" accept="image/*" style="display: none;" />
                         </label><br>
                         <img id="sample1" class="w-75 h-75 py-2">
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>ジャンル
@@ -112,9 +112,6 @@
                         <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>特徴
@@ -123,9 +120,6 @@
                         <textarea name="feature" class="w-75" rows="5" placeholder="イベントの開催場所、詳しい日時を含め、催しの特徴を入力してください。" required></textarea>
                     </td>
                 </tr>
-            </div>
-
-            <div class="row">
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         リンク
@@ -134,8 +128,6 @@
                         <input type="text" name="link" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
                     </td>
                 </tr>
-            </div>
-
         </table>
         </form>
 
