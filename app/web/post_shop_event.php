@@ -61,6 +61,8 @@
                         <label for="x" class="form-check-label">固定店舗</label>
                         <input class="form-check-input ms-2" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
                         <label for="y" class="form-check-label">イベント・移動店舗</label>
+                        <input class="form-check-input ms-2" type="radio" id="z" name="radio1" value="life" onclick="Switch()">
+                        <label for="z" class="form-check-label">過ごし方</label>
                 </td>
             </tr>
 
@@ -82,7 +84,6 @@
                     ※定休日等については下の「特徴」欄に<br>入力してください
                 </td>
             </tr>
-            </div>
             
             <tr class="eventList">
                 <th class="col-3 py-4 align-middle bg-lightbrown">
@@ -101,6 +102,16 @@
                 <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="holdstart">から
                     <input type="time" name="holdend">まで開催
+                </td>
+            </tr>
+
+            <tr class="lifeList">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
+                    そこにいた時間
+                </th>
+                <td class="col-9 py-4 align-middle bg-white">
+                    <input type="time" name="spendstart">から
+                    <input type="time" name="spendend">まで
                 </td>
             </tr>
     </form>
@@ -126,12 +137,14 @@
                     <select name="genre" required>
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
-                        <option value="2">あいうえおあいうえお</option>
-                        <option value="3">ﾝｱｰ</option>
-                        <option value="4">ぽゃぴぉ</option>
-                        <option value="5">ヌベジョン</option>
-                        <option value="6">はまがしらしゅんぺい</option>
+                        <option value="2">学び</option>
+                        <option value="3">工作・体験</option>
+                        <option value="4">フリーマーケット</option>
+                        <option value="5">芸術・音楽</option>
+                        <option value="999">その他</option>
                     </select>
+                    <input type="text" class="w-25 d-inline"><br>
+                    <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                 </td>
             </tr>
 
@@ -144,10 +157,7 @@
                 </td>
             </tr>
         </table>
-
-        <!--投稿ボタン-->
-            <input type="submit" value="投稿する">
-
+        <input type="submit" value="投稿する">
         </form>
 
         
@@ -266,17 +276,27 @@
             const radio = document.getElementsByName('radio1');
             const shop = document.getElementsByClassName('shopList');
             const event = document.getElementsByClassName('eventList');
+            const life = document.getElementsByClassName('lifeList');
             if (radio[0].checked) {
                 shop[0].style.display = '';
                 shop[1].style.display = '';
                 event[0].style.display = 'none';
                 event[1].style.display = 'none';
-                
+                life[0].style.display = 'none';
+                life[1].style.display = 'none';     
             }
             else if (radio[1].checked) {
                 shop[0].style.display = 'none';
                 shop[1].style.display = 'none';
                 event[0].style.display = '';
+                event[1].style.display = '';
+                life[0].style.display = 'none';
+                life[1].style.display = 'none';
+            }
+            else if (radio[2].checked) {
+                shop[0].style.display = 'none';
+                shop[1].style.display = 'none';
+                event[0].style.display = 'none';
                 event[1].style.display = '';
             }
             else {
