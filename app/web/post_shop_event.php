@@ -56,12 +56,12 @@
                     <div class="text-danger d-inline">*</div>種類
                 </th>
         
-                <td class="col-9 py-4 align-middle bg-white text-left" required>
-                        <input class="form-check-input" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
+                <td class="col-9 py-4 align-middle bg-white" required>
+                        <input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
                         <label for="x" class="form-check-label">固定店舗</label><br>
-                        <input class="form-check-input ms-2" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
+                        <input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
                         <label for="y" class="form-check-label">イベント・移動店舗</label><br>
-                        <input class="form-check-input ms-2" type="radio" id="z" name="radio1" value="life" onclick="Switch()">
+                        <input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()">
                         <label for="z" class="form-check-label">過ごし方</label>
                 </td>
             </tr>
@@ -157,7 +157,7 @@
                 </td>
             </tr>
         </table>
-        <input type="submit" value="投稿する">
+        <input class="text-center" type="submit" value="投稿する">
         </form>
 
 
