@@ -169,11 +169,13 @@ if ($reviewData != PDO::PARAM_NULL) {
                 <h3 class="h3"><?php echo $shopName ?></h3>
             </div>
             <div class="px-2">
-                <?php if (gettype($averageScore) == 'double') { ?>
-                    <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $averageScore); ?>点</div>
-                    <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi; ?></div>
-                <?php } else { ?>
-                    <p class="fw-normal"><?php echo $averageScore ?></p>
+                <?php if ($conveni == 0) { ?>
+                    <?php if (gettype($averageScore) == 'double') { ?>
+                        <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $averageScore); ?>点</div>
+                        <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi; ?></div>
+                    <?php } else { ?>
+                        <p class="fw-normal"><?php echo $averageScore ?></p>
+                    <?php } ?>
                 <?php } ?>
             </div>
         </div>
