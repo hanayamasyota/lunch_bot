@@ -107,7 +107,7 @@
 
             <tr class="lifeList">
                 <th class="col-3 py-4 align-middle bg-lightbrown">
-                    そこにいた<br>時間
+                    <small>そこにいた<br>時間</small>
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="spendstart">から
