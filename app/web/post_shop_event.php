@@ -39,7 +39,7 @@
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy">
         <form method="post" action="#">
-        <table class="table border-top border-navy align-middle" style="align: center;">
+        <table class="table border-top border-navy align-middle" style="text-center">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
                 <th class="col-3 py-4 align-middle bg-lightbrown">
@@ -57,7 +57,7 @@
                 </th>
         
                 <td class="col-9 py-4 align-middle bg-white text-left" required>
-                        <input class="form-check-input" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
+                        <input class="form-check-input ms-2" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
                         <label for="x" class="form-check-label">固定店舗</label><br>
                         <input class="form-check-input ms-2" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
                         <label for="y" class="form-check-label">イベント・移動店舗</label><br>
