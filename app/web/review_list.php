@@ -71,7 +71,7 @@ if ($reviewData != PDO::PARAM_NULL) {
             }
         }
 
-    else {
+    } else {
         //最大ページ数の計算
         $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_CONVENI);
         $maxPage = ceil($reviewCount / ONE_PAGE);
