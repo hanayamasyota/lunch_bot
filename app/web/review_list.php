@@ -50,7 +50,7 @@ if ($reviewData != PDO::PARAM_NULL) {
     }
     $uniqueUserId = array_unique($userIdArray);
 
-    if ($_GET["conveni"] == 1) {
+    if ($_GET["conveni"] == 0) {
         //最大ページ数の計算
         $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
         $maxPage = ceil($reviewCount / ONE_PAGE);
@@ -251,7 +251,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 品ぞろえ
                             </th>
                             <td class="col-7 py-3 bg-white">
-                                <?php echo ASSORT_LIST[$crowdArray[$i]]; ?>
+                                <?php echo ASSORT_LIST[$assortmentArray[$i]]; ?>
                             </td>
                         </tr>
                         <?php } ?>
