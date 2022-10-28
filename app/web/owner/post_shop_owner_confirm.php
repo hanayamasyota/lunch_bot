@@ -1,4 +1,5 @@
 <?php
+require_once '../../DBConnection.php';
 require_once '../../database_function/eventshops_sql.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
