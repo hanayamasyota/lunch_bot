@@ -1,4 +1,10 @@
 <?php
+require_once '../../database_function/eventshops_sql.php';
+
+define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+?>
+
+<?php
     $email = $_POST['email'];
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
@@ -19,14 +25,13 @@
             //仮
             $email,
             1, //オーナー
-            null,
             $shopname,
-            $photo,
+            $img_name,
             $link,
             $holdDate,
             null,
-            $closeTime,
             $openTime,
+            $closeTime,
             $genre,
             $feature,
             0, //固定店舗

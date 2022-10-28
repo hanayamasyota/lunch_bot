@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <!-- readonlyにする -->
-                    <a href="">こちらのリンクから設定してください</a>
+                    <a href="../getlatlng.php">こちらのリンクから設定してください</a>
                     <input type="text" value="<?php echo $lat; ?>" class="" required>
                     <input type="text" value="<?php echo $lng; ?>" class="d-inline" required>
                 </td>
