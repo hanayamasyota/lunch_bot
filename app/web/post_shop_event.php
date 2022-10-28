@@ -297,7 +297,8 @@
                 shop[0].style.display = 'none';
                 shop[1].style.display = 'none';
                 event[0].style.display = 'none';
-                event[1].style.display = '';
+                event[1].style.display = 'none';
+                life[0].style.display = '';
             }
             else {
                 shop[0].style.display = 'none';
