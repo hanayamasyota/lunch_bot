@@ -42,21 +42,21 @@
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>名前
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <input type="text" required>
                 </td>
             </tr>
 
     <form>
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>種類
                 </th>
         
-                <td class="col-9 py-4 align-middle bg-lightbrown" required>
+                <td class="col-9 py-4 align-middle bg-white" required>
                         <input class="form-check-input" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
                         <label for="x" class="form-check-label">固定店舗</label>
                         <input class="form-check-input ms-2" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
@@ -65,18 +65,18 @@
             </tr>
 
             <tr class="shopList">
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     開店日
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <input type="date" name="opendate">開店
                 </td>
             </tr>
             <tr class="shopList">
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     営業時間
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="opentime">から
                     <input type="time" name="closetime">まで<br>
                     ※定休日等については下の「特徴」欄に<br>入力してください
@@ -85,20 +85,20 @@
             </div>
             
             <tr class="eventList">
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     開催日
                 </th>
-                <td class="col-9 py-4 font-weight-normal align-middle bg-lightbrown">
+                <td class="col-9 py-4 font-weight-normal align-middle bg-white">
                     <input type="date" name="holddatestart" class="w-35">から<br>
                     <input type="date" name="holddateend" class="w-35">まで<br>
                     ※1日だけの場合は同じ日にちを入力
                 </td>
             </tr>
             <tr class="eventList">
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     開催時間
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="holdstart">から
                     <input type="time" name="holdend">まで開催
                 </td>
@@ -106,10 +106,10 @@
     </form>
 
             <tr>
-                <th class="col-3 py-5 align-middle bg-gray">
+                <th class="col-3 py-5 align-middle bg-lightbrown">
                     写真
                 </th>
-                <td class="col-9 py-1 align-middle bg-lightbrown">
+                <td class="col-9 py-1 align-middle bg-white">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
                         <input type="file" id="input1" class="pt-2" style="display: none;" />
@@ -119,10 +119,10 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <select name="genre" required>
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
@@ -136,10 +136,10 @@
             </tr>
 
             <tr>
-                <th class="col-3 py-4 align-middle bg-gray">
+                <th class="col-3 py-4 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-9 py-4 align-middle bg-lightbrown">
+                <td class="col-9 py-4 align-middle bg-white">
                     <textarea name="feature" class="w-75" rows="4" maxlength="100" placeholder="それはどんなところですか？特徴を入力してください。※100文字以内"></textarea>
                 </td>
             </tr>
