@@ -28,16 +28,16 @@
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
+    <header class="mt-5">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">「たのしいこと」を投稿する</p>
+            <p class="text-light h3">昼休みの過ごし方</p>
         </div>
     </header>
 
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-center py-5">
+    <div class="container dx-1 mt-3 my-5">
         <form method="post" action="#">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
