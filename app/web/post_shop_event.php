@@ -39,7 +39,7 @@
     <!-- Contents-->
     <div class="container mt-3 text-center py-5">
         <form method="post" action="#">
-        <table class="table border-top border-navy align-middle mb-4 text-nowrap">
+        <table class="table border-top border-navy align-middle mb-4 text-nowrap" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
                 <th class="col-3 py-4 align-middle bg-lightbrown">
