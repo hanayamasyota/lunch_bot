@@ -1,18 +1,23 @@
 <?php
+    $email = $_POST['email'];
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
     $closeTime = $_POST['holdstart'];
     $openTime = $_POST['holdend'];
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
-    $photo = $_POST['photo'];
     $genre = $_POST['genre'];
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
+    $img_name = $_FILES['photo']['name'];
+    //画像を保存
+    move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
-            //email
+            //仮
+            $email,
             1, //オーナー
             null,
             $shopname,
@@ -70,7 +75,7 @@
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <div class="">登録が完了しました。</div>
-        <a href="owner_index.php"></a>
+        <a href="owner_index.php">ホームへ</a>
     </div>
 
     <!-- Footer-->

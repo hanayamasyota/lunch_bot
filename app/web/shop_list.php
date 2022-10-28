@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|個人設定</title>
+    <title>ひるまちGO|お店を見る</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -30,14 +30,14 @@
     <!-- Mashead header-->
     <header class="mt-4">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">「たのしいこと」を見る(店舗)</p>
+            <p class="text-light h3">お店を見る</p>
         </div>
     </header>
 
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-center">
+    <div class="container mt-3 text-center py-5">
         <form method="post" action="#">
 
     <!--1.固定店舗テーブル-->
