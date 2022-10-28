@@ -71,6 +71,27 @@ if ($reviewData != PDO::PARAM_NULL) {
             }
         }
 
+        //レビューから総合の店の雰囲気を取り出す
+        $matchAmbi = return_max_count_item($ambiArray);
+        if (is_array($matchAmbi)) {
+            foreach ($matchAmbi as $ambi) {
+                if ($ambi === end($matchAmbi)) {
+                    $shopAmbi .= AMBIENCE_LIST[$ambi];
+                } else {
+                    $shopAmbi .= AMBIENCE_LIST[$ambi] . ', ';
+                }
+            }
+        } else {
+            $shopAmbi = AMBIENCE_LIST[$matchAmbi];
+        }
+
+        $totalScore = 0;
+        for ($i = 0; $i < count($scoreArray); $i++) {
+            //平均点を取得
+            $totalScore += intval($scoreArray[$i]);
+        }
+        $averageScore = floatval($totalScore / count($scoreArray));
+
     } else {
         //最大ページ数の計算
         $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_CONVENI);
@@ -89,33 +110,11 @@ if ($reviewData != PDO::PARAM_NULL) {
         }
     }
 
-    $totalScore = 0;
-    for ($i = 0; $i < count($scoreArray); $i++) {
-        //平均点を取得
-        $totalScore += intval($scoreArray[$i]);
-    }
-    $averageScore = floatval($totalScore / count($scoreArray));
-    }
-
 
     foreach ($uniqueUserId as $userId) {
         //ニックネーム取得
         $nickName = getNickNameByUserId($userId);
         array_push($nickNameArray, $nickName);
-    }
-
-    //レビューから総合の店の雰囲気を取り出す
-    $matchAmbi = return_max_count_item($ambiArray);
-    if (is_array($matchAmbi)) {
-        foreach ($matchAmbi as $ambi) {
-            if ($ambi === end($matchAmbi)) {
-                $shopAmbi .= AMBIENCE_LIST[$ambi];
-            } else {
-                $shopAmbi .= AMBIENCE_LIST[$ambi] . ', ';
-            }
-        }
-    } else {
-        $shopAmbi = AMBIENCE_LIST[$matchAmbi];
     }
 
     $pageRange = getPageRange($page, $maxPage);
@@ -181,7 +180,7 @@ if ($reviewData != PDO::PARAM_NULL) {
 
         <div class="bg-white">
             <?php if ($reviewData != PDO::PARAM_NULL) {
-                for ($i = 0; $i < count($scoreArray); $i++) { ?>
+                for ($i = 0; $i < count($visitTimeArray); $i++) { ?>
                     <table class="table border-navy px-3 bg-navy">
                         <?php $time = explode(' ', $timeArray[$i])[0] ?>
                         <thead>
