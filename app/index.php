@@ -396,7 +396,7 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
             } else {
                 updateUser($event->getUserId(), 'shop_review');
-                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/img/hirumatiGO.png', 'レビューメニュー',
+                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
                 'レビューのメニューです。',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'レビュー登録', 'レビュー登録'),
