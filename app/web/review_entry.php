@@ -71,7 +71,7 @@ $crowdStr .= <<<EOD
     </datalist>
     EOD;
 
-$assortmentStr = '空 <input name="assort" type="range" list="my-assortlist" min="1" max="5" value="' . $assortment . '"> 混' .
+$assortmentStr = '少 <input name="assort" type="range" list="my-assortlist" min="1" max="5" value="' . $assortment . '"> 多' .
     '<datalist id="my-assortlist">';
 for ($i = 1; $i <= count(ASSORT_LIST); $i++) {
     $additions = '';
