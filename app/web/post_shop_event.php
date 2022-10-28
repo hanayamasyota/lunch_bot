@@ -56,7 +56,7 @@
                     <div class="text-danger d-inline">*</div>種類
                 </th>
         
-                <td class="col-9 py-4 align-middle bg-white" required>
+                <td class="col-9 py-4 align-middle bg-white text-left" required>
                         <input class="form-check-input" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
                         <label for="x" class="form-check-label">固定店舗</label><br>
                         <input class="form-check-input ms-2" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
@@ -107,7 +107,7 @@
 
             <tr class="lifeList">
                 <th class="col-3 py-4 align-middle bg-lightbrown">
-                    そこにいた時間
+                    そこにいた<br>時間
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="spendstart">から
