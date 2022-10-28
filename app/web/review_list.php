@@ -13,10 +13,10 @@ $page = $_GET["now_page"];
 $shopId = $_GET["shopid"];
 $shopName = $_GET["shopname"];
 
-$convei = intval($_GET["conveni"]);
+$conveni = intval($_GET["conveni"]);
 
 $reviewData = array();
-if ($conveni) {
+if ($conveni == 1) {
     $reviewData = getReviewData($shopId, 1);
 } else {
     $reviewData = getReviewData($shopId, 0);
