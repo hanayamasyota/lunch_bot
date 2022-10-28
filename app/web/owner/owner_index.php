@@ -40,8 +40,8 @@
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <a href="post_event_owner.php">十店舗(固定店舗)の登録はこちら</a><br>
-        <a href="post_shop_owner.php">イベント・移動店舗の登録はこちら</a>
+        <a href="post_shop_owner.php">実店舗(固定店舗)の登録はこちら</a><br>
+        <a href="post_event_owner.php">イベント・移動店舗の登録はこちら</a>
     </div>
 
     <!-- Footer-->
