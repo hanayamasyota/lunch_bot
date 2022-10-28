@@ -121,8 +121,8 @@
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <!-- readonlyにしてフォームは見えないようにする予定 -->
-                    <a href="../getlatlng.php">こちらのリンクから設定してください</a>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required>
+                    <a href="../getlatlng.php">こちらのリンクから設定してください</a><br>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required><br>
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-inline" required>
                 </td>
             </tr>
