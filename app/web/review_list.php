@@ -13,7 +13,7 @@ $page = $_GET["now_page"];
 $shopId = $_GET["shopid"];
 $shopName = $_GET["shopname"];
 
-$convei = $_GET["conveni"];
+$convei = intval($_GET["conveni"]);
 
 $reviewData = array();
 if ($conveni) {
