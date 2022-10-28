@@ -12,7 +12,15 @@ define('TABLE_NAME_USERS', 'users');
 $page = $_GET["now_page"];
 $shopId = $_GET["shopid"];
 $shopName = $_GET["shopname"];
-$reviewData = getReviewData($shopId);
+
+$convei = $_GET["conveni"];
+
+$reviewData = array();
+if ($conveni) {
+    $reviewData = getReviewData($shopId, 1);
+} else {
+    $reviewData = getReviewData($shopId, 0);
+}
 
 $uniqueUserId = array();
 
@@ -22,12 +30,12 @@ $ambiArray = array(); //雰囲気
 $visitTimeArray = array(); //来店時刻
 $crowdArray = array(); //混み具合
 $freeArray = array(); //自由欄
+$assortmentArray = array(); //品ぞろえ
 
 $timeArray = array();
-$reviewTimeArray = array();
 
 $shopAmbi = '';
-$avarageScore = 0.0;
+$averageScore = 0.0;
 
 $maxPage = 0;
 $pageRange = 0;
@@ -42,35 +50,59 @@ if ($reviewData != PDO::PARAM_NULL) {
     }
     $uniqueUserId = array_unique($userIdArray);
 
-    //最大ページ数の計算
-    $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
-    $maxPage = ceil($reviewCount / ONE_PAGE);
+    if ($_GET["conveni"] == 1) {
+        //最大ページ数の計算
+        $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_KIND);
+        $maxPage = ceil($reviewCount / ONE_PAGE);
 
-    foreach ($reviewData as $review) {
-        if ($review["review_num"] == 1) {
-            array_push($scoreArray, $review["review"]);
-        } else if ($review["review_num"] == 2) {
-            array_push($ambiArray, $review["review"]);
-        } else if ($review["review_num"] == 3) {
-            array_push($visitTimeArray, $review["review"]);
-            array_push($timeArray, $review["time"]);
-        } else if ($review["review_num"] == 4) {
-            array_push($crowdArray, $review["review"]);
-        } else if ($review["review_num"] == 5) {
-            array_push($freeArray, $review["review"]);
+    
+        foreach ($reviewData as $review) {
+            if ($review["review_num"] == 1) {
+                array_push($scoreArray, $review["review"]);
+            } else if ($review["review_num"] == 2) {
+                array_push($ambiArray, $review["review"]);
+            } else if ($review["review_num"] == 3) {
+                array_push($visitTimeArray, $review["review"]);
+                array_push($timeArray, $review["time"]);
+            } else if ($review["review_num"] == 4) {
+                array_push($crowdArray, $review["review"]);
+                } else if ($review["review_num"] == 5) {
+                array_push($freeArray, $review["review"]);
+            }
+        }
+
+    else {
+        //最大ページ数の計算
+        $reviewCount = (getDataCountByShopReviews($shopId) / REVIEW_CONVENI);
+        $maxPage = ceil($reviewCount / ONE_PAGE);
+        
+            
+        foreach ($reviewData as $review) {
+            if ($review["review_num"] == 1) {
+                array_push($visitTimeArray, $review["review"]);
+            } else if ($review["review_num"] == 2) {
+                array_push($crowdArray, $review["review"]);
+            } else if ($review["review_num"] == 3) {
+                array_push($assortmentArray, $review["review"]);
+                array_push($timeArray, $review["time"]);
+            }
         }
     }
-    foreach ($uniqueUserId as $userId) {
-        //ニックネーム取得
-        $nickName = getNickNameByUserId($userId);
-        array_push($nickNameArray, $nickName);
-    }
+
     $totalScore = 0;
     for ($i = 0; $i < count($scoreArray); $i++) {
         //平均点を取得
         $totalScore += intval($scoreArray[$i]);
     }
-    $avarageScore = floatval($totalScore / count($scoreArray));
+    $averageScore = floatval($totalScore / count($scoreArray));
+    }
+
+
+    foreach ($uniqueUserId as $userId) {
+        //ニックネーム取得
+        $nickName = getNickNameByUserId($userId);
+        array_push($nickNameArray, $nickName);
+    }
 
     //レビューから総合の店の雰囲気を取り出す
     $matchAmbi = return_max_count_item($ambiArray);
@@ -90,7 +122,7 @@ if ($reviewData != PDO::PARAM_NULL) {
 
     //レビューが登録されていない場合
 } else {
-    $avarageScore = 'まだレビューが登録されていません。';
+    $averageScore = 'まだレビューが登録されていません。';
 }
 ?>
 
@@ -138,11 +170,11 @@ if ($reviewData != PDO::PARAM_NULL) {
                 <h3 class="h3"><?php echo $shopName ?></h3>
             </div>
             <div class="px-2">
-                <?php if (gettype($avarageScore) == 'double') { ?>
-                    <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $avarageScore); ?>点</div>
+                <?php if (gettype($averageScore) == 'double') { ?>
+                    <div class="fw-bold pt-2 pb-0">平均の評価： <?php printf("%.1f", $averageScore); ?>点</div>
                     <div class="fw-bold pt-0 pb-1">店の雰囲気： <?php echo $shopAmbi; ?></div>
                 <?php } else { ?>
-                    <p class="fw-normal"><?php echo $avarageScore ?></p>
+                    <p class="fw-normal"><?php echo $averageScore ?></p>
                 <?php } ?>
             </div>
         </div>
@@ -155,6 +187,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                         <thead>
                             <div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：" . $time ?>
                         </thead>
+                        <?php if (!($conveni)) { ?>
                         <tr>
                             <th class="col-5 py-3 bg-lightorange text-dark">
                                 評価
@@ -195,6 +228,34 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 <?php echo $freeArray[$i]; ?>
                             </td>
                         </tr>
+
+                        <?php } else { ?>
+
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                行った時間
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo $visitTimeArray[$i]; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                混み具合
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="col-5 py-3 bg-lightorange text-dark">
+                                品ぞろえ
+                            </th>
+                            <td class="col-7 py-3 bg-white">
+                                <?php echo ASSORT_LIST[$crowdArray[$i]]; ?>
+                            </td>
+                        </tr>
+                        <?php } ?>
                     </table>
                     <hr>
             <?php }

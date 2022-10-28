@@ -115,6 +115,7 @@ function showShop($page, $userId, $bot, $token) {
             // 'userid' => $userId,
             'shopid' => $shop["shopid"],
             'shopname' => $shop["shopname"],
+            'conveni' => 0,
             'now_page' => 1,
         );
         $query = http_build_query($data);
@@ -295,6 +296,7 @@ function showConveni($page, $userId, $bot, $token) {
             // 'userid' => $userId,
             'shopid' => $conveni["shopid"],
             'shopname' => $conveni["shopname"],
+            'conveni' => 1,
             'now_page' => 1,
         );
         $query = http_build_query($data);

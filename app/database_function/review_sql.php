@@ -46,11 +46,11 @@ function getOwnReviewData($userId, $shopId) {
     }
 }
 
-function getReviewData($shopId) {
+function getReviewData($shopId, $conveni) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
+    $sql = 'select review, review_num, time from ' .TABLE_NAME_REVIEWS. ' where ? = shopid and ? = convenience_store order by pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\'), review_num';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($shopId));
+    $sth->execute(array($shopId, $conveni));
     // if no record
     if (!($row = $sth->fetchall())) {
         return PDO::PARAM_NULL;
