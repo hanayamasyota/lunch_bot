@@ -18,6 +18,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $link = $_POST['link'];
 
     $img_name = $_FILES['photo']['name'];
+    error_log('imageName:'.$img_name);
     //画像を保存
     move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name);
 
