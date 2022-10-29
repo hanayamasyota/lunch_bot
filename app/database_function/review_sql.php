@@ -92,10 +92,10 @@ function getPageReviewData2($userId, $page) {
             $str .= $row['shopid']." = :'shopid' or ";
         }
     }
-    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and (?) order by time';
+    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ('.$str.') order by time';
     error_log($sql);
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $str));
+    $sth->execute(array($userId));
 
     $rows = $sth->fetchAll();
 
