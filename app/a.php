@@ -1,7 +1,7 @@
 <?php
 $array = array(
     array('a1' => 'abcde', 'a2' => 'fghij'),
-    array('b1' => 'klmno', 'b2' => 'pqrst'),
+    array('b1' => 'klmno', 'b2' => 'pqrst', 'b3' => 'uvwxy'),
 );
 
 $count = 0;
