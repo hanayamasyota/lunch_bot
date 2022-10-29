@@ -8,6 +8,4 @@ $array2 = array('c1' => '123');
 $key = 'c2';
 $value = '456';
 $array2 = array_merge($array2, array($key => $value));
-$array = array_push($array, $array2);
-
-var_dump($array);
+var_dump(array_push($array, $array2));
