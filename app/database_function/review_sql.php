@@ -76,7 +76,7 @@ function getPageReviewData($userId, $page, $count) {
 function getPageReviewData2($userId, $page) {
     $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
-    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')order by time, review_num limit 5 offset ?';
+    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')order by shopid, review_num limit 5 offset ?';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $start));
     // if no record
