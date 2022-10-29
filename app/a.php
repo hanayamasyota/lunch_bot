@@ -4,11 +4,10 @@ $array = array(
     array('b1' => 'klmno', 'b2' => 'pqrst', 'b3' => 'uvwxy'),
 );
 
-$count = 0;
-
-// foreach ($list as $data) {
-//     array_merge($array, array($data => 'aiueo'));
-//     $count += 1;
-// }
+$array2 = array('c1' => '123');
+$key = 'c2';
+$value = '456';
+$array2 = array_merge($array2, array($key => $value));
+$array += $array2;
 
 var_dump($array);
