@@ -17,22 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_GET["userid"];
 }
 $page = intval($_GET["now_page"]);
-$ownReviewData = getPageReviewData($userId, $page);
+$ownReviewData = getPageReviewData2($userId, $page);
 
 $reviewCount = 0;
 
-$scoreArray = array(); //評価点
-$ambiArray = array(); //雰囲気
-$visitTimeArray = array(); //来店時刻
-$crowdArray = array(); //混み具合
-$freeArray = array(); //自由欄
-
-$timeArray = array();
-$shopNameArray = array();
-$shopIdArray = array();
-
-//飲食店　…店名、店ID、レビュー日付、評価点、雰囲気、来店時刻、混み具合、自由欄、タイプ(飲食店)
-//コンビニ…店名、店ID、レビュー日付、来店時刻、混み具合、品揃え、タイプ(コンビニ)
+//飲食店　…店名、店ID、レビュー日付、評価点、雰囲気、来店時刻、混み具合、自由欄、コンビニ判定
+//コンビニ…店名、店ID、レビュー日付、来店時刻、混み具合、品揃え、コンビニ判定
 $shopsArray = array();
 
 $maxPage = 0;
@@ -40,31 +30,33 @@ $pageRange = 0;
 
 if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
-    $reviewCount = (getDataCountByReviews($userId) / REVIEW_KIND);
+    $reviewCount = getDataCountByReviews($userId);
     $maxPage = ceil($reviewCount / ONE_PAGE);
     //レビュー
     foreach ($ownReviewData as $review) {
         $oneShopData = array();
 
         if ($review["review_num"] == 1) {
-            $oneShopData = array_merge($oneShopData, array('shopname' => $review['shopname']));
-            $shopId = getShopIdByReviews($userId, $review['shopname'])[0]['shopid'];
-            array_push($oneShopData, $shopId);
-            array_push($oneShopData, $review["time"]);
-            array_push($oneShopData, $review["review"]);
+            $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
         } else if ($review["review_num"] == 2) {
-            array_push($oneShopData, $review["review"]);
+            $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
         } else if ($review["review_num"] == 3) {
-            array_push($oneShopData, $review["review"]);
-
+            $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
+            if ($review["convenience_store"]) {
+                $oneShopData = array_merge($oneShopData, array('conveni' => 1));
+            }
         } else if ($review["review_num"] == 4) {
-            array_push($oneShopData, $review["review"]);
+            $oneShopData = array_merge($oneShopData, array('crowd' => $review["review"]));
         } else if ($review["review_num"] == 5) {
-            array_push($oneShopData, $review["review"]);
+            $oneShopData = array_merge($oneShopData, array('' => $review["review"]));
+            if (!($review["convenience_store"])) {
+                $oneShopData = array_merge($oneShopData, array('conveni' => 0));
+            }
         }
 
         array_push($shopsArray, $oneShopData);
     }
+    var_dump($shopsArray);
     $pageRange = getPageRange($page, $maxPage);
 
 //レビューが登録されていない場合

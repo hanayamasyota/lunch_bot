@@ -59,9 +59,9 @@ function getReviewData($shopId, $conveni) {
     }
 }
 
-function getPageReviewData($userId, $page) {
-    $start = ($page * ONE_PAGE - ONE_PAGE) * REVIEW_KIND;
-    $dataLength = ONE_PAGE * REVIEW_KIND;
+function getPageReviewData($userId, $page, $count) {
+    $start = ($page * ONE_PAGE - ONE_PAGE) * $count;
+    $dataLength = ONE_PAGE * $count;
     $dbh = dbConnection::getConnection();
     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, review_num limit ? offset ?';
     $sth = $dbh->prepare($sql);
@@ -72,6 +72,32 @@ function getPageReviewData($userId, $page) {
     } else {
         return $row;
     }
+}
+function getPageReviewData2($userId, $page) {
+    $start = ($page * ONE_PAGE - ONE_PAGE);
+    $dbh = dbConnection::getConnection();
+    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')order by time, review_num limit 5 offset ?';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $start));
+    // if no record
+    if (!($rows = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    }
+
+    $str = '';
+    foreach($rows as $row) {
+        if ($row === array_key_last($rows)) {
+            $str .= $row['shopid'].', shopid';
+        }
+        $str .= $row['shopid'].', shopid or ';
+    }
+    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? order by time';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId, $start));
+
+    $rows = $sth->fetchAll();
+
+    return $rows;
 }
 
 function separateReviewData($userId, $shopId) {
@@ -100,10 +126,10 @@ function getDataByReviews($userId) {
     }
 }
 
-//個人のレビュー数取得
+//個人のレビュー件数取得
 function getDataCountByReviews($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(review) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select count(distinct shopid) as review_count from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
