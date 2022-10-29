@@ -384,6 +384,7 @@ foreach ($events as $event) {
         //search
         if (strcmp($event->getText(), 'ひるまちGO') == 0) {
             //設定チェック
+            error_log('userid:'.$event->getUserId());
             replyTextMessage($bot, $event->getReplyToken(), 
             "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:イベントをさがす");
             updateUser($event->getUserId(), 'search');
