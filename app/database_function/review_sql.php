@@ -76,7 +76,7 @@ function getPageReviewData($userId, $page, $count) {
 function getPageReviewData2($userId, $page) {
     $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
-    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')order by shopid limit 5 offset ?';
+    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by shopid limit 5 offset ?';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $start));
     // if no record
@@ -87,9 +87,9 @@ function getPageReviewData2($userId, $page) {
     $str = '';
     foreach($rows as $row) {
         if ($row === array_key_last($rows)) {
-            $str .= $row['shopid'].', shopid';
+            $str .= $row['shopid'].' = shopid';
         }
-        $str .= $row['shopid'].', shopid or ';
+        $str .= $row['shopid'].' = shopid or ';
     }
     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? order by time';
     $sth = $dbh->prepare($sql);
