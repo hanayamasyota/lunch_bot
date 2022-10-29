@@ -31,6 +31,10 @@ $timeArray = array();
 $shopNameArray = array();
 $shopIdArray = array();
 
+//飲食店　…店名、店ID、レビュー日付、評価点、雰囲気、来店時刻、混み具合、自由欄、タイプ(飲食店)
+//コンビニ…店名、店ID、レビュー日付、来店時刻、混み具合、品揃え、タイプ(コンビニ)
+$shopsArray = array();
+
 $maxPage = 0;
 $pageRange = 0;
 
@@ -40,26 +44,27 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     $maxPage = ceil($reviewCount / ONE_PAGE);
     //レビュー
     foreach ($ownReviewData as $review) {
+        $oneShopData = array();
+
         if ($review["review_num"] == 1) {
-            array_push($scoreArray, $review["review"]);
+            $oneShopData = array_merge($oneShopData, array('shopname' => $review['shopname']));
+            $shopId = getShopIdByReviews($userId, $review['shopname'])[0]['shopid'];
+            array_push($oneShopData, $shopId);
+            array_push($oneShopData, $review["time"]);
+            array_push($oneShopData, $review["review"]);
         } else if ($review["review_num"] == 2) {
-            array_push($ambiArray, $review["review"]);
+            array_push($oneShopData, $review["review"]);
         } else if ($review["review_num"] == 3) {
-            array_push($visitTimeArray, $review["review"]);
-            array_push($timeArray, $review["time"]);
-            array_push($shopNameArray, $review['shopname']);
+            array_push($oneShopData, $review["review"]);
+
         } else if ($review["review_num"] == 4) {
-            array_push($crowdArray, $review["review"]);
+            array_push($oneShopData, $review["review"]);
         } else if ($review["review_num"] == 5) {
-            array_push($freeArray, $review["review"]);
+            array_push($oneShopData, $review["review"]);
         }
-    }
 
-    foreach ($shopNameArray as $shopName) {
-        $shopId = getShopIdByReviews($userId, $shopName)[0]['shopid'];
-        array_push($shopIdArray, $shopId);
+        array_push($shopsArray, $oneShopData);
     }
-
     $pageRange = getPageRange($page, $maxPage);
 
 //レビューが登録されていない場合
