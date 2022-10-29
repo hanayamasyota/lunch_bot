@@ -94,7 +94,7 @@ function getPageReviewData2($userId, $page) {
     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? order by time';
     error_log($sql);
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($str));
+    $sth->execute(array($userId, $str));
 
     $rows = $sth->fetchAll();
 
