@@ -1,16 +1,14 @@
 <?php
-$array = array('a' => 'aiueo0');
-
-$list = [
-    'b',
-    'c',
-];
+$array = array(
+    array('a1' => 'abcde', 'a2' => 'fghij'),
+    array('b1' => 'klmno', 'b2' => 'pqrst'),
+);
 
 $count = 0;
 
-for ($i = 0; $i < 2; $i++) {
-    array_merge($array, array($list[$i] => 'aiueo'.($i+1)));
-    $count += 1;
-}
+// foreach ($list as $data) {
+//     array_merge($array, array($data => 'aiueo'));
+//     $count += 1;
+// }
 
 var_dump($array);
