@@ -84,6 +84,7 @@ function getPageReviewData2($userId, $page) {
         return PDO::PARAM_NULL;
     }
 
+    error_log('rows:'.count($rows));
     $str = '';
     foreach($rows as $row) {
         if ($row === end($rows)) {
@@ -92,6 +93,7 @@ function getPageReviewData2($userId, $page) {
             $str .= "? = shopid or ";
         }
     }
+    error_log('sql:'.$str);
 
     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ('.$str.') order by time, shopid, review_num';
     $sth = $dbh->prepare($sql);
