@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 $page = intval($_GET["now_page"]);
 $ownReviewData = getPageReviewData2($userId, $page);
-error_log('count:'.count($ownReviewData));
 
 $reviewCount = 0;
 
@@ -40,6 +39,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         if (!($review["convenience_store"])) {
             if ($review["review_num"] == 1) {
                 $oneShopData = array();
+                $oneShopData = array_merge($oneShopData, array('shopname' => $review["shopname"]));
+                $oneShopData = array_merge($oneShopData, array('shopid' => $review["shopid"]));
+                $oneShopData = array_merge($oneShopData, array('review_time' => $review["time"]));
                 $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
             } else if ($review["review_num"] == 2) {
                 $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
@@ -55,11 +57,14 @@ if ($ownReviewData != PDO::PARAM_NULL) {
         } else {
             if ($review["review_num"] == 1) {
                 $oneShopData = array();
-                $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
-            } else if ($review["review_num"] == 2) {
-                $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
-            } else if ($review["review_num"] == 3) {
+                $oneShopData = array_merge($oneShopData, array('shopname' => $review["shopname"]));
+                $oneShopData = array_merge($oneShopData, array('shopid' => $review["shopid"]));
+                $oneShopData = array_merge($oneShopData, array('review_time' => $review["time"]));
                 $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
+            } else if ($review["review_num"] == 2) {
+                $oneShopData = array_merge($oneShopData, array('crowd' => $review["review"]));
+            } else if ($review["review_num"] == 3) {
+                $oneShopData = array_merge($oneShopData, array('assortment' => $review["review"]));
                 $oneShopData = array_merge($oneShopData, array('conveni' => 1));
                 array_push($shopsArray, $oneShopData);
             }
@@ -111,15 +116,15 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
-        <?php var_dump($shopsArray); ?>
         <div class="bg-white">
-            <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
+            <?php foreach($shopsArray as $shop) { ?>
                 <h5 class="bg-navy text-light mb-0 py-2 align-middle">
-                    <?php echo $shopNameArray[$i]; ?>
+                    <?php echo $shop["shopname"]; ?>
                 </h5>
                 <table class="table border-navy px-3 mb-0 align-middle">
-                    <?php $time = explode(' ', $timeArray[$i])[0]; ?>
+                    <?php $time = explode(' ', $shop["review_time"])[0]; ?>
                     <thead><?php echo "レビュー日：".$time ?></thead>
+                    <?php if ($shop["conveni"] == 0) { ?>
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
@@ -128,7 +133,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             <?php
                             $scorePreview = '';
                             for ($n = 0; $n < 5; $n++) {
-                                if ($n < intval($scoreArray[$i])) {
+                                if ($n < intval($shop["score"])) {
                                     $scorePreview .= '<div class="d-inline preview-star">★</div>';
                                 } else {
                                     $scorePreview .= '<div class="d-inline preview-star-gray">★</div>';
@@ -143,7 +148,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             雰囲気
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo AMBIENCE_LIST[$ambiArray[$i]]; ?>
+                            <?php echo AMBIENCE_LIST[$shop["ambi"]]; ?>
                         </td>
                     </tr>
                     <tr>
@@ -151,7 +156,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             行った時間
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $visitTimeArray[$i]; ?>
+                            <?php echo $shop["visit_time"]; ?>
                         </td>
                     </tr>
                     <tr>
@@ -159,7 +164,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             混み具合
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo CROWD_LIST[$crowdArray[$i]]; ?>
+                            <?php echo CROWD_LIST[$shop["crowd"]]; ?>
                         </td>
                     </tr>
                     <tr>
@@ -167,21 +172,47 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             感想など
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo $freeArray[$i]; ?>
+                            <?php echo $shop["free"]; ?>
                         </td>
                     </tr>
+                    <?php } else { ?>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            行った時間
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo $shop["visit_time"]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            混み具合
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo CROWD_LIST[$shop["crowd"]]; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-5 py-3 bg-lightorange text-dark">
+                            品揃え
+                        </th>
+                        <td class="col-7 py-3 bg-white">
+                            <?php echo CROWD_LIST[$shop["assortment"]]; ?>
+                        </td>
+                    </tr>
+                    <?php } ?>
                 </table>
                 <div class="text-end pt-2 px-2 h-2rem">
                     <form method="POST" action="review_entry.php" class="d-inline pe-2">
                         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
-                        <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
-                        <input type="hidden" value="<?php echo $shopNameArray[$i]; ?>" name="shopname">
+                        <input type="hidden" value="<?php echo $shop["shopid"]; ?>" name="shopid">
+                        <input type="hidden" value="<?php echo $shop["shopname"]; ?>" name="shopname">
                         <button type="submit" class="btn-primary w-25 h-2rem rounded">編集</button>
                     </form>
                     <form method="POST" action="review_delete.php" class="d-inline ps-2">
                         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
-                        <input type="hidden" value="<?php echo $shopIdArray[$i]; ?>" name="shopid">
-                        <input type="hidden" value="<?php echo $shopNameArray[$i]; ?>" name="shopname">
+                        <input type="hidden" value="<?php echo $shop["shopid"]; ?>" name="shopid">
+                        <input type="hidden" value="<?php echo $shop["shopname"]; ?>" name="shopname">
                         <button type="submit" class="btn-danger w-25 h-2rem rounded">削除</button>
                     </form>
                 </div>
