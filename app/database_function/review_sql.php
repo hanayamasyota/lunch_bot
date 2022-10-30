@@ -85,6 +85,7 @@ function getPageReviewData2($userId, $page) {
     }
 
     error_log('rows:'.count($rows));
+    error_log(print_r($rows, true));
     $str = '';
     foreach($rows as $row) {
         if ($row === end($rows)) {
@@ -104,7 +105,7 @@ function getPageReviewData2($userId, $page) {
         $sth->execute(array($userId, $row[0], $row[1]));
     }
     if (count($rows) == 3) {
-        $sth->execute(array($userId, $row[0], $row[1]));
+        $sth->execute(array($userId, $row[0], $row[1], $row[1]));
     }
     if (count($rows) == 4) {
         $sth->execute(array($userId, $row[0], $row[1], $row[2], $row[3]));
