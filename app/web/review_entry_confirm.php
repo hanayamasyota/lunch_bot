@@ -10,10 +10,9 @@ define('TABLE_NAME_USERS', 'users');
 <?php
     $postData = array();
     $conveni = intval($_POST['conveni']);
-    error_log('flag:'.$conveni);
+    $time = explode(':', $_POST['visit_time']);
+    $timeStr = $time[0].'時'.$time[1].'分';
     if ($conveni == 1) {
-        $time = explode(':', $_POST['visit_time']);
-        $timeStr = $time[0].'時'.$time[1].'分';
         array_push($postData, $timeStr);
         array_push($postData, $_POST['crowd']);
         array_push($postData, $_POST['assort']);
