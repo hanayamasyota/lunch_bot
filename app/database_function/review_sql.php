@@ -99,7 +99,7 @@ function getPageReviewData2($userId, $page) {
         $sth->execute(array($userId, $row[0]["shopid"]));
     }
     if (count($rows) == 2) {
-        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"]));
+        $sth->execute(array($userId, $row[0], $row[1]));
     }
     if (count($rows) == 3) {
         $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"]));
