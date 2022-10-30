@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_GET["userid"];
 }
 $page = intval($_GET["now_page"]);
-$ownReviewData = getPageReviewData2($userId, $page);
+$ownReviewData = getPageReviewData($userId, $page);
 
 $reviewCount = 0;
 
