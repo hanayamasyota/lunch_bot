@@ -93,22 +93,22 @@ function getPageReviewData2($userId, $page) {
         }
     }
 
-    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ('.$str.') order by time';
+    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ('.$str.') order by time, shopid, review_num';
     $sth = $dbh->prepare($sql);
     if (count($rows) == 1) {
-        $sth->execute(array($userId, $row[0]["shopid"]));
+        $sth->execute(array($userId, $row[0]));
     }
     if (count($rows) == 2) {
         $sth->execute(array($userId, $row[0], $row[1]));
     }
     if (count($rows) == 3) {
-        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"]));
+        $sth->execute(array($userId, $row[0], $row[1]));
     }
     if (count($rows) == 4) {
-        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"], $row[3]["shopid"]));
+        $sth->execute(array($userId, $row[0], $row[1], $row[2], $row[3]));
     }
     if (count($rows) == 5) {
-        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"], $row[3]["shopid"], $row[4]["shopid"]));
+        $sth->execute(array($userId, $row[0], $row[1], $row[2], $row[3], $row[4]));
     }
 
     $rows = $sth->fetchAll();

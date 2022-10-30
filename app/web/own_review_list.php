@@ -57,7 +57,6 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
         array_push($shopsArray, $oneShopData);
     }
-    var_dump($shopsArray);
     $pageRange = getPageRange($page, $maxPage);
 
 //レビューが登録されていない場合
@@ -104,6 +103,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
 
     <!-- CONTENTS -->
     <div class="container dx-2 my-5 bg-lightnavy">
+        <?php var_dump($shopsArray); ?>
         <div class="bg-white">
             <?php for ($i = 0; $i < count($scoreArray); $i++) { ?>
                 <h5 class="bg-navy text-light mb-0 py-2 align-middle">
