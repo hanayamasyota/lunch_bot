@@ -281,7 +281,7 @@ foreach ($events as $event) {
                 $query = http_build_query($data);
 
                 //該当の店のレビューがすでに存在するかをチェック
-                if (checkExistsReview($event->getUserId(), $shop['shopid'], 100) != PDO::PARAM_NULL) {
+                if (checkExistsReview($event->getUserId(), $shop['shopid'], 1) != PDO::PARAM_NULL) {
                     replyButtonsTemplate($bot, $event->getReplyToken(),
                         'レビュー更新確認',
                         SERVER_ROOT . '/imgs/hirumatiGO.png',
