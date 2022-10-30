@@ -33,13 +33,13 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     //最大ページ数の計算
     $reviewCount = getDataCountByReviews($userId);
     $maxPage = ceil($reviewCount / ONE_PAGE);
-    //レビュー
-    foreach ($ownReviewData as $review) {
-        $oneShopData = array();
 
+    $oneShopData = array();
+    foreach ($ownReviewData as $review) {
         //コンビニ判定
         if (!($review["convenience_store"])) {
             if ($review["review_num"] == 1) {
+                $oneShopData = array();
                 $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
             } else if ($review["review_num"] == 2) {
                 $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
