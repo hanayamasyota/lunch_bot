@@ -87,15 +87,29 @@ function getPageReviewData2($userId, $page) {
     $str = '';
     foreach($rows as $row) {
         if ($row === end($rows)) {
-            $str .= $row['shopid']." = shopid";
+            $str .= "? = shopid";
         } else {
-            $str .= $row['shopid']." = shopid or ";
+            $str .= "? = shopid or ";
         }
     }
+
     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ('.$str.') order by time';
-    error_log($sql);
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    if (count($rows) == 1) {
+        $sth->execute(array($userId, $row[0]["shopid"]));
+    }
+    if (count($rows) == 2) {
+        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"]));
+    }
+    if (count($rows) == 3) {
+        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"]));
+    }
+    if (count($rows) == 4) {
+        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"], $row[3]["shopid"]));
+    }
+    if (count($rows) == 5) {
+        $sth->execute(array($userId, $row[0]["shopid"], $row[1]["shopid"], $row[2]["shopid"], $row[3]["shopid"], $row[4]["shopid"]));
+    }
 
     $rows = $sth->fetchAll();
 
