@@ -168,7 +168,7 @@ foreach ($events as $event) {
                     if ($shopType == 0) {
                         registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum, 0);
                     } else if ($shopType == 1) {
-                        registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, $shopNum, 1);
+                        registerUserVisitedShops($event->getUserId(), $shopId, $shopName, $nowTimeString, ($shopNum+10), 1);
                     }
                 }
 
