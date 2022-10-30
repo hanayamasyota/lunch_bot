@@ -37,22 +37,29 @@ if ($ownReviewData != PDO::PARAM_NULL) {
     foreach ($ownReviewData as $review) {
         $oneShopData = array();
 
-        if ($review["review_num"] == 1) {
-            $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
-        } else if ($review["review_num"] == 2) {
-            $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
-        } else if ($review["review_num"] == 3) {
-            $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
-            if ($review["convenience_store"]) {
-                $oneShopData = array_merge($oneShopData, array('conveni' => 1));
+        //コンビニ判定
+        if (!($review["convenience_store"])) {
+            if ($review["review_num"] == 1) {
+                $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
+            } else if ($review["review_num"] == 2) {
+                $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
+            } else if ($review["review_num"] == 3) {
+                $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
+            } else if ($review["review_num"] == 4) {
+                $oneShopData = array_merge($oneShopData, array('crowd' => $review["review"]));
+            } else if ($review["review_num"] == 5) {
+                $oneShopData = array_merge($oneShopData, array('free' => $review["review"]));
+                $oneShopData = array_merge($oneShopData, array('conveni' => 0));
                 array_push($shopsArray, $oneShopData);
             }
-        } else if ($review["review_num"] == 4) {
-            $oneShopData = array_merge($oneShopData, array('crowd' => $review["review"]));
-        } else if ($review["review_num"] == 5) {
-            $oneShopData = array_merge($oneShopData, array('' => $review["review"]));
-            if (!($review["convenience_store"])) {
-                $oneShopData = array_merge($oneShopData, array('conveni' => 0));
+        } else {
+            if ($review["review_num"] == 1) {
+                $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
+            } else if ($review["review_num"] == 2) {
+                $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
+            } else if ($review["review_num"] == 3) {
+                $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
+                $oneShopData = array_merge($oneShopData, array('conveni' => 1));
                 array_push($shopsArray, $oneShopData);
             }
         }
