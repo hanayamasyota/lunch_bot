@@ -59,31 +59,31 @@ function getReviewData($shopId, $conveni) {
     }
 }
 
-function getPageReviewData($userId, $page, $count) {
-    $start = ($page * ONE_PAGE - ONE_PAGE) * $count;
-    $dataLength = ONE_PAGE * $count;
-    $dbh = dbConnection::getConnection();
-    $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, review_num limit ? offset ?';
-    $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId, $dataLength, $start));
-    // if no record
-    if (!($row = $sth->fetchall())) {
-        return PDO::PARAM_NULL;
-    } else {
-        return $row;
-    }
-}
-function getPageReviewData2($userId, $page) {
+// function getPageReviewData($userId, $page, $count) {
+//     $start = ($page * ONE_PAGE - ONE_PAGE) * $count;
+//     $dataLength = ONE_PAGE * $count;
+//     $dbh = dbConnection::getConnection();
+//     $sql = 'select * from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, review_num limit ? offset ?';
+//     $sth = $dbh->prepare($sql);
+//     $sth->execute(array($userId, $dataLength, $start));
+//     // if no record
+//     if (!($row = $sth->fetchall())) {
+//         return PDO::PARAM_NULL;
+//     } else {
+//         return $row;
+//     }
+// }
+function getPageReviewData($userId, $page) {
     $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
-    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by shopid limit 5 offset ?';
+    $sql = 'select distinct shopid from ' .TABLE_NAME_REVIEWS. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by time, shopid limit 5 offset ?';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $start));
     // if no record
     if (!($rows = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     }
-    
+
     $str = '';
     foreach($rows as $row) {
         if ($row === end($rows)) {

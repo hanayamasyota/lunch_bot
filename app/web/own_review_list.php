@@ -197,7 +197,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                             品揃え
                         </th>
                         <td class="col-7 py-3 bg-white">
-                            <?php echo CROWD_LIST[$shop["assortment"]]; ?>
+                            <?php echo ASSORT_LIST[$shop["assortment"]]; ?>
                         </td>
                     </tr>
                     <?php } ?>
