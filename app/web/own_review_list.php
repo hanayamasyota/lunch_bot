@@ -54,6 +54,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             }
         } else {
             if ($review["review_num"] == 1) {
+                $oneShopData = array();
                 $oneShopData = array_merge($oneShopData, array('score' => $review["review"]));
             } else if ($review["review_num"] == 2) {
                 $oneShopData = array_merge($oneShopData, array('ambi' => $review["review"]));
