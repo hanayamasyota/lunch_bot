@@ -45,6 +45,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             $oneShopData = array_merge($oneShopData, array('visit_time' => $review["review"]));
             if ($review["convenience_store"]) {
                 $oneShopData = array_merge($oneShopData, array('conveni' => 1));
+                array_push($shopsArray, $oneShopData);
             }
         } else if ($review["review_num"] == 4) {
             $oneShopData = array_merge($oneShopData, array('crowd' => $review["review"]));
@@ -52,10 +53,9 @@ if ($ownReviewData != PDO::PARAM_NULL) {
             $oneShopData = array_merge($oneShopData, array('' => $review["review"]));
             if (!($review["convenience_store"])) {
                 $oneShopData = array_merge($oneShopData, array('conveni' => 0));
+                array_push($shopsArray, $oneShopData);
             }
         }
-
-        array_push($shopsArray, $oneShopData);
     }
     $pageRange = getPageRange($page, $maxPage);
 
