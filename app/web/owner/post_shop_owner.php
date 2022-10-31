@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-error_log("email:".$_SESSION["email"]);
-
 $shopname = '';
 $openDate = '';
 $openTime = '';
@@ -59,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
-        <form method="post" action="post_shop_owner_confirm.php">
+        <form method="post" action="post_shop_owner_confirm.php" enctype="multipart/form-data">
     
         <table class="table border-top border-navy align-middle mb-4 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</thead>
