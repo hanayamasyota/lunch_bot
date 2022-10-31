@@ -8,6 +8,8 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
 <?php
+    $email = $_SESSION["email"];
+    error_log('email:'.$email);
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
     $closeTime = $_POST['holdstart'];

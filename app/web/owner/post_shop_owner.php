@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+error_log("email:".$_SESSION["email"]);
+
 $shopname = '';
 $openDate = '';
 $openTime = '';

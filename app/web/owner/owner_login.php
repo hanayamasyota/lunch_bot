@@ -18,6 +18,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $status = checkEmailPsword($email, $psword);
 }
+if (isset($email)) {
+    $_SESSION["email"] = $email;
+}
 
 ?>
 
