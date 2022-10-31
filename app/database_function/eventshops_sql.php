@@ -7,4 +7,16 @@ function registerEventShopsByOwner($email, $eventMobilestore, $owner, $shopName,
     $sth->execute(array($email, $eventMobilestore, $owner, $shopName, $img, $link, $holdStart, $holdEnd, $openTime, $closeTime, $genre, $feature, $lat, $lng));
 }
 
+function getShopsEventsData($type) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = event_mobilestore';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($type));
+    if (!($rows = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $rows;
+    }
+}
+
 ?>
