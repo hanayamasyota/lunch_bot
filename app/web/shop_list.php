@@ -8,7 +8,6 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 <?php
 $shops = getShopsEventsData('0');
 error_log('count:'.count($shops));
-var_dump($shops);
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +48,7 @@ var_dump($shops);
 
 
     <!-- Contents-->
+    <?php var_dump($shops); ?>
     <div class="container mt-3 text-center py-5">
         <form method="post" action="#">
 
