@@ -22,6 +22,12 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
     $img_name = uniqid().'.png';
     error_log('imageName:'.$img_name);
+
+    $image = base64_encode(file_get_contents($_FILES['photo']['tmp_name']));
+    error_log('image='.$image);
+
+    $imginfo = getimagesize('data:application/octet-stream;base64,' . $image);
+    
     //画像を保存
     error_log('temp_name='.$_FILES['photo']['name']);
     error_log('name='.$_FILES['photo']['tmp_name']);
@@ -94,6 +100,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     <div class="container dx-3 my-5 bg-lightnavy">
         <div class="">登録が完了しました。</div>
         <a href="owner_index.php">ホームへ</a>
+        <?php echo '<img src="data:'.$imginfo['mime'].';base64,'.$image.'">'; ?>
     </div>
 
     <!-- Footer-->
