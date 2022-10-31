@@ -1,3 +1,15 @@
+<?php 
+require_once '../DBConnection.php';
+require_once '../database_function/eventshops_sql.php';
+
+define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+?>
+
+<?php
+$shops = getShopsEventsData('0');
+error_log('count:'.count($shops));
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
