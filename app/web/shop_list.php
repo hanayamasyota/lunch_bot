@@ -8,6 +8,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 <?php
 $shops = getShopsEventsData('0');
 error_log('count:'.count($shops));
+var_dump($shops);
 ?>
 
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ error_log('count:'.count($shops));
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|お店を見る</title>
+    <title>ひるまちGO|みんなが登録したお店一覧</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -53,9 +54,7 @@ error_log('count:'.count($shops));
 
     <!--1.固定店舗テーブル-->
     <?php 
-        $count = 3;
-        for($i=0; $i<$count; $i++){
-        
+        foreach($shops as $shop) {
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
