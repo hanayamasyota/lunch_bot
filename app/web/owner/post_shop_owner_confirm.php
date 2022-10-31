@@ -8,7 +8,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
 <?php
-    $email = $_SESSION["email"];
+    $userId = $_SESSION["email"];
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
     $closeTime = $_POST['holdstart'];
@@ -22,12 +22,12 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $img_name = $_FILES['photo']['name'];
     error_log('imageName:'.$img_name);
     //画像を保存
-    move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name);
+    move_uploaded_file($_FILES['photo']['tmp_name'], '../photos/'.$img_name);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
             //仮
-            $email,
+            $userId,
             1, //オーナー
             $shopname,
             $img_name,
