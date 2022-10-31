@@ -59,7 +59,7 @@ error_log('count:'.count($shops));
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
             <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
-                <!--店名-->店舗名
+                <?php echo $shop["event_name"]; ?>
             </div>
 
             <tr>
@@ -85,7 +85,7 @@ error_log('count:'.count($shops));
                     開店日
                 </th>
                 <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <!--開店日入れるとこ-->から
+                    <?php echo $shop["open_date"]; ?>から
                 </td>
             </tr>
 
@@ -94,8 +94,8 @@ error_log('count:'.count($shops));
                     営業時間
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
-                    <!--営業開始時間-->から
-                    <!--営業終了時間-->まで
+                    <?php echo $shop["open_time"]; ?>から
+                    <?php echo $shop["close_time"]; ?>まで
                 </td>
             </tr>
 
@@ -104,7 +104,7 @@ error_log('count:'.count($shops));
                     ジャンル
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <!--ジャンル入れるとこ-->
+                    <?php echo $shop["genre"]; ?>
                 </td>
             </tr>
 
@@ -113,7 +113,7 @@ error_log('count:'.count($shops));
                     特徴
                 </th>
                 <td class="col-8 py-5 align-middle bg-white">
-                    <!--特徴入れるとこ-->
+                    <?php echo $shop["feature"]; ?>
                 </td>
             </tr>
 
@@ -122,7 +122,7 @@ error_log('count:'.count($shops));
                     リンク
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <!--リンク入れるとこ-->
+                    <?php echo $shop["url"]; ?>
                 </td>
             </tr>
 
