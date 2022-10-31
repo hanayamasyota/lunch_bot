@@ -20,8 +20,8 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
-    $img_name = uniqid().'.png';
-    error_log('imageName:'.$img_name);
+    $image = base64_encode(file_get_contents($request->photo->getRealPath()));
+
     //画像を保存
     if (move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name)) {
         echo 'アップロードされたファイルを保存しました。';
@@ -37,7 +37,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             1, //オーナー
             0, //固定店舗
             $shopname,
-            $img_name,
+            $image,
             $link,
             $holdDate,
             null,
