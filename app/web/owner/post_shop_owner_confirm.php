@@ -12,15 +12,25 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $userId = $_SESSION["email"];
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
-    $closeTime = $_POST['holdstart'];
-    $openTime = $_POST['holdend'];
+    $openTime = $_POST['holdstart'];
+    $closeTime = $_POST['holdend'];
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
     $genre = $_POST['genre'];
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
-    $image = base64_encode(file_get_contents($_FILES['photo']['tmp_name']));
+    $img_name = uniqid().'.png';
+    error_log('imageName:'.$img_name);
+    //画像を保存
+    if (move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name)) {
+        error_log('temp='.$_FILES['photo']['name']);
+        error_log('name='.$_FILES['photo']['tmp_name']);
+        error_log('アップロードされたファイルを保存しました。');
+    } else {
+        error_log('アップロードされたファイルの保存に失敗しました。');
+    }
+    
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
@@ -29,7 +39,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             1, //オーナー
             0, //固定店舗
             $shopname,
-            $image,
+            $img_name,
             $link,
             $holdDate,
             null,
