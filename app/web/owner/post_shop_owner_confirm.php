@@ -20,14 +20,13 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
-    $img_name = uniqid().'.png';
-
     $image = base64_encode(file_get_contents($_FILES['photo']['tmp_name']));
 
     // $imginfo = getimagesize('data:application/octet-stream;base64,' . $image);
     
     //画像を保存
     //
+    // $img_name = uniqid().'.png';
     // error_log('temp_name='.$_FILES['photo']['name']);
     // error_log('name='.$_FILES['photo']['tmp_name']);
     // if (move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name)) {
@@ -45,7 +44,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             1, //オーナー
             0, //固定店舗
             $shopname,
-            $img_name,
+            $image,
             $link,
             $holdDate,
             null,
@@ -99,7 +98,6 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     <div class="container dx-3 my-5 bg-lightnavy">
         <div class="">登録が完了しました。</div>
         <a href="owner_index.php">ホームへ</a>
-        <?php echo '<img src="data:'.$imginfo['mime'].';base64,'.$image.'">'; ?>
     </div>
 
     <!-- Footer-->
