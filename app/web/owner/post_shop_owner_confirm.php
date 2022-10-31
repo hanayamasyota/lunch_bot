@@ -29,6 +29,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             //仮
             $userId,
             1, //オーナー
+            0, //固定店舗
             $shopname,
             $img_name,
             $link,
@@ -38,7 +39,6 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             $closeTime,
             $genre,
             $feature,
-            0, //固定店舗
             $lat,
             $lng,
         );
