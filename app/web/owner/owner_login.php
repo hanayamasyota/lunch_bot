@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 require_once '../../DBConnection.php';
 require_once '../../database_function/owner_sql.php';
 
@@ -16,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $status = checkEmailPsword($email, $psword);
 }
+
 ?>
 
 <!DOCTYPE html>
