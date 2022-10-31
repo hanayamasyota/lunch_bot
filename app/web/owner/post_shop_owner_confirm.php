@@ -23,7 +23,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $img_name = uniqid().'.png';
     error_log('imageName:'.$img_name);
     //画像を保存
-    move_uploaded_file($_FILES['photo']['tmp_name'], MEDIA_ROOT.'./photos/'.$img_name);
+    move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
