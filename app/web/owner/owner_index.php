@@ -1,5 +1,5 @@
 <?php
-//phpはここ 
+session_start();
 ?>
 
 

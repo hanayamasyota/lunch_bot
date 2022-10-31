@@ -15,11 +15,9 @@ $status = 'first';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST["email"];
     $psword = $_POST["password"];
+    $_SESSION["email"] = $email;
 
     $status = checkEmailPsword($email, $psword);
-}
-if (isset($email)) {
-    $_SESSION["email"] = $email;
 }
 
 ?>
