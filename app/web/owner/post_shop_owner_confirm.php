@@ -20,15 +20,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
-    $image = base64_encode(file_get_contents($request->photo->getRealPath()));
-
-    //画像を保存
-    if (move_uploaded_file($_FILES['photo']['tmp_name'], './photos/'.$img_name)) {
-        echo 'アップロードされたファイルを保存しました。';
-    } else {
-        echo 'アップロードされたファイルの保存に失敗しました。';
-    }
-    
+    $image = base64_encode(file_get_contents($_FILES['photo']['tmp_name']));
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
