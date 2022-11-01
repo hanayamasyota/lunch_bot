@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <select name="genre" class="d-inline" requierd>
+                    <select name="genre" class="d-inline" requierd id ="select1">
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
                         <option value="2">学び</option>
@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="5">芸術・音楽</option>
                         <option value="999">その他</option>
                     </select>
-                    <input type="text" class="w-25 d-inline"><br>
+                    <input type="text" class="w-25 d-inline" id="newgenre"><br>
                     <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                 </td>
             </tr>
@@ -193,7 +193,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 shop[1].style.display = '';
                 event[0].style.display = 'none';
                 event[1].style.display = 'none';
-                
             }
             else if (radio[1].checked) {
                 shop[0].style.display = 'none';
@@ -211,17 +210,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         window.onload = Switch();
 
+        const myGenre = document.getElementById("select1");
+        myGenre.onchange = changeGenre(myGenre);
 
-        
+        function changeGenre(genre) {
+            let num = genre.selectedIndex;
+            let str = genre.options[num].value;
 
+            if (str == '999') {
 
-        // $('#myImage').on('change', function (e) {
-        //     var reader = new FileReader();
-        //     reader.onload = function (e) {
-        //         $("#preview").attr('src', e.target.result);
-        //     }
-        //     reader.readAsDataURL(e.target.files[0]);
-        // });
+            }
+        }
+
+        function disableNewGenre() {
+
+        }
 
 </script>
 

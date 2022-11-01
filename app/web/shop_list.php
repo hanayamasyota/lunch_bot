@@ -55,6 +55,7 @@ error_log('count:'.count($shops));
     <!--1.固定店舗テーブル-->
     <?php 
         foreach($shops as $shop) {
+            error_log(print_r($shop, true));
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
@@ -67,11 +68,8 @@ error_log('count:'.count($shops));
                     写真
                 </th>
                 <td class="col-8 py-5 align-middle bg-white w-100 h-100">
-                    <?php 
-                    // $imginfo = getimagesize('data:application/octet-stream;base64,' . $shop["photo"]);
-                    // error_log(print_r($imginfo, true));
-                    ?>
-                    <img src="<?php echo 'data:image/png;base64,'.fgets($shop["photo"]).';'; ?>"> 
+                    <?php //fgetsも無理 ?>
+                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'; ?>">
                 </td>
             </tr>
 

@@ -169,10 +169,6 @@ function getShopIdByReviews($userId, $shopName) {
     }
 }
 
-function conveniDecision($userId, $genre) {
-
-}
-
 function updateReview($userId, $shopId, $reviewNum, $review, $time) {
     $dbh = dbConnection::getConnection();
     $sql = 'update ' . TABLE_NAME_REVIEWS . ' set (review, time) = (?, ?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = review_num and ? = shopid';
