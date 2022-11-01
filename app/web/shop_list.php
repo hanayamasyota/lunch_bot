@@ -71,7 +71,7 @@ error_log('count:'.count($shops));
                     // $imginfo = getimagesize('data:application/octet-stream;base64,' . $shop["photo"]);
                     // error_log(print_r($imginfo, true));
                     ?>
-                    <img src="<?php echo 'data:image/png;base64,'.$shop[0]["photo"].';'; ?>"> 
+                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"][0].';'; ?>"> 
                 </td>
             </tr>
 
