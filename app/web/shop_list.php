@@ -68,10 +68,11 @@ error_log('count:'.count($shops));
                 </th>
                 <td class="col-8 py-5 align-middle bg-white w-100 h-100">
                     <?php 
-                    $imginfo = getimagesize('data:application/octet-stream;base64,' . $shop["photo"]);
-                    error_log(print_r($imginfo, true));
-                    echo '<img src="data:'.$imginfo['mime'].';base64,'.$shop["photo"].'">'; 
+                    // $imginfo = getimagesize('data:application/octet-stream;base64,' . $shop["photo"]);
+                    // error_log(print_r($imginfo, true));
                     ?>
+                    <!-- <img src="<?php echo 'data:'.$imginfo['mime'].';base64,'.$shop["photo"]';'?>">  -->
+                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"]';'?>"> 
                 </td>
             </tr>
 
