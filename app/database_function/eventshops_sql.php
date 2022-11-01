@@ -9,7 +9,7 @@ function registerEventShopsByOwner($email, $owner, $eventMobilestore, $shopName,
 
 function getShopsEventsData($type) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = event_mobilestore';
+    $sql = 'select photo from ' . TABLE_NAME_EVENTSHOPS . ' where ? = event_mobilestore';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($type));
     if (!($rows = $sth->fetchall())) {
