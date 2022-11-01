@@ -72,7 +72,7 @@ error_log('count:'.count($shops));
                     // error_log(print_r($imginfo, true));
                     ?>
 
-                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"]';'?>"> 
+                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'?>"> 
                 </td>
             </tr>
 
