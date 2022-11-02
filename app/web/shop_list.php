@@ -115,7 +115,7 @@ error_log('count:'.count($shops));
                     特徴
                 </th>
                 <td class="col-8 py-5 align-middle bg-white w-100 h-100">
-                    <textarea disabled style="resize: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
+                    <textarea disabled style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
 
@@ -123,7 +123,7 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-3 align-middle bg-lightbrown">
                     リンク
                 </th>
-                <td class="col-8 py-3 align-middle bg-white">
+                <td class="col-8 align-middle bg-white">
                     <?php echo $shop["url"]; ?>
                 </td>
             </tr>
