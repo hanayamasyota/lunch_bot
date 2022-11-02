@@ -7,7 +7,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
 <?php
-$shops = getShopsEventsData(0);
+$shops = getShopsEventsData(2);
 error_log('count:'.count($shops));
 ?>
 
@@ -19,7 +19,7 @@ error_log('count:'.count($shops));
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|お店を見る</title>
+    <title>ひるまちGO|イベントを見る</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -43,18 +43,21 @@ error_log('count:'.count($shops));
     <!-- Mashead header-->
     <header class="mt-4">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">お店を見る</p>
+            <p class="text-light h3">イベントを見る</p>
         </div>
     </header>
 
 
+
     <!-- Contents-->
-    <div class="container mt-3 text-center py-5">
-    <!--1.固定店舗テーブル-->
+    <div class="container mt-3 text-centerpy-5">
+        <form method="post" action="#">
+
+    <!--2.イベント・移動店舗テーブル-->
     <?php 
         foreach($shops as $shop) {
     ?>
-        <table class="table border-top border-navy align-middle mb-5 text-nowrap" style="table-layout: fixed; word-wrap: break-word;">
+        <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
             <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
                 <?php echo $shop["event_name"]; ?>
@@ -64,7 +67,7 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     写真
                 </th>
-                <td class="col-8 py-5 align-middle bg-white w-100 h-100">
+                <td class="col-8 py-5 align-middle bg-white">
                     <?php //fgetsでバイナリデータの取得自体はできたが表示ができない ?>
                     <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'; ?>">
                 </td>
@@ -75,22 +78,22 @@ error_log('count:'.count($shops));
                     種類
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    実店舗(固定店舗)
+                    イベント・移動店舗
                 </td>
             </tr>
             
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
-                    開店日
+                    開催日
                 </th>
                 <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <?php echo $shop["open_date"]; ?>から
+                    <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
                 </td>
             </tr>
 
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
-                    営業時間
+                    開催時間
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
                     <?php echo $shop["open_time"]; ?>から
@@ -111,7 +114,7 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-8 py-5 align-middle bg-white w-100 h-100">
+                <td class="col-8 py-5 align-middle bg-white">
                     <textarea disabled style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
@@ -120,15 +123,17 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-3 align-middle bg-lightbrown">
                     リンク
                 </th>
-                <td class="col-8 align-middle bg-white">
+                <td class="col-8 py-3 align-middle bg-white">
                     <?php echo $shop["url"]; ?>
                 </td>
             </tr>
-
+            
         </table>
     <?php
         }
     ?>
+
+        </form>
     </div>
 
     <!-- Footer-->
@@ -140,7 +145,8 @@ error_log('count:'.count($shops));
                     </div>
                 </div>
             </div>
-        </footer>
+    </footer>
+
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->

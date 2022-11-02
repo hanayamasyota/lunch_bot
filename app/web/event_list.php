@@ -7,7 +7,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
 <?php
-$shops = getShopsEventsData('1');
+$shops = getShopsEventsData(1);
 error_log('count:'.count($shops));
 ?>
 
@@ -235,58 +235,5 @@ error_log('count:'.count($shops));
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
-
-<!-- <script>
-        $("#input1").on("change", function (e) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#sample1").attr("src", e.target.result);
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        });
-
-        function Switch() {
-            const radio = document.getElementsByName('radio1');
-            const shop = document.getElementsByClassName('shopList');
-            const event = document.getElementsByClassName('eventList');
-            if (radio[0].checked) {
-                shop[0].style.display = '';
-                shop[1].style.display = '';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-                
-            }
-            else if (radio[1].checked) {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = '';
-                event[1].style.display = '';
-            }
-            else {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-            }
-        }
-
-        window.onload = Switch();
-
-
-        
-
-
-        // $('#myImage').on('change', function (e) {
-        //     var reader = new FileReader();
-        //     reader.onload = function (e) {
-        //         $("#preview").attr('src', e.target.result);
-        //     }
-        //     reader.readAsDataURL(e.target.files[0]);
-        // });
-
-</script> -->
-
-
-
 
 </html>
