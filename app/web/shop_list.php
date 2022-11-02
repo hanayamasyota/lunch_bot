@@ -57,7 +57,7 @@ error_log('count:'.count($shops));
         foreach($shops as $shop) {
             error_log(print_r($shop, true));
     ?>
-        <table class="table border-top border-navy align-middle mb-5 text-nowrap">
+        <table class="table border-top border-navy align-middle mb-5 text-nowrap" style="word-wrap: break-word;">
 
             <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
                 <?php echo $shop["event_name"]; ?>
@@ -114,7 +114,7 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-8 py-5 align-middle bg-white" style="word-wrap: break-word;">
+                <td class="col-8 py-5 align-middle bg-white">
                     <?php echo $shop["feature"]; ?>
                 </td>
             </tr>
