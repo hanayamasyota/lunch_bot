@@ -20,7 +20,9 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
+    //一時的にファイルを保存
     $image = file_get_contents($_FILES['photo']['tmp_name']);
+    //base64バイナリデータに変換
     $binary_image = base64_encode($image);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {

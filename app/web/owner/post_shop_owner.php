@@ -94,9 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <!-- readonlyにする -->
-                    <a href="../getlatlng.php">こちらのリンクから設定してください</a>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-inline" required>
+                    <a href="../getlatlng.php?type=shop">こちらのリンクから設定してください</a>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required readonly>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required readonly>
                 </td>
             </tr>
 

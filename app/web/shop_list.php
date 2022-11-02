@@ -68,7 +68,7 @@ error_log('count:'.count($shops));
                     写真
                 </th>
                 <td class="col-8 py-5 align-middle bg-white w-100 h-100">
-                    <?php //fgetsも無理 ?>
+                    <?php //fgetsでバイナリデータの取得自体はできたが表示ができない ?>
                     <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'; ?>">
                 </td>
             </tr>
