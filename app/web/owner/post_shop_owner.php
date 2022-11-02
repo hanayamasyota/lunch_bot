@@ -95,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-2 align-middle bg-white">
                     <!-- readonlyにする -->
                     <a href="../getlatlng.php?type=shop">こちらのリンクから設定してください</a>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required readonly>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required readonly>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
             </tr>
 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <select name="genre" class="d-inline" requierd id ="select1">
+                    <select name="genre" class="d-inline" required id ="select1">
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
                         <option value="2">学び</option>
