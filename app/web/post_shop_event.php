@@ -1,3 +1,19 @@
+<?php
+$shopname = '';
+$openDate = '';
+$openTime = '';
+$closeTime = '';
+$lat = 0.0;
+$lng = 0.0;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $lat = floatval($_POST['lat']);
+    $lng = floatval($_POST['lng']);
+} else {
+    $lat = null;
+    $lng = null;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -6,7 +22,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|個人設定</title>
+    <title>ひるまちGO|昼休みの過ごし方</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -17,6 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/form.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
@@ -39,6 +56,7 @@
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy">
         <form method="post" action="#">
+        <input type="hidden" value="<?php echo $_GET["userid"]; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed; ">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
@@ -120,10 +138,9 @@
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <!-- readonlyにしてフォームは見えないようにする予定 -->
-                    <a href="../getlatlng.php">こちらのリンクから設定してください</a><br>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required><br>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-inline" required>
+                    <a href="getlatlng.php?type=shop">こちらのリンクから設定してください</a><br>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
             </tr>
             <tr>
@@ -133,7 +150,7 @@
                 <td class="col-9 py-1 align-middle bg-white w-100 h-100">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
-                        <input type="file" id="input1" class="pt-2" style="display: none;" />
+                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none;" />
                     </label><br>
                     <img id="sample1" class="w-75 h-75 py-2">
                 </td>
@@ -144,7 +161,7 @@
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <select name="genre" required>
+                    <select name="genre" class="d-inline" required id ="select1">
                         <option hidden value="">選択してください</option>
                         <option value="1">食事</option>
                         <option value="2">学び</option>
@@ -153,7 +170,7 @@
                         <option value="5">芸術・音楽</option>
                         <option value="999">その他</option>
                     </select>
-                    <input type="text" class="w-25 d-inline"><br>
+                    <input type="text" class="w-25 d-inline" id="newgenre"><br>
                     <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                 </td>
             </tr>

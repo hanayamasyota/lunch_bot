@@ -93,7 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <!-- readonlyにする -->
                     <a href="../getlatlng.php?type=shop">こちらのリンクから設定してください</a>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
@@ -104,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <th class="col-3 py-5 align-middle bg-lightbrown">
                     写真
                 </th>
-                <td class="col-9 py-1 align-middle bg-white">
+                <td class="col-9 py-1 align-middle bg-white w-100 h-100">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
                         <input type="file" id="input1" name="photo" class="pt-2" style="display: none;">

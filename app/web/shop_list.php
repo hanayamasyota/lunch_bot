@@ -19,7 +19,7 @@ error_log('count:'.count($shops));
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|みんなが登録したお店一覧</title>
+    <title>ひるまちGO|お店を見る</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -50,12 +50,9 @@ error_log('count:'.count($shops));
 
     <!-- Contents-->
     <div class="container mt-3 text-center py-5">
-        <form method="post" action="#">
-
     <!--1.固定店舗テーブル-->
     <?php 
         foreach($shops as $shop) {
-            error_log(print_r($shop, true));
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap" style="table-layout: fixed; word-wrap: break-word;">
 
@@ -132,8 +129,6 @@ error_log('count:'.count($shops));
     <?php
         }
     ?>
-
-        </form>
     </div>
 
     <!-- Footer-->

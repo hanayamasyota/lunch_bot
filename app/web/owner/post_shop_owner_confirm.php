@@ -9,7 +9,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
 <?php
-    $userId = $_SESSION["email"];
+    $email = $_SESSION["email"];
     $shopname = $_POST['shopname'];
     $holdDate = $_POST['holddate'];
     $openTime = $_POST['holdstart'];
@@ -27,12 +27,12 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
-            //仮
-            $userId,
+            $email,
             1, //オーナー
             0, //固定店舗
             $shopname,
-            $binary_image,
+            // $binary_image,
+            null,
             $link,
             $holdDate,
             null,

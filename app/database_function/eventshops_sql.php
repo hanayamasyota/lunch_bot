@@ -1,8 +1,8 @@
 <?php
 
-function registerEventShopsByOwner($email, $owner, $eventMobilestore, $shopName, $img, $link, $holdStart, $holdEnd, $openTime, $closeTime, $genre, $feature, $lat, $lng) {
+function registerEventShopsByOwner($email, $owner, $kind, $shopName, $img, $link, $holdStart, $holdEnd, $openTime, $closeTime, $genre, $feature, $lat, $lng) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into ' . TABLE_NAME_EVENTSHOPS . ' (userid, owner, event_mobilestore, event_name, photo, url, open_date, close_date, open_time, close_time, genre, feature, latitude, longitude) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    $sql = 'insert into ' . TABLE_NAME_EVENTSHOPS . ' (userid, owner, kind, event_name, photo, url, open_date, close_date, open_time, close_time, genre, feature, latitude, longitude) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($email, $owner, $eventMobilestore, $shopName, $img, $link, $holdStart, $holdEnd, $openTime, $closeTime, $genre, $feature, $lat, $lng));
 }

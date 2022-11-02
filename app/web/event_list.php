@@ -1,3 +1,16 @@
+<?php 
+require_once '../DBConnection.php';
+require_once '../database_function/eventshops_sql.php';
+require_once 'list.php';
+
+define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+?>
+
+<?php
+$shops = getShopsEventsData('1');
+error_log('count:'.count($shops));
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -40,16 +53,14 @@
     <div class="container mt-3 text-centerpy-5">
         <form method="post" action="#">
 
-<!--2.イベント・移動店舗テーブル-->
+    <!--2.イベント・移動店舗テーブル-->
     <?php 
-        $count = 3;
-        for($i=0; $i<$count; $i++){
-        
+        foreach($shops as $shop) {
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
             <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
-                <!--店名-->イベント名
+                <?php echo $shop["event_name"]; ?>
             </div>
 
             <tr>
@@ -57,7 +68,8 @@
                     写真
                 </th>
                 <td class="col-8 py-5 align-middle bg-white">
-                    <!--写真貼るとこ-->
+                    <?php //fgetsでバイナリデータの取得自体はできたが表示ができない ?>
+                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'; ?>">
                 </td>
             </tr>
 
@@ -75,7 +87,7 @@
                     開催日
                 </th>
                 <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <!--開催一日目入れるとこ-->から<!--開催最終日入れるとこ-->まで
+                    <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
                 </td>
             </tr>
 
@@ -84,8 +96,8 @@
                     開催時間
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
-                    <!--開催開始時間-->から
-                    <!--開催終了時間-->まで
+                    <?php echo $shop["open_time"]; ?>から
+                    <?php echo $shop["close_time"]; ?>まで
                 </td>
             </tr>
 
@@ -94,7 +106,7 @@
                     ジャンル
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <!--ジャンル入れるとこ-->
+                    <?php echo GENRE_LIST[$shop["genre"]]; ?>
                 </td>
             </tr>
 
@@ -103,7 +115,7 @@
                     特徴
                 </th>
                 <td class="col-8 py-5 align-middle bg-white">
-                    <!--特徴入れるとこ-->
+                    <textarea disabled style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
 
@@ -112,7 +124,7 @@
                     リンク
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <!--リンク入れるとこ-->
+                    <?php echo $shop["url"]; ?>
                 </td>
             </tr>
             

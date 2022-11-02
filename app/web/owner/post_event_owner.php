@@ -1,3 +1,22 @@
+<?php
+session_start();
+
+$shopname = '';
+$openDate = '';
+$closeDate = '';
+$openTime = '';
+$closeTime = '';
+$lat = 0.0;
+$lng = 0.0;
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $lat = floatval($_POST['lat']);
+    $lng = floatval($_POST['lng']);
+} else {
+    $lat = null;
+    $lng = null;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 

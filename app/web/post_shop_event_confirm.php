@@ -5,15 +5,35 @@ require_once '../../DBConnection.php';
 require_once '../../database_function/eventshops_sql.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+
 ?>
 
 <?php
-    $email = $_SESSION['email'];
+    $userId = $_POST["userid"];
     $shopname = $_POST['shopname'];
-    $openDate = $_POST['opendate'];
-    $closeDate = $_POST['closedate'];
-    $closeTime = $_POST['holdstart'];
-    $openTime = $_POST['holdend'];
+
+    $openDate = null,
+    $closeDate = null,
+    $openTime = null,
+    $closeTime = null,
+
+    $num = 0;
+    if ($_POST["radio1"] == 'shop') {
+        $num=0;
+        $openDate = $_POST["opendate"];
+        $openTime = $_POST["opentime"];
+        $closeTime = $_POST["closetime"];
+    } else if ($_POST["radio1"] == 'event') {
+        $num=1;
+        $openDate = $_POST["holddatestart"];
+        $closeDate = $_POST["holddateend"];
+        $openTime = $_POST["holdstart"];
+        $closeTime = $_POST["holdend"];
+    } else if ($_POST["radio1"] == 'life') {
+        $num=2;
+        $openTime = $_POST["spendstart"];
+        $closeTime = $_POST["spendend"];
+    }
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
     $genre = $_POST['genre'];
@@ -27,12 +47,12 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
-            $email,
-            1, //オーナー
-            1, //イベント・移動店舗
+            $userId,
+            0, //オーナー
+            $num, //固定店舗
             $shopname,
             // $binary_image,
-            null, 
+            null,
             $link,
             $openDate,
             $closeDate,
@@ -55,7 +75,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|固定店舗登録完了</title>
+    <title>ひるまちGO|昼休みの過ごし方登録完了</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -83,9 +103,8 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 my-5 bg-lightnavy">
+    <div class="container dx-3 py-5 bg-lightnavy">
         <div class="">登録が完了しました。</div>
-        <a href="owner_index.php">ホームへ</a>
     </div>
 
     <!-- Footer-->
