@@ -114,7 +114,7 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-8 py-5 align-middle bg-white">
+                <td class="col-8 py-5 align-middle bg-white" style="word-wrap: break-word;">
                     <?php echo $shop["feature"]; ?>
                 </td>
             </tr>
