@@ -59,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
         <form method="post" action="post_shop_owner_confirm.php">
-        <!-- emailは現在get -->
-        <input type="hidden" name="email" value="<?php echo $_GET['email']; ?>">
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</th>
 
@@ -149,12 +147,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </td>
                 </tr>
         </table>
-        </form>
-
-        <!--投稿ボタン-->
-        <form>
             <input type="submit" value="投稿する">
-        </form> 
+        </form>
 
 
 
