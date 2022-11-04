@@ -41,7 +41,7 @@ error_log('count:'.count($shops));
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
+    <header class="mt-5">
         <div class="container px-3 pt-2 bg-imagecolor">
             <p class="text-light h3">お店を見る</p>
         </div>

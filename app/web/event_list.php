@@ -41,7 +41,7 @@ error_log('count:'.count($shops));
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
+    <header class="mt-5">
         <div class="container px-3 pt-2 bg-imagecolor">
             <p class="text-light h3">イベントを見る</p>
         </div>
@@ -50,7 +50,7 @@ error_log('count:'.count($shops));
 
 
     <!-- Contents-->
-    <div class="container mt-3 text-centerpy-5">
+    <div class="container mt-3 text-center py-5">
     <!--2.イベント・移動店舗テーブル-->
     <?php 
     if ($shops != 0) {
