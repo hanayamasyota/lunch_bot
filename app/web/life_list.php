@@ -67,19 +67,10 @@ $shops = getShopsEventsData(2);
                     <img src="data:image/png;base64,<?= $shop["photo"] ?>" class="w-100" style="height: auto;">
                 </td>
             </tr>
-            
-            <tr>
-                <th class="col-4 py-4 align-middle bg-lightbrown">
-                    開催日
-                </th>
-                <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
-                </td>
-            </tr>
 
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
-                    開催時間
+                    過ごした時間
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
                     <?php echo $shop["open_time"]; ?>から
