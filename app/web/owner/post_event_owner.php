@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td class="col-8 py-1 align-middle bg-white">
                         <label for="input1" class="box px-2">
                             <small>+写真を選択</small>
-                            <input type="file" id="input1" class="pt-2" name="photo" accept="image/*" style="display: none;" />
+                            <input type="file" id="input1" name="photo" style="display: none;">
                         </label><br>
                         <img id="sample1" class="w-75 h-75 py-2">
                     </td>
