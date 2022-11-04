@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-5">
+    <header class="mt-4">
         <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">昼休みの過ごし方登録</p>
         </div>

@@ -41,7 +41,7 @@ $shops = getShopsEventsData(0);
     </nav>
     <!-- Mashead header-->
     <header class="mt-5">
-        <div class="container px-3 pt-2 bg-imagecolor">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">お店を見る</p>
         </div>
     </header>
