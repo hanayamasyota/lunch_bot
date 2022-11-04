@@ -31,8 +31,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             1, //オーナー
             0, //固定店舗
             $shopname,
-            // $binary_image,
-            null,
+            $binary_image,
             $link,
             $holdDate,
             null,

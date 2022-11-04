@@ -443,9 +443,9 @@ foreach ($events as $event) {
         } else if (strcmp($event->getText(), '新規登録') == 0) {
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', '新規登録',
             '新しい場所や過ごし方を登録するメニューです。',
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '新規登録', '新規登録'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '新規登録', SERVER_ROOT.'/web/post_shop_event.php?'.$),
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '自分が登録したものを確認', '自分が登録したものを確認'),
             );
 
