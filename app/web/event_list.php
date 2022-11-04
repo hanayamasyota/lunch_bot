@@ -18,7 +18,7 @@ $shops = getShopsEventsData(1);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|イベントを見る</title>
+    <title>ひるまちGO|場所を見る</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -42,7 +42,7 @@ $shops = getShopsEventsData(1);
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">イベントを見る</p>
+            <p class="text-light h3">場所を見る</p>
         </div>
     </header>
 

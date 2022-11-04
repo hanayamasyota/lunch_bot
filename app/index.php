@@ -368,7 +368,7 @@ foreach ($events as $event) {
                 '場所を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '場所を探す',
                 '登録されている場所の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/life_list.php'),
+                    '場所一覧へ', SERVER_ROOT.'/web/life_list.php'),
                 );
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -420,7 +420,7 @@ foreach ($events as $event) {
             //設定チェック
             error_log('userid:'.$event->getUserId());
             replyTextMessage($bot, $event->getReplyToken(), 
-            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:イベントをさがす");
+            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:昼休みの過ごし方を探す");
             updateUser($event->getUserId(), 'search');
 
         //review
