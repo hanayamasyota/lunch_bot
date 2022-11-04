@@ -8,7 +8,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
 <?php
     $userId = $_POST["userid"];
-    $shopname = $_POST['shopname'];
+    $name = $_POST['name'];
 
     $openDate = null;
     $closeDate = null;
@@ -52,7 +52,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             $userId,
             0, //オーナー
             $num, //固定店舗
-            $shopname,
+            $name,
             $binary_image,
             $link,
             $openDate,

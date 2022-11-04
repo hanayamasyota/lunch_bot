@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>名前
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="text" required>
+                    <input type="text" name="name" required>
                 </td>
             </tr>
 
