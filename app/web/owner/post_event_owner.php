@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/form.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
@@ -97,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-2 align-middle bg-white">
                     <!-- readonlyにしてフォームは見えないようにする予定 -->
                     <a href="../getlatlng.php?type=event">こちらのリンクから設定してください</a>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="" required>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-inline" required>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
                 </tr>
                 <tr>
