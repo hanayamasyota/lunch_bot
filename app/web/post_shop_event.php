@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="opentime">から
                     <input type="time" name="closetime">まで<br>
-                    <small>※定休日等については下の「特徴」欄に入力してください</small>
+                    <small class="text-left">※定休日等については下の「特徴」欄に入力してください</small>
                 </td>
             </tr>
             
@@ -173,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="999">その他</option>
                     </select>
                     <input type="text" class="w-25 d-inline" id="newgenre"><br>
-                    <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
+                    <small class="text-left">セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                 </td>
             </tr>
 

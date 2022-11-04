@@ -94,11 +94,11 @@ session_start();
 
  
 
-    <body onload="javascript:init();" class="bg-lightnavy py-2">
+    <body onload="javascript:init();" class="bg-lightnavy py-4">
         <div id="map" style="margin-top: 10px; margin-bottom:15px;"></div><br>
         <p>検索欄に住所や地名を入力すると、その付近に移動できます。<br>地図でクリックした位置の座標が表示されます。<br>場所を地図でクリックして確定してください。</p>
         <center>
-            <input type="text" value="" id="place" placeholder="住所や地名を入力" class="input-group-lg w-50 h4">
+            <input type="text" value="" id="place" placeholder="住所や地名を入力" class="input-group-lg w-50 h4 h-4rem">
             <button type="button" onclick="search()" class="px-5 h-4rem">検索</button><br><br>
         <?php if ($_GET["type"] == 'shop') {
             $url = 'owner/post_shop_owner.php';
