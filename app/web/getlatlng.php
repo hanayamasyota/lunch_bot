@@ -96,7 +96,7 @@ session_start();
         <div id="map" style="margin-top: 10px; margin-bottom:15px;"></div><br>
         <p>検索欄に住所や地名を入力すると、その付近に移動できます。<br>地図でクリックした位置の座標が表示されます。<br>場所を地図でクリックして確定してください。</p>
         <center>
-            <input type="text" value="" size="20" id="place" placeholder="住所や地名を入力">
+            <input type="text" value="" id="place" placeholder="住所や地名を入力" class="input-lg w-50">
             <button type="button" onclick="search()">検索</button><br><br>
         <?php if ($_GET["type"] == 'shop') {
             $url = 'owner/post_shop_owner.php';
@@ -107,8 +107,8 @@ session_start();
         } ?>
         <form method="post" action="<?php echo $url; ?>">
             <div class="input">
-                緯度：<input type="text" id="lat" name="lat" value="" size="20">　
-                経度：<input type="text" id="lng" name="lng" value="" size="20"><br><br>
+                緯度：<input type="text" id="lat" name="lat" value="" class="input-lg w-25">
+                経度：<input type="text" id="lng" name="lng" value="" class="input-lg w-25"><br><br>
             </div>
         <input type="submit" value="確定する" />
         </form>
