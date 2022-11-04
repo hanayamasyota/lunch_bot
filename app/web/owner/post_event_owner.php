@@ -58,10 +58,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
-        <form method="post" action="post_event_owner_confirm.php">
+        <form method="post" action="post_event_owner_confirm.php" enctype="multipart/form-data">
+
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead class="border border-start">フォームの入力をしてください。</th>
-
                 <tr>
                     <th class="col-4 py-2 align-middle bg-lightbrown">
                         <div class="text-danger d-inline">*</div>イベント名
@@ -104,10 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <th class="col-4 py-5 align-middle bg-lightbrown">
                         写真
                     </th>
-                    <td class="col-8 py-1 align-middle bg-white">
+                    <td class="col-8 py-1 align-middle bg-white w-100 h-100">
                         <label for="input1" class="box px-2">
                             <small>+写真を選択</small>
-                            <input type="file" id="input1" name="photo" style="display: none;">
+                            <input type="file" id="input1" name="photo" class="pt-2" style="display: none;">
                         </label><br>
                         <img id="sample1" class="w-75 h-75 py-2">
                     </td>

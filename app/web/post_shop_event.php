@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|昼休みの過ごし方</title>
+    <title>ひるまちGO|昼休みの過ごし方登録</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-2 bg-imagecolor">
-            <p class="text-light h3">昼休みの過ごし方</p>
+            <p class="text-light h3">昼休みの過ごし方登録</p>
         </div>
     </header>
 
