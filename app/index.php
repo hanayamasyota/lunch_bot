@@ -420,7 +420,7 @@ foreach ($events as $event) {
             //設定チェック
             error_log('userid:'.$event->getUserId());
             replyTextMessage($bot, $event->getReplyToken(), 
-            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:昼休みの過ごし方を探す");
+            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る");
             updateUser($event->getUserId(), 'search');
 
         //review
