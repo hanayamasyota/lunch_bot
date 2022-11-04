@@ -41,11 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <h1 class="pt-3 font-nicokaku pe-1" style="display: inline-block;">ひるまち</h1><h1 class="pt-3 font-rc" style="display: inline-block;">GO</h1>
+            <h1 class="d-inline pt-3 font-nicokaku pe-1">ひるまち</h1>
+            <h1 class="d-inline pt-3 font-rc">GO</h1>
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
+    <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">昼休みの過ごし方登録</p>
         </div>
