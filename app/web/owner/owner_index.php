@@ -1,5 +1,5 @@
 <?php
-if (isset($_SESSION['email'])) {
+if (!(isset($_SESSION['email']))) {
     header('Location:owner_login.php');
 }
 
