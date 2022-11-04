@@ -90,6 +90,8 @@ session_start();
             });
         }
     </script>
+    <link href="css/styles.css" rel="stylesheet" />
+
  
 
     <body onload="javascript:init();">
