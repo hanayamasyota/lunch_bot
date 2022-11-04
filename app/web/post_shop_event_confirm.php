@@ -40,10 +40,14 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
+    $binary_image = null;
+
     //一時的にファイルを保存
-    $image = file_get_contents($_FILES['photo']['tmp_name']);
-    //base64バイナリデータに変換
-    $binary_image = base64_encode($image);
+    if ($_FILES['upload']['size'] != 0) {
+        $image = file_get_contents($_FILES['photo']['tmp_name']);
+        //base64バイナリデータに変換
+        $binary_image = base64_encode($image);
+    }
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
@@ -51,8 +55,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             0, //オーナー
             $num, //固定店舗
             $shopname,
-            // $binary_image,
-            null,
+            $binary_image,
             $link,
             $openDate,
             $closeDate,

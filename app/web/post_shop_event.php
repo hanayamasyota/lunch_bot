@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy">
-        <form method="post" action="#">
+        <form method="post" action="post_shop_event_confirm.php" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $_GET["userid"]; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed; ">
             <thead class="border border-start">フォームの入力をしてください。</th>
@@ -150,7 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-1 align-middle bg-white w-100 h-100">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
-                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none;" />
+                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none;">
                     </label><br>
                     <img id="sample1" class="w-75 h-75 py-2">
                 </td>
