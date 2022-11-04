@@ -444,7 +444,7 @@ foreach ($events as $event) {
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', '新規登録',
             '新しい場所や過ごし方を登録するメニューです。',
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '新規登録', SERVER_ROOT.'/web/post_shop_event.php?'.$),
+                '新規登録', SERVER_ROOT.'/web/post_shop_event.php?'.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '自分が登録したものを確認', '自分が登録したものを確認'),
             );

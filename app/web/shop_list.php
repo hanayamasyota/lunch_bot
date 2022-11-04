@@ -111,8 +111,8 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-8 py-5 align-middle bg-white w-100 h-100">
-                    <textarea disabled style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
+                <td class="col-8 py-2 align-middle bg-white w-100 h-100">
+                    <textarea readonly style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
 
