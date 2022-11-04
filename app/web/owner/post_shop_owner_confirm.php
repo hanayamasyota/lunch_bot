@@ -1,6 +1,10 @@
 <?php
 session_start();
 
+if (!(isset($_SESSION['email']))) {
+    header('Location:owner_login.php');
+}
+
 require_once '../../DBConnection.php';
 require_once '../../database_function/eventshops_sql.php';
 
