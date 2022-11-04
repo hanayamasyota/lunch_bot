@@ -69,15 +69,6 @@ error_log('count:'.count($shops));
                     <img src="data:image/png;base64,<?= $shop["photo"] ?>" class="w-100" style="height: auto;">
                 </td>
             </tr>
-
-            <!-- <tr>
-                <th class="col-4 py-3 align-middle bg-lightbrown">
-                    種類
-                </th>
-                <td class="col-8 py-3 align-middle bg-white">
-                    実店舗(固定店舗)
-                </td>
-            </tr> -->
             
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">

@@ -47,8 +47,6 @@ error_log('count:'.count($shops));
         </div>
     </header>
 
-
-
     <!-- Contents-->
     <div class="container mt-3 text-centerpy-5">
     <!--2.イベント・移動店舗テーブル-->
@@ -66,19 +64,10 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     写真
                 </th>
-                <td class="col-8 py-5 align-middle bg-white">
+                <td class="col-8 py-2 align-middle bg-white">
                     <img src="data:image/png;base64,<?= $shop["photo"] ?>" class="w-100" style="height: auto;">
                 </td>
             </tr>
-
-            <!-- <tr>
-                <th class="col-4 py-3 align-middle bg-lightbrown">
-                    種類
-                </th>
-                <td class="col-8 py-3 align-middle bg-white">
-                    イベント・移動店舗
-                </td>
-            </tr> -->
             
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
@@ -112,8 +101,8 @@ error_log('count:'.count($shops));
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
                 </th>
-                <td class="col-8 py-5 align-middle bg-white">
-                    <textarea disabled style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
+                <td class="col-8 py-2 align-middle bg-white">
+                    <textarea readonly style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
 
