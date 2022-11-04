@@ -52,7 +52,7 @@ error_log('count:'.count($shops));
     <div class="container mt-3 text-center py-5">
     <!--1.固定店舗テーブル-->
     <?php 
-    if ($shops == 0) {
+    if ($shops != 0) {
         foreach($shops as $shop) {
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap" style="table-layout: fixed; word-wrap: break-word;">
@@ -130,7 +130,7 @@ error_log('count:'.count($shops));
         }
     } else {
     ?>
-        <p>まだ登録されていません。</p>
+        <div class="py-5"><p>まだ登録されていません。</p></div>
     <?php } ?>
     </div>
 
