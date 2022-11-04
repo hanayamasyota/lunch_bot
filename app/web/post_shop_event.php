@@ -139,11 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <a href="getlatlng.php?type=shop">こちらのリンクから設定してください</a><br>
+                    <a href="getlatlng.php?type=user">こちらのリンクから設定してください</a><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
             </tr>
+
             <tr>
                 <th class="col-3 py-5 align-middle bg-lightbrown">
                     写真

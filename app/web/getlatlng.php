@@ -74,7 +74,6 @@ session_start();
             });
         }
 
-
         function search(){ // 検索ボタンクリック時
             var place = document.getElementById('place').value;
             var geocoder = new google.maps.Geocoder();
@@ -105,9 +104,7 @@ session_start();
             $url = 'owner/post_event_owner.php';
         } else {
             $url = 'post_shop_event.php';
-        }
-
-        ?>
+        } ?>
         <form method="post" action="<?php echo $url; ?>">
             <div class="input">
                 緯度：<input type="text" id="lat" name="lat" value="" size="20">　
