@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-4 align-middle bg-white">
                     <input type="time" name="opentime">から
                     <input type="time" name="closetime">まで<br>
-                    ※定休日等については下の「特徴」欄に<br>入力してください
+                    <small>※定休日等については下の「特徴」欄に入力してください</small>
                 </td>
             </tr>
             
