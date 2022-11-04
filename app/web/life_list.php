@@ -51,10 +51,9 @@ error_log('count:'.count($shops));
 
     <!-- Contents-->
     <div class="container mt-3 text-centerpy-5">
-        <form method="post" action="#">
-
     <!--2.イベント・移動店舗テーブル-->
     <?php 
+    if ($shops == 0) {
         foreach($shops as $shop) {
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
@@ -68,19 +67,18 @@ error_log('count:'.count($shops));
                     写真
                 </th>
                 <td class="col-8 py-5 align-middle bg-white">
-                    <?php //fgetsでバイナリデータの取得自体はできたが表示ができない ?>
-                    <img src="<?php echo 'data:image/png;base64,'.$shop["photo"].';'; ?>">
+                    <img src="data:image/png;base64,<?= $shop["photo"] ?>" class="w-100" style="height: auto;">
                 </td>
             </tr>
 
-            <tr>
+            <!-- <tr>
                 <th class="col-4 py-3 align-middle bg-lightbrown">
                     種類
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
                     イベント・移動店舗
                 </td>
-            </tr>
+            </tr> -->
             
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
@@ -131,9 +129,10 @@ error_log('count:'.count($shops));
         </table>
     <?php
         }
+    } else {
     ?>
-
-        </form>
+    <p>まだ登録されていません。</p>
+    <?php } ?>
     </div>
 
     <!-- Footer-->
