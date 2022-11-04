@@ -53,13 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </header>
 
-
-
     <!-- Contents-->
     <div class="container dx-2 my-5 bg-lightnavy text-center">
         <form method="post" action="post_shop_owner_confirm.php" enctype="multipart/form-data">
     
-        <table class="table border-top border-navy align-middle mb-4 text-nowrap">
+        <table class="table border-top border-navy align-middle mb-4 text-nowrap" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
                 <th class="col-3 py-2 align-middle bg-lightbrown">

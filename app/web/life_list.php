@@ -8,7 +8,6 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
 <?php
 $shops = getShopsEventsData(2);
-error_log('count:'.count($shops));
 ?>
 
 <!DOCTYPE html>

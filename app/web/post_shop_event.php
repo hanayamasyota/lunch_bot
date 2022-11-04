@@ -45,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-5">
-        <div class="container px-3 pt-2 bg-imagecolor">
+    <header class="mt-4">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">昼休みの過ごし方登録</p>
         </div>
     </header>
@@ -54,10 +54,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <!-- Contents-->
-    <div class="container dx-1 my-5 bg-lightnavy">
+    <div class="container dx-1 my-5 bg-lightnavy text-center">
         <form method="post" action="post_shop_event_confirm.php" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $_GET["userid"]; ?>" name="userid">
-        <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed; ">
+        <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
                 <th class="col-3 py-4 align-middle bg-lightbrown">
