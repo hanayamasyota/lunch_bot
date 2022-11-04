@@ -247,12 +247,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 event[0].style.display = 'none';
                 event[1].style.display = 'none';
                 life[0].style.display = '';
+                life[1].style.display = '';
             }
             else {
                 shop[0].style.display = 'none';
                 shop[1].style.display = 'none';
                 event[0].style.display = 'none';
                 event[1].style.display = 'none';
+                life[0].style.display = 'none';
+                life[1].style.display = 'none';
             }
         }
 
