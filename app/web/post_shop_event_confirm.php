@@ -12,10 +12,10 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $userId = $_POST["userid"];
     $shopname = $_POST['shopname'];
 
-    $openDate = null,
-    $closeDate = null,
-    $openTime = null,
-    $closeTime = null,
+    $openDate = null;
+    $closeDate = null;
+    $openTime = null;
+    $closeTime = null;
 
     $num = 0;
     if ($_POST["radio1"] == 'shop') {
