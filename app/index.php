@@ -316,7 +316,6 @@ foreach ($events as $event) {
             }
         }
 
-        //次、前の5件表示
         else if ($beforeMessage === 'search') {
             //設定が完了しているかチェック
             $userData = checkUsers($event->getUserId());
@@ -337,6 +336,10 @@ foreach ($events as $event) {
                 showShop($page, $event->getUserId(), $bot, $event->getReplyToken());
             } else if ($event->getText() === '3') {
                 //イベントを検索
+                replyTextMessage($bot, $event->getReplyToken(),
+                "何を探しますか？\n1:固定店舗\n2:イベント・移動店舗\n3:場所",
+                );
+                updateUser($event->getUserId(), 'event');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                     "無効な値です。入力しなおしてください。");
@@ -344,6 +347,37 @@ foreach ($events as $event) {
             }
         }
 
+
+        else if ($beforeMessage === 'event') {
+            if ($event->getText() === '1') {
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                '固定店舗を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '固定店舗を探す',
+                '登録されている固定店舗の一覧を表示します。',
+                new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                    '固定店舗一覧へ', SERVER_ROOT.'/web/shop_list.php'),
+                );
+            } else if ($event->getText() === '2') {
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                'イベント・移動店舗を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', 'イベント・移動店舗を探す',
+                '登録されているイベント・移動店舗の一覧を表示します。',
+                new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                    'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/event_list.php'),
+                );
+            } else if ($event->getText() === '3') {
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                '場所を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '場所を探す',
+                '登録されている場所の一覧を表示します。',
+                new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                    'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/life_list.php'),
+                );
+            } else {
+                replyTextMessage($bot, $event->getReplyToken(),
+                    "無効な値です。入力しなおしてください。");
+                continue;
+            }
+        }
+
+        //次、前の5件表示
         else if (strpos($beforeMessage, '_search') !== false) {
             $userId = $event->getUserId();
             //件数を超えて次のページにいけないようにする
