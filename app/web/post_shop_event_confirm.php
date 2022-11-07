@@ -32,9 +32,30 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
         $openTime = $_POST["spendstart"];
         $closeTime = $_POST["spendend"];
     }
+
+    $genre = '';
+    //ジャンル項目でその他を選択した場合
+    if ($_POST["genre"] == '0') {
+        $newGenre = $_POST["newgenre"];
+        if (isset($newGenre)) {
+            //ジャンルがすでにあるかを確認
+            $genreData = checkGenre($newGenre);
+            if ($genreData != PDO::PARAM_NULL) {
+                //既存のジャンルのIDで登録
+                $genre = $genreData["genre_id"];
+            } else {
+                //新しくジャンルを登録(idはserial)
+                //登録したジャンルのIDを取得
+                $genreId = strval(registerGenre($newGenre));
+                //新しいIDを$genreに代入
+                $genre = $genreId;
+            }
+        }
+    } else {
+        $genre = $_POST['genre'];
+    }
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
-    $genre = $_POST['genre'];
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 

@@ -1,4 +1,11 @@
 <?php
+require_once '../DBConnection.php';
+require_once '../database_function/genre_sql.php';
+
+define('TABLE_NAME_GENRE', 'genre');
+?>
+
+<?php
 $shopname = '';
 $openDate = '';
 $openTime = '';
@@ -165,14 +172,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-4 align-middle bg-white">
                     <select name="genre" class="d-inline" required id ="select1">
                         <option hidden value="">選択してください</option>
-                        <option value="1">食事</option>
-                        <option value="2">学び</option>
-                        <option value="3">工作・体験</option>
-                        <option value="4">フリーマーケット</option>
-                        <option value="5">芸術・音楽</option>
-                        <option value="999">その他</option>
+                        <?php 
+                        $genres = getAllGenres();
+                        foreach ($genres as $genre) {
+                        ?>
+                        <option value="<?php echo $genre["genre_id"]; ?>"><?php echo $genre["genre_name"]; ?></option>
+                        <?php } ?>
+                        <option value="0">その他</option>
                     </select>
-                    <input type="text" class="w-25 d-inline" id="newgenre"><br>
+                    <input type="text" name="newgenre" class="w-25 d-inline" id="newgenre"><br>
                     <small class="text-left">セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
                 </td>
             </tr>
