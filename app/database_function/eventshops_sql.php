@@ -23,7 +23,7 @@ function getShopsEventsData($type, $page) {
 //店ごとのレビュー数取得
 function getDataCountByEventShops($type) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(event_id) as count from ' .TABLE_NAME_REVIEWS. ' where ? = kind';
+    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = kind';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($type));
     // if no record
