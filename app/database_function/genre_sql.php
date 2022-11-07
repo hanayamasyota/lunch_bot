@@ -14,6 +14,7 @@ function registerGenre($genreName) {
         return PDO::PARAM_NULL;
     } else {
         return $row;
+    }
 }
 
 function getAllGenres() {
