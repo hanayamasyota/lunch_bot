@@ -13,6 +13,19 @@ function registerGenre($genreName) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
+        return $row["genre_id"];
+    }
+}
+
+function getGenre($genreId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select genre_name from ' . TABLE_NAME_GENRE . ' where ? = genre_id';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($genreId));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
         return $row;
     }
 }
