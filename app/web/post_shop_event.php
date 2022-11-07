@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy text-center">
-        <form method="post" action="getlatlng.php?type=user" name="post_form" enctype="multipart/form-data">
+        <form method="post" action="post_shop_event_confirm.php" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
