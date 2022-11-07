@@ -26,7 +26,7 @@ function getGenre($genreId) {
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
-        return $row;
+        return $row["genre_name"];
     }
 }
 
