@@ -26,6 +26,7 @@ function getAllGenres() {
         return PDO::PARAM_NULL;
     } else {
         return $rows;
+    }
 }
 
 function checkGenre($genreName) {
