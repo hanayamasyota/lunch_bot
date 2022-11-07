@@ -6,16 +6,44 @@ define('TABLE_NAME_GENRE', 'genre');
 ?>
 
 <?php
-$shopname = '';
+$userId = '';
+$name = '';
+
 $openDate = '';
 $openTime = '';
 $closeTime = '';
+
+$holdDateStart = '';
+$holdDateEnd = '';
+$holdStart = '';
+$holdEnd = '';
+
+$spendStart = '';
+$spendEnd = '';
+
 $lat = 0.0;
 $lng = 0.0;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST["userid"];
+    $name = $_POST["shopname"];
+
+    $openDate = $_POST["opendate"];
+    $openTime = $_POST["opentime"];
+    $closeTime = $_POST["closetime"];
+
+    $holdDateStart = $_POST["holddatestart"];
+    $holdDateEnd = $_POST["holddateend"];
+    $holdStart = $_POST["holdstart"];
+    $holdEnd = $_POST["holdend"];
+
+    $spendStart = $_POST["spendstart"];
+    $spendEnd = $_POST["spendend"];
+
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
 } else {
+    $userId = $_GET["userid"];
     $lat = null;
     $lng = null;
 }
@@ -63,8 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy text-center">
-        <form method="post" action="post_shop_event_confirm.php" enctype="multipart/form-data">
-        <input type="hidden" value="<?php echo $_GET["userid"]; ?>" name="userid">
+        <form method="post" action="post_shop_event_confirm.php" name="post_form" enctype="multipart/form-data">
+        <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
             <tr>
@@ -146,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <a href="getlatlng.php?type=user">こちらのリンクから設定してください</a><br>
+                    <a href="getlatlng.php?type=user" onclick="document.post_form.submit()">こちらのリンクから設定してください</a><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>

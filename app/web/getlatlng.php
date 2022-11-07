@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+error_log('post::'. $_POST["name"]);
 ?>
 
 <!doctype html>
