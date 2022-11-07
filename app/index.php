@@ -354,21 +354,21 @@ foreach ($events as $event) {
                 '固定店舗を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '固定店舗を探す',
                 '登録されている固定店舗の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    '固定店舗一覧へ', SERVER_ROOT.'/web/shop_list.php'),
+                    '固定店舗一覧へ', SERVER_ROOT.'/web/shop_list.php?now_page=1'),
                 );
             } else if ($event->getText() === '2') {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 'イベント・移動店舗を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', 'イベント・移動店舗を探す',
                 '登録されているイベント・移動店舗の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/event_list.php'),
+                    'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/event_list.php?now_page=1'),
                 );
             } else if ($event->getText() === '3') {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 '場所を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '場所を探す',
                 '登録されている場所の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                    '場所一覧へ', SERVER_ROOT.'/web/life_list.php'),
+                    '場所一覧へ', SERVER_ROOT.'/web/life_list.php?now_page=1'),
                 );
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),

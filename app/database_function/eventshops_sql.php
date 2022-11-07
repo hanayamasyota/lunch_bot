@@ -7,15 +7,30 @@ function registerEventShopsByOwner($email, $owner, $kind, $shopName, $img, $link
     $sth->execute(array($email, $owner, $kind, $shopName, $img, $link, $holdStart, $holdEnd, $openTime, $closeTime, $genre, $feature, $lat, $lng));
 }
 
-function getShopsEventsData($type) {
+function getShopsEventsData($type, $page) {
+    $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
-    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = kind';
+    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = kind limit 5 offset ?';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($type));
+    $sth->execute(array($type, $start));
     if (!($rows = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
         return $rows;
+    }
+}
+
+//店ごとのレビュー数取得
+function getDataCountByEventShops($type) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select count(event_id) as count from ' .TABLE_NAME_REVIEWS. ' where ? = kind';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($type));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row["count"];
     }
 }
 

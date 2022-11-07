@@ -6,10 +6,22 @@ require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 define('TABLE_NAME_GENRE', 'genre');
+define('ONE_PAGE', 5);
 ?>
 
 <?php
-$shops = getShopsEventsData(2);
+//自分が設定している場所から一定距離のものだけ表示したい
+$page = $_GET["now_page"];
+$maxPage = 0;
+$pageRange = 0;
+
+$shops = getShopsEventsData(2, $page);
+//場所の件数
+if ($shops != 0) {
+    $maxPage = ceil(getDataCountByEventShops(2) / ONE_PAGE);
+    $pageRange = getPageRange($page, $maxPage);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +133,7 @@ $shops = getShopsEventsData(2);
     <?php if ($reviewData != PDO::PARAM_NULL) { ?>
             <div class="pagination">
                 <?php if ($page >= 2) { ?>
-                    <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
+                    <a href="life_list.php?now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
                 <?php } else { ?>
                     <span class="first_last_page">&laquo;</span>
                 <?php } ?>
@@ -131,13 +143,13 @@ $shops = getShopsEventsData(2);
                         <?php if ($i == $page) { ?>
                             <span class="now_page_number"><?php echo $i; ?></span>
                         <?php } else { ?>
-                            <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+                            <a href="life_list.php?now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
                         <?php } ?>
                     <?php } ?>
                 <?php } ?>
 
                 <?php if ($page < $maxPage) { ?>
-                    <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page + 1; ?>" class="page_feed">&raquo;</a>
+                    <a href="life_list.php?now_page=<?php echo $page + 1; ?>" class="page_feed">&raquo;</a>
                 <?php } else { ?>
                     <span class="first_last_page">&raquo;</span>
                 <?php } ?>
@@ -173,3 +185,17 @@ $shops = getShopsEventsData(2);
 </body>
 
 </html>
+
+<?php
+function getPageRange($page, $maxPage)
+{
+    if ($page == 1 || $page == $maxPage) {
+        $range = 4;
+    } elseif ($page == 2 || $page == $maxPage - 1) {
+        $range = 3;
+    } else {
+        $range = 2;
+    }
+    return $range;
+}
+?>

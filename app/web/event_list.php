@@ -1,13 +1,26 @@
 <?php 
 require_once '../DBConnection.php';
 require_once '../database_function/eventshops_sql.php';
+require_once '../database_function/genre_sql.php';
 require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+define('TABLE_NAME_GENRE', 'genre');
+define('ONE_PAGE', 5);
 ?>
 
 <?php
-$shops = getShopsEventsData(1);
+//自分が設定している場所から一定距離のものだけ表示したい
+$page = $_GET["now_page"];
+$maxPage = 0;
+$pageRange = 0;
+
+$shops = getShopsEventsData(1, $page);
+//イベントの件数
+if ($shops != 0) {
+    $maxPage = ceil(getDataCountByEventShops(1) / ONE_PAGE);
+    $pageRange = getPageRange($page, $maxPage);
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +42,7 @@ $shops = getShopsEventsData(1);
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/review.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
@@ -61,6 +75,7 @@ $shops = getShopsEventsData(1);
                 <?php echo $shop["event_name"]; ?>
             </div>
 
+            <?php if (isset($shop["photo"])) { ?>
             <tr>
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     写真
@@ -69,7 +84,9 @@ $shops = getShopsEventsData(1);
                     <img src="data:image/png;base64,<?= $shop["photo"] ?>" class="w-100" style="height: auto;">
                 </td>
             </tr>
+            <?php } ?>
             
+            <?php if ((isset($shop["open_date"])) && (isset($shop["close_date"]))) { ?>
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
                     開催日
@@ -78,7 +95,9 @@ $shops = getShopsEventsData(1);
                     <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
                 </td>
             </tr>
+            <?php } ?>
 
+            <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
             <tr>
                 <th class="col-4 py-4 align-middle bg-lightbrown">
                     開催時間
@@ -88,6 +107,7 @@ $shops = getShopsEventsData(1);
                     <?php echo $shop["close_time"]; ?>まで
                 </td>
             </tr>
+            <?php } ?>
 
             <tr>
                 <th class="col-4 py-3 align-middle bg-lightbrown">
@@ -98,6 +118,7 @@ $shops = getShopsEventsData(1);
                 </td>
             </tr>
 
+            <?php if (isset($shop["feature"])) { ?>
             <tr>
                 <th class="col-4 py-5 align-middle bg-lightbrown">
                     特徴
@@ -106,7 +127,9 @@ $shops = getShopsEventsData(1);
                     <textarea readonly style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
+            <?php } ?>
 
+            <?php if (isset($shop["url"])) { ?>
             <tr>
                 <th class="col-4 py-3 align-middle bg-lightbrown">
                     リンク
@@ -115,10 +138,36 @@ $shops = getShopsEventsData(1);
                     <?php echo $shop["url"]; ?>
                 </td>
             </tr>
+            <?php } ?>
             
         </table>
+    <?php } ?>
+    <?php if ($reviewData != PDO::PARAM_NULL) { ?>
+        <div class="pagination">
+            <?php if ($page >= 2) { ?>
+                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
+            <?php } else { ?>
+                <span class="first_last_page">&laquo;</span>
+            <?php } ?>
+
+            <?php for ($i = 1; $i <= $maxPage; $i++) { ?>
+                <?php if (($i >= $page - $pageRange) && ($i <= $page + $pageRange)) { ?>
+                    <?php if ($i == $page) { ?>
+                        <span class="now_page_number"><?php echo $i; ?></span>
+                    <?php } else { ?>
+                        <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $i; ?>" class="page_number"><?php echo $i; ?></a>
+                    <?php } ?>
+                <?php } ?>
+            <?php } ?>
+
+            <?php if ($page < $maxPage) { ?>
+                <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page + 1; ?>" class="page_feed">&raquo;</a>
+            <?php } else { ?>
+                <span class="first_last_page">&raquo;</span>
+            <?php } ?>
+        </div>
+    <?php } ?>
     <?php
-        }
     } else {
     ?>
         <div class="py-5"><p>まだ登録されていません。</p></div>
