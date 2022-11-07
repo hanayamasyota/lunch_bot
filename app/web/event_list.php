@@ -6,7 +6,6 @@ require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 define('TABLE_NAME_GENRE', 'genre');
-define('ONE_PAGE', 5);
 ?>
 
 <?php
