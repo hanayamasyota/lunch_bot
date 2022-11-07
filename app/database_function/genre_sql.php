@@ -6,7 +6,7 @@ function registerGenre($genreName) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($genreName));
 
-    $sql = 'select id from ' . TABLE_NAME_GENRE . ' where ? = genre_name';
+    $sql = 'select genre_id from ' . TABLE_NAME_GENRE . ' where ? = genre_name';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($genreName));
     // if no record
