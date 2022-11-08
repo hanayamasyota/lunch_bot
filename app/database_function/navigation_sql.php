@@ -21,6 +21,20 @@ function checkShopByNavigation($userId, $shopNum) {
         return $row;
     }
 }
+
+function getRandomByNavigation($userId) {
+    //ナビゲーションテーブルからshopidを取り出す
+    $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by rand() limit 3';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    $shopIds = $sth->fetchall();
+    if (!($data = $sth->fetchAll())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $data;
+    }
+}
+
 function getShopDataByNavigation($userId, $shopNum) {
     $dbh = dbConnection::getConnection();
     $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND shopnum BETWEEN ? AND ?';
@@ -33,6 +47,7 @@ function getShopDataByNavigation($userId, $shopNum) {
         return $data;
     }
 }
+
 function deleteNavigation($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'delete from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';

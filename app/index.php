@@ -308,6 +308,39 @@ foreach ($events as $event) {
                 "何を探しますか？\n1:固定店舗\n2:イベント・移動店舗\n3:場所",
                 );
                 updateUser($event->getUserId(), 'event');
+            } else if ($event->getText() === '4') {
+                //おすすめを検索
+                $recShops = getRandomByNavigation($userId);
+                $columnArray = array();
+                foreach ($recShops as $recShop) {
+                    //urlのクエリを作成
+                    $data = array(
+                        'shopid' => $recShop["shopid"],
+                        'shopname' => $recShop["shopname"],
+                        'conveni' => 0,
+                        'now_page' => 1,
+                    );
+                    $query = http_build_query($data);
+            
+                    $actionArray = array();
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+                        '店舗情報', $recShop['url']));
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
+                        //みんなのレビューを表示するページへ移動
+                        'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
+                    array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
+                        //おしたときにナビゲーションをしたい !
+                        'ここに行く!', 'visited_'.$recShop['shopid'].'_'.$recShop['shopname'].'_'.$recShop['shopnum'].'_'.$recShop['shop_lat'].'_'.$recShop['shop_lng']));
+                    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
+                        $recShop['shopname'],
+                        //何分かかるかを表示
+                        $recShop['genre'] . ' 徒歩' . $recShop['arrival_time'],
+                        $recShop['image'],
+                        $actionArray,
+                    );
+                    array_push($columnArray, $column);
+                }
+                replyCarouselTemplate($bot, $event->getReplyToken(), 'おすすめのお店', $columnArray);
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                     "無効な値です。入力しなおしてください。");
@@ -388,7 +421,7 @@ foreach ($events as $event) {
             //設定チェック
             error_log('userid:'.$event->getUserId());
             replyTextMessage($bot, $event->getReplyToken(), 
-            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る");
+            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店");
             updateUser($event->getUserId(), 'search');
 
         //review
@@ -439,8 +472,6 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
-
-        //
 
         //テスト用
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
