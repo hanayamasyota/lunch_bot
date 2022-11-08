@@ -24,6 +24,7 @@ function checkShopByNavigation($userId, $shopNum) {
 
 function getRandomByNavigation($userId) {
     //ナビゲーションテーブルからshopidを取り出す
+    $dbh = dbConnection::getConnection();
     $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by rand() limit 3';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
