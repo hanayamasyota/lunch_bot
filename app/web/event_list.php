@@ -113,7 +113,7 @@ if ($shops != 0) {
                     ジャンル
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <?php echo GENRE_LIST[$shop["genre"]]; ?>
+                    <?php echo getGenre($shop["genre"]); ?>
                 </td>
             </tr>
 
