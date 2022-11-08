@@ -193,3 +193,17 @@ if ($shops != 0) {
 </body>
 
 </html>
+
+<?php
+function getPageRange($page, $maxPage)
+{
+    if ($page == 1 || $page == $maxPage) {
+        $range = 4;
+    } elseif ($page == 2 || $page == $maxPage - 1) {
+        $range = 3;
+    } else {
+        $range = 2;
+    }
+    return $range;
+}
+?>

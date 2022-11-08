@@ -135,8 +135,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <?php } ?>
                             <option value="999">その他</option>
                         </select>
-                        <input type="text" class="w-25 d-inline"><br>
-                        <small>セレクトボックス内にない場合は<br>その他を選択し右欄に入力してください</small>
+                        <input type="text" class="w-75"><br>
+                        <small>セレクトボックス内にない場合は<br>その他を選択しテキストボックスに入力してください</small>
                     </td>
                 </tr>
                 <tr>
