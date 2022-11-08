@@ -28,7 +28,7 @@ function getRandomByNavigation($userId) {
     $sql = 'select * from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by random() limit 3';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
-    $shopIds = $sth->fetchall();
+    // $shopIds = $sth->fetchall();
     if (!($data = $sth->fetchAll())) {
         return PDO::PARAM_NULL;
     } else {

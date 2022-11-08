@@ -310,7 +310,7 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'event');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
-                $recShops = getRandomByNavigation($userId);
+                $recShops = getRandomByNavigation($event->getUserId());
                 $columnArray = array();
                 foreach ($recShops as $recShop) {
                     //urlのクエリを作成
