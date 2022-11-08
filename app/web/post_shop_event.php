@@ -208,7 +208,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <?php } ?>
                         <option value="0">その他</option>
                     </select>
-                    <input type="text" name="newgenre" class="w-75" id="newgenre"><br>
+                    <br>
+                    <input type="text" name="newgenre" class="w-50" id="newgenre"><br>
                     <small class="text-left">セレクトボックス内にない場合はその他を<br>選択しテキストボックスに入力してください</small>
                 </td>
             </tr>
