@@ -310,39 +310,7 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'event');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
-                $recShops = getRandomByNavigation($event->getUserId());
-                error_log('count:'.count($recShops));
-                $columnArray = array();
-                foreach ($recShops as $recShop) {
-                    error_log('shopname:'.$recShop["shopname"]);
-                    //urlのクエリを作成
-                    $data = array(
-                        'shopid' => $recShop['shopid'],
-                        'shopname' => $recShop['shopname'],
-                        'conveni' => 0,
-                        'now_page' => 1,
-                    );
-                    $query = http_build_query($data);
-            
-                    $actionArray = array();
-                    array_push($actionArray, new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-                        '店舗情報', $recShop['url']));
-                    array_push($actionArray, new \LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
-                        //みんなのレビューを表示するページへ移動
-                        'レビューを見る', SERVER_ROOT."/web/review_list.php?".$query));
-                    array_push($actionArray, new \LINE\LINEBot\TemplateActionBuilder\PostbackTemplateActionBuilder (
-                        //おしたときにナビゲーションをしたい !
-                        'ここに行く!', 'visited_'.$recShop['shopid'].'_'.$recShop['shopname'].'_'.$recShop['shopnum'].'_'.$recShop['shop_lat'].'_'.$recShop['shop_lng']));
-                    $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
-                        $recShop['shopname'],
-                        //何分かかるかを表示
-                        $recShop['genre'] . ' 徒歩' . $recShop['arrival_time'],
-                        $recShop['image'],
-                        $actionArray,
-                    );
-                    array_push($columnArray, $column);
-                }
-                replyCarouselTemplate($bot, $event->getReplyToken(), 'おすすめのお店', $columnArray);
+                searchReccomend($bot, $event->getReplyToken());
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                     "無効な値です。入力しなおしてください。");
