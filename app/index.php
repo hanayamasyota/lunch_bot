@@ -314,6 +314,7 @@ foreach ($events as $event) {
                 error_log('count:'.count($recShops));
                 $columnArray = array();
                 foreach ($recShops as $recShop) {
+                    error_log('shopname:'.$recShop["shopname"]);
                     //urlのクエリを作成
                     $data = array(
                         'shopid' => $recShop['shopid'],
