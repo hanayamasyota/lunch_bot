@@ -316,8 +316,8 @@ foreach ($events as $event) {
                 foreach ($recShops as $recShop) {
                     //urlのクエリを作成
                     $data = array(
-                        'shopid' => $recShop["shopid"],
-                        'shopname' => $recShop["shopname"],
+                        'shopid' => $recShop['shopid'],
+                        'shopname' => $recShop['shopname'],
                         'conveni' => 0,
                         'now_page' => 1,
                     );
