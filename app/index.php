@@ -311,6 +311,7 @@ foreach ($events as $event) {
             } else if ($event->getText() === '4') {
                 //おすすめを検索
                 $recShops = getRandomByNavigation($event->getUserId());
+                error_log('count:'.count($recShops));
                 $columnArray = array();
                 foreach ($recShops as $recShop) {
                     //urlのクエリを作成
