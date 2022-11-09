@@ -330,8 +330,8 @@ function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
     return $url;
 }
 
-function searchReccomend($bot, $token) {
-    $recShops = getRandomByNavigation($event->getUserId());
+function searchReccomend($bot, $token, $userId) {
+    $recShops = getRandomByNavigation($userId);
     $columnArray = array();
     foreach ($recShops as $recShop) {
         //urlのクエリを作成

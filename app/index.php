@@ -310,7 +310,7 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'event');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
-                searchReccomend($bot, $event->getReplyToken());
+                searchReccomend($bot, $event->getReplyToken(), $event->getUserId());
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                     "無効な値です。入力しなおしてください。");
