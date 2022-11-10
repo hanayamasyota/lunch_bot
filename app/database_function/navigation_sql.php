@@ -76,7 +76,7 @@ function getMatchByNavigation($userId, $userAmbi) {
 
     $sql = 'select * from ' .TABLE_NAME_NAVIGATION. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($showShopList[0]));
+    $sth->execute(array($userId, $showShopList[0]));
     $rows = $sth->fetchall();
     return $rows;
 }
