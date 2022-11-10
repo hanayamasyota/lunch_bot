@@ -339,7 +339,7 @@ function searchReccomend($userId, $bot, $token, $userAmbi) {
         replyTextMessage($bot, $token,
         'おすすめが見つかりませんでした。'
         );
-        break;
+        return;
     }
 
     $columnArray = array();
