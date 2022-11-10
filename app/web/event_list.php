@@ -123,7 +123,7 @@ if ($shops != 0) {
                     特徴
                 </th>
                 <td class="col-8 py-2 align-middle bg-white">
-                    <textarea readonly style="resize: none; border: none;" class="w-100 h-100" rows="5"><?php echo $shop["feature"]; ?></textarea>
+                    <textarea readonly style="resize: none; border: none;" class="w-100 h-100" rows="7"><?php echo $shop["feature"]; ?></textarea>
                 </td>
             </tr>
             <?php } ?>
@@ -134,7 +134,7 @@ if ($shops != 0) {
                     リンク
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <?php echo $shop["url"]; ?>
+                    <a href><?php echo $shop["url"]; ?></a>
                 </td>
             </tr>
             <?php } ?>
