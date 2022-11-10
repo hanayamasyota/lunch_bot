@@ -310,7 +310,7 @@ foreach ($events as $event) {
                 updateUser($event->getUserId(), 'event');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
-                showConveni(1, $event->getReplyToken(), $bot, $event->getUserId());
+                showConveni(1, $event->getUserId(), $bot, $event->getReplyToken());
                 // searchReccomend($bot, $event->getReplyToken(), $event->getUserId());
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
