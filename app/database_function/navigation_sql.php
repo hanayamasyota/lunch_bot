@@ -74,7 +74,7 @@ function getMatchByNavigation($userId, $userAmbi) {
             $count = 3;
         }
         $randArray = array_rand($matchShopList, $count);
-        array_push($showShopList, $matchShopList[$randArray[0]]);
+        array_push($showShopList, $matchShopList[$randArray]);
         error_log(print_r($showShopList, true));
     } else {
         return null;
