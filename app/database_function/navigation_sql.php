@@ -62,9 +62,12 @@ function getMatchByNavigation($userId, $userAmbi) {
                 array_push($matchShopList, $shopId["shopid"]);
             }
     }
-    error_log(print_r($matchShopList, true));
+    error_log('matchshop:'.print_r($matchShopList, true));
+    //↑これは取得できた
 
     $count = count($matchShopList);
+    error_log('count:'.$count);
+    
     $showShopList = array();
     if (!($count == 0)) {
         if ($count > 3) {
