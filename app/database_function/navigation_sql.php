@@ -62,17 +62,22 @@ function getMatchByNavigation($userId, $userAmbi) {
                 array_push($matchShopList, $shopId["shopid"]);
             }
     }
+    error_log(print_r($matchShopList, true));
 
     $count = count($matchShopList);
     $showShopList = array();
     if (!($count == 0)) {
         if ($count > 3) {
+            error_log('count:'.$count);
             $count = 3;
         }
         $showShopList = array_rand($matchShopList, $count);
+        error_log(print_r($showShopList, true));
     } else {
         return null;
     }
+    error_log(print_r($showShopList, true));
+
 
     $sql = 'select * from ' .TABLE_NAME_NAVIGATION. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
