@@ -335,6 +335,12 @@ function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
 
 function searchReccomend($userId, $bot, $token, $userAmbi) {
     $recShops = getRandomByNavigation($userId, $userAmbi);
+    if (!(isset($recShops))) {
+        replyTextMessage($bot, $token,
+        'おすすめが見つかりませんでした。'
+        );
+        break;
+    }
 
     $columnArray = array();
     foreach ($recShops as $recShop) {
