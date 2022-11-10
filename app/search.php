@@ -287,6 +287,7 @@ function showConveni($page, $userId, $bot, $token) {
     }
 
     $columnArray = array();
+    $count = 1;
     foreach ($conveniData as $conveni) {
         //urlのクエリを作成
         $data = array(
@@ -312,6 +313,8 @@ function showConveni($page, $userId, $bot, $token) {
             $actionArray,
         );
         array_push($columnArray, $column);
+
+        $count += 1;
     }
     updateUser($userId, 'conveni_search');
     
@@ -330,8 +333,9 @@ function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
     return $url;
 }
 
-function searchReccomend($bot, $token, $userId) {
+function searchReccomend($userId, $bot, $token) {
     $recShops = getRandomByNavigation($userId);
+
     $columnArray = array();
     foreach ($recShops as $recShop) {
         //urlのクエリを作成
