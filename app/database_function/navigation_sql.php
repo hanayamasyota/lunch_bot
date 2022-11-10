@@ -73,7 +73,7 @@ function getMatchByNavigation($userId, $userAmbi) {
         if ($count > 3) {
             $count = 3;
         } else if ($count == 1) {
-            $showShopList = $matchShopList[0];
+            $showShopList = array_push(array_rand($matchShopList, $count));
         } else {
             $showShopList = array_rand($matchShopList, $count);
         }
