@@ -333,8 +333,8 @@ function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
     return $url;
 }
 
-function searchReccomend($userId, $bot, $token) {
-    $recShops = getRandomByNavigation($userId);
+function searchReccomend($userId, $bot, $token, $userAmbi) {
+    $recShops = getRandomByNavigation($userId, $userAmbi);
 
     $columnArray = array();
     foreach ($recShops as $recShop) {

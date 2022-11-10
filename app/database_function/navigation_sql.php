@@ -22,6 +22,7 @@ function checkShopByNavigation($userId, $shopNum) {
     }
 }
 
+//完全にランダムで取り出し
 function getRandomByNavigation($userId) {
     //ナビゲーションテーブルからshopidを取り出す
     $dbh = dbConnection::getConnection();
@@ -34,6 +35,50 @@ function getRandomByNavigation($userId) {
     } else {
         return $data;
     }
+}
+
+//設定した雰囲気の中からランダムで取り出し
+function getMatchByNavigation($userId, $userAmbi) {
+    //ナビゲーションテーブルからshopidを取り出す
+    $dbh = dbConnection::getConnection();
+    $sql = 'select shopid from ' . TABLE_NAME_NAVIGATION . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    $shopIds = $sth->fetchall();
+
+    $matchShopList = array();
+    foreach ($shopIds as $shopId) {
+            $sql = 'select review from ' .TABLE_NAME_REVIEWS. ' where ? = shopid and review_num = 2';
+            $sth = $dbh->prepare($sql);
+            $sth->execute(array($shopId["shopid"]));
+            $ambis = $sth->fetchall();
+            $ambiList = array();
+            foreach ($ambis as $ambi) {
+                array_push($ambiList, $ambi["review"]);
+            }
+            $matchAmbi = return_max_count_item($ambiList);
+
+            if ($userAmbi == $matchAmbi) {
+                array_push($matchShopList, $shopId["shopid"]);
+            }
+    }
+
+    $count = count($matchShopList);
+    $showShopList = array();
+    if (!($count == 0)) {
+        if ($count > 3) {
+            $count = 3;
+        }
+        $showShopList = array_rand($matchShopList, $count);
+    } else {
+        return null;
+    }
+
+    $sql = 'select * from ' .TABLE_NAME_NAVIGATION. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($showShopList[0]));
+    $rows = $sth->fetchall();
+    return $rows;
 }
 
 function getShopDataByNavigation($userId, $shopNum) {
@@ -69,4 +114,40 @@ function getGenreByNavigation($userId, $shopId) {
     }
 }
 
+
+function return_max_count_item($list, &$count = null)
+{
+    if (empty($list)) {
+        $count = 0;
+        return null;
+    }
+
+    //値を集計して降順に並べる
+    $list = array_count_values($list);
+    arsort($list);
+
+    //最初のキーを取り出す
+    $before_key = '';
+    $before_val = 0;
+    $no1_list = array();
+
+    //2番目以降の値との比較
+    foreach ($list as $key => $val) {
+        if ($before_val > $val) {
+            break;
+        } else {
+            // 個数が同値の場合は配列に追加する
+            array_push($no1_list, $key);
+            $before_key = $key;
+            $before_val = $val;
+        }
+    }
+    $count = $before_val;
+    if (count($no1_list) > 1) {
+        //同値の場合の処理があればここに書く
+        return $no1_list[0];
+    } else {
+        return $before_key;
+    }
+}
 ?>

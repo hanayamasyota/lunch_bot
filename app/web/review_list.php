@@ -344,7 +344,7 @@ function return_max_count_item($list, &$count = null)
     }
     $count = $before_val;
     if (count($no1_list) > 1) {
-        //同値の場合の処理があればここに書く、今回はarray_shiftで最初に追加したkeyを返した
+        //同値の場合の処理があればここに書く
         return $no1_list;
     } else {
         return $before_key;
