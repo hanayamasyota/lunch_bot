@@ -9,7 +9,7 @@ function registerUserVisitedShops($userId, $shopId, $shopName, $time, $shopNum, 
 
 function getUserVisitedShopData($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopname, visittime, shopnum from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime desc';
+    $sql = 'select shopname, visittime, shopnum, conveni from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime desc';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
