@@ -218,7 +218,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 混み具合
                             </th>
                             <td class="col-7 py-3 bg-white">
-                                <meter max=5 value=<?php $crowdArray[$i]; ?> low=4 high=2 optimum=1></meter>
+                                <meter max=5 value=<?php echo $crowdArray[$i]; ?> low=4 high=2 optimum=1></meter>
                             </td>
                         </tr>
                         <tr>
@@ -245,7 +245,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 混み具合
                             </th>
                             <td class="col-7 py-3 bg-white">
-                                <meter max=5 value=<?php $crowdArray[$i]; ?> low=4 high=2 optimum=1></meter>
+                                <meter max=5 value=<?php echo $crowdArray[$i]; ?> low=4 high=2 optimum=1></meter>
                             </td>
                         </tr>
                         <tr>
@@ -253,7 +253,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 品ぞろえ
                             </th>
                             <td class="col-7 py-3 bg-white">
-                                <meter max=5 value=<?php $assortmentArray[$i]; ?> low=2 high=4 optimum=5></meter>
+                                <meter max=5 value=<?php echo $assortmentArray[$i]; ?> low=2 high=4 optimum=5></meter>
                             </td>
                         </tr>
                         <?php } ?>
