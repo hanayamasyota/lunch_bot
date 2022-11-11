@@ -209,8 +209,14 @@ foreach ($events as $event) {
                 //「ここに行く」を押した店の番号と店名の一覧を表示する
                 $replyMessage = "過去に行った中からレビューしたいお店の番号を入力してください。\n\n";
                 $visitedShops = getUserVisitedShopData($event->getUserId());
+                $count = 1;
                 foreach ($visitedShops as $visitedShop) {
-                    $replyMessage .= $visitedShop['shopnum'] . ': ' . $visitedShop['shopname']."\n";
+                    if ($visitedShop["conveni"]) {
+                        $replyMessage .= ($count+10) . ': ' . $visitedShop['shopname']."\n";
+                    } else {
+                        $replyMessage .= $count . ': ' . $visitedShop['shopname']."\n";
+                    }
+                    $count += 1;
                 }
                 replyTextMessage($bot, $event->getReplyToken(),
                 $replyMessage);
@@ -236,8 +242,12 @@ foreach ($events as $event) {
         }
         if ($beforeMessage === 'review_entry') {
             //navigationテーブルに番号が存在するか確認
-            if (checkShopByUserVisitedShops($event->getUserId(), intval($event->getText())) != PDO::PARAM_NULL) {
-                $shop = checkShopByUserVisitedShops($event->getUserId(), intval($event->getText()));
+            $num = intval($event->getText());
+            if ($num > 10) {
+                $num - 10;
+            } 
+            if (checkShopByUserVisitedShops($event->getUserId(), $num) != PDO::PARAM_NULL) {
+                $shop = checkShopByUserVisitedShops($event->getUserId(), ($num-1));
 
                 //urlのクエリを作成
                 $data = array(

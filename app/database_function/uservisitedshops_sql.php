@@ -9,7 +9,7 @@ function registerUserVisitedShops($userId, $shopId, $shopName, $time, $shopNum, 
 
 function getUserVisitedShopData($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopname, visittime, shopnum from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select shopname, visittime, shopnum from '. TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime desc';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
@@ -20,16 +20,15 @@ function getUserVisitedShopData($userId) {
     }
 }
 
-function checkShopByUserVisitedShops($userId, $shopNum) {
+function checkShopByUserVisitedShops($userId, $number) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') AND ? = shopnum';
+    $sql = 'select shopid, shopname from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $shopNum));
-    // if no record
-    if (!($row = $sth->fetch())) {
-        return PDO::PARAM_NULL;
-    } else {
-        return $row;
+    $rows = $sth->fetchall();
+
+    if (isset($rows[$number])) {
+        return $rows[$number];
     }
 }
 
