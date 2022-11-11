@@ -70,7 +70,7 @@ function searchShop($userId, $bot, $token) {
     } else {
         foreach($shopInfo as $shop) {
             //到着時間を計算する(必要なときのみ表示)
-            // $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
+            $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             
             registerNavigation(
@@ -81,8 +81,8 @@ function searchShop($userId, $bot, $token) {
                 floatval($shop["latitude"]),
                 floatval($shop["longitude"]),
 
-                // $arrivalTime,
-                " 〇〇分",
+                $arrivalTime,
+                // " 〇〇分",
 
                 $shop["genre"],
                 $shop["image"],
@@ -261,7 +261,6 @@ function searchConveni($userId, $bot, $token) {
                 floatval($conveni[4]),
 
                 $conveni[5],
-                // " 〇〇分",
 
                 'convenience',
                 null,

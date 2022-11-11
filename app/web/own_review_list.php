@@ -125,6 +125,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                     <?php $time = explode(' ', $shop["review_time"])[0]; ?>
                     <thead><?php echo "レビュー日：".$time ?></thead>
                     <?php if ($shop["conveni"] == 0) { ?>
+                    <!-- 飲食店 -->
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             評価
@@ -176,6 +177,7 @@ if ($ownReviewData != PDO::PARAM_NULL) {
                         </td>
                     </tr>
                     <?php } else { ?>
+                    <!-- コンビニ -->
                     <tr>
                         <th class="col-5 py-3 bg-lightorange text-dark">
                             行った時間
