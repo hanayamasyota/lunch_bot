@@ -244,7 +244,7 @@ foreach ($events as $event) {
             //navigationテーブルに番号が存在するか確認
             $num = intval($event->getText());
             if ($num > 10) {
-                $num - 10;
+                $num -= 10;
             } 
             if (checkShopByUserVisitedShops($event->getUserId(), ($num-1)) != PDO::PARAM_NULL) {
                 $shop = checkShopByUserVisitedShops($event->getUserId(), ($num-1));
