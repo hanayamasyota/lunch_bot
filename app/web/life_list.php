@@ -122,7 +122,7 @@ if ($shops != 0) {
                     リンク
                 </th>
                 <td class="col-8 py-3 align-middle bg-white">
-                    <?php echo $shop["url"]; ?>
+                    <a href="<?php echo $shop["url"]; ?>">詳細はこちら</a>
                 </td>
             </tr>
             <?php } ?>
