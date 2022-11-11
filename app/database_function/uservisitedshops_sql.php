@@ -22,7 +22,7 @@ function getUserVisitedShopData($userId) {
 
 function checkShopByUserVisitedShops($userId, $number) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select shopid, shopname from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime';
+    $sql = 'select shopid, shopname from ' . TABLE_NAME_USERVISITEDSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') order by visittime desc';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     $rows = $sth->fetchall();

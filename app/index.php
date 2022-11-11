@@ -246,7 +246,7 @@ foreach ($events as $event) {
             if ($num > 10) {
                 $num - 10;
             } 
-            if (checkShopByUserVisitedShops($event->getUserId(), $num) != PDO::PARAM_NULL) {
+            if (checkShopByUserVisitedShops($event->getUserId(), ($num-1)) != PDO::PARAM_NULL) {
                 $shop = checkShopByUserVisitedShops($event->getUserId(), ($num-1));
 
                 //urlのクエリを作成
