@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>特徴
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <textarea name="feature" class="w-75" rows="5" placeholder="住所や定休日などの情報を含め、お店の特徴を入力してください。" required></textarea>
+                    <textarea name="feature" class="w-75" rows="5" placeholder="住所や定休日などの情報を含め、お店の特徴を入力してください。※200文字以内" maxlength="200" required></textarea>
                 </td>
             </tr>
 

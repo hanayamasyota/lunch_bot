@@ -219,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     特徴
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <textarea name="feature" class="w-75" rows="4" maxlength="100" placeholder="それはどんなところですか？特徴を入力してください。※100文字以内"></textarea>
+                    <textarea name="feature" class="w-75" rows="4" maxlength="200" placeholder="それはどんなところですか？特徴を入力してください。※200文字以内"></textarea>
                 </td>
             </tr>
         </table>
