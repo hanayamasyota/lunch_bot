@@ -150,7 +150,7 @@ function showShop($page, $userId, $bot, $token) {
     }
     updateUser($userId, 'shop_search');
     replyMultiMessage($bot, $token, 
-    'てすとだよ',
+    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('てすとだよ'),
     new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
         'お店を探す:'.($page+1).'ページ目',
         new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
