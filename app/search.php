@@ -153,8 +153,7 @@ function showShop($page, $userId, $bot, $token) {
     'てすとだよ',
     new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
         'お店を探す:'.($page+1).'ページ目',
-        $columnArray,
-    ),
+        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
     );
 }
 
