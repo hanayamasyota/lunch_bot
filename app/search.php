@@ -70,7 +70,7 @@ function searchShop($userId, $bot, $token) {
     } else {
         foreach($shopInfo as $shop) {
             //到着時間を計算する(必要なときのみ表示)
-            $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
+            // $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             
             registerNavigation(
@@ -81,8 +81,8 @@ function searchShop($userId, $bot, $token) {
                 floatval($shop["latitude"]),
                 floatval($shop["longitude"]),
 
-                $arrivalTime,
-                // " 〇〇分",
+                // $arrivalTime,
+                " 〇〇分",
 
                 $shop["genre"],
                 $shop["image"],
@@ -132,7 +132,8 @@ function showShop($page, $userId, $bot, $token) {
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
             //何分かかるかを表示
-            $shop['shopnum'].'/'.$shopLength.'件:'.$shop['genre'] . ' 徒歩' . $shop['arrival_time'],
+            $shop['shopnum']."/".$shopLength."件:".$shop['genre'] . "\n徒歩 " . $shop['arrival_time'].
+            "\n滞在可能時間 ",
             $shop['image'],
             $actionArray,
         );
