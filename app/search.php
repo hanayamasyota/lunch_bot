@@ -66,7 +66,7 @@ function searchShop($userId, $bot, $token) {
     $shopInfo = getRestaurantInfomation($userId, floatval($location['latitude']), floatval($location['longitude']));
     //0件だった場合に店が無かったと表示させる
     if (($shopInfo) == false) {
-        replyTextMessage($bot, $token, '店が見つかりませんでした。');
+        replyTextMessage($bot, $token, '近くに飲食店が見つかりませんでした。');
     } else {
         foreach($shopInfo as $shop) {
             //到着時間を計算する(必要なときのみ表示)
@@ -92,14 +92,14 @@ function searchShop($userId, $bot, $token) {
     }
 }
 //登録済みの店を表示
-function showShop($page, $userId, $bot, $token) {
+function showShop($page, $userId, $bot, $token, $first) {
     //カルーセルは5件まで
     //1ページに5店表示(現在のページはデータベースに登録)
     $start = $page*5;
     $shopData = getShopDataByNavigation($userId, ($start+1));
     //shopid, shopname, shopnum, shop_lat, shop_lng, genre, image, url
     if ($shopData == PDO::PARAM_NULL) {
-        error_log('エラー：店のデータがありません');
+        error_log('エラー：飲食店のデータがありません');
     }
     $shopLength = getDataByUserShopData($userId, 'shop_length');
 
@@ -154,19 +154,30 @@ function showShop($page, $userId, $bot, $token) {
     }
     updateUser($userId, 'shop_search');
 
-    //昼休み中かどうか判定
-    $message = "5件ごとにお店を表示します\n「次へ」:次の5件を表示\n「前へ」:前の5件を表示";
-    if ($lunch) {
-        $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
+    if ($first) {
+        //昼休み中かどうか判定
+        $message = "5件ごとにお店を表示します\n「次へ」:次の5件を表示\n「前へ」:前の5件を表示";
+        if ($lunch) {
+            $message .= "\n※滞在可能時間は現在時刻から昼休みの終了時刻を基準にしています。";
+        } else {
+            $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
+        }
+        $replyArray = array();
+        $replyArray["column_array"] = $columnArray;
+        $replyArray["page"] = $page;
+        $replyArray["alt_message"] = $message; 
+        replyMultiMessage($bot, $token, 
+        new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
+        new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+            'お店を探す:'.($page+1).'ページ目',
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
+        );
     } else {
-        $message .= "\n※滞在可能時間は現在時刻から昼休みの終了時刻を基準にしています。";
+        replyCarouselTemplate($bot, $token,
+            'お店を探す:'.($page+1).'ページ目',
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+        );
     }
-    replyMultiMessage($bot, $token, 
-    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
-    new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
-        'お店を探す:'.($page+1).'ページ目',
-        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
-    );
 }
 
 require 'vendor/autoload.php';
@@ -297,7 +308,7 @@ function searchConveni($userId, $bot, $token) {
     }
 }
 
-function showConveni($page, $userId, $bot, $token) {
+function showConveni($page, $userId, $bot, $token, $first) {
     $start = $page*5;
     
     $conveniData = getShopDataByNavigation($userId, ($start+1));
@@ -334,7 +345,8 @@ function showConveni($page, $userId, $bot, $token) {
             'ここに行く!', 'visited_'.$conveni['shopid'].'_'.$conveni['shopname'].'_'.$conveni['shopnum'].'_'.$conveni['shop_lat'].'_'.$conveni['shop_lng']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $conveni["shopname"],
-            $conveni['shopnum'].'/'.$shopLength.'件: 徒歩' . $conveni['arrival_time'],
+            $conveni['shopnum']."/".$shopLength."件".
+            "\n徒歩" . $conveni['arrival_time'],
             SERVER_ROOT.'imgs/nuko.png',
             $actionArray,
         );
@@ -344,8 +356,20 @@ function showConveni($page, $userId, $bot, $token) {
     }
     updateUser($userId, 'conveni_search');
     
-    
-    replyCarouselTemplate($bot, $token, 'コンビニを探す:'.($page+1).'ページ目', $columnArray);
+    if ($first) {
+        $message = "5件ごとにお店を表示します\n「次へ」:次の5件を表示\n「前へ」:前の5件を表示";
+        replyMultiMessage($bot, $token, 
+        new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
+        new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+            'お店を探す:'.($page+1).'ページ目',
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
+        );
+    } else {
+        replyCarouselTemplate($bot, $token,
+        'お店を探す:'.($page+1).'ページ目',
+        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+        );
+    }
 }
 
 function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
