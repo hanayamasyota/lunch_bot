@@ -70,7 +70,7 @@ function searchShop($userId, $bot, $token) {
     } else {
         foreach($shopInfo as $shop) {
             //到着時間を計算する(必要なときのみ表示)
-            // $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
+            $arrivalTime = getTimeInfo(floatval($location['latitude']), floatval($location['longitude']), $shop['latitude'], $shop['longitude']);
             //for文内でnavigationテーブルへのデータ追加をする
             
             registerNavigation(
@@ -81,8 +81,8 @@ function searchShop($userId, $bot, $token) {
                 floatval($shop["latitude"]),
                 floatval($shop["longitude"]),
 
-                // $arrivalTime,
-                " 〇〇分",
+                $arrivalTime,
+                // " 〇〇分",
 
                 $shop["genre"],
                 $shop["image"],
@@ -108,6 +108,9 @@ function showShop($page, $userId, $bot, $token) {
         $showLength = 5;
     }
 
+    //昼休みの時刻を取得
+    $restTime = getRestTimeByUserId($userId);
+
     $columnArray = array();
     foreach ($shopData as $shop) {
         //urlのクエリを作成
@@ -120,15 +123,16 @@ function showShop($page, $userId, $bot, $token) {
         );
         $query = http_build_query($data);
 
+        $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
         //1件ごとに表示する情報
         $infoStr = $shop['shopnum']."/".$shopLength."件:".$shop['genre'].
                     "\n徒歩 " . $shop['arrival_time'].
-                    "\n滞在可能時間";
-        //昼休み中なら表示を変える
-        $infoStr .= "(現在時刻から)";
+                    "\n滞在可能時間 " . $stayTime . "分";
         //滞在可能時間が5分以下の場合は警告
+        if ($stayTime <= 5) {
+            $infoStr .= " (*'ω'*)";
+        }
 
-        //昼休み中かどうかをアナウンス
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shop['url']));
@@ -140,17 +144,21 @@ function showShop($page, $userId, $bot, $token) {
             'ここに行く!', 'visited_'.$shop['shopid'].'_'.$shop['shopname'].'_'.$shop['shopnum'].'_'.$shop['shop_lat'].'_'.$shop['shop_lng']));
         $column = new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselColumnTemplateBuilder (
             $shop['shopname'],
-            //何分かかるかを表示
-            $shop['shopnum']."/".$shopLength."件:".$shop['genre'] . "\n徒歩 " . $shop['arrival_time'].
-            "\n滞在可能時間 ",
+            $infoStr,
             $shop['image'],
             $actionArray,
         );
         array_push($columnArray, $column);
     }
     updateUser($userId, 'shop_search');
+
+    //昼休み中かどうか判定
+    $message = "5件ごとにお店を表示します。次の5件を表示したい場合は「次へ」、前の5件を表示したい場合は「前へ」と入力してください。\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
+    if () {
+
+    }
     replyMultiMessage($bot, $token, 
-    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder('てすとだよ'),
+    new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
     new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
         'お店を探す:'.($page+1).'ページ目',
         new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
@@ -386,5 +394,36 @@ function searchReccomend($userId, $bot, $token, $userAmbi) {
         array_push($columnArray, $column);
     }
     replyCarouselTemplate($bot, $token, 'おすすめのお店', $columnArray);
+}
+
+function getStayTime($restStart, $restEnd, $walkTime) {
+    // タイムゾーンを日本に
+    date_default_timezone_set('Asia/Tokyo');
+
+    // :をなくす
+    $now_list = explode(':', date('H:i'));
+    $start_list = explode(':', $restStart);
+    $end_list = explode(":", $restEnd);
+    
+    // 分になおす
+    $nowTime = ($now_list[0] * 60) + $now_list[1];
+    $startTime = ($start_list[0] * 60) + $start_list[1];
+    $endTime = ($end_list[0] * 60) + $end_list[1];
+
+    // 徒歩でかかる往復時間(分)
+    $roundTrip = intval((rtrim($walkTime, '分'))) * 2;
+    
+    // 現在時刻が昼休み時間内かどうか
+    $stayTime = array();
+    if ($nowTime >= $startTime && $nowTime <= $endTime) {
+        // 時間内
+        array_push($stayTime, $endTime - $nowTime - $roundTrip);
+        array_push($stayTime, true);
+    } else {
+        // 時間外
+        array_push($stayTime, $endTime - $startTime - $roundTrip);
+        array_push($stayTime, false);
+    }
+    return $stayTime;
 }
 ?>
