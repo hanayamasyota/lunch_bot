@@ -124,6 +124,8 @@ function showShop($page, $userId, $bot, $token) {
         $query = http_build_query($data);
 
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
+        $stayTime = $stayTime[0];
+        $lunch = $stayTime[1];
         //1件ごとに表示する情報
         $infoStr = $shop['shopnum']."/".$shopLength."件:".$shop['genre'].
                     "\n徒歩 " . $shop['arrival_time'].
@@ -153,9 +155,11 @@ function showShop($page, $userId, $bot, $token) {
     updateUser($userId, 'shop_search');
 
     //昼休み中かどうか判定
-    $message = "5件ごとにお店を表示します。次の5件を表示したい場合は「次へ」、前の5件を表示したい場合は「前へ」と入力してください。\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
-    if () {
-
+    $message = "5件ごとにお店を表示します\n「次へ」:次の5件を表示\n「前へ」:前の5件を表示";
+    if ($lunch) {
+        $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
+    } else {
+        $message .= "\n※滞在可能時間は現在時刻から昼休みの終了時刻を基準にしています。";
     }
     replyMultiMessage($bot, $token, 
     new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
