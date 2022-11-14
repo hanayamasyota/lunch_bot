@@ -120,6 +120,15 @@ function showShop($page, $userId, $bot, $token) {
         );
         $query = http_build_query($data);
 
+        //1件ごとに表示する情報
+        $infoStr = $shop['shopnum']."/".$shopLength."件:".$shop['genre'].
+                    "\n徒歩 " . $shop['arrival_time'].
+                    "\n滞在可能時間";
+        //昼休み中なら表示を変える
+        $infoStr .= "(現在時刻から)";
+        //滞在可能時間が5分以下の場合は警告
+
+        //昼休み中かどうかをアナウンス
         $actionArray = array();
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder (
             '店舗情報', $shop['url']));
@@ -140,7 +149,13 @@ function showShop($page, $userId, $bot, $token) {
         array_push($columnArray, $column);
     }
     updateUser($userId, 'shop_search');
-    replyCarouselTemplate($bot, $token, 'お店を探す:'.($page+1).'ページ目', $columnArray);
+    replyMultiMessage($bot, $token, 
+    'てすとだよ',
+    new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+        'お店を探す:'.($page+1).'ページ目',
+        $columnArray,
+    ),
+    );
 }
 
 require 'vendor/autoload.php';
