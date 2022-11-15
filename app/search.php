@@ -123,7 +123,6 @@ function showShop($page, $userId, $bot, $token, $first) {
         $query = http_build_query($data);
 
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
-        error_log(print_r($stayTime, true));
         $time = $stayTime[0];
         $lunch = $stayTime[1];
         //1件ごとに表示する情報
@@ -366,7 +365,7 @@ function showConveni($page, $userId, $bot, $token, $first) {
     } else {
         replyCarouselTemplate($bot, $token,
             'お店を探す:'.($page+1).'ページ目',
-            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+            $columnArray
         );
     }
 }
@@ -444,10 +443,10 @@ function getStayTime($restStart, $restEnd, $walkTime) {
     $stayTime = array();
     if ($nowTime >= $startTime && $nowTime <= $endTime) {
         // 時間内
-        array_push($stayTime, ($endTime - $nowTime - $roundTrip), 1);
+        array_push($stayTime, ($endTime - $nowTime - $roundTrip), true);
     } else {
         // 時間外
-        array_push($stayTime, ($endTime - $startTime - $roundTrip), 0);
+        array_push($stayTime, ($endTime - $startTime - $roundTrip), false);
     }
     return $stayTime;
 }
