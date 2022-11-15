@@ -122,9 +122,6 @@ function showShop($page, $userId, $bot, $token, $first) {
         );
         $query = http_build_query($data);
 
-        error_log('1'. $restTime["rest_start"]);
-        error_log('2'. $restTime["rest_end"]);
-        error_log('3'. $shop["arrival_time"]);
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
         error_log(print_r($stayTime, true));
         $time = $stayTime[0];
@@ -447,10 +444,10 @@ function getStayTime($restStart, $restEnd, $walkTime) {
     $stayTime = array();
     if ($nowTime >= $startTime && $nowTime <= $endTime) {
         // 時間内
-        array_push($stayTime, ($endTime - $nowTime - $roundTrip), true);
+        array_push($stayTime, ($endTime - $nowTime - $roundTrip), 1);
     } else {
         // 時間外
-        array_push($stayTime, ($endTime - $startTime - $roundTrip), false);
+        array_push($stayTime, ($endTime - $startTime - $roundTrip), 0);
     }
     return $stayTime;
 }
