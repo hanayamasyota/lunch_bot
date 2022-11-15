@@ -173,7 +173,7 @@ function showShop($page, $userId, $bot, $token, $first) {
     } else {
         replyCarouselTemplate($bot, $token,
             'お店を探す:'.($page+1).'ページ目',
-            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+            $columnArray,
         );
     }
 }
