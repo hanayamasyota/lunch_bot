@@ -123,6 +123,7 @@ function showShop($page, $userId, $bot, $token, $first) {
         $query = http_build_query($data);
 
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
+        error_log(print_r($stayTime, true));
         $stayTime = $stayTime[0];
         $lunch = $stayTime[1];
         //1件ごとに表示する情報
