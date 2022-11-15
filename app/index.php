@@ -98,10 +98,10 @@ try {
     error_log('parseEventRequest failed. InvalidEventRequestException => '.var_export($e, true));
 }
 
-$richMenuBuilder = new \LINE\LINEBot\RichMenuBuilder(
-    
-);
-$response = $bot->createRichMenu($richMenuBuilder);
+// $richMenuBuilder = new \LINE\LINEBot\RichMenuBuilder(
+
+// );
+// $response = $bot->createRichMenu($richMenuBuilder);
 
 //main//----------------------------------------------------------------
 foreach ($events as $event) {
