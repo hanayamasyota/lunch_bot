@@ -376,7 +376,6 @@ foreach ($events as $event) {
                 if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
                     updateUserShopData($userId, 'page_num', ($page+1));
                     if ($beforeMessage === 'shop_search') {
-                        error_log('あああああ');
                         showShop(($page+1), $userId, $bot, $event->getReplyToken(), false);
                     } else if ($beforeMessage === 'conveni_search') {
                         showConveni(($page+1), $userId, $bot, $event->getReplyToken(), false);
