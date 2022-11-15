@@ -124,14 +124,17 @@ function showShop($page, $userId, $bot, $token, $first) {
 
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
         error_log(print_r($stayTime, true));
-        $stayTime = $stayTime[0];
+        $time = $stayTime[0];
         $lunch = $stayTime[1];
         //1件ごとに表示する情報
+        if ($time <= 0) {
+            $time = '-';
+        }
         $infoStr = $shop['shopnum']."/".$shopLength."件:".$shop['genre'].
                     "\n徒歩 " . $shop['arrival_time'].
-                    "\n滞在可能時間 " . $stayTime . "分";
+                    "\n滞在可能時間 " . $time . "分";
         //滞在可能時間が5分以下の場合は警告
-        if ($stayTime <= 5) {
+        if ($time <= 5) {
             $infoStr .= " (*'ω'*)";
         }
 
@@ -162,10 +165,6 @@ function showShop($page, $userId, $bot, $token, $first) {
         } else {
             $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
         }
-        $replyArray = array();
-        $replyArray["column_array"] = $columnArray;
-        $replyArray["page"] = $page;
-        $replyArray["alt_message"] = $message; 
         replyMultiMessage($bot, $token, 
         new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
@@ -445,12 +444,10 @@ function getStayTime($restStart, $restEnd, $walkTime) {
     $stayTime = array();
     if ($nowTime >= $startTime && $nowTime <= $endTime) {
         // 時間内
-        array_push($stayTime, $endTime - $nowTime - $roundTrip);
-        array_push($stayTime, true);
+        array_push($stayTime, ($endTime - $nowTime - $roundTrip), true);
     } else {
         // 時間外
-        array_push($stayTime, $endTime - $startTime - $roundTrip);
-        array_push($stayTime, false);
+        array_push($stayTime, ($endTime - $startTime - $roundTrip), false);
     }
     return $stayTime;
 }
