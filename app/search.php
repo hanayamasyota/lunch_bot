@@ -122,9 +122,9 @@ function showShop($page, $userId, $bot, $token, $first) {
         );
         $query = http_build_query($data);
 
-        error_log('1', $restTime["rest_start"]);
-        error_log('2', $restTime["rest_end"]);
-        error_log('3', $shop["arrival_time"]);
+        error_log('1'. $restTime["rest_start"]);
+        error_log('2'. $restTime["rest_end"]);
+        error_log('3'. $shop["arrival_time"]);
         $stayTime = getStayTime($restTime["rest_start"], $restTime["rest_end"], $shop["arrival_time"]);
         error_log(print_r($stayTime, true));
         $time = $stayTime[0];
