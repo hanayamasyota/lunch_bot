@@ -102,7 +102,6 @@ function showShop($page, $userId, $bot, $token, $first) {
         error_log('エラー：飲食店のデータがありません');
     }
     $shopLength = getDataByUserShopData($userId, 'shop_length');
-
     $showLength = $shopLength-$start;
     if ($showLength > 5) {
         $showLength = 5;
