@@ -154,7 +154,7 @@ function showShop($page, $userId, $bot, $token, $first) {
     }
     updateUser($userId, 'shop_search');
 
-    if ($first) {
+    if ($first == true) {
         //昼休み中かどうか判定
         $message = "5件ごとにお店を表示します\n「次へ」:次の5件を表示\n「前へ」:前の5件を表示";
         if ($lunch) {
@@ -366,8 +366,8 @@ function showConveni($page, $userId, $bot, $token, $first) {
         );
     } else {
         replyCarouselTemplate($bot, $token,
-        'お店を探す:'.($page+1).'ページ目',
-        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+            'お店を探す:'.($page+1).'ページ目',
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
         );
     }
 }
