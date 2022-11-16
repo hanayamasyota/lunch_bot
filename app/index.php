@@ -133,18 +133,21 @@ foreach ($events as $event) {
 
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
-        if (strpos(getBeforeMessageByUserId($event->getUserId()), '_search') !== false) {
-            if (strpos($event->getPostbackData(), 'visited_') !== false) {
+        $postBackMsg = $event->getPostbackData();
+        if ($postBackMsg === 'score') {
+            replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
+        } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_search') !== false) {
+            if (strpos($postBackMsg, 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
                 $shopType = 0;
-                $shopId = explode('_', $event->getPostbackData())[1];
+                $shopId = explode('_', $postBackMsg)[1];
                 if (!(preg_match("/J[0-9]{9}$/", $shopId))) {
                     $shopType = 1;
                 }
-                $shopName = explode('_', $event->getPostbackData())[2];
-                $shopNum = intval(explode('_', $event->getPostbackData())[3]);
-                $lat = explode('_', $event->getPostbackData())[4];
-                $lng = explode('_', $event->getPostbackData())[5];
+                $shopName = explode('_', $postBackMsg)[2];
+                $shopNum = intval(explode('_', $postBackMsg)[3]);
+                $lat = explode('_', $postBackMsg)[4];
+                $lng = explode('_', $postBackMsg)[5];
                 //timestampのデータはdate関数を使って表示させる。詳しくは↓のURL。
                 //https://www.php.net/manual/ja/function.date.php
                 $nowTime = time()+32400;
@@ -463,6 +466,9 @@ foreach ($events as $event) {
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
             replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
+        } else if (strcmp($event->getText(), 'あ') == 0) {
+            //リッチメニューの切り替えテスト
+            $response = $bot->linkRichMenu($event->getUserId(), "richmenu-a06b20363313cadc7d63eb13f00d35da");
         }
     }
 }
