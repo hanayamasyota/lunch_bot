@@ -469,6 +469,8 @@ foreach ($events as $event) {
         } else if (strcmp($event->getText(), 'あ') == 0) {
             //リッチメニューの切り替えテスト
             $response = $bot->linkRichMenu($event->getUserId(), "richmenu-a06b20363313cadc7d63eb13f00d35da");
+        } else if (strcmp($event->getText(), 'い') == 0) {
+            $response = $bot->unlinkRichMenu("richmenu-a06b20363313cadc7d63eb13f00d35da");
         }
     }
 }
