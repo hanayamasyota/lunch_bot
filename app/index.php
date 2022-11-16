@@ -470,7 +470,7 @@ foreach ($events as $event) {
             //リッチメニューの切り替えテスト
             $response = $bot->linkRichMenu($event->getUserId(), "richmenu-a06b20363313cadc7d63eb13f00d35da");
         } else if (strcmp($event->getText(), 'い') == 0) {
-            $response = $bot->unlinkRichMenu("richmenu-a06b20363313cadc7d63eb13f00d35da");
+            $bot->unlinkRichMenu($event->getUserId());
         }
     }
 }
