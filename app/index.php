@@ -140,7 +140,7 @@ foreach ($events as $event) {
         } else if (strpos($postBackMsg, '_page') !== false) {
             if ($postBackMsg === 'next_page') {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                $range = getDataByUserShopData($userId->getUserId(), 'shop_length');
+                $range = getDataByUserShopData($event->getUserId(), 'shop_length');
                 nextPage($page, $beforeMessage, $range, $bot, $event->getUserId(), $event->getReplyToken());
             } else {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
