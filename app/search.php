@@ -166,7 +166,7 @@ function showShop($page, $userId, $bot, $token, $first) {
         }
         $message .= "\n\nPowered by ホットペッパー Webサービス";
         $actionArray = array();
-        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'), new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'));
+        array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'));
         replyMultiMessage($bot, $token, 
             new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
                 '飲食店を探す',
