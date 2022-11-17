@@ -134,7 +134,7 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         $postBackMsg = $event->getPostbackData();
-        $beforeMessage = getBeforeMessageByUserId($event->getUserId();
+        $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         if ($postBackMsg === 'score') {
             replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
         } else if (strpos($postBackMsg, '_page') !== false) {
@@ -146,7 +146,7 @@ foreach ($events as $event) {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 beforePage($page, $beforeMessage, $bot, $event->getUserId(), $event->getReplyToken());
             }
-        } else if (strpos($beforeMessage, '_search')) !== false) {
+        } else if (strpos($beforeMessage, '_search') !== false) {
             if (strpos($postBackMsg, 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
                 $shopType = 0;
