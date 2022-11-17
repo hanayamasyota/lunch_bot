@@ -171,7 +171,7 @@ function showShop($page, $userId, $bot, $token, $first) {
             new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
                 '飲食店を探す',
                 new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-                '飲食店を探す', $message, SERVER_ROOT."/imgs/hirumatiGO.jpg", $actionArray)
+                '飲食店を探す', $message, SERVER_ROOT."/imgs/hirumatiGO.png", $actionArray)
             ),
             new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
                 'お店を探す:'.($page+1).'ページ目',
