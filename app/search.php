@@ -169,6 +169,11 @@ function showShop($page, $userId, $bot, $token, $first) {
         array_push($actionArray, new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'), new \LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'));
         replyMultiMessage($bot, $token, 
             new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+                '飲食店を探す',
+                new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+                '飲食店を探す', $message, SERVER_ROOT."/imgs/hirumatiGO.jpg", $actionArray)
+            ),
+            new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
                 'お店を探す:'.($page+1).'ページ目',
                 new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
             )
