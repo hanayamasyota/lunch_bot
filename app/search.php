@@ -164,6 +164,7 @@ function showShop($page, $userId, $bot, $token, $first) {
         } else {
             $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
         }
+        $message .= "\n\nPowered by ホットペッパー Webサービス";
         replyMultiMessage($bot, $token, 
         new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
