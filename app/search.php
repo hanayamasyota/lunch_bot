@@ -169,7 +169,7 @@ function showShop($page, $userId, $bot, $token, $first) {
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             '飲食店を探す',
             new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-            '飲食店を探す', $message, $SERVER_ROOT."/web/review_list.php", 
+            '飲食店を探す', $message, SERVER_ROOT."/web/review_list.php", 
             [
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 '他の過ごし方を探す', '戻る'),
