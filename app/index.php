@@ -134,18 +134,19 @@ foreach ($events as $event) {
     // postbackイベント
     if ($event instanceof \LINE\LINEBot\Event\PostbackEvent) {
         $postBackMsg = $event->getPostbackData();
+        $beforeMessage = getBeforeMessageByUserId($event->getUserId();
         if ($postBackMsg === 'score') {
             replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
         } else if (strpos($postBackMsg, '_page') !== false) {
             if ($postBackMsg === 'next_page') {
                 $page = getDataByUserShopData($userId, 'page_num');
                 $range = getDataByUserShopData($userId, 'shop_length');
-                nextPage($page, $beforeMessage, $range, $bot, $userId, $event->getReplyToken());
+                nextPage($page, $beforeMessage, $range, $bot, $event->getUserId(), $event->getReplyToken());
             } else {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
-                beforePage($page, $beforeMessage, $bot, $userId, $event->getReplyToken());
+                beforePage($page, $beforeMessage, $bot, $event->getUserId(), $event->getReplyToken());
             }
-        } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_search') !== false) {
+        } else if (strpos($beforeMessage, '_search')) !== false) {
             if (strpos($postBackMsg, 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
                 $shopType = 0;
@@ -213,6 +214,8 @@ foreach ($events as $event) {
             updateUser($event->getUserId(), null);
             replyTextMessage($bot, $event->getReplyToken(),
             '「'.$mode.'」がキャンセルされました。');
+            //デフォルトのリッチメニューに変更
+            $bot->unlinkRichMenu($event->getUserId());
         }
 
     // before_sendが設定されている場合 //
