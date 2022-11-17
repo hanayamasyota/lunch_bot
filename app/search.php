@@ -165,16 +165,8 @@ function showShop($page, $userId, $bot, $token, $first) {
             $message .= "\n※滞在可能時間は設定された昼休みの時間を基準にしています。";
         }
         $message .= "\n\nPowered by ホットペッパー Webサービス";
-        $builder = replyButtonsBuilder('飲食店を探す', SERVER_ROOT."/imgs/hirumatiGO.png", '飲食店を探す', $message,
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '他の過ごし方を探す', '戻る'
-            ),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'メインメニューに戻る', '終了'
-            ),
-        );
-        replyMultiMessage($bot, $token, 
-            $builder,
+        replyMultiMessage($bot, $token,
+            new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
             new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
                 'お店を探す:'.($page+1).'ページ目',
                 new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
