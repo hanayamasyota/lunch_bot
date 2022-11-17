@@ -136,6 +136,15 @@ foreach ($events as $event) {
         $postBackMsg = $event->getPostbackData();
         if ($postBackMsg === 'score') {
             replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
+        } else if (strpos($postBackMsg, '_page') !== false) {
+            if ($postBackMsg === 'next_page') {
+                $page = getDataByUserShopData($userId, 'page_num');
+                $range = getDataByUserShopData($userId, 'shop_length');
+                nextPage($page, $beforeMessage, $range, $bot, $userId, $event->getReplyToken());
+            } else {
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                beforePage($page, $beforeMessage, $bot, $userId, $event->getReplyToken());
+            }
         } else if (strpos(getBeforeMessageByUserId($event->getUserId()), '_search') !== false) {
             if (strpos($postBackMsg, 'visited_') !== false) {
                 // postbackテキストからidを抜き出す
@@ -315,11 +324,13 @@ foreach ($events as $event) {
                 searchConveni($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showConveni($page, $event->getUserId(), $bot, $event->getReplyToken(), true);
+                $response = $bot->linkRichMenu($event->getUserId(), "richmenu-c5f761472cc1e38878dee3e3a77cfca3");
             } else if ($event->getText() === '2') {
                 //飲食店を検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showShop($page, $event->getUserId(), $bot, $event->getReplyToken(), true);
+                $response = $bot->linkRichMenu($event->getUserId(), "richmenu-c5f761472cc1e38878dee3e3a77cfca3");
             } else if ($event->getText() === '3') {
                 //イベントを検索
                 replyTextMessage($bot, $event->getReplyToken(),
@@ -470,6 +481,7 @@ foreach ($events as $event) {
             //リッチメニューの切り替えテスト
             $response = $bot->linkRichMenu($event->getUserId(), "richmenu-a06b20363313cadc7d63eb13f00d35da");
         } else if (strcmp($event->getText(), 'い') == 0) {
+            //デフォルトのリッチメニューに戻すテスト
             $bot->unlinkRichMenu($event->getUserId());
         }
     }

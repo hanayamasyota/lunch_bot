@@ -450,4 +450,30 @@ function getStayTime($restStart, $restEnd, $walkTime) {
     }
     return $stayTime;
 }
+
+function nextPage($page, $beforeMessage, $range, $bot, $userId, $token) {
+    //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
+    if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
+        updateUserShopData($userId, 'page_num', ($page+1));
+        if ($beforeMessage === 'shop_search') {
+            showShop(($page+1), $userId, $bot, $token, false);
+        } else if ($beforeMessage === 'conveni_search') {
+            showConveni(($page+1), $userId, $bot, $token, false);
+        }
+    } else {
+        replyTextMessage($bot, $token, 'これ以上次へは進めません。');
+    }
+}
+function beforePage($page, $beforeMessage, $bot, $userId, $token) {
+    if ($page >= 1) {
+        updateUserShopData($userId, 'page_num', ($page-1));
+        if ($beforeMessage === 'shop_search') {
+            showShop(($page-1), $userId, $bot, $token, false);
+        } else if ($beforeMessage === 'conveni_search') {
+            showConveni(($page-1), $userId, $bot, $token, false);
+        }
+    } else {
+        replyTextMessage($bot, $token, 'これ以上前には戻れません。');
+    }
+}
 ?>
