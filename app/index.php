@@ -408,7 +408,7 @@ foreach ($events as $event) {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
             }
-            else if (strcmp($event->getText(), '戻る')) {
+            else if (strcmp($event->getText(), '戻る') == 0) {
                 updateUser($event->getUserId(), 'search');
                 replyTextMessage($bot, $event->getReplyToken(), 
                 "ジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店");
