@@ -139,8 +139,8 @@ foreach ($events as $event) {
             replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
         } else if (strpos($postBackMsg, '_page') !== false) {
             if ($postBackMsg === 'next_page') {
-                $page = getDataByUserShopData($userId, 'page_num');
-                $range = getDataByUserShopData($userId, 'shop_length');
+                $page = getDataByUserShopData($event->getUserId(), 'page_num');
+                $range = getDataByUserShopData($userId->getUserId(), 'shop_length');
                 nextPage($page, $beforeMessage, $range, $bot, $event->getUserId(), $event->getReplyToken());
             } else {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
