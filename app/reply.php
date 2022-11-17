@@ -89,6 +89,21 @@ function replyButtonsTemplate($bot, $replyToken, $alternativeText, $imageUrl, $t
         error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
     }
 }
+function replyButtonsBuilder($alternativeText, $imageUrl, $title, $text, ...$actions) {
+    $actionArray = array();
+    //アクション追加
+    foreach($actions as $value) {
+        array_push($actionArray, $value);
+    }
+
+    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+        $alternativeText,
+        // ButtonTemplateBuilder...title, maintext, url, actionarray
+        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+        $title, $text, $imageUrl, $actionArray)
+    );
+    return $builder;
+}
 
 //Confirmテンプレート
 //引数...本文、アクション
