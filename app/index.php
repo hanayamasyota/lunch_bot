@@ -186,34 +186,27 @@ foreach ($events as $event) {
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                     '道案内を見る', $url),
                 );
+                //メインメニューに戻す
+                updateUser($event->getUserId(), null);
+                $bot->unlinkRichMenu($event->getUserId());
             }
         }
         continue;
     }
 
     // 今行っている動きをキャンセルする
-    if (strcmp($event->getText(), 'キャンセル') == 0) {
+    if (strcmp($event->getText(), '終了') == 0) {
         // before_sendの有無を確認、ない場合はスルー
         if ((getBeforeMessageByUserId($event->getUserId()) != PDO::PARAM_NULL) && (getBeforeMessageByUserId($event->getUserId()) != null)) {
-            $mode = '';
             $beforeMessage = getBeforeMessageByUserId($event->getUserId());
-            // reviewを含む場合
-            if (strpos($beforeMessage, 'review') !== false) {
-                $mode = 'レビュー';
-            }
-            //settingを含む場合
-            else if (strpos($beforeMessage, 'setting') !== false) {
-                $mode = 'ユーザ設定';
-            }
             //searchを含む場合
-            else if (strpos($beforeMessage, 'search') !== false) {
+            if (strpos($beforeMessage, 'search') !== false) {
                 updateUserShopData($event->getUserId(), 'page_num', 0);
-                $mode = 'ひるまちGO';
             }
             // 共通部分
             updateUser($event->getUserId(), null);
             replyTextMessage($bot, $event->getReplyToken(),
-            '「'.$mode.'」がキャンセルされました。');
+            'メインメニューに戻ります');
             //デフォルトのリッチメニューに変更
             $bot->unlinkRichMenu($event->getUserId());
         }
@@ -415,6 +408,11 @@ foreach ($events as $event) {
                     replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
                 }
             }
+            else if (strcmp($event->getText(), '戻る')) {
+                updateUser($event->getUserId(), 'search');
+                replyTextMessage($bot, $event->getReplyToken(), 
+                "ジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店");
+            }
         }
     } 
 
@@ -466,12 +464,12 @@ foreach ($events as $event) {
                 $message .= '更新したい設定を選んでください。';
                 createUser($event->getUserId(), 'setting_location');
             }
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'ユーザ設定', SERVER_ROOT.'/imgs/setting.png', 'ユーザ設定',
+            replyButtonsTemplate($bot, $event->getReplyToken(), '個人情報の設定', SERVER_ROOT.'/imgs/setting.png', '個人情報の設定',
             $message,
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '位置情報の設定・変更', 'line://nv/location'),
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '個人用設定(html)', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
+                '個人用設定', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
@@ -480,12 +478,6 @@ foreach ($events as $event) {
         } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
             replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
-        } else if (strcmp($event->getText(), 'あ') == 0) {
-            //リッチメニューの切り替えテスト
-            $response = $bot->linkRichMenu($event->getUserId(), "richmenu-a06b20363313cadc7d63eb13f00d35da");
-        } else if (strcmp($event->getText(), 'い') == 0) {
-            //デフォルトのリッチメニューに戻すテスト
-            $bot->unlinkRichMenu($event->getUserId());
         }
     }
 }

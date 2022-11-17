@@ -134,7 +134,7 @@ function showShop($page, $userId, $bot, $token, $first) {
                     "\n滞在可能時間 " . $time . "分";
         //滞在可能時間が5分以下の場合は警告
         if ($time <= 5) {
-            $infoStr .= " (*'ω'*)";
+            $infoStr .= " 利用可能な時間が短いです";
         }
 
         $actionArray = array();
@@ -166,7 +166,17 @@ function showShop($page, $userId, $bot, $token, $first) {
         }
         $message .= "\n\nPowered by ホットペッパー Webサービス";
         replyMultiMessage($bot, $token, 
-        new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
+        new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+            '飲食店を探す',
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+            '飲食店を探す', $message, $SERVER_ROOT."/web/review_list.php", 
+            [
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'メインメニューに戻る', '終了'),
+            ],)
+        ),
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             'お店を探す:'.($page+1).'ページ目',
             new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
