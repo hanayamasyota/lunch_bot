@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>店名
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="text" name="shopname" placeholder="飲食店の名前を入力" required>
+                    <input type="text" name="name" placeholder="飲食店の名前を入力" required>
                 </td>
             </tr>
             

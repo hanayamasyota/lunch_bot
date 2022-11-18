@@ -13,7 +13,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
 <?php
     $email = $_SESSION['email'];
-    $shopname = $_POST['shopname'];
+    $shopname = $_POST['name'];
     $openDate = $_POST['opendate'];
     $closeDate = $_POST['closedate'];
     $closeTime = $_POST['holdstart'];

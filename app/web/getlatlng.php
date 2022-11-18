@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-error_log('post::'. $_POST["name"]);
 ?>
 
 <!doctype html>
@@ -110,6 +108,32 @@ error_log('post::'. $_POST["name"]);
             $url = 'post_shop_event.php';
         } ?>
         <form method="post" action="<?php echo $url; ?>">
+            <input type="hidden" name="name" value="<?php echo $_POST["name"]; ?>">
+            <?php if ($_GET["type"] == 'shop'): ?>
+                <input type="hidden" name="map" value="<?php echo 1; ?>">
+                <input type="hidden" name="" value="">
+            <?php else if ($_GET["type"] == 'event'): ?>
+                <input type="hidden" name="map" value="<?php echo 1; ?>">
+                <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
+                <input type="hidden" name="closedate" value="<?php echo $_POST["closedate"]; ?>">
+                <input type="hidden" name="holdstart" value="<?php echo $_POST["holdstart"]; ?>">
+                <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
+                <input type="hidden" name="">
+            <?php else: ?>
+                <input type="hidden" name="map" value="<?php echo 1; ?>">
+                <input type="hidden" name="userid" value="<?php echo $_POST["userid"]; ?>">
+                <input type="hidden" name="radio1" value="<?php echo $_POST["radio1"]; ?>">
+                <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
+                <input type="hidden" name="opentime" value="<?php echo $_POST["opentime"]; ?>">
+                <input type="hidden" name="closetime" value="<?php echo $_POST["closetime"]; ?>">
+                <input type="hidden" name="holddatestart" value="<?php echo $_POST["holddatestart"]; ?>">
+                <input type="hidden" name="holddateend" value="<?php echo $_POST["holddateend"]; ?>">
+                <input type="hidden" name="spendstart" value="<?php echo $_POST["holdstart"]; ?>">
+                <input type="hidden" name="spendend" value="<?php echo $_POST["holdend"]; ?>">
+                <input type="hidden" name="holdstart" value="<?php echo $_POST["spqndstart"]; ?>">
+                <input type="hidden" name="holdend" value="<?php echo $_POST["spendend"]; ?>">
+            <?php endif; ?>
+
             <div class="input">
                 緯度：<input type="text" id="lat" name="lat" value="" class="input-group-lg w-25 h-2rem h5">
                 経度：<input type="text" id="lng" name="lng" value="" class="input-group-lg w-25 h-2rem h5"><br><br>

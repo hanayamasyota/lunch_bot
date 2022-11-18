@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <div class="text-danger d-inline">*</div>イベント名
                     </th>
                     <td class="col-8 py-2 align-middle bg-white">
-                        <input type="text" name="shopname" placeholder="イベント名を入力" required>
+                        <input type="text" name="name" placeholder="イベント名を入力" required>
                     </td>
                 </tr>
                 <tr>

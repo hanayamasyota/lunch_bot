@@ -6,8 +6,13 @@ define('TABLE_NAME_GENRE', 'genre');
 ?>
 
 <?php
+//ページの状態
+$status = 'input';
+
 $userId = '';
 $name = '';
+
+$type = 'shop';
 
 $openDate = '';
 $openTime = '';
@@ -27,6 +32,9 @@ $lng = 0.0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
     $name = $_POST["shopname"];
+    $type = $_POST["radio1"];
+
+    $map = $_POST["map"];
 
     $openDate = $_POST["opendate"];
     $openTime = $_POST["opentime"];
@@ -42,11 +50,100 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
+
+    if (!(isset($map))) {
+        if (isset($userId) && isset($name) && isset($type) && isset()) {
+            //登録
+            $num = 0;
+            if ($type == 'shop') {
+                $num=0;
+                $openDate = $_POST["opendate"];
+                $openTime = $_POST["opentime"];
+                $closeTime = $_POST["closetime"];
+            } else if ($type == 'event') {
+                $num=1;
+                $openDate = $_POST["holddatestart"];
+                $closeDate = $_POST["holddateend"];
+                $openTime = $_POST["holdstart"];
+                $closeTime = $_POST["holdend"];
+            } else if ($type == 'life') {
+                $num=2;
+                $openTime = $_POST["spendstart"];
+                $closeTime = $_POST["spendend"];
+            }
+
+            $genre = '';
+            //ジャンル項目でその他を選択した場合
+            if ($_POST["genre"] == '0') {
+                $newGenre = $_POST["newgenre"];
+                if (isset($newGenre)) {
+                //ジャンルがすでにあるかを確認
+                    $genreData = checkGenre($newGenre);
+                    if ($genreData != PDO::PARAM_NULL) {
+                        //既存のジャンルのIDで登録
+                        $genre = $genreData["genre_id"];
+                    } else {
+                        //新しくジャンルを登録(idはserial)
+                        //登録したジャンルのIDを取得
+                        $genreId = strval(registerGenre($newGenre));
+                        //新しいIDを$genreに代入
+                        $genre = $genreId;
+                    }
+                }
+            } else {
+                $genre = $_POST['genre'];
+            }
+            $lat = $_POST['lat'];
+            $lng = $_POST['lng'];
+            $feature = $_POST['feature'];
+            $link = $_POST['link'];
+
+            $binary_image = null;
+
+            //一時的にファイルを保存
+            if ($_FILES['photo']['size'] != 0) {
+                $image = file_get_contents($_FILES['photo']['tmp_name']);
+                //base64バイナリデータに変換
+                $binary_image = base64_encode($image);
+            }
+
+            registerEventShopsByOwner(
+                $userId,
+                0, //オーナー
+                $num, //固定店舗
+                $name,
+                $binary_image,
+                $link,
+                $openDate,
+                $closeDate,
+                $openTime,
+                $closeTime,
+                $genre,
+                $feature,
+                $lat,
+                $lng,
+                );
+            $status = 'success';
+        } else {
+            $status = 'error';
+        }
+    }
 } else {
     $userId = $_GET["userid"];
     $lat = null;
     $lng = null;
 }
+
+
+
+$typeStr = <<<EOD
+<input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <php if ($type == 'shop') { echo checked="checked" } ?>>
+<label for="x" class="form-check-label">固定店舗</label><br>
+<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <php if ($type == 'event') { echo checked="checked" } ?>>
+<label for="y" class="form-check-label">イベント・移動店舗</label><br>
+<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <php if ($type == 'life') { echo checked="checked" } ?>>
+<label for="z" class="form-check-label">過ごし方</label>
+EOD;
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +187,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     <!-- Contents-->
+    <?php if ($status == 'success') { ?>
+        <div class="container dx-1 my-5 bg-lightnavy text-center">
+            <p>登録が完了しました。</p>
+        </div>
+    <?php } else { ?>
     <div class="container dx-1 my-5 bg-lightnavy text-center">
+        <?php if ($status == 'error') { ?>
+            <p class="text-danger">※必須項目が入力されていません</p>
+        <?php } ?>
         <form method="post" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed;">
@@ -100,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>名前
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="text" name="name" >
+                    <input type="text" name="name" value="<?php echo $name; ?>">
                 </td>
             </tr>
 
@@ -109,14 +214,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <th class="col-3 py-4 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>種類
                 </th>
-        
-                <td class="col-9 py-4 align-middle bg-white" >
-                        <input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
-                        <label for="x" class="form-check-label">固定店舗</label><br>
-                        <input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
-                        <label for="y" class="form-check-label">イベント・移動店舗</label><br>
-                        <input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()">
-                        <label for="z" class="form-check-label">過ごし方</label>
+                <td class="col-9 py-4 align-middle bg-white">
+                    <?php echo $typeStr; ?>
                 </td>
             </tr>
 
@@ -125,7 +224,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     開店日
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="date" name="opendate">開店
+                    <input type="date" name="opendate" value="<?php echo $openDate; ?>">開店
                 </td>
             </tr>
             <tr class="shopList">
@@ -144,8 +243,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     開催日
                 </th>
                 <td class="col-9 py-4 font-weight-normal align-middle bg-white">
-                    <input type="date" name="holddatestart" class="w-35">から<br>
-                    <input type="date" name="holddateend" class="w-35">まで<br>
+                    <input type="date" name="holddatestart" class="w-35" value="<?php echo $holdDateStart; ?>">から<br>
+                    <input type="date" name="holddateend" class="w-35" value="<?php echo $holdDateEnd; ?>">まで<br>
                     ※1日だけの場合は同じ日にちを入力
                 </td>
             </tr>
@@ -154,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     開催時間
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="time" name="holdstart">から
+                    <input type="time" name="holdstart" value="">から
                     <input type="time" name="holdend">まで開催
                 </td>
             </tr>
@@ -175,8 +274,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" >
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" >
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
             </tr>
 
@@ -198,7 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <select name="genre" class="d-inline"  id ="select1">
+                    <select name="genre" class="d-inline" required id ="select1">
                         <option hidden value="">選択してください</option>
                         <?php 
                         $genres = getAllGenres();
@@ -225,9 +324,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </table>
         <input class="text-center" type="submit" formaction="" value="投稿する">
         </form>
-
-
-
+    </div>
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
             <div class="container px-5">

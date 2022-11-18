@@ -3,6 +3,9 @@
 
 define('SERVER_ROOT', 'https://'.$_SERVER['HTTP_HOST']);
 
+//リッチメニュー
+define('RICHMENU_PAGECHANGE', 'richmenu-d8d0b4fbf08333f26dff7cdafff15596');
+
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/reply.php';
