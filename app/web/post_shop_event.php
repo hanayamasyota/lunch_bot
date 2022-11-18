@@ -137,11 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $typeStr = <<<EOD
-<input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <php if ($type == 'shop') { echo checked="checked" } ?>>
+<input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?php if ($type == 'shop') { echo checked="checked" } ?>>
 <label for="x" class="form-check-label">固定店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <php if ($type == 'event') { echo checked="checked" } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?php if ($type == 'event') { echo checked="checked" } ?>>
 <label for="y" class="form-check-label">イベント・移動店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <php if ($type == 'life') { echo checked="checked" } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?php if ($type == 'life') { echo checked="checked" } ?>>
 <label for="z" class="form-check-label">過ごし方</label>
 EOD;
 ?>

@@ -112,7 +112,7 @@ session_start();
             <?php if ($_GET["type"] == 'shop'): ?>
                 <input type="hidden" name="map" value="<?php echo 1; ?>">
                 <input type="hidden" name="" value="">
-            <?php else if ($_GET["type"] == 'event'): ?>
+            <?php elseif ($_GET["type"] == 'event'): ?>
                 <input type="hidden" name="map" value="<?php echo 1; ?>">
                 <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
                 <input type="hidden" name="closedate" value="<?php echo $_POST["closedate"]; ?>">
