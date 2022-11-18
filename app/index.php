@@ -139,7 +139,7 @@ foreach ($events as $event) {
         $postBackMsg = $event->getPostbackData();
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         if ($postBackMsg === 'score') {
-            replyTextMessage($bot, $event->getUserId(), 'スコアを表示させる機能です。');
+            replyTextMessage($bot, $event->getReplyToken(), 'スコアを表示させる機能です。');
         } else if (strpos($postBackMsg, '_page') !== false) {
             if ($postBackMsg === 'next_page') {
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');

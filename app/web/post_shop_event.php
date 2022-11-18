@@ -52,61 +52,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lng = floatval($_POST['lng']);
 
     if (!(isset($map))) {
-        if (isset($userId) && isset($name) && isset($type) && isset()) {
-            //登録
-            $num = 0;
-            if ($type == 'shop') {
-                $num=0;
-                $openDate = $_POST["opendate"];
-                $openTime = $_POST["opentime"];
-                $closeTime = $_POST["closetime"];
-            } else if ($type == 'event') {
-                $num=1;
-                $openDate = $_POST["holddatestart"];
-                $closeDate = $_POST["holddateend"];
-                $openTime = $_POST["holdstart"];
-                $closeTime = $_POST["holdend"];
-            } else if ($type == 'life') {
-                $num=2;
-                $openTime = $_POST["spendstart"];
-                $closeTime = $_POST["spendend"];
-            }
+        $num = 0;
+        if ($type == 'shop') {
+            $num=0;
+            $openDate = $_POST["opendate"];
+            $openTime = $_POST["opentime"];
+            $closeTime = $_POST["closetime"];
+        } else if ($type == 'event') {
+            $num=1;
+            $openDate = $_POST["holddatestart"];
+            $closeDate = $_POST["holddateend"];
+            $openTime = $_POST["holdstart"];
+            $closeTime = $_POST["holdend"];
+        } else if ($type == 'life') {
+            $num=2;
+            $openTime = $_POST["spendstart"];
+            $closeTime = $_POST["spendend"];
+        }
 
-            $genre = '';
-            //ジャンル項目でその他を選択した場合
-            if ($_POST["genre"] == '0') {
-                $newGenre = $_POST["newgenre"];
-                if (isset($newGenre)) {
-                //ジャンルがすでにあるかを確認
-                    $genreData = checkGenre($newGenre);
-                    if ($genreData != PDO::PARAM_NULL) {
-                        //既存のジャンルのIDで登録
-                        $genre = $genreData["genre_id"];
-                    } else {
-                        //新しくジャンルを登録(idはserial)
-                        //登録したジャンルのIDを取得
-                        $genreId = strval(registerGenre($newGenre));
-                        //新しいIDを$genreに代入
-                        $genre = $genreId;
-                    }
+        $genre = '';
+        //ジャンル項目でその他を選択した場合
+        if ($_POST["genre"] == '0') {
+            $newGenre = $_POST["newgenre"];
+            if (isset($newGenre)) {
+            //ジャンルがすでにあるかを確認
+                $genreData = checkGenre($newGenre);
+                if ($genreData != PDO::PARAM_NULL) {
+                    //既存のジャンルのIDで登録
+                    $genre = $genreData["genre_id"];
+                } else {
+                    //新しくジャンルを登録(idはserial)
+                    //登録したジャンルのIDを取得
+                    $genreId = strval(registerGenre($newGenre));
+                    //新しいIDを$genreに代入
+                    $genre = $genreId;
                 }
-            } else {
-                $genre = $_POST['genre'];
             }
-            $lat = $_POST['lat'];
-            $lng = $_POST['lng'];
-            $feature = $_POST['feature'];
-            $link = $_POST['link'];
+        } else {
+            $genre = $_POST['genre'];
+        }
+        $lat = $_POST['lat'];
+        $lng = $_POST['lng'];
+        $feature = $_POST['feature'];
+        $link = $_POST['link'];
 
-            $binary_image = null;
+        $binary_image = null;
 
-            //一時的にファイルを保存
-            if ($_FILES['photo']['size'] != 0) {
-                $image = file_get_contents($_FILES['photo']['tmp_name']);
-                //base64バイナリデータに変換
-                $binary_image = base64_encode($image);
-            }
-
+        //一時的にファイルを保存
+        if ($_FILES['photo']['size'] != 0) {
+            $image = file_get_contents($_FILES['photo']['tmp_name']);
+            //base64バイナリデータに変換
+            $binary_image = base64_encode($image);
+        }
+        
+        if (isset($userId) && isset($name) && isset($type) && isset($lat) && isset($lng) && isset($genre)) {
+            //登録
             registerEventShopsByOwner(
                 $userId,
                 0, //オーナー
@@ -274,8 +274,8 @@ EOD;
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
                 </td>
             </tr>
 
@@ -297,7 +297,7 @@ EOD;
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <select name="genre" class="d-inline" required id ="select1">
+                    <select name="genre" class="d-inline" id ="select1">
                         <option hidden value="">選択してください</option>
                         <?php 
                         $genres = getAllGenres();
