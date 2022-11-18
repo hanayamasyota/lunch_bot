@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>名前
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="text" name="name" required>
+                    <input type="text" name="name" >
                 </td>
             </tr>
 
@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>種類
                 </th>
         
-                <td class="col-9 py-4 align-middle bg-white" required>
+                <td class="col-9 py-4 align-middle bg-white" >
                         <input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" checked="checked">
                         <label for="x" class="form-check-label">固定店舗</label><br>
                         <input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()">
@@ -175,8 +175,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" >
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" >
                 </td>
             </tr>
 
@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <select name="genre" class="d-inline" required id ="select1">
+                    <select name="genre" class="d-inline"  id ="select1">
                         <option hidden value="">選択してください</option>
                         <?php 
                         $genres = getAllGenres();
@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </td>
             </tr>
         </table>
-        <input class="text-center" type="submit" formaction="post_shop_event_confirm.php" value="投稿する">
+        <input class="text-center" type="submit" formaction="" value="投稿する">
         </form>
 
 
