@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             //base64バイナリデータに変換
             $binary_image = base64_encode($image);
         }
-        
+
         if (isset($userId) && isset($name) && isset($type) && isset($lat) && isset($lng) && isset($genre)) {
             //登録
             registerEventShopsByOwner(
@@ -325,6 +325,7 @@ EOD;
         <input class="text-center" type="submit" formaction="" value="投稿する">
         </form>
     </div>
+    <?php } ?>
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
             <div class="container px-5">
