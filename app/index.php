@@ -323,13 +323,13 @@ foreach ($events as $event) {
                 searchConveni($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showConveni($page, $event->getUserId(), $bot, $event->getReplyToken(), true);
-                $response = $bot->linkRichMenu($event->getUserId(), "richmenu-c5f761472cc1e38878dee3e3a77cfca3");
+                $response = $bot->linkRichMenu($event->getUserId(), RICHMENU_PAGECHANGE);
             } else if ($event->getText() === '2') {
                 //飲食店を検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $page = getDataByUserShopData($event->getUserId(), 'page_num');
                 showShop($page, $event->getUserId(), $bot, $event->getReplyToken(), true);
-                $response = $bot->linkRichMenu($event->getUserId(), "richmenu-c5f761472cc1e38878dee3e3a77cfca3");
+                $response = $bot->linkRichMenu($event->getUserId(), RICHMENU_PAGECHANGE);
             } else if ($event->getText() === '3') {
                 //イベントを検索
                 replyTextMessage($bot, $event->getReplyToken(),
