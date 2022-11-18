@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <div class="container dx-1 my-5 bg-lightnavy text-center">
-        <form method="post" action="post_shop_event_confirm.php" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle text-center" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</th>
@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <a href="getlatlng.php?type=user" onclick="document.post_form.submit();">こちらのリンクから設定してください</a><br>
+                    <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
                 </td>
@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </td>
             </tr>
         </table>
-        <input class="text-center" type="submit" value="投稿する">
+        <input class="text-center" type="submit" formaction="post_shop_event_confirm.php" value="投稿する">
         </form>
 
 
