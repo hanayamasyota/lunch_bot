@@ -60,6 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
 
+    $genre = $_POST["genre"];
     $feature = $_POST["feature"];
 
     if (!(isset($map))) {
@@ -82,22 +83,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $closeTime = $_POST["spendend"];
             }
 
-            $genre = '';
+            $selectGenre = '';
             //ジャンル項目でその他を選択した場合
-            if ($_POST["genre"] == '0') {
+            if ($genre == '0') {
                 $newGenre = $_POST["newgenre"];
                 if (isset($newGenre)) {
                     //ジャンルがすでにあるかを確認
                     $genreData = checkGenre($newGenre);
                     if ($genreData != PDO::PARAM_NULL) {
                         //既存のジャンルのIDで登録
-                        $genre = $genreData["genre_id"];
+                        $selectGenre = $genreData["genre_id"];
                     } else {
                         //新しくジャンルを登録(idはserial)
                         //登録したジャンルのIDを取得
                         $genreId = strval(registerGenre($newGenre));
                         //新しいIDを$genreに代入
-                        $genre = $genreId;
+                        $selectGenre = $genreId;
                     }
                 }
             } else {
