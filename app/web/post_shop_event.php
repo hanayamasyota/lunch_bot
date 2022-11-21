@@ -133,15 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lat = null;
     $lng = null;
 }
-
-
-
-$typeStr ='<input class="form-check-input ms-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?= $type == "shop" ? "checked" : "" ?>>
-<label for="x" class="form-check-label">固定店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?= $type == "event" ? "checked" : "" ?>>
-<label for="y" class="form-check-label">イベント・移動店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?= $type == "life" ? "checked" : "" ?>>
-<label for="z" class="form-check-label">過ごし方</label>';
 ?>
 
 <!DOCTYPE html>
@@ -213,7 +204,12 @@ $typeStr ='<input class="form-check-input ms-2 text-left" type="radio" id="x" na
                     <div class="text-danger d-inline">*</div>種類
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <?php echo $typeStr; ?>
+                    <input class="form-check-input ms-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?= $type == "shop" ? "checked" : "" ?>>
+                    <label for="x" class="form-check-label">固定店舗</label><br>
+                    <input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?= $type == "event" ? "checked" : "" ?>>
+                    <label for="y" class="form-check-label">イベント・移動店舗</label><br>
+                    <input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?= $type == "life" ? "checked" : "" ?>>
+                    <label for="z" class="form-check-label">過ごし方</label>
                 </td>
             </tr>
 
@@ -274,8 +270,10 @@ $typeStr ='<input class="form-check-input ms-2 text-left" type="radio" id="x" na
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline"><br>
+                    <div class="text-left">
                     緯度：<?php echo $lat; ?><br>
                     経度：<?php echo $lng; ?>
+                    </div>
                 </td>
             </tr>
 
