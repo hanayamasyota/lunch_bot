@@ -34,6 +34,8 @@ $lng = null;
 $feature = '';
 $other = '';
 
+$pageName = '昼休みの過ごし方登録';
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $userId = $_GET["userid"];
 }
@@ -136,6 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             );
 
             $status = 'success';
+            $pageName = '登録完了';
         } else {
             $status = 'error';
         }
@@ -155,7 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|昼休みの過ごし方登録</title>
+    <title>ひるまちGO|<?php echo $pageName; ?></title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
