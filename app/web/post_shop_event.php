@@ -137,11 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $typeStr = <<<EOD
-<input class="form-check-input ms-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?php if ($type == 'shop') { echo checked="checked"; } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?= $type == 'shop' ? 'checked' : '' ?>>
 <label for="x" class="form-check-label">固定店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?php if ($type == 'event') { echo checked="checked"; } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?= $type == 'event' ? 'checked' : '' ?>>
 <label for="y" class="form-check-label">イベント・移動店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?php if ($type == 'life') { echo checked="checked"; } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?= $type == 'life' ? 'checked' : '' ?>>
 <label for="z" class="form-check-label">過ごし方</label>
 EOD;
 ?>
@@ -263,8 +263,8 @@ EOD;
                     <small>そこにいた<br>時間</small>
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="time" name="spendstart">から
-                    <input type="time" name="spendend">まで
+                    <input type="time" name="spendstart" value="<?php echo $spendStart; ?>">から
+                    <input type="time" name="spendend" value="<?php echo $spendEnd; ?>">まで
                 </td>
             </tr>
     </form>
@@ -275,7 +275,7 @@ EOD;
                 <td class="col-9 py-2 align-middle bg-white">
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline"><br>
                     緯度：<?php echo $lat; ?><br>
                     経度：<?php echo $lng; ?>
                 </td>
