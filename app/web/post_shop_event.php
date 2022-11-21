@@ -137,11 +137,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 $typeStr = <<<EOD
-<input class="form-check-input m2-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?php if ($type == 'shop') { echo checked="checked" } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="x" name="radio1" value="shop" onclick="Switch()" <?php if ($type == 'shop') { echo checked="checked"; } ?>>
 <label for="x" class="form-check-label">固定店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?php if ($type == 'event') { echo checked="checked" } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="y" name="radio1" value="event" onclick="Switch()" <?php if ($type == 'event') { echo checked="checked"; } ?>>
 <label for="y" class="form-check-label">イベント・移動店舗</label><br>
-<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?php if ($type == 'life') { echo checked="checked" } ?>>
+<input class="form-check-input ms-2 text-left" type="radio" id="z" name="radio1" value="life" onclick="Switch()" <?php if ($type == 'life') { echo checked="checked"; } ?>>
 <label for="z" class="form-check-label">過ごし方</label>
 EOD;
 ?>
@@ -232,8 +232,8 @@ EOD;
                     営業時間
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="time" name="opentime">から
-                    <input type="time" name="closetime">まで<br>
+                    <input type="time" name="opentime" value="<?php echo $openTime; ?>">から
+                    <input type="time" name="closetime" value="<?php echo $closeTime; ?>">まで<br>
                     <small class="text-left">※定休日等については下の「特徴」欄に入力してください</small>
                 </td>
             </tr>
@@ -253,8 +253,8 @@ EOD;
                     開催時間
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <input type="time" name="holdstart" value="">から
-                    <input type="time" name="holdend">まで開催
+                    <input type="time" name="holdstart" value="<?php echo $holdStart; ?>">から
+                    <input type="time" name="holdend" value="<?php echo $holdEnd; ?>">まで開催
                 </td>
             </tr>
 
@@ -276,6 +276,8 @@ EOD;
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
+                    緯度：<?php echo $lat; ?><br>
+                    経度：<?php echo $lng; ?>
                 </td>
             </tr>
 
@@ -308,7 +310,7 @@ EOD;
                         <option value="0">その他</option>
                     </select>
                     <br>
-                    <input type="text" name="newgenre" class="w-50" id="newgenre"><br>
+                    <input type="text" name="newgenre" class="w-50" id="newgenre" value="<?php echo $genre; ?>"><br>
                     <small class="text-left">セレクトボックス内にない場合はその他を<br>選択しテキストボックスに入力してください</small>
                 </td>
             </tr>
@@ -318,7 +320,7 @@ EOD;
                     特徴
                 </th>
                 <td class="col-9 py-4 align-middle bg-white">
-                    <textarea name="feature" class="w-75" rows="4" maxlength="200" placeholder="それはどんなところですか？特徴を入力してください。※200文字以内"></textarea>
+                    <textarea name="feature" class="w-75" rows="4" maxlength="200" placeholder="それはどんなところですか？特徴を入力してください。※200文字以内" value="<?php echo $feature; ?>"></textarea>
                 </td>
             </tr>
         </table>
