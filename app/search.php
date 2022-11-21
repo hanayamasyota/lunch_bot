@@ -174,8 +174,8 @@ function showShop($page, $userId, $bot, $token, $first) {
         }
         $message .= "\n\nPowered by ホットペッパー Webサービス";
         replyMultiMessage($bot, $token,
-            $text_message_builder,
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
+            $text_message_builder,
             // new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             //     'お店を探す:'.($page+1).'ページ目',
             //     new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
