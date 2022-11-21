@@ -97,17 +97,38 @@ function quickReplyBuilder($text, ...$actions) {
 //ボタンテンプレート
 //引数はLINEBot、返信先、代替テキスト、
 // 画像URL、タイトル、本文、アクション（可変長引数）
-function replyButtonsTemplate($bot, $replyToken, $text, ...$actions) {
+function replyButtonsTemplate($bot, $replyToken, $alternativeText, $imageUrl, $title, $text, ...$actions) {
     $actionArray = array();
+    //アクション追加
     foreach($actions as $value) {
         array_push($actionArray, $value);
     }
-    $quick_reply_buttons = array();
-    $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
-    array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-    $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了');
-    array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-    $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
+
+    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+        $alternativeText,
+        // ButtonTemplateBuilder...title, maintext, url, actionarray
+        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+        $title, $text, $imageUrl, $actionArray)
+    );
+    $response = $bot->replyMessage($replyToken, $builder);
+    if (!$response->isSucceeded()) {
+        error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+    }
+}
+function replyButtonsBuilder($alternativeText, $imageUrl, $title, $text, ...$actions) {
+    $actionArray = array();
+    //アクション追加
+    foreach($actions as $value) {
+        array_push($actionArray, $value);
+    }
+
+    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+        $alternativeText,
+        // ButtonTemplateBuilder...title, maintext, url, actionarray
+        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
+        $title, $text, $imageUrl, $actionArray)
+    );
+    return $builder;
 }
 
 //Confirmテンプレート
