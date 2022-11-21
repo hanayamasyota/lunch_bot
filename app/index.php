@@ -492,9 +492,9 @@ foreach ($events as $event) {
         } else if(strcmp($event->getText(), 'あ') == 0) {
             $quick_reply_buttons = array();
             $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
-            array_push($quick_reply_buttons, $quick_reply_button_builder);
+            array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
             $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了');
-            array_push($quick_reply_buttons, $quick_reply_button_builder);
+            array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
             $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
             $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder('これはテストです', $quick_reply_message_builder);
             $response = $bot->replyMessage($event->getReplyToken(), $text_message_builder);
