@@ -430,9 +430,15 @@ foreach ($events as $event) {
     else {
         //search
         if (strcmp($event->getText(), 'ひるまちGO') == 0) {
-            //設定チェック
-            replyTextMessage($bot, $event->getReplyToken(), 
-            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店");
+            $userData = checkUsers($event->getUserId());
+            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
+                inductionUserSetting($bot, $event->getReplyToken());
+                continue;
+            }
+            quickReplyMessage($bot, $event->getReplyToken(),
+            "お昼はどうしますか？\nジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店",
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+            );
             updateUser($event->getUserId(), 'search');
 
         //review

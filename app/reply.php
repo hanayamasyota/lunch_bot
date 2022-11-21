@@ -67,42 +67,38 @@ function replyMultiMessage($bot, $replyToken, ...$msgs) {
     }
 }
 
-//リッチメッセージ
-//ボタンテンプレート
-//引数はLINEBot、返信先、代替テキスト、
-// 画像URL、タイトル、本文、アクション（可変長引数）
-function replyButtonsTemplate($bot, $replyToken, $alternativeText, $imageUrl, $title, $text, ...$actions) {
+//クイックリプライ送信
+function quickReplyMessage($bot, $replyToken, $text, ...$actions) {
     $actionArray = array();
-    //アクション追加
     foreach($actions as $value) {
         array_push($actionArray, $value);
     }
+    $quick_reply_buttons = array();
+    foreach ($actionArray as $action) {
+        array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($action));
+    }
+    $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
+    $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder($text, $quick_reply_message_builder);
 
-    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
-        $alternativeText,
-        // ButtonTemplateBuilder...title, maintext, url, actionarray
-        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-        $title, $text, $imageUrl, $actionArray)
-    );
-    $response = $bot->replyMessage($replyToken, $builder);
+    $response = $bot->replyMessage($replyToken, $text_message_builder);
     if (!$response->isSucceeded()) {
-        error_log('Failed!'. $response->getHTTPStatus . ' ' . $response->getRawBody());
+        error_log('Failed! '. $response->getHTTPStatus . ' ' . $response->getRawBody());
     }
 }
-function replyButtonsBuilder($alternativeText, $imageUrl, $title, $text, ...$actions) {
+//ビルダー生成(マルチメッセージ用)
+function quickReplyBuilder($text, ...$actions) {
     $actionArray = array();
-    //アクション追加
     foreach($actions as $value) {
         array_push($actionArray, $value);
     }
+    $quick_reply_buttons = array();
+    foreach ($actionArray as $action) {
+        array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($action));
+    }
+    $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
+    $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder($text, $quick_reply_message_builder);
 
-    $builder = new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
-        $alternativeText,
-        // ButtonTemplateBuilder...title, maintext, url, actionarray
-        new \LINE\LINEBot\MessageBuilder\TemplateBuilder\ButtonTemplateBuilder(
-        $title, $text, $imageUrl, $actionArray)
-    );
-    return $builder;
+    return $text_message_builder;
 }
 
 //Confirmテンプレート
