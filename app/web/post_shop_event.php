@@ -26,12 +26,12 @@ $holdEnd = '';
 $spendStart = '';
 $spendEnd = '';
 
-$lat = 0.0;
-$lng = 0.0;
+$lat = null;
+$lng = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
-    $name = $_POST["shopname"];
+    $name = $_POST["name"];
     $type = $_POST["radio1"];
 
     $map = $_POST["map"];
