@@ -176,10 +176,10 @@ function showShop($page, $userId, $bot, $token, $first) {
         replyMultiMessage($bot, $token,
             $text_message_builder,
             new \LINE\LINEBot\MessageBuilder\TextMessageBuilder($message),
-            new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
-                'お店を探す:'.($page+1).'ページ目',
-                new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
-            )
+            // new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
+            //     'お店を探す:'.($page+1).'ページ目',
+            //     new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)
+            // )
         );
     } else {
         replyCarouselTemplate($bot, $token,
