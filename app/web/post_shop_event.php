@@ -279,10 +279,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline"><br>
-                    <small>
-                    <p class="text-left">緯度：<?php echo $lat; ?></p>
-                    <p class="text-left">経度：<?php echo $lng; ?></p>
-                    </small>
+                    <div class="text-start"><small>
+                    緯度：<?php echo $lat; ?><br>
+                    経度：<?php echo $lng; ?>
+                    </small></div>
                 </td>
             </tr>
 
