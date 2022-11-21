@@ -130,7 +130,7 @@ session_start();
                 <input type="hidden" name="holddateend" value="<?php echo $_POST["holddateend"]; ?>">
                 <input type="hidden" name="holdstart" value="<?php echo $_POST["holdstart"]; ?>">
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
-                <input type="hidden" name="spendstart" value="<?php echo $_POST["spqndstart"]; ?>">
+                <input type="hidden" name="spendstart" value="<?php echo $_POST["spendstart"]; ?>">
                 <input type="hidden" name="spendend" value="<?php echo $_POST["spendend"]; ?>">
             <?php endif; ?>
 

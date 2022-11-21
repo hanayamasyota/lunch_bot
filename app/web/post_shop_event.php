@@ -29,6 +29,13 @@ $spendEnd = '';
 $lat = null;
 $lng = null;
 
+$feature = '';
+$other = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    $userId = $_GET["userid"];
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
     $name = $_POST["name"];
@@ -50,6 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
+
+    $feature = $_POST["feature"];
 
     if (!(isset($map))) {
         $num = 0;
@@ -270,10 +279,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline"><br>
-                    <div class="text-left">
-                    緯度：<?php echo $lat; ?><br>
-                    経度：<?php echo $lng; ?>
-                    </div>
+                    <small>
+                    <p class="text-left">緯度：<?php echo $lat; ?></p>
+                    <p class="text-left">経度：<?php echo $lng; ?></p>
+                    </small>
                 </td>
             </tr>
 
@@ -306,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="0">その他</option>
                     </select>
                     <br>
-                    <input type="text" name="newgenre" class="w-50" id="newgenre" value="<?php echo $genre; ?>"><br>
+                    <input type="text" name="newgenre" class="w-50" id="newgenre" value="<?php echo $other; ?>"><br>
                     <small class="text-left">セレクトボックス内にない場合はその他を<br>選択しテキストボックスに入力してください</small>
                 </td>
             </tr>
