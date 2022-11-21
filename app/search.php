@@ -154,10 +154,9 @@ function showShop($page, $userId, $bot, $token, $first) {
         array_push($columnArray, $column);
     }
 
-    $builder = quickReplyBuilder($bot, $token,
-    ($start+1).'~'.($start+5).'件目',
-    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
-    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+    $builder = quickReplyBuilder(($start+1).'~'.($start+5).'件目',
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
     );
     // $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
     // array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));

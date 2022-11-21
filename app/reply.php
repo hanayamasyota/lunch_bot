@@ -69,12 +69,8 @@ function replyMultiMessage($bot, $replyToken, ...$msgs) {
 
 //クイックリプライ送信
 function quickReplyMessage($bot, $replyToken, $text, ...$actions) {
-    $actionArray = array();
-    foreach($actions as $value) {
-        array_push($actionArray, $value);
-    }
     $quick_reply_buttons = array();
-    foreach ($actionArray as $action) {
+    foreach ($actions as $action) {
         array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($action));
     }
     $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
@@ -87,18 +83,31 @@ function quickReplyMessage($bot, $replyToken, $text, ...$actions) {
 }
 //ビルダー生成(マルチメッセージ用)
 function quickReplyBuilder($text, ...$actions) {
-    $actionArray = array();
-    foreach($actions as $value) {
-        array_push($actionArray, $value);
-    }
     $quick_reply_buttons = array();
-    foreach ($actionArray as $action) {
+    foreach ($actions as $action) {
         array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($action));
     }
     $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
     $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder($text, $quick_reply_message_builder);
 
     return $text_message_builder;
+}
+
+//リッチメッセージ
+//ボタンテンプレート
+//引数はLINEBot、返信先、代替テキスト、
+// 画像URL、タイトル、本文、アクション（可変長引数）
+function replyButtonsTemplate($bot, $replyToken, $text, ...$actions) {
+    $actionArray = array();
+    foreach($actions as $value) {
+        array_push($actionArray, $value);
+    }
+    $quick_reply_buttons = array();
+    $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
+    array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
+    $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了');
+    array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
+    $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
 }
 
 //Confirmテンプレート
