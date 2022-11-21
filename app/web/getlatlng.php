@@ -111,14 +111,14 @@ session_start();
             <input type="hidden" name="name" value="<?php echo $_POST["name"]; ?>">
             <?php if ($_GET["type"] == 'shop'): ?>
                 <input type="hidden" name="map" value="<?php echo 1; ?>">
-                <input type="hidden" name="" value="">
+                <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
             <?php elseif ($_GET["type"] == 'event'): ?>
                 <input type="hidden" name="map" value="<?php echo 1; ?>">
                 <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
                 <input type="hidden" name="closedate" value="<?php echo $_POST["closedate"]; ?>">
                 <input type="hidden" name="holdstart" value="<?php echo $_POST["holdstart"]; ?>">
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
-                <input type="hidden" name="">
+                <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
             <?php else: ?>
                 <input type="hidden" name="map" value="<?php echo 1; ?>">
                 <input type="hidden" name="userid" value="<?php echo $_POST["userid"]; ?>">
@@ -132,6 +132,7 @@ session_start();
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
                 <input type="hidden" name="spendstart" value="<?php echo $_POST["spendstart"]; ?>">
                 <input type="hidden" name="spendend" value="<?php echo $_POST["spendend"]; ?>">
+                <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
             <?php endif; ?>
 
             <div class="input">
