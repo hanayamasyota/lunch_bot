@@ -132,6 +132,8 @@ session_start();
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
                 <input type="hidden" name="spendstart" value="<?php echo $_POST["spendstart"]; ?>">
                 <input type="hidden" name="spendend" value="<?php echo $_POST["spendend"]; ?>">
+                <input type="hidden" name="genre" value="<?php echo $_POST["genre"]; ?>">
+                <input type="hidden" name="other" value="<?php echo $_POST["other"]; ?>">
                 <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
             <?php endif; ?>
 

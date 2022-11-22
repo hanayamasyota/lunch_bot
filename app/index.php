@@ -6,7 +6,6 @@ use LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder;
 define('SERVER_ROOT', 'https://'.$_SERVER['HTTP_HOST']);
 
 //リッチメニュー
-define('RICHMENU_PAGECHANGE', 'richmenu-d8d0b4fbf08333f26dff7cdafff15596');
 
 // load files
 require_once __DIR__ . '/vendor/autoload.php';
@@ -342,21 +341,24 @@ foreach ($events as $event) {
                 replyTextMessage($bot, $event->getReplyToken(),
                 "何を探しますか？\n1:固定店舗\n2:イベント・移動店舗\n3:場所",
                 );
-                updateUser($event->getUserId(), 'event');
+                updateUser($event->getUserId(), 'life_search');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
                 searchShop($event->getUserId(), $bot, $event->getReplyToken());
                 $userAmbi = getAmbiByUserId($event->getUserId());
                 searchReccomend($event->getUserId(), $bot, $event->getReplyToken(), $userAmbi);
             } else {
-                replyTextMessage($bot, $event->getReplyToken(),
-                    "無効な値です。入力しなおしてください。");
+                quickReplyMessage($bot, $event->getReplyToken(),
+                '無効な値です',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
                 continue;
             }
         }
 
 
-        else if ($beforeMessage === 'event') {
+        else if ($beforeMessage === 'life_search') {
             if ($event->getText() === '1') {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
                 '固定店舗を探す', SERVER_ROOT.'/imgs/hirumatiGO.png', '固定店舗を探す',
@@ -379,10 +381,16 @@ foreach ($events as $event) {
                     '場所一覧へ', SERVER_ROOT.'/web/life_list.php?now_page=1'),
                 );
             } else {
-                replyTextMessage($bot, $event->getReplyToken(),
-                    "無効な値です。入力しなおしてください。");
+                quickReplyMessage($bot, $event->getReplyToken(),
+                '無効な値です',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
                 continue;
             }
+            replyMultiMessage($bot, $event->ReplyToken(),
+                
+            );
         }
 
         //次、前の5件表示
@@ -401,7 +409,11 @@ foreach ($events as $event) {
                         showConveni(($page+1), $userId, $bot, $event->getReplyToken(), false);
                     }
                 } else {
-                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上次へは進めません。');
+                    quickReplyMessage($bot, $event->getReplyToken(),
+                    'これ以上前には戻れません',
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                    );
                 }
             }
             //0ページよりも前にいけないようにする
@@ -415,13 +427,25 @@ foreach ($events as $event) {
                         showConveni(($page-1), $userId, $bot, $event->getReplyToken(), false);
                     }
                 } else {
-                    replyTextMessage($bot, $event->getReplyToken(), 'これ以上前には戻れません。');
+                    quickReplyMessage($bot, $event->getReplyToken(),
+                    'これ以上前には戻れません',
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                    );
                 }
             }
             else if (strcmp($event->getText(), '戻る') == 0) {
                 updateUser($event->getUserId(), 'search');
-                replyTextMessage($bot, $event->getReplyToken(), 
-                "ジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店");
+                quickReplyMessage($bot, $event->getReplyToken(),
+                "ジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店",
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
+            } else {
+                quickReplyMessage($bot, $event->getReplyToken(),
+                '無効な値です',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
             }
         }
     } 
@@ -447,18 +471,22 @@ foreach ($events as $event) {
             $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
-            } else {
-                updateUser($event->getUserId(), 'review');
-                replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-                'レビューのメニューです。',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    'レビュー登録', 'レビュー登録'),
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                    '自分のレビュー確認・編集', 'レビュー確認・編集'),
-                );
+                continue;
             }
+            updateUser($event->getUserId(), 'review');
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            'レビューのメニューです。',
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'レビュー登録', 'レビュー登録'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '自分のレビュー確認・編集', 'レビュー確認・編集'),
+            );
         
         } else if (strcmp($event->getText(), '新規登録') == 0) {
+            if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
+                inductionUserSetting($bot, $event->getReplyToken());
+                continue;
+            }
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', '新規登録',
             '新しい場所や過ごし方を登録するメニューです。',
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
@@ -469,16 +497,15 @@ foreach ($events as $event) {
             );
 
         //setting
-        //あいさつメッセージでユーザ設定を促す
         } else if(strcmp($event->getText(), '設定') == 0) {
             $userData = checkUsers($event->getUserId());
             $message = 'ユーザ設定メニューです。';
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 $message .= '初期設定の登録をお願いします。';
-                createUser($event->getUserId(), 'setting_location');
+                createUser($event->getUserId(), 'setting');
             } else {
                 $message .= '更新したい設定を選んでください。';
-                createUser($event->getUserId(), 'setting_location');
+                createUser($event->getUserId(), 'setting');
             }
             replyButtonsTemplate($bot, $event->getReplyToken(), '個人情報の設定', SERVER_ROOT.'/imgs/setting.png', '個人情報の設定',
             $message,
@@ -491,19 +518,9 @@ foreach ($events as $event) {
             );
 
         //テスト用
-        } else if(strcmp($event->getText(), 'ユーザ設定削除') == 0) {
+        } else if (strcmp($event->getText(), 'ユーザ設定削除') == 0) {
             replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
             deleteUser($event->getUserId(), TABLE_NAME_USERS);
-        //クイックリプライのテスト
-        } else if(strcmp($event->getText(), 'あ') == 0) {
-            $quick_reply_buttons = array();
-            $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
-            array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-            $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了');
-            array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-            $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
-            $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder('Message', $quick_reply_message_builder);
-            $response = $bot->replyMessage($event->getReplyToken(), $text_message_builder);
         }
     }
 }

@@ -31,6 +31,7 @@ $spendEnd = '';
 $lat = null;
 $lng = null;
 
+$genre = '';
 $feature = '';
 $other = '';
 
@@ -62,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
 
-    $genre = $_POST["genre"];
+    $myGenre = $_POST["genre"];
     $feature = $_POST["feature"];
 
     if (!(isset($map))) {
@@ -87,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $selectGenre = '';
             //ジャンル項目でその他を選択した場合
-            if ($genre == '0') {
+            if ($myGenre == '0') {
                 $newGenre = $_POST["newgenre"];
                 if (isset($newGenre)) {
                     //ジャンルがすでにあるかを確認
@@ -104,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 }
             } else {
-                $genre = $_POST['genre'];
+                $myGenre = $_POST['genre'];
             }
             $lat = $_POST['lat'];
             $lng = $_POST['lng'];
@@ -131,7 +132,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $closeDate,
                 $openTime,
                 $closeTime,
-                $genre,
+                $myGenre,
                 $feature,
                 $lat,
                 $lng,
@@ -192,8 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <?php if ($status == 'success') { ?>
-        <div class="container dx-1 my-5 bg-lightnavy text-center">
-            <p>登録が完了しました。</p>
+        <div class="container dx-1 my-5 bg-lightnavy">
+            <p>登録が完了しました。<br>このページを閉じてください。</p>
         </div>
     <?php } else { ?>
         <div class="container dx-1 my-5 bg-lightnavy text-center">
@@ -316,7 +317,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     $genres = getAllGenres();
                                     foreach ($genres as $genre) {
                                     ?>
-                                        <option value="<?php echo $genre["genre_id"]; ?>"><?php echo $genre["genre_name"]; ?></option>
+                                        <?php
+                                            echo '<option value="<?php echo $genre["genre_id"]; ?>"';
+                                            if ($genre["genre_id"] == intval($myGenre)) {
+                                                echo 'selected';
+                                            }
+                                            echo '><?php echo $genre["genre_name"]; ?></option>';
+                                        ?>
                                     <?php } ?>
                                     <option value="0">その他</option>
                                 </select>

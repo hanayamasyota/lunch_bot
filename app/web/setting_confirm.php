@@ -3,6 +3,21 @@ require_once '../DBConnection.php';
 require_once '../database_function/users_sql.php';
 
 define('TABLE_NAME_USERS', 'users');
+
+$status = 'error';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST['userid'];
+    $start = $_POST['start'];
+    $end = $_POST['end'];
+    $ambi = $_POST['ambi'];
+    $name = $_POST['nickname'];
+
+    updateRestTime($userId, $start, $end, $ambi, $name);
+    updateUser($userId, null);
+
+    $status = 'success';
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,10 +56,15 @@ define('TABLE_NAME_USERS', 'users');
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 my-5 bg-lightnavy">
-        <p>設定が適用されました。</p>
-    </div>
-
+    <?php if ($status == 'seccess') { ?>
+        <div class="container dx-3 my-5 bg-lightnavy">
+            <p>設定が適用されました。</p>
+        </div>
+    <?php } else { ?>
+        <div class="container dx-3 my-5 bg-lightnavy">
+            <p>エラーが発生しました。</p>
+        </div>
+    <?php } ?>
     <!-- Footer-->
     <footer class="bg-black text-center py-2 fixed-bottom">
         <div class="container px-5">
@@ -68,14 +88,3 @@ define('TABLE_NAME_USERS', 'users');
 </body>
 
 </html>
-
-<?php
-$userId = $_POST['userid'];
-$start = $_POST['start'];
-$end = $_POST['end'];
-$ambi = $_POST['ambi'];
-$name = $_POST['nickname'];
-
-updateRestTime($userId, $start, $end, $ambi, $name);
-updateUser($userId, null);
-?>
