@@ -477,9 +477,9 @@ function nextPage($page, $beforeMessage, $range, $bot, $userId, $token) {
         $nextPage = ($page+1);
         updateUserShopData($userId, 'page_num', $nextPage);
         if ($beforeMessage === 'shop_search') {
-            showShop(($nextPage, $userId, $bot, $token, false);
+            showShop($nextPage, $userId, $bot, $token, false);
         } else if ($beforeMessage === 'conveni_search') {
-            showConveni(($nextPage, $userId, $bot, $token, false);
+            showConveni($nextPage, $userId, $bot, $token, false);
         }
     } else {
         quickReplyMessage($bot, $event->getReplyToken(),
