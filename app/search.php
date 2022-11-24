@@ -484,7 +484,7 @@ function nextPage($page, $beforeMessage, $range, $bot, $userId, $token) {
     } else {
         quickReplyMessage($bot, $token,
         'これ以上次へは進めません',
-        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
         );
     }
@@ -500,8 +500,8 @@ function beforePage($page, $beforeMessage, $bot, $userId, $token) {
         }
     } else {
         quickReplyMessage($bot, $token,
-        'これ以上前には戻れません'
-        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+        'これ以上前には戻れません',
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
         );
     }
