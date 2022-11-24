@@ -1,3 +1,3 @@
 git add .
-git commit -am "update-hanayama"
+git commit -am "hirumachigo"
 git push heroku master
