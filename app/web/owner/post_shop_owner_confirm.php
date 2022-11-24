@@ -29,6 +29,9 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     //base64バイナリデータに変換
     $binary_image = base64_encode($image);
 
+    $nowTime = time()+32400;
+    $nowTimeString = date('Y-m-d H:i:s', $nowTime);
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         registerEventShopsByOwner(
             $email,
@@ -45,6 +48,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             $feature,
             $lat,
             $lng,
+            $nowTimeString,
         );
     }
 ?>

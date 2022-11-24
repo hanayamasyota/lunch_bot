@@ -36,7 +36,6 @@ define('TABLE_NAME_USERS', 'users');
         $message = 'レビュー登録';
     }
 
-
     foreach($postData as $data) {
         $nowTime = time()+32400;
         $nowTimeString = date('Y-m-d H:i:s', $nowTime);

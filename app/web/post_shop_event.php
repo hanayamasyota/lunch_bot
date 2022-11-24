@@ -120,6 +120,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 //base64バイナリデータに変換
                 $binary_image = base64_encode($image);
             }
+            //登録日時を取得
+            $nowTime = time()+32400;
+            $nowTimeString = date('Y-m-d H:i:s', $nowTime);
             //登録
             registerEventShopsByOwner(
                 $userId,
@@ -136,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $feature,
                 $lat,
                 $lng,
+                $nowTimeString,
             );
 
             $status = 'success';

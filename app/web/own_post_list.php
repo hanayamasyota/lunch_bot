@@ -86,27 +86,64 @@ if ($shops != 0) {
             </tr>
             <?php } ?>
             
-            <?php if ((isset($shop["open_date"])) && (isset($shop["close_date"]))) { ?>
-            <tr>
-                <th class="col-4 py-4 align-middle bg-lightbrown">
-                    開催日
-                </th>
-                <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
-                </td>
-            </tr>
-            <?php } ?>
+            <?php if (isset($shop["kind"]) == 0) { ?>
+                <?php if (isset($shop["open_date"])) { ?>
+                <tr>
+                    <th class="col-4 py-4 align-middle bg-lightbrown">
+                        開店日
+                    </th>
+                    <td class="col-8 py-4 font-weight-normal align-middle bg-white">
+                        <?php echo $shop["open_date"]; ?>から
+                    </td>
+                </tr>
+                <?php } ?>
 
-            <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
-            <tr>
-                <th class="col-4 py-4 align-middle bg-lightbrown">
-                    開催時間
-                </th>
-                <td class="col-8 py-4 align-middle bg-white">
-                    <?php echo $shop["open_time"]; ?>から
-                    <?php echo $shop["close_time"]; ?>まで
-                </td>
-            </tr>
+                <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
+                <tr>
+                    <th class="col-4 py-4 align-middle bg-lightbrown">
+                        営業時間
+                    </th>
+                    <td class="col-8 py-4 align-middle bg-white">
+                        <?php echo $shop["open_time"]; ?>から
+                        <?php echo $shop["close_time"]; ?>まで
+                    </td>
+                </tr>
+                <?php } ?>
+            <?php } else if (isset($shop["kind"]) == 1) { ?>
+                <?php if ((isset($shop["open_date"])) && (isset($shop["close_date"]))) { ?>
+                <tr>
+                    <th class="col-4 py-4 align-middle bg-lightbrown">
+                        開催日
+                    </th>
+                    <td class="col-8 py-4 font-weight-normal align-middle bg-white">
+                        <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
+                    </td>
+                </tr>
+                <?php } ?>
+
+                <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
+                <tr>
+                    <th class="col-4 py-4 align-middle bg-lightbrown">
+                        開催時間
+                    </th>
+                    <td class="col-8 py-4 align-middle bg-white">
+                        <?php echo $shop["open_time"]; ?>から
+                        <?php echo $shop["close_time"]; ?>まで
+                    </td>
+                </tr>
+                <?php } ?>
+            <?php } else if (isset($shop["kind"]) == 2) { ?>
+                <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
+                <tr>
+                    <th class="col-4 py-4 align-middle bg-lightbrown">
+                        過ごした時間
+                    </th>
+                    <td class="col-8 py-4 align-middle bg-white">
+                        <?php echo $shop["open_time"]; ?>から
+                        <?php echo $shop["close_time"]; ?>まで
+                    </td>
+                </tr>
+                <?php } ?>
             <?php } ?>
 
             <tr>
