@@ -31,7 +31,7 @@ if ($shops != 0) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|イベント・移動店舗を見る</title>
+    <title>ひるまちGO|自分の過ごし方一覧</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -56,7 +56,7 @@ if ($shops != 0) {
     <!-- Mashead header-->
     <header class="mt-5">
         <div class="container px-3 pt-5 bg-imagecolor">
-            <p class="text-light h3">イベント・移動店舗を見る</p>
+            <p class="text-light h3">自分の過ごし方一覧</p>
         </div>
     </header>
 

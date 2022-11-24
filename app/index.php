@@ -489,6 +489,7 @@ foreach ($events as $event) {
             );
         
         } else if (strcmp($event->getText(), '新規登録') == 0) {
+            $userData = checkUsers($event->getUserId());
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
                 inductionUserSetting($bot, $event->getReplyToken());
                 continue;
