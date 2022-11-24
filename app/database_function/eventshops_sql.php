@@ -22,7 +22,7 @@ function getShopsEventsData($type, $page) {
 function getOwnShopsEventsData($page, $userId) {
     $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
-    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') limit 5 offset ?';
+    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = userid limit 5 offset ?';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $start));
     if (!($rows = $sth->fetchall())) {
@@ -45,10 +45,10 @@ function getDataCountByEventShops($type) {
         return $row["count"];
     }
 }
-//店ごとのレビュー数取得
+//新規登録の個数
 function getOwnDataCountByEventShops($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = userid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
