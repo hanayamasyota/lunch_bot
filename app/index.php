@@ -485,6 +485,10 @@ foreach ($events as $event) {
             $builder = quickReplyBuilder('レビューの登録や確認ができます。',
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
             );
+            replyMultiMessage($bot, $event->ReplyToken(),
+                $button,
+                $builder
+            );
         
         } else if (strcmp($event->getText(), '新規登録') == 0) {
             if ($userData == PDO::PARAM_NULL || $userData['latitude'] == null || $userData['longitude'] == null || $userData['rest_start'] == null || $userData['rest_end'] == null){
