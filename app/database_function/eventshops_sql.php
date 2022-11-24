@@ -48,7 +48,7 @@ function getDataCountByEventShops($type) {
 //店ごとのレビュー数取得
 function getOwnDataCountByEventShops($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = userid';
+    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     // if no record
