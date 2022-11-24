@@ -158,12 +158,6 @@ function showShop($page, $userId, $bot, $token, $first) {
         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
     );
-    // $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る');
-    // array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-    // $quick_reply_button_builder = new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了');
-    // array_push($quick_reply_buttons, new LINE\LINEBot\QuickReplyBuilder\ButtonBuilder\QuickReplyButtonBuilder($quick_reply_button_builder));
-    // $quick_reply_message_builder = new LINE\LINEBot\QuickReplyBuilder\QuickReplyMessageBuilder($quick_reply_buttons);
-    // $text_message_builder = new LINE\LINEBot\MessageBuilder\TextMessageBuilder(($start+1).'~'.($start+5).'件目', $quick_reply_message_builder);
 
     updateUser($userId, 'shop_search');
 
@@ -373,6 +367,11 @@ function showConveni($page, $userId, $bot, $token, $first) {
 
         $count += 1;
     }
+
+    $builder = quickReplyBuilder(($start+1).'~'.($start+5).'件目',
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
+    );
     updateUser($userId, 'conveni_search');
     
     if ($first) {
@@ -475,26 +474,36 @@ function getStayTime($restStart, $restEnd, $walkTime) {
 function nextPage($page, $beforeMessage, $range, $bot, $userId, $token) {
     //検索件数/PAGE_COUNT(切り上げ)よりも高い数字にならないようにする
     if ($page < ceil(floatval($range)/floatval(PAGE_COUNT))) {
-        updateUserShopData($userId, 'page_num', ($page+1));
+        $nextPage = ($page+1);
+        updateUserShopData($userId, 'page_num', $nextPage);
         if ($beforeMessage === 'shop_search') {
-            showShop(($page+1), $userId, $bot, $token, false);
+            showShop(($nextPage, $userId, $bot, $token, false);
         } else if ($beforeMessage === 'conveni_search') {
-            showConveni(($page+1), $userId, $bot, $token, false);
+            showConveni(($nextPage, $userId, $bot, $token, false);
         }
     } else {
-        replyTextMessage($bot, $token, 'これ以上次へは進めません。');
+        quickReplyMessage($bot, $event->getReplyToken(),
+        'これ以上次へは進めません',
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+        );
     }
 }
 function beforePage($page, $beforeMessage, $bot, $userId, $token) {
     if ($page >= 1) {
-        updateUserShopData($userId, 'page_num', ($page-1));
+        $beforePage = ($page-1);
+        updateUserShopData($userId, 'page_num', $beforePage);
         if ($beforeMessage === 'shop_search') {
-            showShop(($page-1), $userId, $bot, $token, false);
+            showShop($beforePage, $userId, $bot, $token, false);
         } else if ($beforeMessage === 'conveni_search') {
-            showConveni(($page-1), $userId, $bot, $token, false);
+            showConveni($beforePage, $userId, $bot, $token, false);
         }
     } else {
-        replyTextMessage($bot, $token, 'これ以上前には戻れません。');
+        quickReplyMessage($bot, $event->getReplyToken(),
+        'これ以上前には戻れません'
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+        );
     }
 }
 ?>

@@ -475,12 +475,15 @@ foreach ($events as $event) {
                 continue;
             }
             updateUser($event->getUserId(), 'review');
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            $button = replyButtonsBuilder('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
             'レビューのメニューです。',
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 '自分のレビュー確認・編集', 'レビュー確認・編集'),
+            );
+            $builder = quickReplyBuilder('レビューの登録や確認ができます。',
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
             );
         
         } else if (strcmp($event->getText(), '新規登録') == 0) {
