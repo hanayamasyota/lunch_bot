@@ -179,10 +179,6 @@ function showShop($page, $userId, $bot, $token, $first) {
             $builder
         );
     } else {
-        replyCarouselTemplate($bot, $token,
-            'お店を探す:'.($page+1).'ページ目',
-            $columnArray,
-        );
         replyMultiMessage($bot, $token,
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             'お店を探す:'.($page+1).'ページ目',
@@ -381,11 +377,14 @@ function showConveni($page, $userId, $bot, $token, $first) {
         new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             'お店を探す:'.($page+1).'ページ目',
             new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
+        $builder
         );
     } else {
-        replyCarouselTemplate($bot, $token,
+        replyMultiMessage($bot, $token, 
+        new \LINE\LINEBot\MessageBuilder\TemplateMessageBuilder(
             'お店を探す:'.($page+1).'ページ目',
-            $columnArray
+            new \LINE\LINEBot\MessageBuilder\TemplateBuilder\CarouselTemplateBuilder($columnArray)),
+        $builder
         );
     }
 }
@@ -502,7 +501,7 @@ function beforePage($page, $beforeMessage, $bot, $userId, $token) {
         quickReplyMessage($bot, $token,
         'これ以上前には戻れません',
         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
-        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
         );
     }
 }
