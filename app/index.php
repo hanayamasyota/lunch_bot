@@ -388,9 +388,6 @@ foreach ($events as $event) {
                 );
                 continue;
             }
-            replyMultiMessage($bot, $event->ReplyToken(),
-                
-            );
         }
 
         //次、前の5件表示
@@ -485,7 +482,7 @@ foreach ($events as $event) {
             $builder = quickReplyBuilder('レビューの登録や確認ができます。',
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
             );
-            replyMultiMessage($bot, $event->ReplyToken(),
+            replyMultiMessage($bot, $event->getReplyToken(),
                 $button,
                 $builder
             );
