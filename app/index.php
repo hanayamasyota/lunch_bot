@@ -472,19 +472,20 @@ foreach ($events as $event) {
                 continue;
             }
             updateUser($event->getUserId(), 'review');
+            replyButtonsTemplate($bot, $event->getReplyToken(),
+            'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            '登録されている場所の一覧を表示します。',
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '場所一覧へ', SERVER_ROOT.'/web/life_list.php?now_page=1'),
+            );
             $button = replyButtonsBuilder('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            'レビューのメニューです。',
+            "レビューのメニューです。\nレビューの登録や確認ができます。",
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 '自分のレビュー確認・編集', 'レビュー確認・編集'),
-            );
-            $builder = quickReplyBuilder('レビューの登録や確認ができます。',
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了')
-            );
-            replyMultiMessage($bot, $event->getReplyToken(),
-                $button,
-                $builder
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'メインメニューに戻る', '終了'),
             );
         
         } else if (strcmp($event->getText(), '新規登録') == 0) {
@@ -492,13 +493,20 @@ foreach ($events as $event) {
                 inductionUserSetting($bot, $event->getReplyToken());
                 continue;
             }
+            //urlのクエリを作成
+            $data = array(
+                'userid' => $event->getUserId(),
+                'now_page' => 1,
+            );
+            $query = http_build_query($data);
             replyButtonsTemplate($bot, $event->getReplyToken(), 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', '新規登録',
             '新しい場所や過ごし方を登録するメニューです。',
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '新規登録', SERVER_ROOT.'/web/post_shop_event.php?userid='.$event->getUserId()),
-                //未実装
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '自分が登録したものを確認', SERVER_ROOT.'/web/own_post_list.php?'.$query),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '自分が登録したものを確認', '自分が登録したものを確認'),
+                'メインメニューに戻る', '終了'),
             );
 
         //setting

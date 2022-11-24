@@ -19,11 +19,36 @@ function getShopsEventsData($type, $page) {
         return $rows;
     }
 }
+function getOwnShopsEventsData($page, $userId) {
+    $start = ($page * ONE_PAGE - ONE_PAGE);
+    $dbh = dbConnection::getConnection();
+    $sql = 'select * from ' . TABLE_NAME_EVENTSHOPS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') limit 5 offset ?';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($type, $start));
+    if (!($rows = $sth->fetchall())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $rows;
+    }
+}
 
 //店ごとのレビュー数取得
 function getDataCountByEventShops($type) {
     $dbh = dbConnection::getConnection();
     $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = kind';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($type));
+    // if no record
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row["count"];
+    }
+}
+//店ごとのレビュー数取得
+function getOwnDataCountByEventShops($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select count(event_id) as count from ' . TABLE_NAME_EVENTSHOPS . ' where ? = userid';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($type));
     // if no record
