@@ -530,11 +530,6 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'キャンセル', 'キャンセル'),
             );
-
-        //テスト用
-        } else if (strcmp($event->getText(), 'ユーザ設定削除') == 0) {
-            replyTextMessage($bot, $event->getReplyToken(), 'ユーザ設定を削除しました。');
-            deleteUser($event->getUserId(), TABLE_NAME_USERS);
         }
     }
 }
