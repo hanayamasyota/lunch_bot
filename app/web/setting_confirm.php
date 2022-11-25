@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
 
     <!-- CONTENTS -->
-    <?php if ($status == 'seccess') { ?>
+    <?php if ($status == 'success') { ?>
         <div class="container dx-3 my-5 bg-lightnavy">
             <p>設定が適用されました。</p>
         </div>
