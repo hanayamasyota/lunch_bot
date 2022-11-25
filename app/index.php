@@ -241,15 +241,16 @@ foreach ($events as $event) {
                 }
                 quickReplyMessage($bot, $event->getReplyToken(),
                 $replyMessage,
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('レビューメニューに戻る', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
                 updateUser($event->getUserId(), 'review_entry');
             }
         }
         if ($beforeMessage === 'review_entry') {
-            replyButtonsTemplate('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            "レビューのメニューです。\nレビューの登録や確認ができます。",
+            replyButtonsTemplate($bot, $event->getReplyToken(),
+            'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            "レビューの登録や確認ができます。",
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
@@ -365,8 +366,10 @@ foreach ($events as $event) {
                 $response = $bot->linkRichMenu($event->getUserId(), getenv('RICHMENU_PAGECHANGE'));
             } else if ($event->getText() === '3') {
                 //イベントを検索
-                replyTextMessage($bot, $event->getReplyToken(),
+                quickReplyMessage($bot, $event->getReplyToken(),
                 "何を探しますか？\n1:固定店舗\n2:イベント・移動店舗\n3:場所",
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
                 updateUser($event->getUserId(), 'life_search');
             } else if ($event->getText() === '4') {
@@ -501,7 +504,7 @@ foreach ($events as $event) {
             updateUser($event->getUserId(), 'review');
             replyButtonsTemplate($bot, $event->getReplyToken(),
             'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            "レビューのメニューです。\nレビューの登録や確認ができます。",
+            "レビューの登録や確認ができます。",
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(

@@ -29,8 +29,8 @@
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
-        <div class="container px-3 pt-2 bg-imagecolor">
+    <header class="mt-5">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">使い方ガイド</p>
         </div>
     </header>
