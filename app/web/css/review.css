@@ -81,7 +81,6 @@ a.page_number:visited {color: black; text-decoration:none }
 .contents {
   padding: 0;
   position: relative;
-  margin: auto;
 }
 
 .contents_list {
