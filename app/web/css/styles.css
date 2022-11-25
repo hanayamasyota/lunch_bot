@@ -105,6 +105,16 @@
   font-family: Ngc;
 }
 
+.picture img {
+
+  max-width: 100%;
+
+  width: 49%;
+
+  height: auto;
+
+}
+
 body {
   margin: 0;
   font-family: var(--bs-body-font-family);
