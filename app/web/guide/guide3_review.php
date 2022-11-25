@@ -58,7 +58,7 @@
       <img src="guide_img/3-5.png" class="mb-5">
     </p>
 
-    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
+    <p class="text-center mb-5"><a href="guide.php">目次に戻る</a></p>
     
 
     <!-- Footer-->

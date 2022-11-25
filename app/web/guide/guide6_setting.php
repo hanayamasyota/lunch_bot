@@ -56,7 +56,7 @@
     </p>
     <p class="mb-3">それぞれの画面で変更したい個所を入力して完了。</p>
 
-    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
+    <p class="text-center mb-5"><a href="guide.php">目次に戻る</a></p>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
