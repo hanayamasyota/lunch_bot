@@ -94,7 +94,7 @@ function getUserIdCheck($userId, $table) {
 // entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?) ';
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send, post_times) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, 0) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $beforeSend));
 }
