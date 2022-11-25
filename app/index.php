@@ -315,7 +315,7 @@ foreach ($events as $event) {
             }
         }
         else if ($beforeMessage === 'review_entry_confirm') {
-            else if (strcmp($event->getText(), '戻る') == 0) {
+            if (strcmp($event->getText(), '戻る') == 0) {
                 $replyMessage = "過去に行った中からレビューしたいお店の番号を入力してください。\n\n";
                 $visitedShops = getUserVisitedShopData($event->getUserId());
                 $count = 1;
@@ -329,6 +329,13 @@ foreach ($events as $event) {
                 }
                 quickReplyMessage($bot, $event->getReplyToken(),
                 $replyMessage,
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
+                updateUser($event->getUserId(), 'review_entry');
+            } else {
+                quickReplyMessage($bot, $event->getReplyToken(),
+                '戻る場合は↓のボタンを押してください',
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
