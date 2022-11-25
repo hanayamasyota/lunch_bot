@@ -96,7 +96,7 @@ function countUpPost($userId) {
     $sql = 'select post_times from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
-    $row = $sth->fetch()+1;
+    $row = $sth->fetch()["post_times"]+1;
 
     $sql = 'update '.TABLE_NAME_USERS.' set post_times = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
