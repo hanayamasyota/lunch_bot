@@ -225,9 +225,8 @@ foreach ($events as $event) {
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         //review
         if ($beforeMessage === 'review') {
-            $text = $event->getText();
             //レビュー登録
-            if (strcmp($text, 'レビュー登録') == 0) {
+            if (strcmp($event->getText(), 'レビュー登録') == 0) {
                 //「ここに行く」を押した店の番号と店名の一覧を表示する
                 $replyMessage = "過去に行った中からレビューしたいお店の番号を入力してください。\n\n";
                 $visitedShops = getUserVisitedShopData($event->getUserId());
@@ -240,29 +239,25 @@ foreach ($events as $event) {
                     }
                     $count += 1;
                 }
-                replyTextMessage($bot, $event->getReplyToken(),
-                $replyMessage);
+                quickReplyMessage($bot, $event->getReplyToken(),
+                $replyMessage,
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
                 updateUser($event->getUserId(), 'review_entry');
-            //レビュー確認
-            } else if (strcmp($text, 'レビュー確認・編集') == 0) {
-                $data = array(
-                    'userid' => $event->getUserId(),
-                    'now_page' => 1
-                );
-                    $query = http_build_query($data);
-                replyButtonsTemplate($bot, $event->getReplyToken(),
-                    'レビュー確認・編集',
-                    SERVER_ROOT . '/imgs/hirumatiGO.png',
-                    'レビュー確認・編集',
-                    "レビューの確認・編集をしますか？",
-                    new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                        'レビューの確認・編集', SERVER_ROOT . '/web/own_review_list.php?'. $query),
-                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                        'キャンセル', 'キャンセル'),
-                );
             }
         }
         if ($beforeMessage === 'review_entry') {
+            replyButtonsTemplate('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            "レビューのメニューです。\nレビューの登録や確認ができます。",
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'レビュー登録', 'レビュー登録'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                '自分のレビュー確認・編集', 'レビュー確認・編集'),
+            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                'メインメニューに戻る', '終了'),
+            );
+            updateUser($event->getUserId(), 'review');
             //navigationテーブルに番号が存在するか確認
             $num = intval($event->getText());
             if ($num > 10) {
@@ -290,7 +285,9 @@ foreach ($events as $event) {
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                             'はい', SERVER_ROOT . '/web/review_entry.php?' . $query),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                            'キャンセル', 'キャンセル'),
+                            '他のお店をレビューする', '戻る'),
+                        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                            'メインメニューに戻る', '終了'),
                     );
                 } else {
                     replyButtonsTemplate($bot, $event->getReplyToken(),
@@ -301,18 +298,41 @@ foreach ($events as $event) {
                         new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                             'はい', SERVER_ROOT . '/web/review_entry.php?' . $query),
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                            'キャンセル', 'キャンセル')
+                            '他のお店をレビューする', '戻る'),
+                        new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                            'メインメニューに戻る', '終了')
                     );
                     //entry review data
                     updateUserShopData($event->getUserId(),
                         'review_shop',
                         $shop['shopid']
                     );
-                    updateUser($event->getUserId(), 'review');
+                    updateUser($event->getUserId(), 'review_entry_confirm');
                 }
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しい番号を入力して下さい。');
+            }
+        }
+        else if ($beforeMessage === 'review_entry_confirm') {
+            else if (strcmp($event->getText(), '戻る') == 0) {
+                $replyMessage = "過去に行った中からレビューしたいお店の番号を入力してください。\n\n";
+                $visitedShops = getUserVisitedShopData($event->getUserId());
+                $count = 1;
+                foreach ($visitedShops as $visitedShop) {
+                    if ($visitedShop["conveni"]) {
+                        $replyMessage .= ($count+10) . ': ' . $visitedShop['shopname']."\n";
+                    } else {
+                        $replyMessage .= $count . ': ' . $visitedShop['shopname']."\n";
+                    }
+                    $count += 1;
+                }
+                quickReplyMessage($bot, $event->getReplyToken(),
+                $replyMessage,
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
+                updateUser($event->getUserId(), 'review_entry');
             }
         }
 
@@ -472,13 +492,7 @@ foreach ($events as $event) {
                 continue;
             }
             updateUser($event->getUserId(), 'review');
-            replyButtonsTemplate($bot, $event->getReplyToken(),
-            'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            '登録されている場所の一覧を表示します。',
-            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '場所一覧へ', SERVER_ROOT.'/web/life_list.php?now_page=1'),
-            );
-            $button = replyButtonsBuilder('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            replyButtonsTemplate('レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
             "レビューのメニューです。\nレビューの登録や確認ができます。",
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
@@ -528,7 +542,7 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 '個人用設定', SERVER_ROOT.'/web/setting.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'キャンセル', 'キャンセル'),
+                'メインメニューに戻る', '終了'),
             );
         }
     }
