@@ -8,14 +8,36 @@ define('TABLE_NAME_GENRE', 'genre');
 if (!(isset($_SESSION['email']))) {
     header('Location:owner_login.php');
 }
+?>
 
-$shopname = '';
+<?php
+//ページの状態
+$status = 'input';
+
+$userId = $_SESSION['email'];
+$name = '';
+
+$type = 'shop';
+
 $openDate = '';
-$closeDate = '';
 $openTime = '';
 $closeTime = '';
-$lat = 0.0;
-$lng = 0.0;
+
+$holdDateStart = '';
+$holdDateEnd = '';
+$holdStart = '';
+$holdEnd = '';
+
+$spendStart = '';
+$spendEnd = '';
+
+$lat = null;
+$lng = null;
+
+$genre = '';
+$feature = '';
+$other = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);

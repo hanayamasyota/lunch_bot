@@ -21,6 +21,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $lat = $_POST['lat'];
     $lng = $_POST['lng'];
     $genre = $_POST['genre'];
+    $selectGenre = 0;
     $feature = $_POST['feature'];
     $link = $_POST['link'];
 
@@ -28,6 +29,26 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
     $image = file_get_contents($_FILES['photo']['tmp_name']);
     //base64バイナリデータに変換
     $binary_image = base64_encode($image);
+
+    if ($genre == '0') {
+        $genre = $_POST["newgenre"];
+        if (isset($genre)) {
+            //ジャンルがすでにあるかを確認
+            $genreData = checkGenre($newGenre);
+            if ($genreData != PDO::PARAM_NULL) {
+                //既存のジャンルのIDで登録
+                $selectGenre = $genreData["genre_id"];
+            } else {
+                //新しくジャンルを登録(idはserial)
+                //登録したジャンルのIDを取得
+                $genreId = strval(registerGenre($newGenre));
+                //新しいIDを$genreに代入
+                $selectGenre = $genreId;
+            }
+        }
+    } else {
+        $selectGenre = $_POST['genre'];
+    }
 
     $nowTime = time()+32400;
     $nowTimeString = date('Y-m-d H:i:s', $nowTime);
@@ -44,7 +65,7 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
             $closeDate,
             $openTime,
             $closeTime,
-            $genre,
+            $selectGenre,
             $feature,
             $lat,
             $lng,
