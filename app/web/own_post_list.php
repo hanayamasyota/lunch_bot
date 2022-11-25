@@ -68,7 +68,6 @@ if ($shops != 0) {
     <?php 
     if ($shops != 0) {
         foreach($shops as $shop) {
-            error_log('post_type:'.$shop["kind"]);
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
@@ -87,7 +86,7 @@ if ($shops != 0) {
             </tr>
             <?php } ?>
             
-            <?php if (isset($shop["kind"]) == 0) { ?>
+            <?php if ($shop["kind"] == 0) { ?>
                 <?php if (isset($shop["open_date"])) { ?>
                 <tr>
                     <th class="col-4 py-4 align-middle bg-lightbrown">
@@ -110,7 +109,7 @@ if ($shops != 0) {
                     </td>
                 </tr>
                 <?php } ?>
-            <?php } else if (isset($shop["kind"]) == 1) { ?>
+            <?php } else if ($shop["kind"] == 1) { ?>
                 <?php if ((isset($shop["open_date"])) && (isset($shop["close_date"]))) { ?>
                 <tr>
                     <th class="col-4 py-4 align-middle bg-lightbrown">
@@ -133,7 +132,7 @@ if ($shops != 0) {
                     </td>
                 </tr>
                 <?php } ?>
-            <?php } else if (isset($shop["kind"]) == 2) { ?>
+            <?php } else if ($shop["kind"] == 2) { ?>
                 <?php if ((isset($shop["open_time"])) && (isset($shop["close_time"]))) { ?>
                 <tr>
                     <th class="col-4 py-4 align-middle bg-lightbrown">
