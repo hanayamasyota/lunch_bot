@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 }
             } else {
-                $myGenre = $_POST['genre'];
+                $selectGenre = $_POST['genre'];
             }
             $lat = $_POST['lat'];
             $lng = $_POST['lng'];
