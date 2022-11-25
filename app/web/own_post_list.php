@@ -68,6 +68,7 @@ if ($shops != 0) {
     <?php 
     if ($shops != 0) {
         foreach($shops as $shop) {
+            error_log('post_type:'.$shop["kind"]);
     ?>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
 
