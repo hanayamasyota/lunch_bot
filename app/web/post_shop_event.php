@@ -1,9 +1,11 @@
 <?php
 require_once '../DBConnection.php';
 require_once '../database_function/genre_sql.php';
+require_once '../database_function/users_sql.php';
 require_once '../database_function/eventshops_sql.php';
 
 define('TABLE_NAME_GENRE', 'genre');
+define('TABLE_NAME_USERS', 'users');
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 ?>
 
@@ -143,8 +145,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             );
 
             //ユーザの登録回数を増やす
-            //...
-
+            countupPost($userId);
+            
             $status = 'success';
             $pageName = '登録完了';
         } else {
