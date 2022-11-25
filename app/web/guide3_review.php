@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top" class="bg-base">
+<body id="page-top" class="bg-base mx-3">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -36,19 +36,29 @@
     </header>
 
     <!-- Contents-->
-    <p class="h2 text-center mb-4">ひるまちGO 使い方ガイド</p>
-    <p class="h4 text-center">-目次-</p>
-    
-    <ul class="ms-5">
-        <li><a href="guide1_first.php">はじめに</a></li>
-        <li><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
-        <li><a href="guide3_review.php">場所のレビューをする</a></li>
-        <li><a href="guide4_post.php">新しい場所を追加する</a></li>
-        <li><a href="guide5_score.php">スコアを見る</a></li>
-        <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
-    </ul>
+    <p class="h2 text-center mt-4">ひるまちGO 使い方ガイド</p>
+    <p class="text-center">-場所のレビューをする-</p>
+    <p>「ひるまちGO！」機能で「ここに行く！」を押した場所が、レビューができる場所になります。</p>
+    <hr>
+    <p class="mb-3">メニューの「ひるやすみのこと」の「行った場所をレビュー」を選択。<br>返ってくるメッセージの「レビュー登録」を押す。</p>
+    <p class="picture">
+      <img src="guide_img/3-1.png" class="mb-5">
+    </p>
+    <p class="mb-3">自分が行った場所が出るので、レビューしたい場所に該当する数字を入力する。(直近10件まで表示される)</p>
+    <p class="picture">
+      <img src="guide_img/3-2.png" class="mb-5">
+    </p>
+    <p class="mb-3">「はい」を選び、必要事項を入力。</p>
+    <p class="picture">
+      <img src="guide_img/3-3.png" class="mb-5">
+      <img src="guide_img/3-4.png" class="mb-5">
+    </p>
+    <p class="mb-3">過去の自分のレビューは、メニューの「行った場所をレビュー」を選択し、「自分のレビュー確認・編集」から見ることができる。</p>
+    <p class="picture">
+      <img src="guide_img/3-5.png" class="mb-5">
+    </p>
 
-
+    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
     
 
     <!-- Footer-->

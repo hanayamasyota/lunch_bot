@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top" class="bg-base">
+<body id="page-top" class="bg-base mx-3">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -36,20 +36,27 @@
     </header>
 
     <!-- Contents-->
-    <p class="h2 text-center mb-4">ひるまちGO 使い方ガイド</p>
-    <p class="h4 text-center">-目次-</p>
-    
-    <ul class="ms-5">
-        <li><a href="guide1_first.php">はじめに</a></li>
-        <li><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
-        <li><a href="guide3_review.php">場所のレビューをする</a></li>
-        <li><a href="guide4_post.php">新しい場所を追加する</a></li>
-        <li><a href="guide5_score.php">スコアを見る</a></li>
-        <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
-    </ul>
+    <p class="h2 text-center mt-4">ひるまちGO 使い方ガイド</p>
+    <p class="text-center">-個人の設定を変更する-</p>
+    <p>位置情報や個人情報の設定を変更したいときは、以下の手順で変更できます。</p>
+    <hr>
+    <p class="mb-3">メニューを開き「じぶんのこと」を選択。<br>「個人情報の設定」を押す。</p>
+    <p class="picture">
+      <img src="guide_img/6-1.png" class="mb-5">
+    </p>
+    <p class="mb-3">位置情報の設定を更新したい場合は「位置情報の設定・変更」を選択。</p>
+    <p class="picture">
+      <img src="guide_img/1-2.png" class="mb-5">
+      <img src="guide_img/1-3.png" class="mb-5">
+    </p>
+    <p class="mb-3">ニックネーム・昼休みの時間・好みの雰囲気を変更したい場合は「個人用設定」を選択。</p>
+    <p class="picture">
+      <img src="guide_img/1-4.png" class="mb-5">
+      <img src="guide_img/1-5.png" class="mb-5">
+    </p>
+    <p class="mb-3">それぞれの画面で変更したい個所を入力して完了。</p>
 
-
-    
+    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">

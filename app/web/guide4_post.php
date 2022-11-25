@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top" class="bg-base">
+<body id="page-top" class="bg-base mx-3">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -36,20 +36,29 @@
     </header>
 
     <!-- Contents-->
-    <p class="h2 text-center mb-4">ひるまちGO 使い方ガイド</p>
-    <p class="h4 text-center">-目次-</p>
-    
-    <ul class="ms-5">
-        <li><a href="guide1_first.php">はじめに</a></li>
-        <li><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
-        <li><a href="guide3_review.php">場所のレビューをする</a></li>
-        <li><a href="guide4_post.php">新しい場所を追加する</a></li>
-        <li><a href="guide5_score.php">スコアを見る</a></li>
-        <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
-    </ul>
+    <p class="h2 text-center mt-4">ひるまちGO 使い方ガイド</p>
+    <p class="text-center">-あたらしい場所を追加する-</p>
+    <p>メニューの「ひるやすみのこと」にある「あたらしい場所を登録」の機能では、自分自身が見つけたお店や場所、アクティビティ・イベントを登録することができます。</p>
+    <hr>
+    <p class="mb-3">メニューの「ひるやすみのこと」を選択。<br>「あたらしい場所を登録」を選択。</p>
+    <p class="picture">
+      <img src="guide_img/4-1.png" class="mb-5">
+    </p>
+    <p class="mb-3">「新規登録」を選択。</p>
+    <p class="picture">
+      <img src="guide_img/4-2.png" class="mb-5">
+    </p>
+    <p class="mb-3">入力フォームに登録したいお店やイベント、過ごし方について入力し、登録する。<div class="text-danger d-inline">*</div>がついている項目は入力必須です。</p>
+    <p class="picture">
+      <img src="guide_img/4-3.png" alt="登録フォーム" class="mb-5">
+    </p>
+    <p class="mb-3">過去の自分の投稿は、メニューの「あたらしい場所を登録」を選択し、「自分が登録したものを確認」から見ることができます。</p>
+    <p class="picture">
+      <img src="guide_img/4-4.png" class="mb-5">
+    </p>
 
+    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
 
-    
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">

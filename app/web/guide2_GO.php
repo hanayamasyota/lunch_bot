@@ -21,7 +21,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
 
-<body id="page-top" class="bg-base">
+<body id="page-top" class="bg-base mx-3">
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
@@ -36,19 +36,49 @@
     </header>
 
     <!-- Contents-->
-    <p class="h2 text-center mb-4">ひるまちGO 使い方ガイド</p>
-    <p class="h4 text-center">-目次-</p>
-    
-    <ul class="ms-5">
-        <li><a href="guide1_first.php">はじめに</a></li>
-        <li><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
-        <li><a href="guide3_review.php">場所のレビューをする</a></li>
-        <li><a href="guide4_post.php">新しい場所を追加する</a></li>
-        <li><a href="guide5_score.php">スコアを見る</a></li>
-        <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
-    </ul>
+    <p class="h2 text-center mt-4">ひるまちGO 使い方ガイド</p>
+    <p class="text-center">-「ひるまちGO！」を使う-</p>
+    <p>「ひるまちGO！」機能では昼休みの過ごし方を探したり、おすすめのお店などを知れたりします。</p>
+    <hr>
+    <p class="mb-3">メニューの「ひるやすみのこと」を選択し、「ひるまちGO！」を押す。</p>
+    <p class="picture">
+      <img src="guide_img/2-1.png" class="mb-5">
+    </p>
+    <p class="mb-3">知りたいことに該当する数字を入力。(キーボード)</p>
+    <p class="picture">
+      <img src="guide_img/2-2.png" class="mb-5">
+    </p>
+    <p class="mb-3">１. コンビニをさがす</p>
+    <p class="mb-3">　近くにあるコンビニと、徒歩でかかる時間が表示される。<br>
+        　「レビューを見る」を選択すると、行った時間とその時間帯の混み具合、品揃えを把握できる。<br>
+        　「ここに行く！」を選択すると、その場所までのルートを知ることができる。</p>
+    <p class="picture">
+      <img src="guide_img/2-3a.png" class="mb-5">
+      <img src="guide_img/2-3b.png" class="mb-5">
+    </p>
+    <p class="mb-3">２. 飲食店を探す</p>
+    <p class="mb-3">　近くにある飲食店と、そこに徒歩でかかる時間と着いてからどれぐらい
+        過ごせるか(滞在可能時間)が表示される。<br>
+        　「レビューを見る」を選択すると、ほかの利用者が登録したレビューを見ることができる。<br>
+        　「ここに行く！」を選択すると、その場所までのルートを知ることができる。</p>
+    <p class="picture">
+      <img src="guide_img/2-4a.png" class="mb-5">
+      <img src="guide_img/2-4b.png" class="mb-5">
+    </p>
+    <p class="mb-3">３. みんなが登録したところを見る</p>
+    <p class="mb-3">　探したい数字を入力。(キーボード)<br>
+        　それぞれの一覧を見ることができる。</p></p>
+    <p class="picture">
+      <img src="guide_img/2-5a.png" class="mb-5">
+      <img src="guide_img/2-5b.png" class="mb-5">
+    </p>
+    <p class="mb-3">４. おすすめの店</p>
+    <p class="mb-3">自分が登録した好みの雰囲気に合わせておすすめの店を表示してくれる。</p>
+    <p class="picture">
+      <img src="guide_img/2-6.png" class="mb-5">
+    </p>
 
-
+    <p class="text-center"><a href="guide.php">目次に戻る</a></p>
     
 
     <!-- Footer-->

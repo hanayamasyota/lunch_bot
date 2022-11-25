@@ -142,6 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $nowTimeString,
             );
 
+            //ユーザの登録回数を増やす
+            //...
+
             $status = 'success';
             $pageName = '登録完了';
         } else {
