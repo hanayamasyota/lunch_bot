@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/review.css" rel="stylesheet" />
     <!-- <link href="../css/form.css" rel="stylesheet" /> -->
     <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 </head>
@@ -29,22 +30,22 @@
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
-        <div class="container px-3 pt-2 bg-imagecolor">
+        <!-- Mashead header-->
+        <header class="mt-5">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">使い方ガイド</p>
         </div>
     </header>
 
     <!-- Contents-->
-    <p class="h2 text-center mb-4">ひるまちGO 使い方ガイド</p>
     <p class="h4 text-center">-目次-</p>
     
-    <ul class="ms-5">
-        <li><a href="guide1_first.php">はじめに</a></li>
-        <li><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
-        <li><a href="guide3_review.php">場所のレビューをする</a></li>
-        <li><a href="guide4_post.php">新しい場所を追加する</a></li>
-        <li><a href="guide5_score.php">スコアを見る</a></li>
+    <ul class="ms-5 contents">
+        <li class="contents_list"><a href="guide1_first.php">はじめに</a></li>
+        <li class="contents_list"><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
+        <li class="contents_list"><a href="guide3_review.php">場所のレビューをする</a></li>
+        <li class="contents_list"><a href="guide4_post.php">新しい場所を追加する</a></li>
+        <li class="contents_list"><a href="guide5_score.php">スコアを見る</a></li>
         <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
     </ul>
 
