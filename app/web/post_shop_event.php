@@ -66,10 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lng = floatval($_POST['lng']);
 
     $myGenre = $_POST["genre"];
+    
     $feature = $_POST["feature"];
 
     if (!(isset($map))) {
         if (isset($userId) && isset($name) && isset($type) && isset($lat) && isset($lng) && isset($genre)) {
+            $selectGenre=0;
             $num = 0;
             if ($type == 'shop') {
                 $num = 0;
