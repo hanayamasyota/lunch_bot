@@ -92,3 +92,12 @@ a.page_number:visited {color: black; text-decoration:none }
   padding: 0.5em;
   list-style-type: none!important;/*ポチ消す*/
 }
+.picture img {
+
+  max-width: 100%;
+
+  width: 49%;
+
+  height: auto;
+
+}
