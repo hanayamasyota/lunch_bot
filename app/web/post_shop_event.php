@@ -137,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $closeDate,
                 $openTime,
                 $closeTime,
-                $myGenre,
+                $selectGenre,
                 $feature,
                 $lat,
                 $lng,
@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             //ユーザの登録回数を増やす
             countupPost($userId);
-            
+
             $status = 'success';
             $pageName = '登録完了';
         } else {
