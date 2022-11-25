@@ -41,12 +41,12 @@
     <p class="h4 text-center">-目次-</p>
     
     <ul class="ms-5 contents">
-        <li class="contents_list"><a href="guide1_first.php">はじめに</a></li>
+        <label for="guide1"><li class="contents_list"><a href="guide1_first.php" id="guide1">はじめに</a></li></label>
         <li class="contents_list"><a href="guide2_GO.php">「ひるまちGO！」を使う</a></li>
         <li class="contents_list"><a href="guide3_review.php">場所のレビューをする</a></li>
         <li class="contents_list"><a href="guide4_post.php">新しい場所を追加する</a></li>
         <li class="contents_list"><a href="guide5_score.php">スコアを見る</a></li>
-        <li><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
+        <li class="contents_list"><a href="guide6_setting.php">個人情報の設定を変更する</a></li>
     </ul>
 
 
