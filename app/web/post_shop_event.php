@@ -322,16 +322,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option hidden value="">選択してください</option>
                                     <?php
                                     $genres = getAllGenres();
+                                    $genreStr = '';
                                     foreach ($genres as $genre) {
                                     ?>
                                         <?php
-                                            echo '<option value="<?php echo $genre["genre_id"]; ?>"';
+                                            $genreStr .= '<option value="<?php echo $genre["genre_id"]; ?>"';
                                             if ($genre["genre_id"] == intval($myGenre)) {
-                                                echo 'selected';
+                                                $genreStr .= ' selected';
                                             }
-                                            echo '><?php echo $genre["genre_name"]; ?></option>';
+                                            $genreStr .= '><?php echo $genre["genre_name"]; ?></option>';
                                         ?>
                                     <?php } ?>
+                                    <?php echo $genreStr; ?>
                                     <option value="0">その他</option>
                                 </select>
                                 <br>
