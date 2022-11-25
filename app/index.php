@@ -395,6 +395,8 @@ foreach ($events as $event) {
                 '登録されている固定店舗の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                     '固定店舗一覧へ', SERVER_ROOT.'/web/shop_list.php?now_page=1'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
             } else if ($event->getText() === '2') {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
@@ -402,6 +404,8 @@ foreach ($events as $event) {
                 '登録されているイベント・移動店舗の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                     'イベント・移動店舗一覧へ', SERVER_ROOT.'/web/event_list.php?now_page=1'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
             } else if ($event->getText() === '3') {
                 replyButtonsTemplate($bot, $event->getReplyToken(),
@@ -409,6 +413,15 @@ foreach ($events as $event) {
                 '登録されている場所の一覧を表示します。',
                 new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                     '場所一覧へ', SERVER_ROOT.'/web/life_list.php?now_page=1'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
+            } else if (strcmp($event->getText(), '戻る') == 0) {
+                updateUser($event->getUserId(), 'search');
+                $response = $bot->linkRichMenu($event->getUserId(), getenv('RICHMENU_HIRUMATIMENU'));
+                quickReplyMessage($bot, $event->getReplyToken(),
+                "ジャンルを数字で選んでください。\n\n1:コンビニをさがす\n2:飲食店をさがす\n3:みんなが登録したとこを見る\n4:おすすめの店",
+                    new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
             } else {
                 quickReplyMessage($bot, $event->getReplyToken(),
