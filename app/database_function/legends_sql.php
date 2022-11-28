@@ -26,7 +26,7 @@ function getLegends($legendId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select legend_name from legends where ? = legends_id';
     $sth = $dbh->prepare($sql);
-    $sth->execute(array($userId));
+    $sth->execute(array($legendId));
     if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
     } else {
