@@ -10,6 +10,7 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
 <?php
 $userId = '';
 $score = 0;
+$legends = array();
 if ($_SERVER["REQUEST_METHOD"] != "GET") {
     $userId = $_GET["userid"];
     //登録数を取得
