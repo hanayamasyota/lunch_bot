@@ -140,7 +140,7 @@ foreach ($events as $event) {
         $postBackMsg = $event->getPostbackData();
         $beforeMessage = getBeforeMessageByUserId($event->getUserId());
         if ($postBackMsg === 'score') {
-            replyButtonsTemplate($bot, $event->getReplyToken(), 'スコア表示ボタン', SERVER_ROOT.'/imgs/hirumatigo.png', 'スコア表示',
+            replyButtonsTemplate($bot, $event->getReplyToken(), 'スコア表示ボタン', SERVER_ROOT.'/imgs/hirumatiGO.png', 'スコア表示',
             "こちらのボタンからスコアを表示します。",
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
                 'スコア確認', SERVER_ROOT.'/web/score.php?userid='.$event->getUserId()
@@ -258,7 +258,6 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'メインメニューに戻る', '終了'),
             );
-            updateUser($event->getUserId(), 'review');
             //navigationテーブルに番号が存在するか確認
             $num = intval($event->getText());
             if ($num > 10) {
@@ -303,13 +302,8 @@ foreach ($events as $event) {
                         new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                             'メインメニューに戻る', '終了')
                     );
-                    //entry review data
-                    updateUserShopData($event->getUserId(),
-                        'review_shop',
-                        $shop['shopid']
-                    );
-                    updateUser($event->getUserId(), 'review_entry_confirm');
                 }
+                updateUser($event->getUserId(), 'review_entry_confirm');
             } else {
                 replyTextMessage($bot, $event->getReplyToken(),
                 '店が見つかりませんでした。正しい番号を入力して下さい。');

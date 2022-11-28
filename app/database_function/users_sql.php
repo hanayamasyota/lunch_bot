@@ -1,4 +1,6 @@
 <?php
+require_once 'legends_sql.php';
+define('TABLE_NAME_LEGENDS', 'legends');
 
 // get berore_send message by userid
 function getBeforeMessageByUserId($userId) {
@@ -98,6 +100,16 @@ function countUpPost($userId) {
     $sth->execute(array($userId));
     $row = $sth->fetch()["post_times"]+1;
 
+    //称号判定
+    if ($row == 1) {
+        //登録
+        registerUser($userId, 1);
+    } else if ($row == 5) {
+        registerUser($userId, 2);
+    } else if ($row == 10) {
+        registerUser($userId, 3);
+    }
+
     $sql = 'update '.TABLE_NAME_USERS.' set post_times = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($row, $userId));
@@ -108,13 +120,10 @@ function getCountPost($userId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     $row = $sth->fetch()["post_times"];
-
-    if (!($row = $sth->fetch())) {
+    if (!($row)) {
         return PDO::PARAM_NULL;
-    } else {
-        //return shopname
-        return $row;
     }
+    return $row;
 }
 
 // entry userinfo

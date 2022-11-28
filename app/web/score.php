@@ -1,7 +1,9 @@
 <?php
 require_once '../database_function/users_sql.php';
+require_once '../database_function/legends_sql.php';
 
 define('TABLE_NAME_USERS', 'users');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
@@ -11,6 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     $userId = $_GET["userid"];
     //登録数を取得
     $score = getCountPost($userId);
+    //現在の称号を取得(関数未実装)
+    $now_legend = getNowLegend($userId);
+    //称号のデータを取得
+    $legends = getUserLegends($userId);
 }
 ?>
 
@@ -54,6 +60,21 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
         <h1>あなたのスコアは <?php echo $score; ?> 点です</h1>
+        <p>設定中の称号名がここに入ります</p>
+        <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
+            <?php foreach ($legends as $legend) { ?>
+
+            <?php } ?>
+        <?php } else { ?>
+            <p>まだ称号を獲得していません</p>
+        <?php } ?>
+        
+        <!-- 取得ログ -->
+            <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
+                <?php foreach ($legends as $legend) { ?>
+                    
+                <?php } ?>
+            <?php }?>
     </div>
 
     <!-- Footer-->
