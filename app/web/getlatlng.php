@@ -108,20 +108,26 @@ session_start();
             $url = 'post_shop_event.php';
         } ?>
         <form method="post" action="<?php echo $url; ?>">
+            <input type="hidden" name="userid" value="<?php echo $_POST["userid"]; ?>">
             <input type="hidden" name="name" value="<?php echo $_POST["name"]; ?>">
+            <input type="hidden" name="map" value="<?php echo 1; ?>">
             <?php if ($_GET["type"] == 'shop'): ?>
-                <input type="hidden" name="map" value="<?php echo 1; ?>">
-                <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
-            <?php elseif ($_GET["type"] == 'event'): ?>
-                <input type="hidden" name="map" value="<?php echo 1; ?>">
                 <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
-                <input type="hidden" name="closedate" value="<?php echo $_POST["closedate"]; ?>">
+                <input type="hidden" name="opentime" value="<?php echo $_POST["opentime"]; ?>">
+                <input type="hidden" name="closetime" value="<?php echo $_POST["closetime"]; ?>">
+                <input type="hidden" name="genre" value="<?php echo $_POST["genre"]; ?>">
+                <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
+                <input type="hidden" name="link" value="<?php echo $_POST["link"]; ?>">
+            <?php elseif ($_GET["type"] == 'event'): ?>
+                <input type="hidden" name="opendate" value="<?php echo $_POST["holddatestart"]; ?>">
+                <input type="hidden" name="closedate" value="<?php echo $_POST["holddateend"]; ?>">
                 <input type="hidden" name="holdstart" value="<?php echo $_POST["holdstart"]; ?>">
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
+                <input type="hidden" name="genre" value="<?php echo $_POST["genre"]; ?>">
                 <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
+                <input type="hidden" name="link" value="<?php echo $_POST["link"]; ?>">
+
             <?php else: ?>
-                <input type="hidden" name="map" value="<?php echo 1; ?>">
-                <input type="hidden" name="userid" value="<?php echo $_POST["userid"]; ?>">
                 <input type="hidden" name="radio1" value="<?php echo $_POST["radio1"]; ?>">
                 <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">
                 <input type="hidden" name="opentime" value="<?php echo $_POST["opentime"]; ?>">

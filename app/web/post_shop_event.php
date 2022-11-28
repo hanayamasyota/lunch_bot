@@ -111,10 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $selectGenre = $_POST['genre'];
             }
-            $lat = $_POST['lat'];
-            $lng = $_POST['lng'];
-            $feature = $_POST['feature'];
-            $link = $_POST['link'];
 
             $binary_image = null;
 
@@ -134,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $num, //固定店舗
                 $name,
                 $binary_image,
-                $link,
+                null, //リンクはオーナーのみ
                 $openDate,
                 $closeDate,
                 $openTime,

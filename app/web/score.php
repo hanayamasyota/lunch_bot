@@ -1,4 +1,5 @@
 <?php
+require_once '../../DBConnection.php';
 require_once '../database_function/users_sql.php';
 require_once '../database_function/legends_sql.php';
 
@@ -72,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
         <!-- 取得ログ -->
             <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
                 <?php foreach ($legends as $legend) { ?>
-                    
+
                 <?php } ?>
             <?php }?>
     </div>

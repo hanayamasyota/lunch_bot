@@ -3,24 +3,110 @@ session_start();
 
 require_once '../../DBConnection.php';
 require_once '../../database_function/genre_sql.php';
+require_once '../../database_function/eventshops_sql.php';
+
 define('TABLE_NAME_GENRE', 'genre');
+define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 
 if (!(isset($_SESSION['email']))) {
     header('Location:owner_login.php');
 }
 
-$shopname = '';
+$status = 'input';
+
+$userId = '';
+$name = '';
+
 $openDate = '';
 $openTime = '';
 $closeTime = '';
-$lat = 0.0;
-$lng = 0.0;
+
+$lat = null;
+$lng = null;
+
+$genre = '';
+$feature = '';
+$link = '';
+$other = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $userId = $_POST["userid"];
+    $name = $_POST["name"];
+    $map = $_POST["map"];
+    $openDate = $_POST["opendate"];
+    $openTime = $_POST["opentime"];
+    $closeTime = $_POST["closetime"];
+    $spendStart = $_POST["spendstart"];
+    $spendEnd = $_POST["spendend"];
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
+    $myGenre = $_POST["genre"];
+    $feature = $_POST["feature"];
+    $link = $_POST["link"];
+
+    if (!(isset($map))) {
+        if (isset($userId) && isset($name) && isset($openDate) && isset($openTime) && isset($closeTime) && isset($lat) && isset($lng) && isset($myGenre) && isset($feature)) {
+            $selectGenre=0;
+
+            $selectGenre = '';
+            //ジャンル項目でその他を選択した場合
+            if ($myGenre == '0') {
+                $newGenre = $_POST["newgenre"];
+                if (isset($newGenre)) {
+                    //ジャンルがすでにあるかを確認
+                    $genreData = checkGenre($newGenre);
+                    if ($genreData != PDO::PARAM_NULL) {
+                        //既存のジャンルのIDで登録
+                        $selectGenre = $genreData["genre_id"];
+                    } else {
+                        //新しくジャンルを登録(idはserial)
+                        //登録したジャンルのIDを取得
+                        $genreId = strval(registerGenre($newGenre));
+                        //新しいIDを$genreに代入
+                        $selectGenre = $genreId;
+                    }
+                }
+            } else {
+                $selectGenre = $_POST['genre'];
+            }
+
+            $binary_image = null;
+            //一時的にファイルを保存
+            if ($_FILES['photo']['size'] != 0) {
+                $image = file_get_contents($_FILES['photo']['tmp_name']);
+                //base64バイナリデータに変換
+                $binary_image = base64_encode($image);
+            }
+            //登録日時を取得
+            $nowTime = time()+32400;
+            $nowTimeString = date('Y-m-d H:i:s', $nowTime);
+            //登録
+            registerEventShopsByOwner(
+                $userId,
+                1, //オーナー
+                0, //固定店舗
+                $name,
+                $binary_image,
+                $link,
+                $openDate,
+                null,
+                $openTime,
+                $closeTime,
+                $selectGenre,
+                $feature,
+                $lat,
+                $lng,
+                $nowTimeString,
+            );
+
+            $status = 'success';
+            $pageName = '登録完了';
+        } else {
+            $status = 'error';
+        }
+    }
 } else {
-    $lat = null;
-    $lng = null;
+    $userId = $_SESSION["email"];
 }
 ?>
 
@@ -32,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|固定店舗登録</title>
+    <title>ひるまちGO|</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -62,9 +148,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </header>
 
     <!-- Contents-->
+    <?php if ($status == 'success') { ?>
+        <div class="container dx-1 my-5 bg-lightnavy">
+            <p>登録が完了しました。</p>
+            <a href="owner_index.php">ホームへ</a>
+        </div>
+    <?php } else { ?>
     <div class="container dx-2 my-5 bg-lightnavy text-center">
-        <form method="post" action="post_shop_owner_confirm.php" enctype="multipart/form-data">
-    
+        <?php if ($status == 'error') { ?>
+            <p class="text-danger">※必須項目が入力されていません</p>
+        <?php } ?>
+        <form method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap" style="table-layout: fixed;">
             <thead class="border border-start">フォームの入力をしてください。</thead>
             <tr>
@@ -72,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>店名
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="text" name="name" placeholder="飲食店の名前を入力" required>
+                    <input type="text" name="name" value="<?php echo $name; ?>" placeholder="飲食店の名前を入力">
                 </td>
             </tr>
             
@@ -81,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>開店日
                 </th>
                 <td class="col-9 py-2 font-weight-normal align-middle bg-white">
-                    <input type="date" name="holddate" class="w-35" required>から
+                    <input type="date" name="opendate" value="<?php echo $openDate; ?>" class="w-35">から
                 </td>
             </tr>
             <tr>
@@ -89,8 +184,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="time" name="holdstart" required><div class="px-1">から</div>
-                    <input type="time" name="holdend" required><div class="px-1">まで</div>
+                    <input type="time" name="opentime" value="<?php echo $openTime; ?>"><div class="px-1">から</div>
+                    <input type="time" name="closetime" value="<?php echo $closeTime; ?>"><div class="px-1">まで</div>
                 </td>
             </tr>
 
@@ -99,9 +194,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <a href="../getlatlng.php?type=shop">こちらのリンクから設定してください</a>
-                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent" required>
-                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline" required>
+                    <input type="submit" formaction="getlatlng.php?type=user" value="位置情報の登録"><br>
+                    <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
+                    <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
+                    <div class="text-start"><small>
+                        緯度：<?php echo $lat; ?><br>
+                        経度：<?php echo $lng; ?>
+                    </small></div>
                 </td>
             </tr>
 
@@ -112,9 +211,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <td class="col-9 py-1 align-middle bg-white w-100 h-100">
                     <label for="input1" class="box px-2">
                         <small>+写真を選択</small>
-                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none; height: auto;">
+                        <input type="file" id="input1" name="photo" class="pt-2" style="display: none;">
                     </label><br>
-                    <img id="sample1" class="w-75 h-75 py-2">
+                    <img id="sample1" class="w-100 py-2" style="height: auto;">
                 </td>
             </tr>
 
@@ -123,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <select name="genre" class="d-inline" required id ="select1">
+                    <select name="genre" class="d-inline" id ="select1">
                         <option hidden value="">選択してください</option>
                         <?php 
                         $genres = getAllGenres();
@@ -134,8 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <option value="999">その他</option>
                     </select>
                     <br>
-                    <input type="text" class="w-50" id="newgenre"><br>
-                    <small>セレクトボックス内にない場合は<br>その他を選択しテキストボックスに入力してください</small>
+                    <input name="other" type="text" class="w-50" id="newgenre"><br>
+                    <small>セレクトボックス内にない場合は<br>その他を選択しテキストボックス<br>に追加したいジャンルを入力してください</small>
                 </td>
             </tr>
 
@@ -144,7 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>特徴
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <textarea name="feature" class="w-75" rows="5" placeholder="住所や定休日などの情報を含め、お店の特徴を入力してください。※200文字以内" maxlength="200" required></textarea>
+                    <textarea name="feature" value="<?php echo $feature; ?>" class="w-75" rows="5" placeholder="住所や定休日などの情報を含め、お店の特徴を入力してください。※200文字以内" maxlength="200"></textarea>
                 </td>
             </tr>
 
@@ -153,11 +252,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     リンク
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="text" name="link" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
+                    <input type="text" name="link" value="<?php echo $link; ?>" class="w-75" placeholder="SNSやHPのURLを貼り付け"/>
                 </td>
             </tr>
         </table>
-        <input type="submit" value="投稿する">
+        <input class="text-center" type="submit" formaction="" value="投稿する">
         </form>
 
     <!-- Footer-->
@@ -170,6 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </footer>
+    <?php } ?>
     
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
