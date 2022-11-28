@@ -143,7 +143,7 @@ foreach ($events as $event) {
             replyButtonsTemplate($bot, $event->getReplyToken(), 'スコア表示ボタン', SERVER_ROOT.'/imgs/hirumatigo.png', 'スコア表示',
             "こちらのボタンからスコアを表示します。",
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                'スコア確認', SERVER_ROOT.'/web/review_score.php?userid='.$event->getUserId()
+                'スコア確認', SERVER_ROOT.'/web/score.php?userid='.$event->getUserId()
             ),
             );
         } else if (strpos($postBackMsg, '_page') !== false) {

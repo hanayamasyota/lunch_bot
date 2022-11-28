@@ -102,6 +102,20 @@ function countUpPost($userId) {
     $sth = $dbh->prepare($sql);
     $sth->execute(array($row, $userId));
 }
+function getCountPost($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select post_times from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    $row = $sth->fetch()["post_times"];
+
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return shopname
+        return $row;
+    }
+}
 
 // entry userinfo
 function registerUser($userId, $beforeSend) {
