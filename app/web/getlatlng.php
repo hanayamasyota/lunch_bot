@@ -119,8 +119,8 @@ session_start();
                 <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
                 <input type="hidden" name="link" value="<?php echo $_POST["link"]; ?>">
             <?php elseif ($_GET["type"] == 'event'): ?>
-                <input type="hidden" name="opendate" value="<?php echo $_POST["holddatestart"]; ?>">
-                <input type="hidden" name="closedate" value="<?php echo $_POST["holddateend"]; ?>">
+                <input type="hidden" name="holddatestart" value="<?php echo $_POST["holddatestart"]; ?>">
+                <input type="hidden" name="holddateend" value="<?php echo $_POST["holddateend"]; ?>">
                 <input type="hidden" name="holdstart" value="<?php echo $_POST["holdstart"]; ?>">
                 <input type="hidden" name="holdend" value="<?php echo $_POST["holdend"]; ?>">
                 <input type="hidden" name="genre" value="<?php echo $_POST["genre"]; ?>">

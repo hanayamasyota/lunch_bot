@@ -60,12 +60,18 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
+        <p>スコアに応じて名前の前につける称号がもらえます。</p>
         <h1>あなたのスコアは <?php echo $score; ?> 点です</h1>
         <p>設定中の称号名がここに入ります</p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
-            <?php foreach ($legends as $legend) { ?>
-
-            <?php } ?>
+            <form action="" method="post">
+                <select name="genre" class="d-inline" id="select1">
+                    <option value="">設定しない</option>
+                    <?php foreach ($legends as $legend) { ?>
+                    <option value="<?php echo $legend['legend_id']; ?>"><?php echo $legend['legend_name']; ?></option>
+                <?php } ?>
+                </select>
+            </form>
         <?php } else { ?>
             <p>まだ称号を獲得していません</p>
         <?php } ?>
@@ -73,7 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
         <!-- 取得ログ -->
             <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
                 <?php foreach ($legends as $legend) { ?>
-
+                    <?php $date = explode(' ', $legend['got_time'])[0]; ?>
+                    <p><?php echo $date; ?> 称号:「<?php echo $legend['legend_name']; ?>」を獲得しました。</p>
                 <?php } ?>
             <?php }?>
     </div>
