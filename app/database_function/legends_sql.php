@@ -1,4 +1,5 @@
 <?php
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 function registerLegend($userId, $legendId) {
     //取得日時を取得
     $nowTime = time()+32400;
