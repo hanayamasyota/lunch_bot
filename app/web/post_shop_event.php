@@ -47,31 +47,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
     $name = $_POST["name"];
     $type = $_POST["radio1"];
-
     $map = $_POST["map"];
-
     $openDate = $_POST["opendate"];
     $openTime = $_POST["opentime"];
     $closeTime = $_POST["closetime"];
-
     $holdDateStart = $_POST["holddatestart"];
     $holdDateEnd = $_POST["holddateend"];
     $holdStart = $_POST["holdstart"];
     $holdEnd = $_POST["holdend"];
-
     $spendStart = $_POST["spendstart"];
     $spendEnd = $_POST["spendend"];
-
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
-
     $myGenre = $_POST["genre"];
-    
     $feature = $_POST["feature"];
 
     if (!(isset($map))) {
         if (isset($userId) && isset($name) && isset($type) && isset($lat) && isset($lng) && isset($genre)) {
-            $selectGenre=0;
             $num = 0;
             if ($type == 'shop') {
                 $num = 0;
@@ -113,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
             $binary_image = null;
-
             //一時的にファイルを保存
             if ($_FILES['photo']['size'] != 0) {
                 $image = file_get_contents($_FILES['photo']['tmp_name']);

@@ -126,7 +126,6 @@ session_start();
                 <input type="hidden" name="genre" value="<?php echo $_POST["genre"]; ?>">
                 <input type="hidden" name="feature" value="<?php echo $_POST["feature"]; ?>">
                 <input type="hidden" name="link" value="<?php echo $_POST["link"]; ?>">
-
             <?php else: ?>
                 <input type="hidden" name="radio1" value="<?php echo $_POST["radio1"]; ?>">
                 <input type="hidden" name="opendate" value="<?php echo $_POST["opendate"]; ?>">

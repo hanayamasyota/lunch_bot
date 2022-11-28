@@ -11,7 +11,9 @@ define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 if (!(isset($_SESSION['email']))) {
     header('Location:owner_login.php');
 }
+?>
 
+<?php
 $status = 'input';
 
 $userId = null;
@@ -29,6 +31,8 @@ $feature = null;
 $link = null;
 $other = null;
 
+$pageName = 'お店の登録';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
     $name = $_POST["name"];
@@ -36,8 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $openDate = $_POST["opendate"];
     $openTime = $_POST["opentime"];
     $closeTime = $_POST["closetime"];
-    $spendStart = $_POST["spendstart"];
-    $spendEnd = $_POST["spendend"];
     $lat = floatval($_POST['lat']);
     $lng = floatval($_POST['lng']);
     $myGenre = $_POST["genre"];
@@ -46,9 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!(isset($map))) {
         if ((isset($userId)) && (isset($name)) && (isset($openDate)) && (isset($openTime)) && (isset($closeTime)) && (isset($lat)) && (isset($lng)) && (isset($myGenre)) && (isset($feature))) {
-            $selectGenre=0;
-
-            $selectGenre = '';
+            $selectGenre='';
             //ジャンル項目でその他を選択した場合
             if ($myGenre == '0') {
                 $newGenre = $_POST["newgenre"];
@@ -59,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         //既存のジャンルのIDで登録
                         $selectGenre = $genreData["genre_id"];
                     } else {
-                        //新しくジャンルを登録(idはserial)
-                        //登録したジャンルのIDを取得
                         $genreId = strval(registerGenre($newGenre));
                         //新しいIDを$genreに代入
                         $selectGenre = $genreId;
@@ -118,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>ひるまちGO|</title>
+    <title>ひるまちGO|<?php echo $pageName; ?></title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
@@ -262,14 +260,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
-            <div class="container px-5">
-                <div class="text-white-50 small">
-                    <div class="mb-2">
-                        ひるまちGO
-                    </div>
+        <div class="container px-5">
+            <div class="text-white-50 small">
+                <div class="mb-2">
+                    ひるまちGO
                 </div>
             </div>
-        </footer>
+        </div>
+    </footer>
     
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -281,61 +279,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
-
-<script>
-        $("#input1").on("change", function (e) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#sample1").attr("src", e.target.result);
-            }
-            reader.readAsDataURL(e.target.files[0]);
-        });
-
-        function Switch() {
-            const radio = document.getElementsByName('radio1');
-            const shop = document.getElementsByClassName('shopList');
-            const event = document.getElementsByClassName('eventList');
-            if (radio[0].checked) {
-                shop[0].style.display = '';
-                shop[1].style.display = '';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-            }
-            else if (radio[1].checked) {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = '';
-                event[1].style.display = '';
-            }
-            else {
-                shop[0].style.display = 'none';
-                shop[1].style.display = 'none';
-                event[0].style.display = 'none';
-                event[1].style.display = 'none';
-            }
-        }
-
-        window.onload = Switch();
-
-        const myGenre = document.getElementById("select1");
-        myGenre.onchange = changeGenre(myGenre);
-
-        function changeGenre(genre) {
-            let num = genre.selectedIndex;
-            let str = genre.options[num].value;
-
-            if (str == '999') {
-
-            }
-        }
-
-        function disableNewGenre() {
-
-        }
-
-</script>
-
-
-
-
 </html>

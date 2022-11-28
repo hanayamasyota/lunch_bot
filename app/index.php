@@ -477,8 +477,8 @@ foreach ($events as $event) {
                 );
             } else {
                 quickReplyMessage($bot, $event->getReplyToken(),
-                '無効な値です',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '終了'),
+                '戻る場合は↓のボタンを押してください',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
             }
