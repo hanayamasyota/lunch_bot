@@ -119,11 +119,11 @@ function getCountPost($userId) {
     $sql = 'select post_times from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
-    $row = $sth->fetch()["post_times"];
-    if (!($row)) {
+    if (!($row = $sth->fetch())) {
         return PDO::PARAM_NULL;
+    } else {
+        return $row['post_times'];
     }
-    return $row;
 }
 
 // entry userinfo
