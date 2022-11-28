@@ -14,20 +14,20 @@ if (!(isset($_SESSION['email']))) {
 
 $status = 'input';
 
-$userId = '';
-$name = '';
+$userId = null;
+$name = null;
 
-$openDate = '';
-$openTime = '';
-$closeTime = '';
+$openDate = null;
+$openTime = null;
+$closeTime = null;
 
 $lat = null;
 $lng = null;
 
-$genre = '';
-$feature = '';
-$link = '';
-$other = '';
+$genre = null;
+$feature = null;
+$link = null;
+$other = null;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_POST["userid"];
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $link = $_POST["link"];
 
     if (!(isset($map))) {
-        if (isset($userId) && isset($name) && isset($openDate) && isset($openTime) && isset($closeTime) && isset($lat) && isset($lng) && isset($myGenre) && isset($feature)) {
+        if ((isset($userId)) && (isset($name)) && (isset($openDate)) && (isset($openTime)) && (isset($closeTime)) && (isset($lat)) && (isset($lng)) && (isset($myGenre)) && (isset($feature))) {
             $selectGenre=0;
 
             $selectGenre = '';
@@ -258,6 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </table>
         <input class="text-center" type="submit" formaction="" value="投稿する">
         </form>
+    <?php } ?>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 mt-5 fixed-bottom">
@@ -269,7 +270,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
             </div>
         </footer>
-    <?php } ?>
     
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
