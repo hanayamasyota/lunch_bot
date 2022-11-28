@@ -194,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>場所
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="submit" formaction="../getlatlng.php?type=user" value="位置情報の登録"><br>
+                    <input type="submit" formaction="../getlatlng.php?type=shop" value="位置情報の登録"><br>
                     <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                     <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
                     <div class="text-start"><small>
