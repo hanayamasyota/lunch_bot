@@ -3,10 +3,12 @@ require_once '../DBConnection.php';
 require_once '../database_function/genre_sql.php';
 require_once '../database_function/users_sql.php';
 require_once '../database_function/eventshops_sql.php';
+require_once '../database_function/legends_sql.php';
 
 define('TABLE_NAME_GENRE', 'genre');
 define('TABLE_NAME_USERS', 'users');
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
