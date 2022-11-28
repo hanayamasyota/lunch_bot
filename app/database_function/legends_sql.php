@@ -12,7 +12,7 @@ function registerLegend($userId, $legendId) {
 
 function getUserLegends($userId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select legend_id, legend_name, got_time from ' . TABLE_NAME_USERLEGENDS . 'user_legends where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'select legend_id, got_time from ' . TABLE_NAME_USERLEGENDS . ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId));
     if (!($rows = $sth->fetchall())) {
@@ -20,6 +20,19 @@ function getUserLegends($userId) {
     } else {
         //return location
         return $rows;
+    }
+}
+
+function getLegends($legendId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select legend_name, got_time from legends where ? = legends_id';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        //return location
+        return $row;
     }
 }
 ?>

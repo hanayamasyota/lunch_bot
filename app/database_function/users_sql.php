@@ -103,11 +103,11 @@ function countUpPost($userId) {
     //称号判定
     if ($row == 1) {
         //登録
-        registerUser($userId, 1);
+        registerLegend($userId, 1);
     } else if ($row == 5) {
-        registerUser($userId, 2);
+        registerLegend($userId, 2);
     } else if ($row == 10) {
-        registerUser($userId, 3);
+        registerLegend($userId, 3);
     }
 
     $sql = 'update '.TABLE_NAME_USERS.' set post_times = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';

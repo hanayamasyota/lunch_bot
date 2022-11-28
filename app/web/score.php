@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     //登録数を取得
     $score = getCountPost($userId);
     //現在の称号を取得(関数未実装)
-    $now_legend = getNowLegend($userId);
+    // $now_legend = getNowLegend($userId);
     //称号のデータを取得
     $legends = getUserLegends($userId);
 }
@@ -68,8 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
                 <select name="genre" class="d-inline" id="select1">
                     <option value="">設定しない</option>
                     <?php foreach ($legends as $legend) { ?>
-                    <option value="<?php echo $legend['legend_id']; ?>"><?php echo $legend['legend_name']; ?></option>
-                <?php } ?>
+                        <?php $name = getLegends($legend['legend_id']); ?>
+                        <option value="<?php echo $legend['legend_id']; ?>"><?php echo $name; ?></option>
+                    <?php } ?>
                 </select>
             </form>
         <?php } else { ?>
@@ -79,8 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
         <!-- 取得ログ -->
             <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
                 <?php foreach ($legends as $legend) { ?>
+                    <?php $name = getLegends($legend['legend_id']); ?>
                     <?php $date = explode(' ', $legend['got_time'])[0]; ?>
-                    <p><?php echo $date; ?> 称号:「<?php echo $legend['legend_name']; ?>」を獲得しました。</p>
+                    <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
                 <?php } ?>
             <?php }?>
     </div>
