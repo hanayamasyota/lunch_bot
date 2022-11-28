@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] != "GET") {
     // $now_legend = getNowLegend($userId);
     //称号のデータを取得
     $legends = getUserLegends($userId);
+    error_log('count::'.count($legends));
 }
 ?>
 

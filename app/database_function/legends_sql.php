@@ -19,7 +19,6 @@ function getUserLegends($userId) {
     if (!($rows = $sth->fetchall())) {
         return PDO::PARAM_NULL;
     } else {
-        //return location
         return $rows;
     }
 }
