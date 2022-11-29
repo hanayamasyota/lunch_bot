@@ -18,14 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST["userid"];
-    $now_legend = $_POST["legend"];
-    error_log('legend::::'.$now_legend);
-    //設定した称号のIDを登録
-    if ($now_legend != "") {
-        updateNowLegend($userId, $now_legend);
-        $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
-    }
-
+    // $now_legend = $_POST["legend"];
+    // error_log('legend::::'.$now_legend);
+    // //設定した称号のIDを登録
+    // if ($now_legend != "") {
+    //     updateNowLegend($userId, $now_legend);
+    //     $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
+    // }
 }
 //登録数を取得
 $score = getCountPost($userId);
@@ -35,7 +34,7 @@ if ($now_legend == PDO::PARAM_NULL) {
     $now_legend_string = '称号が設定されていません';
 } else {
     $legend = getLegends($now_legend);
-    $now_legend_string 
+    $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
 }
 //称号のデータを取得
 $legends = getUserLegends($userId);
