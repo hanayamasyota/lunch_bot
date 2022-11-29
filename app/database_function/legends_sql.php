@@ -24,7 +24,7 @@ function getUserLegends($userId) {
 
 function getLegends($legendId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'select legend_name from legends where ? = legends_id';
+    $sql = 'select legend_name from legends where ? = legend_id';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($legendId));
     if (!($row = $sth->fetch())) {
