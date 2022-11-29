@@ -87,7 +87,7 @@ $legends = getUserLegends($userId);
                         <option value="<?php echo $legend['legend_id']; ?>"><?php echo $name; ?></option>
                     <?php } ?>
                 </select>
-                <button type="submit">
+                <button type="submit">変更する</button>
             </form>
         <?php } else { ?>
             <p>まだ称号を獲得していません</p>
