@@ -18,13 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userId = $_POST["userid"];
-    // $now_legend = $_POST["legend"];
-    // error_log('legend::::'.$now_legend);
+    $now_legend = $_POST["legend"];
     // //設定した称号のIDを登録
-    // if ($now_legend != "") {
-    //     updateNowLegend($userId, $now_legend);
-    //     $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
-    // }
+    if ($now_legend != "") {
+        updateNowLegend($userId, $now_legend);
+    } else {
+        updateNowLegend($userId, null);
+    }
 }
 //登録数を取得
 $score = getCountPost($userId);
