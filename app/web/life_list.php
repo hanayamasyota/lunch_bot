@@ -76,7 +76,7 @@ if ($shops != 0) {
         </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead>
-                <div class="bg-white text-end">
+                <div class="bg-white text-start">
                     <?php
                     $userId = getUserIdByEventId($shop["event_id"]);
                     $userId = stream_get_contents($userId);
@@ -97,7 +97,7 @@ if ($shops != 0) {
                             echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
                         ?>
                     <?php } ?>
-                    <?php echo ' '.$name; ?><small>さん</small></div><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
+                    <?php echo ' '.$name; ?><small>さん</small><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
                 </div>
             </thead>
 
