@@ -97,7 +97,7 @@ if ($shops != 0) {
                             echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
                         ?>
                     <?php } ?>
-                    <?php echo ' '.$name; ?><small>さん</small><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
+                    <?php echo ' '.$name; ?><small>さん</small><br><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
                 </div>
             </thead>
 
