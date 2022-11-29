@@ -196,7 +196,7 @@ if ($reviewData != PDO::PARAM_NULL) {
                                 <?php if (isset($legendArray[$i])) { ?>
                                     <?php 
                                         $legend = getLegends($legendArray[$i]);
-                                        echo '<div class="bg-navy text-light d-inline">'.$legend.'</div>'; 
+                                        echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
                                     ?>
                                 <?php } ?>
                                 <?php echo ' '.$nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：" . $time; ?>
