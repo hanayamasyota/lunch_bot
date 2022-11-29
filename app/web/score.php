@@ -11,7 +11,7 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
 $userId = '';
 $score = 0;
 $now_legend = null;
-$now_legend_name = '称号が設定されていません';
+$now_legend_string = '称号が設定されていません';
 $legends = array();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["userid"];
@@ -29,7 +29,7 @@ $score = getCountPost($userId);
 //現在の称号を取得(関数未実装)
 $now_legend = getNowLegend($userId);
 if ($now_legend == PDO::PARAM_NULL) {
-    $now_legend_name = '称号が設定されていません';
+    $now_legend_string = '称号が設定されていません';
 }
 //称号のデータを取得
 $legends = getUserLegends($userId);
@@ -76,7 +76,7 @@ $legends = getUserLegends($userId);
         <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
         <p>スコアに応じて名前の前につける称号がもらえます。</p>
         <h1>あなたのスコアは <?php echo $score; ?> 点です</h1>
-        <p></p>
+        <p><?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">
                 <input type="hidden" name="userid" value="<?php echo $userId; ?>">
