@@ -80,6 +80,7 @@ if ($shops != 0) {
                     <?php
                     $userId = $shop["userid"];
                     $now_legend = getNowLegend($userId);
+                    error_log('now_legend='.$now_legend);
                     $name = '';
                     ?>
                     <?php if ($shop["owner"] == true) { ?>
@@ -94,7 +95,7 @@ if ($shops != 0) {
                             echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
                         ?>
                     <?php } ?>
-                    <?php echo ' '.$name; ?><small>さん</small></div><?php echo "レビュー日：" . $shop["time"]; ?>
+                    <?php echo ' '.$name; ?><small>さん</small></div><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
                 </div>
             </thead>
 
