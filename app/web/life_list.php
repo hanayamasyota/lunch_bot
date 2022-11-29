@@ -80,7 +80,7 @@ if ($shops != 0) {
                     <?php
                     $userId = $shop["userid"];
                     $now_legend = getNowLegend($userId);
-                    error_log('now_legend='.$now_legend);
+                    error_log('userid='.$userId);
                     $name = '';
                     ?>
                     <?php if ($shop["owner"] == true) { ?>
