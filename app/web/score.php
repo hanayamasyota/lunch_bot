@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $now_legend = $_POST["legend"];
     if ($now_legend != "") {
         updateNowLegend($now_legend, $userId);
-        $now_legend_name = '現在設定されている称号「'.$now_legend.'」';
+        $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
     }
     //設定した称号のIDを登録
 }
@@ -29,7 +29,7 @@ $score = getCountPost($userId);
 //現在の称号を取得(関数未実装)
 $now_legend = getNowLegend($userId);
 if ($now_legend == PDO::PARAM_NULL) {
-    $now_legend = ;
+    $now_legend_name = '称号が設定されていません';
 }
 //称号のデータを取得
 $legends = getUserLegends($userId);
