@@ -11,7 +11,7 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
 $userId = '';
 $score = 0;
 $now_legend = null;
-$now_legend_string = '称号が設定されていません';
+$now_legend_string = '';
 $legends = array();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["userid"];
@@ -34,7 +34,7 @@ if ($now_legend == PDO::PARAM_NULL) {
     $now_legend_string = '称号が設定されていません';
 } else {
     $legend = getLegends($now_legend);
-    $now_legend_string = '現在設定されている称号「'.$now_legend.'」';
+    $now_legend_string = '現在設定されている称号「'.$legend.'」';
 }
 //称号のデータを取得
 $legends = getUserLegends($userId);
@@ -89,7 +89,11 @@ $legends = getUserLegends($userId);
                     <option value="">設定しない</option>
                     <?php foreach ($legends as $legend) { ?>
                         <?php $name = getLegends($legend['legend_id']); ?>
-                        <option value="<?php echo $legend['legend_id']; ?>"><?php echo $name; ?></option>
+                        <?php if ($now_legend == $legend["legend_id"]) { ?>
+                            <option value="<?php echo $legend['legend_id']; ?>" selected><?php echo $name; ?></option>
+                        <?php } else { ?>
+                            <option value="<?php echo $legend['legend_id']; ?>"><?php echo $name; ?></option>
+                        <?php } ?>
                     <?php } ?>
                 </select>
                 <button type="submit">変更する</button>
