@@ -19,6 +19,19 @@ function getShopsEventsData($type, $page) {
         return $rows;
     }
 }
+
+function getUserIdByEventId($eventId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select userid from ' . TABLE_NAME_EVENTSHOPS . ' where ? = event_id';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($eventId));
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row["userid"];
+    }
+}
+
 function getOwnShopsEventsData($page, $userId) {
     $start = ($page * ONE_PAGE - ONE_PAGE);
     $dbh = dbConnection::getConnection();
