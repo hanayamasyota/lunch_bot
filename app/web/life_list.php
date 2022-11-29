@@ -76,7 +76,7 @@ if ($shops != 0) {
         </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
             <thead>
-                <div>
+                <div class="bg-white text-end">
                     <?php
                     $userId = getUserIdByEventId($shop["event_id"]);
                     $userId = stream_get_contents($userId);
