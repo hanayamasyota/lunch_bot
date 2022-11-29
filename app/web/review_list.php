@@ -2,10 +2,13 @@
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php';
 require_once '../database_function/users_sql.php';
+require_once '../database_function/legends_sql.php';
+
 require_once 'list.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
@@ -25,6 +28,7 @@ if ($conveni == 1) {
 $uniqueUserId = array();
 
 $nickNameArray = array();
+$legendArray = arrray();
 $scoreArray = array(); //評価点
 $ambiArray = array(); //雰囲気
 $visitTimeArray = array(); //来店時刻
@@ -115,6 +119,8 @@ if ($reviewData != PDO::PARAM_NULL) {
         //ニックネーム取得
         $nickName = getNickNameByUserId($userId);
         array_push($nickNameArray, $nickName);
+        $legend = getNowLegend($userId);
+        array_push($legendArray, $legend);
     }
 
     $pageRange = getPageRange($page, $maxPage);
@@ -186,7 +192,15 @@ if ($reviewData != PDO::PARAM_NULL) {
                     <table class="table border-navy px-3 bg-navy">
                         <?php $time = explode(' ', $timeArray[$i])[0] ?>
                         <thead>
-                            <div><?php echo $nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：" . $time ?>
+                            <div>
+                                <?php if (isset($legendArray[$i])) { ?>
+                                    <?php 
+                                        $legend = getLegends($legendArray[$i]);
+                                        echo $legend; 
+                                    ?>
+                                <?php } ?>
+                                <?php echo ' '.$nickNameArray[$i]; ?><small>さん</small></div><?php echo "レビュー日：" . $time; ?>
+                            </div>
                         </thead>
                         <?php if (!($conveni)) { ?>
                         <tr>
