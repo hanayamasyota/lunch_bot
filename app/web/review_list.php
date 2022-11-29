@@ -28,7 +28,7 @@ if ($conveni == 1) {
 $uniqueUserId = array();
 
 $nickNameArray = array();
-$legendArray = arrray();
+$legendArray = array();
 $scoreArray = array(); //評価点
 $ambiArray = array(); //雰囲気
 $visitTimeArray = array(); //来店時刻
