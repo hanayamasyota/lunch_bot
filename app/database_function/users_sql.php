@@ -126,6 +126,25 @@ function getCountPost($userId) {
     }
 }
 
+function getNowLegend($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select now_legend from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row['now_legend'];
+    }
+}
+
+function updateNowLegend($userId, $legendId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'update ' . TABLE_NAME_USERS . ' set (now_legend) = (?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($legendId, $userId));
+}
+
 // entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();

@@ -10,17 +10,29 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
 <?php
 $userId = '';
 $score = 0;
+$now_legend = null;
+$now_legend_name = '称号が設定されていません';
 $legends = array();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["userid"];
-    //登録数を取得
-    $score = getCountPost($userId);
-    //現在の称号を取得(関数未実装)
-    // $now_legend = getNowLegend($userId);
-    //称号のデータを取得
-    $legends = getUserLegends($userId);
-    error_log('count::'.count($legends));
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $now_legend = $_POST["legend"];
+    if ($now_legend != "") {
+        updateNowLegend($now_legend, $userId);
+        $now_legend_name = '現在設定されている称号「'.$now_legend.'」';
+    }
+    //設定した称号のIDを登録
+}
+//登録数を取得
+$score = getCountPost($userId);
+//現在の称号を取得(関数未実装)
+$now_legend = getNowLegend($userId);
+if ($now_legend == PDO::PARAM_NULL) {
+    $now_legend = ;
+}
+//称号のデータを取得
+$legends = getUserLegends($userId);
 ?>
 
 
@@ -64,16 +76,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
         <p>スコアに応じて名前の前につける称号がもらえます。</p>
         <h1>あなたのスコアは <?php echo $score; ?> 点です</h1>
-        <p>設定中の称号名がここに入ります</p>
+        <p></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">
-                <select name="genre" class="d-inline" id="select1">
+                <input type="hidden" name="userid" value="<?php echo $userId; ?>">
+                <select name="legend" class="d-inline" id="select1">
                     <option value="">設定しない</option>
                     <?php foreach ($legends as $legend) { ?>
                         <?php $name = getLegends($legend['legend_id']); ?>
                         <option value="<?php echo $legend['legend_id']; ?>"><?php echo $name; ?></option>
                     <?php } ?>
                 </select>
+                <button type="submit">
             </form>
         <?php } else { ?>
             <p>まだ称号を獲得していません</p>
