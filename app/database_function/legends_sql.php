@@ -31,7 +31,7 @@ function getLegends($legendId) {
         return PDO::PARAM_NULL;
     } else {
         //return location
-        return $row;
+        return $row['legend_name'];
     }
 }
 ?>
