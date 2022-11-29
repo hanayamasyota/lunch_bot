@@ -78,6 +78,7 @@ if ($shops != 0) {
             <thead>
                 <div>
                     <?php
+                    error_log(var_dump($shop, true));
                     $userId = $shop["userid"];
                     $now_legend = getNowLegend($userId);
                     error_log('userid='.$userId);
