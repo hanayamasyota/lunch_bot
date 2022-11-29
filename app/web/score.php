@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["userid"];
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $userId = $_POST["userid"];
     $now_legend = $_POST["legend"];
     if ($now_legend != "") {
         updateNowLegend($now_legend, $userId);
