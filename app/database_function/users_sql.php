@@ -140,7 +140,7 @@ function getNowLegend($userId) {
 
 function updateNowLegend($userId, $legendId) {
     $dbh = dbConnection::getConnection();
-    $sql = 'update ' . TABLE_NAME_USERS . ' set (now_legend) = (?) where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sql = 'update ' . TABLE_NAME_USERS . ' set now_legend = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($legendId, $userId));
 }
