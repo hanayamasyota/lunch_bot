@@ -78,7 +78,7 @@ if ($shops != 0) {
             <thead>
                 <div>
                     <?php
-                    $userId = pg_unescape_bytea(getUserIdByEventId($shop["event_id"]));
+                    $userId = getUserIdByEventId($shop["event_id"]);
                     $userId = stream_get_contents($userId);
                     $now_legend = getNowLegend($userId);
                     error_log('userid='.$userId);
