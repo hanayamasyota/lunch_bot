@@ -128,7 +128,7 @@ if ($shops != 0) {
                     場所
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
-                    <?php $url = makeMapURLOnlyDestination($shop["lat"], $shop["lng"]); ?>
+                    <?php $url = makeMapURLOnlyDestination($shop["latitude"], $shop["longitude"]); ?>
                     <a href="<?php echo $url; ?>">こちらから確認できます</a>
                 </td>
             </tr>
