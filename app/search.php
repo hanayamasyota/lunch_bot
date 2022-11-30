@@ -399,6 +399,16 @@ function makeMapURL($org_lat, $org_lng, $dst_lat, $dst_lng) {
 
     return $url;
 }
+//目的地のみ表示
+function makeMapURLOnlyDestination($dst_lat, $dst_lng) {
+    $http_client = new Client();
+
+    $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
+
+    $url = 'https:/www.google.com/maps/dir/?' . http_build_query(['destination' => $dst_latlng]);
+
+    return $url;
+}
 
 function searchReccomend($userId, $bot, $token, $userAmbi) {
     $recShops = getMatchByNavigation($userId, $userAmbi);

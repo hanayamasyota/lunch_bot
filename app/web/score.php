@@ -80,7 +80,7 @@ $legends = getUserLegends($userId);
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
         <p>スコアに応じて名前の前につける称号がもらえます。</p>
-        <h1>あなたのスコアは <?php echo $score; ?> 点です</h1>
+        <h2>現在のあなたのスコアは <?php echo $score; ?> 点です</h2>
         <p><?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">

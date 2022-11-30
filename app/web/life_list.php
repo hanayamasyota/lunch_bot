@@ -71,7 +71,7 @@ if ($shops != 0) {
     if ($shops != 0) {
         foreach($shops as $shop) {
     ?>
-        <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
+        <div class="container px-3 py-1 mb-3 bg-navy text-light h2">
             <?php echo $shop["event_name"]; ?>
         </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
@@ -123,6 +123,16 @@ if ($shops != 0) {
                 </td>
             </tr>
             <?php } ?>
+
+            <tr>
+                <th class="col-4 py-4 align-middle bg-lightbrown">
+                    場所
+                </th>
+                <td class="col-8 py-4 align-middle bg-white">
+                    <?php $url = makeMapURLOnlyDestination($shop["lat"], $shop["lng"]); ?>
+                    <a href="<?php echo $url; ?>">こちらから確認できます</a>
+                </td>
+            </tr>
 
             <tr>
                 <th class="col-4 py-3 align-middle bg-lightbrown">

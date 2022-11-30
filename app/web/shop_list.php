@@ -1,11 +1,15 @@
 <?php 
 require_once '../DBConnection.php';
+require_once '../database_function/users_sql.php';
+require_once '../database_function/legends_sql.php';
 require_once '../database_function/eventshops_sql.php';
 require_once '../database_function/genre_sql.php';
 require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 define('TABLE_NAME_GENRE', 'genre');
+define('TABLE_NAME_USERS', 'users');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
@@ -67,11 +71,36 @@ if ($shops != 0) {
     if ($shops != 0) {
         foreach($shops as $shop) {
     ?>
+    
+        <div class="container px-3 py-1 mb-3 bg-navy text-light h2">
+            <?php echo $shop["event_name"]; ?>
+        </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap" style="table-layout: fixed; word-wrap: break-word;">
-
-            <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
-                <?php echo $shop["event_name"]; ?>
-            </div>
+            <thead>
+                <div class="bg-white text-start">
+                    <?php
+                    $userId = getUserIdByEventId($shop["event_id"]);
+                    $userId = stream_get_contents($userId);
+                    $now_legend = getNowLegend($userId);
+                    error_log('userid='.$userId);
+                    
+                    $name = '';
+                    ?>
+                    <?php if ($shop["owner"] == true) { ?>
+                        <?php 
+                            $legend = getLegends($now_legend);
+                            echo '<div class="bg-navy text-light d-inline px-2">オーナー</div>'; 
+                        ?>
+                    <?php } else if (isset($now_legend)) { ?>
+                        <?php 
+                            $legend = getLegends($now_legend);
+                            $name = getNickNameByUserId($userId);
+                            echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
+                        ?>
+                    <?php } ?>
+                    <?php echo ' '.$name; ?><small>さん</small><br><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
+                </div>
+            </thead>
 
             <?php if (isset($shop["photo"])) { ?>
             <tr>
@@ -106,6 +135,16 @@ if ($shops != 0) {
                 </td>
             </tr>
             <?php } ?>
+
+            <tr>
+                <th class="col-4 py-4 align-middle bg-lightbrown">
+                    場所
+                </th>
+                <td class="col-8 py-4 align-middle bg-white">
+                    <?php echo $shop["open_time"]; ?>から
+                    <?php echo $shop["close_time"]; ?>まで
+                </td>
+            </tr>
 
             <tr>
                 <th class="col-4 py-3 align-middle bg-lightbrown">
