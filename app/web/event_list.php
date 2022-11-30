@@ -118,7 +118,15 @@ if ($shops != 0) {
                     開催日
                 </th>
                 <td class="col-8 py-4 font-weight-normal align-middle bg-white">
-                    <?php echo $shop["open_date"]; ?> から <?php echo $shop["close_date"]; ?> まで
+                    <?php 
+                    if ($shop["open_date"] == $shop["close_date"]) { 
+                        //1日のみの場合
+                        echo $shop["open_date"];
+                    } else {
+                        echo $shop["open_date"].'から'.$shop["close_date"].'まで';
+                    }    
+                    ?>
+                        
                 </td>
             </tr>
             <?php } ?>
