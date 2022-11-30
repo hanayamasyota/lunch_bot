@@ -72,7 +72,7 @@ if ($shops != 0) {
     if ($shops != 0) {
         foreach($shops as $shop) {
     ?>
-        <div class="container px-3 py-1 mb-3 bg-navy text-light h2">
+        <div class="container px-3 py-2 mb-1 bg-navy text-light h2">
             <?php echo $shop["event_name"]; ?>
         </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">

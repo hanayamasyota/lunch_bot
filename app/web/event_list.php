@@ -1,11 +1,16 @@
 <?php 
 require_once '../DBConnection.php';
+require_once '../database_function/users_sql.php';
+require_once '../database_function/legends_sql.php';
 require_once '../database_function/eventshops_sql.php';
 require_once '../database_function/genre_sql.php';
+require_once '../search.php';
 require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
 define('TABLE_NAME_GENRE', 'genre');
+define('TABLE_NAME_USERS', 'users');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
@@ -68,11 +73,33 @@ if ($shops != 0) {
     if ($shops != 0) {
         foreach($shops as $shop) {
     ?>
+        <div class="container px-3 py-2 mb-1 bg-navy text-light h2">
+            <?php echo $shop["event_name"]; ?>
+        </div>
         <table class="table border-top border-navy align-middle mb-5 text-nowrap">
-
-            <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
-                <?php echo $shop["event_name"]; ?>
-            </div>
+            <thead>
+                <div class="bg-white text-start">
+                    <?php
+                    $userId = stream_get_contents($shop["userid"]);
+                    $now_legend = getNowLegend($userId);
+                    
+                    $name = '';
+                    ?>
+                    <?php if ($shop["owner"] == true) { ?>
+                        <?php 
+                            $legend = getLegends($now_legend);
+                            echo '<div class="bg-navy text-light d-inline px-2">オーナー</div>'; 
+                        ?>
+                    <?php } else if (isset($now_legend)) { ?>
+                        <?php 
+                            $legend = getLegends($now_legend);
+                            $name = getNickNameByUserId($userId);
+                            echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
+                        ?>
+                    <?php } ?>
+                    <?php echo ' '.$name; ?><small>さん</small><br><?php echo "投稿日：" . explode(' ', $shop["time"])[0]; ?>
+                </div>
+            </thead>
 
             <?php if (isset($shop["photo"])) { ?>
             <tr>
@@ -141,7 +168,7 @@ if ($shops != 0) {
             
         </table>
     <?php } ?>
-    <?php if ($reviewData != PDO::PARAM_NULL) { ?>
+    <?php if ($shops != PDO::PARAM_NULL) { ?>
         <div class="pagination">
             <?php if ($page >= 2) { ?>
                 <a href="own_review_list.php?shopid=<?php echo $shopId; ?>&shopname=<?php echo $shopName; ?>&now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
