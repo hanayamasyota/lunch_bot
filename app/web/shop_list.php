@@ -139,8 +139,8 @@ if ($shops != 0) {
                     場所
                 </th>
                 <td class="col-8 py-4 align-middle bg-white">
-                    <?php echo $shop["open_time"]; ?>から
-                    <?php echo $shop["close_time"]; ?>まで
+                    <?php $url = makeMapURLOnlyDestination($shop["latitude"], $shop["longitude"]); ?>
+                    <a href="<?php echo $url; ?>">こちらから確認できます</a>
                 </td>
             </tr>
 
@@ -176,7 +176,7 @@ if ($shops != 0) {
             <?php } ?>
         </table>
     <?php } ?>
-    <?php if ($reviewData != PDO::PARAM_NULL) { ?>
+    <?php if ($shops != PDO::PARAM_NULL) { ?>
         <div class="pagination">
             <?php if ($page >= 2) { ?>
                 <a href="shop_list.php?now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
