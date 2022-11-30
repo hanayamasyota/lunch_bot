@@ -4,6 +4,8 @@ require_once '../database_function/users_sql.php';
 require_once '../database_function/legends_sql.php';
 require_once '../database_function/eventshops_sql.php';
 require_once '../database_function/genre_sql.php';
+require_once '../search.php';
+
 require_once 'list.php';
 
 define('TABLE_NAME_EVENTSHOPS', 'eventshops');
