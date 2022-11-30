@@ -248,16 +248,19 @@ foreach ($events as $event) {
             }
         }
         if ($beforeMessage === 'review_entry') {
-            // replyButtonsTemplate($bot, $event->getReplyToken(),
-            // 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            // "レビューの登録や確認ができます。",
-            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-            //     'レビュー登録', 'レビュー登録'),
-            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-            //     '自分のレビュー確認・編集', 'レビュー確認・編集'),
-            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-            //     'メインメニューに戻る', '終了'),
-            // );
+            if (strcmp($event->getText(), '戻る') == 0) {
+                replyButtonsTemplate($bot, $event->getReplyToken(),
+                'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+                "レビューの登録や確認ができます。",
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'レビュー登録', 'レビュー登録'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    '自分のレビュー確認・編集', 'レビュー確認・編集'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+                    'メインメニューに戻る', '終了'),
+                );
+                continue;
+            }
             //navigationテーブルに番号が存在するか確認
             $num = intval($event->getText());
             if ($num > 10) {
