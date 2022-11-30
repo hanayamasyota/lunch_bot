@@ -405,7 +405,7 @@ function makeMapURLOnlyDestination($dst_lat, $dst_lng) {
 
     $dst_latlng = strval($dst_lat) . ',' . strval($dst_lng);
 
-    $url = 'https:/www.google.com/maps/dir/?' . http_build_query(['api' =>"1", 'destination' => $dst_latlng]);
+    $url = 'https://www.google.com/maps/dir/?' . http_build_query(['api' =>"1", 'destination' => $dst_latlng]);
 
     return $url;
 }
