@@ -79,10 +79,8 @@ if ($shops != 0) {
             <thead>
                 <div class="bg-white text-start">
                     <?php
-                    $userId = getUserIdByEventId($shop["event_id"]);
-                    $userId = stream_get_contents($userId);
+                    $userId = stream_get_contents($shop["userid"]);
                     $now_legend = getNowLegend($userId);
-                    error_log('userid='.$userId);
                     
                     $name = '';
                     ?>
@@ -98,7 +96,7 @@ if ($shops != 0) {
                             echo '<div class="bg-navy text-light d-inline px-2">'.$legend.'</div>'; 
                         ?>
                     <?php } ?>
-                    <?php echo ' '.$name; ?><small>さん</small><br><?php echo "レビュー日：" . explode(' ', $shop["time"])[0]; ?>
+                    <?php echo ' '.$name; ?><small>さん</small><br><?php echo "投稿日：" . explode(' ', $shop["time"])[0]; ?>
                 </div>
             </thead>
 
