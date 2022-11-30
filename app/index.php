@@ -248,16 +248,16 @@ foreach ($events as $event) {
             }
         }
         if ($beforeMessage === 'review_entry') {
-            replyButtonsTemplate($bot, $event->getReplyToken(),
-            'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
-            "レビューの登録や確認ができます。",
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'レビュー登録', 'レビュー登録'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '自分のレビュー確認・編集', 'レビュー確認・編集'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                'メインメニューに戻る', '終了'),
-            );
+            // replyButtonsTemplate($bot, $event->getReplyToken(),
+            // 'レビューメニュー', SERVER_ROOT.'/imgs/hirumatiGO.png', 'レビューメニュー',
+            // "レビューの登録や確認ができます。",
+            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+            //     'レビュー登録', 'レビュー登録'),
+            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+            //     '自分のレビュー確認・編集', 'レビュー確認・編集'),
+            // new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
+            //     'メインメニューに戻る', '終了'),
+            // );
             //navigationテーブルに番号が存在するか確認
             $num = intval($event->getText());
             if ($num > 10) {
@@ -324,14 +324,14 @@ foreach ($events as $event) {
                 }
                 quickReplyMessage($bot, $event->getReplyToken(),
                 $replyMessage,
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('レビューメニューに戻る', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
                 updateUser($event->getUserId(), 'review_entry');
             } else {
                 quickReplyMessage($bot, $event->getReplyToken(),
                 '戻る場合は↓のボタンを押してください',
-                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('レビューメニューに戻る', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
                 updateUser($event->getUserId(), 'review_entry');
@@ -365,6 +365,7 @@ foreach ($events as $event) {
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('他の過ごし方を探す', '戻る'),
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
                 );
+                $response = $bot->linkRichMenu($event->getUserId(), getenv('RICHMENU_LIFEMENU'));
                 updateUser($event->getUserId(), 'life_search');
             } else if ($event->getText() === '4') {
                 //おすすめを検索
