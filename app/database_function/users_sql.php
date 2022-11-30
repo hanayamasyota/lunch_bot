@@ -126,6 +126,39 @@ function getCountPost($userId) {
     }
 }
 
+function countUpReview($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review_times from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    $row = $sth->fetch()["review_times"]+1;
+
+    //称号判定
+    if ($row == 1) {
+        //登録
+        registerLegend($userId, 4);
+    } else if ($row == 5) {
+        registerLegend($userId, 5);
+    } else if ($row == 10) {
+        registerLegend($userId, 6);
+    }
+
+    $sql = 'update '.TABLE_NAME_USERS.' set review_times = ? where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($row, $userId));
+}
+function getCountReview($userId) {
+    $dbh = dbConnection::getConnection();
+    $sql = 'select review_times from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
+    $sth = $dbh->prepare($sql);
+    $sth->execute(array($userId));
+    if (!($row = $sth->fetch())) {
+        return PDO::PARAM_NULL;
+    } else {
+        return $row['review_times'];
+    }
+}
+
 function getNowLegend($userId) {
     $dbh = dbConnection::getConnection();
     $sql = 'select now_legend from '.TABLE_NAME_USERS.' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\')';
@@ -148,7 +181,7 @@ function updateNowLegend($userId, $legendId) {
 // entry userinfo
 function registerUser($userId, $beforeSend) {
     $dbh = dbConnection::getConnection();
-    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send, post_times) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, 0) ';
+    $sql = 'insert into '. TABLE_NAME_USERS . ' (userid, before_send, post_times, review_times) values (pgp_sym_encrypt(?, \'' . getenv('DB_ENCRYPT_PASS') . '\'), ?, 0, 0) ';
     $sth = $dbh->prepare($sql);
     $sth->execute(array($userId, $beforeSend));
 }

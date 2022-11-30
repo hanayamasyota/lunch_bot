@@ -28,7 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 //登録数を取得
 $score = getCountPost($userId);
-//現在の称号を取得(関数未実装)
+//レビュー数を取得
+$review_count = getCountReview($userId);
+//現在の称号を取得
 $now_legend = getNowLegend($userId);
 if ($now_legend == PDO::PARAM_NULL) {
     $now_legend_string = '称号が設定されていません';
@@ -78,9 +80,11 @@ $legends = getUserLegends($userId);
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
-        <p>昼休みの過ごし方を登録した数に応じてスコアを獲得することができます。</p>
-        <p>スコアに応じて名前の前につける称号がもらえます。</p>
-        <h2>現在のあなたのスコアは <?php echo $score; ?> 点です</h2>
+        <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
+        <div class="bg-light text-center col-10">
+            <p>昼休みの過ごし方登録数 : <?php echo $score; ?></p>
+            <p>お店のレビュー登録数　 : <?php echo $review_count; ?></p>
+        </div>
         <p><?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">
@@ -102,15 +106,10 @@ $legends = getUserLegends($userId);
             <p>まだ称号を獲得していません</p>
         <?php } ?>
         
-        <!-- 取得ログ -->
-            <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
-                <?php foreach ($legends as $legend) { ?>
-                    <?php $name = getLegends($legend['legend_id']); ?>
-                    <?php $date = explode(' ', $legend['got_time'])[0]; ?>
-                    <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
-                <?php } ?>
-            <?php }?>
     </div>
+
+    <h2 class="mt-2 mb-5">称号獲得履歴</h2>
+    <iframe src="scorenews.php" class="soto"></iframe>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 fixed-bottom">

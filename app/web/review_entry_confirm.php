@@ -2,9 +2,11 @@
 require_once '../DBConnection.php';
 require_once '../database_function/review_sql.php'; 
 require_once '../database_function/users_sql.php';
+require_once '../database_function/legends_sql.php';
 
 define('TABLE_NAME_REVIEWS', 'reviews');
 define('TABLE_NAME_USERS', 'users');
+define('TABLE_NAME_USERLEGENDS', 'user_legends');
 ?>
 
 <?php
@@ -45,6 +47,8 @@ define('TABLE_NAME_USERS', 'users');
         } else {
             //レビューを登録する
             registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName, $conveni);
+            //レビュー数をカウントする
+            countUpReview($userId);
         }
         $num += 1;
     }
