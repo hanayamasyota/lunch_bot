@@ -259,6 +259,7 @@ foreach ($events as $event) {
                 new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                     'メインメニューに戻る', '終了'),
                 );
+                updateUser($event->getUserId(), 'review');
                 continue;
             }
             //navigationテーブルに番号が存在するか確認
@@ -308,8 +309,11 @@ foreach ($events as $event) {
                 }
                 updateUser($event->getUserId(), 'review_entry_confirm');
             } else {
-                replyTextMessage($bot, $event->getReplyToken(),
-                '店が見つかりませんでした。正しい番号を入力して下さい。');
+                quickReplyMessage($bot, $event->getReplyToken(),
+                'お店が見つかりませんでした。正しい番号を入力して下さい。',
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('レビューメニューに戻る', '戻る'),
+                new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder('メインメニューに戻る', '終了'),
+                );
             }
         }
         else if ($beforeMessage === 'review_entry_confirm') {
