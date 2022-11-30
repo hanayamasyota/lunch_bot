@@ -166,7 +166,7 @@ if ($shops != 0) {
             
         </table>
     <?php } ?>
-    <?php if ($reviewData != PDO::PARAM_NULL) { ?>
+    <?php if ($shops != PDO::PARAM_NULL) { ?>
             <div class="pagination">
                 <?php if ($page >= 2) { ?>
                     <a href="life_list.php?now_page=<?php echo $page - 1; ?>" class="page_feed">&laquo;</a>
