@@ -108,20 +108,16 @@ $legends = getUserLegends($userId);
         
     </div>
 
-    <h2 class="mt-2 mb-5">称号獲得履歴</h2>
-    <iframe class="soto">
-        <div class="scroll">
+    <h2 class="mt-2 mb-5 text-center">称号獲得履歴</h2>
+        <div class="test col-10 text-center">
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
-        <?php foreach ($legends as $legend) { ?>
-        <article class="uti">
-            <?php $name = getLegends($legend['legend_id']); ?>
-            <?php $date = explode(' ', $legend['got_time'])[0]; ?>
-            <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
-        </article>
-        <?php } ?>
+            <?php foreach ($legends as $legend) { ?>
+                <?php $name = getLegends($legend['legend_id']); ?>
+                <?php $date = explode(' ', $legend['got_time'])[0]; ?>
+                <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
+            <?php } ?>
         <?php }?>
         </div>
-    </iframe>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 fixed-bottom">
@@ -144,5 +140,12 @@ $legends = getUserLegends($userId);
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
+
+<style>
+.test{
+border: 1px solid;
+overflow: scroll;
+        }
+</style>
 
 </html>
