@@ -84,7 +84,7 @@ $legends = getUserLegends($userId);
         <table class="bg-light mx-auto text-center align-middle col-12 py-2 mb-2 border border-1 border-navy">
                 <tr class="py-2" style="height: 7vh;">
                     <th class="col-9 h4 bg-navy text-light border-bottom border-light">昼休みの過ごし方登録数</th>
-                    <td class="col-3 bg-light text-start px-1 border-bottom border-navy"><b><?php echo $score; ?></b><div class="text-end">件</div></td>
+                    <td class="col-3 bg-light text-start px-1 border-bottom border-navy d-inline"><b><?php echo $score; ?></b><div class="text-end">件</div></td>
                 </tr>
                 <tr class="py-2" style="height: 7vh;">
                     <th class="col-9 h4 bg-navy text-light" style="height: 5vh">お店のレビュー登録数</th>
