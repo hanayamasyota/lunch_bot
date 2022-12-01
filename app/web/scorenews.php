@@ -1,5 +1,4 @@
 <?php 
-require_once 'score.php';
 ?>
 
 <!DOCTYPE html>
