@@ -523,7 +523,7 @@ foreach ($events as $event) {
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
             new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
-                '自分のレビュー確認・編集', SERVER_ROOT.'/web/own_review_list.php?userid='.$event->getUserId()),
+                '自分のレビュー確認・編集', SERVER_ROOT.'/web/own_review_list.php?userid='.$event->getUserId().'&now_page=1'),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'メインメニューに戻る', '終了')
             );
