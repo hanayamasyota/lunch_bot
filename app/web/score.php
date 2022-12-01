@@ -117,7 +117,7 @@ $legends = getUserLegends($userId);
     <h2 class="mt-2 mb-2 text-center">称号獲得履歴</h2>
     <hr>
     <div class="scroll col-10 py-2 mb-5 mx-auto border border-2 bg-light">
-        <p class="text-start col-12 border border-1 border-bottom border-dotted"><small>こちらにログが表示されます</small></p>
+        <p class="text-start col-12 border-1 border-bottom border-dotted"><small>こちらにログが表示されます</small></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
