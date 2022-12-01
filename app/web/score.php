@@ -81,7 +81,7 @@ $legends = getUserLegends($userId);
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
-        <div class="bg-light mx-auto text-start col-10 border border-2 border-navy">
+        <div class="bg-light mx-auto text-start vertical-middle col-10 py-2 border border-1 border-navy">
             <h3>昼休みの過ごし方登録数 : <?php echo $score; ?></h3>
             <h3>お店のレビュー登録数　 : <?php echo $review_count; ?></h3>
         </div>
@@ -108,7 +108,8 @@ $legends = getUserLegends($userId);
         
     </div>
 
-    <h2 class="mt-2 mb-5 text-center">称号獲得履歴</h2>
+    <h2 class="mt-2 mb-2 text-center">称号獲得履歴</h2>
+    <hr>
     <div class="test col-10 py-1 h-50 mx-auto border border-2 bg-light">
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
