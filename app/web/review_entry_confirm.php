@@ -55,7 +55,6 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
             $num += 1;
         }
     }
-    updateUser($userId, null);
 ?>
 
 
