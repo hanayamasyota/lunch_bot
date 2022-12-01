@@ -117,6 +117,7 @@ $legends = getUserLegends($userId);
                 <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
             <?php } ?>
         <?php }?>
+        <p>あいうえお</p>
         </div>
 
     <!-- Footer-->
