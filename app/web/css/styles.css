@@ -6989,6 +6989,10 @@ textarea.form-control-lg {
   border-width: 5px !important;
 }
 
+.border-dotted {
+  border-style: dotted;
+}
+
 .w-25 {
   width: 25% !important;
 }
