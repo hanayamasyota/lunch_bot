@@ -84,11 +84,11 @@ $legends = getUserLegends($userId);
         <table class="bg-light mx-auto text-center align-middle col-12 py-2 mb-2 border border-1 border-navy">
                 <tr class="py-2 border border-bottom border-navy">
                     <th class="col-9 h4 bg-navy text-light">昼休みの過ごし方登録数</th>
-                    <td class="col-3 bg-light"><?php echo $score; ?></td>
+                    <td class="col-3 bg-light text-start"><?php echo $score; ?></td>
                 </tr>
                 <tr class="py-2">
                     <th class="col-9 h4 bg-navy text-light">お店のレビュー登録数</th>
-                    <td class="col-3 bg-light"><?php echo $review_count; ?></td>
+                    <td class="col-3 bg-light text-start"><?php echo $review_count; ?></td>
                 </tr>
         </table>
         <p>設定中の称号 : <?php echo $now_legend_string; ?></p>
@@ -116,7 +116,7 @@ $legends = getUserLegends($userId);
 
     <h2 class="mt-2 mb-2 text-center">称号獲得履歴</h2>
     <hr>
-    <div class="scroll col-10 py-1 mx-auto border border-2 bg-light">
+    <div class="scroll col-10 py-1 mb-5 mx-auto border border-2 bg-light">
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
