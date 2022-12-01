@@ -82,13 +82,13 @@ $legends = getUserLegends($userId);
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
         <table class="bg-light mx-auto text-center align-middle col-12 py-2 mb-2 border border-1 border-navy">
-                <tr class="py-2" style="height: 7vh;">
+                <tr class="py-2" style="height: 6vh;">
                     <th class="col-9 h4 bg-navy text-light border-bottom border-light">昼休みの過ごし方登録数</th>
                     <td class="col-3 bg-light text-end px-1 border-bottom border-navy"><b><?php echo $score; ?></b><div class="d-inline">件</div></td>
                 </tr>
                 <tr class="py-2" style="height: 7vh;">
-                    <th class="col-9 h4 bg-navy text-light" style="height: 5vh">お店のレビュー登録数</th>
-                    <td class="col-3 bg-light text-start px-1"><b><?php echo $review_count; ?></b></td>
+                    <th class="col-9 h4 bg-navy text-light" style="height: 6vh">お店のレビュー登録数</th>
+                    <td class="col-3 bg-light text-end px-1"><b><?php echo $review_count; ?></b><div class="d-inline">件</div></td>
                 </tr>
         </table>
         <p>設定中の称号 : <?php echo $now_legend_string; ?></p>
