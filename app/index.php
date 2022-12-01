@@ -522,8 +522,8 @@ foreach ($events as $event) {
             "レビューの登録や確認ができます。",
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'レビュー登録', 'レビュー登録'),
-            new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
-                '自分のレビュー確認・編集', 'レビュー確認・編集'),
+            new LINE\LINEBot\TemplateActionBuilder\UriTemplateActionBuilder(
+                '自分のレビュー確認・編集', SERVER_ROOT.'/web/own_review_list.php?userid='.$event->getUserId()),
             new LINE\LINEBot\TemplateActionBuilder\MessageTemplateActionBuilder(
                 'メインメニューに戻る', '終了')
             );

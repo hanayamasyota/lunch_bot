@@ -82,8 +82,18 @@ $legends = getUserLegends($userId);
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
         <div class="bg-light mx-auto text-start align-middle col-10 py-2 mb-2 border border-1 border-navy">
+            <table>
+                <tr>
+                    <th>昼休みの過ごし方登録数</th>
+                    <td><?php echo $score; ?></td>
+                </tr>
+                <tr>
+                    <th>お店のレビュー登録数</th>
+                    <td></td>
+                </tr>
             <p class="h4">昼休みの過ごし方登録数 : <?php echo $score; ?></p>
             <p class="h4">お店のレビュー登録数　 : <?php echo $review_count; ?></p>
+            </table>
         </div>
         <p>設定中の称号 : <?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
@@ -110,7 +120,7 @@ $legends = getUserLegends($userId);
 
     <h2 class="mt-2 mb-2 text-center">称号獲得履歴</h2>
     <hr>
-    <div class="test col-10 py-1 h-50 mx-auto border border-2 bg-light">
+    <div class="scroll col-10 py-1 mx-auto border border-2 bg-light">
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
@@ -118,7 +128,6 @@ $legends = getUserLegends($userId);
                 <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
             <?php } ?>
         <?php }?>
-        <p>あいうえお</p>
     </div>
 
     <!-- Footer-->
@@ -145,6 +154,7 @@ $legends = getUserLegends($userId);
 
 <style>
 .scroll{
+height: 200px;
 overflow: scroll;
         }
 </style>
