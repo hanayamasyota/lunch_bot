@@ -122,7 +122,7 @@ $legends = getUserLegends($userId);
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
                 <?php $date = explode(' ', $legend['got_time'])[0]; ?>
-                <p class="text-start  text-gray-700"><?php echo $date; ?>: 称号「<?php echo $name; ?>」を獲得しました。</p>
+                <p class="text-start  text-gray-700 px-1"><?php echo $date; ?>: 称号「<?php echo $name; ?>」を獲得しました。</p>
             <?php } ?>
         <?php }?>
     </div>
