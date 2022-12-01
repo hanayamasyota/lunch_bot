@@ -31,26 +31,29 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
     $shopName = $_POST['shopname'];
 
     $num = 1;
+    $status = '';
     $message = '';
     if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
         $message = 'レビュー更新';
+        $status = 'update';
     } else {
         $message = 'レビュー登録';
+        $status = 'register';
     }
 
-    foreach($postData as $data) {
-        $nowTime = time()+32400;
-        $nowTimeString = date('Y-m-d H:i:s', $nowTime);
-        //同じ店をレビューしていないか確認
-        if (checkExistsReview($userId, $shopId, $num) != PDO::PARAM_NULL) {
-            updateReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
-        } else {
-            //レビューを登録する
+    $nowTime = time()+32400;
+    $nowTimeString = date('Y-m-d H:i:s', $nowTime);
+    if ($status == 'register') {
+        foreach ($postData as $data) {
             registerReview($userId, $shopId, $num, $data, $nowTimeString, $shopName, $conveni);
-            //レビュー数をカウントする
-            countUpReview($userId);
+            $num += 1;
         }
-        $num += 1;
+        countUpReview($userId);
+    } else if ($status == 'update') {
+        foreach ($postData as $data) {
+            updateReview($userId, $shopId, $num, $data, $nowTimeString, $shopName);
+            $num += 1;
+        }
     }
     updateUser($userId, null);
 ?>
