@@ -81,20 +81,16 @@ $legends = getUserLegends($userId);
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
-        <div class="bg-light mx-auto text-start align-middle col-10 py-2 mb-2 border border-1 border-navy">
-            <table>
+        <table class="bg-light mx-auto text-start align-middle col-12 py-2 mb-2 border border-1 border-navy">
                 <tr>
-                    <th>昼休みの過ごし方登録数</th>
-                    <td><?php echo $score; ?></td>
+                    <th class="col-9 h4 bg-navy text-light">昼休みの過ごし方登録数</th>
+                    <td class="col-3"><?php echo $score; ?></td>
                 </tr>
                 <tr>
-                    <th>お店のレビュー登録数</th>
-                    <td></td>
+                    <th class="col-9 h4 bg-navy text-light">お店のレビュー登録数</th>
+                    <td class="col-3"><?php echo $review_count; ?></td>
                 </tr>
-            <p class="h4">昼休みの過ごし方登録数 : <?php echo $score; ?></p>
-            <p class="h4">お店のレビュー登録数　 : <?php echo $review_count; ?></p>
-            </table>
-        </div>
+        </table>
         <p>設定中の称号 : <?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">
