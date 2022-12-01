@@ -109,7 +109,19 @@ $legends = getUserLegends($userId);
     </div>
 
     <h2 class="mt-2 mb-5">称号獲得履歴</h2>
-    <iframe src="scorenews.php" class="soto"></iframe>
+    <iframe class="soto">
+        <div class="scroll">
+        <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
+        <?php foreach ($legends as $legend) { ?>
+        <article class="uti">
+            <?php $name = getLegends($legend['legend_id']); ?>
+            <?php $date = explode(' ', $legend['got_time'])[0]; ?>
+            <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
+        </article>
+        <?php } ?>
+        <?php }?>
+        </div>
+    </iframe>
 
     <!-- Footer-->
     <footer class="bg-black text-center py-2 fixed-bottom">
