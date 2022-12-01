@@ -114,15 +114,15 @@ $legends = getUserLegends($userId);
         
     </div>
 
-    <h2 class="mt-2 mb-2 text-center">称号獲得履歴</h2>
+    <h3 class="mt-2 mb-2 text-center">称号獲得履歴</h3>
     <hr>
-    <div class="scroll col-10 pb-2 mb-5 mx-auto border border-2 bg-light">
-        <p class="text-start col-12 border-bottom text-gray mb-2"><small>こちらにログが表示されます</small></p>
+    <div class="scroll col-10 pb-2 mb-6 mx-auto border border-2 bg-light">
+        <p class="text-start col-12 border-bottom text-gray-500 mb-2"><small>こちらにログが表示されます</small></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
                 <?php $date = explode(' ', $legend['got_time'])[0]; ?>
-                <p><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
+                <p class="text-start  text-gray-700"><?php echo $date; ?> 称号:「<?php echo $name; ?>」を獲得しました。</p>
             <?php } ?>
         <?php }?>
     </div>
