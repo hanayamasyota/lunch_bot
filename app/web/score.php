@@ -11,7 +11,7 @@ define('TABLE_NAME_USERLEGENDS', 'user_legends');
 $userId = '';
 $score = 0;
 $now_legend = null;
-$now_legend_string = '';
+$now_legend_string = '-';
 $legends = array();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $userId = $_GET["userid"];
@@ -33,10 +33,10 @@ $review_count = getCountReview($userId);
 //現在の称号を取得
 $now_legend = getNowLegend($userId);
 if ($now_legend == PDO::PARAM_NULL) {
-    $now_legend_string = '称号が設定されていません';
+    $now_legend_string = '-';
 } else {
     $legend = getLegends($now_legend);
-    $now_legend_string = '現在設定されている称号「'.$legend.'」';
+    $now_legend_string = $legend;
 }
 //称号のデータを取得
 $legends = getUserLegends($userId);
@@ -81,11 +81,11 @@ $legends = getUserLegends($userId);
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
         <p>昼休みの過ごし方を登録した数やお店をレビューした数に応じて名前の前につけることができる称号がもらえます。</p>
-        <div class="bg-light text-center col-10">
+        <div class="bg-light text-center col-10 border-navy">
             <p>昼休みの過ごし方登録数 : <?php echo $score; ?></p>
             <p>お店のレビュー登録数　 : <?php echo $review_count; ?></p>
         </div>
-        <p><?php echo $now_legend_string; ?></p>
+        <p>設定中の称号 : <?php echo $now_legend_string; ?></p>
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得称号をセレクトボックスで表示 ?>
             <form action="" method="post">
                 <input type="hidden" name="userid" value="<?php echo $userId; ?>">
@@ -109,7 +109,7 @@ $legends = getUserLegends($userId);
     </div>
 
     <h2 class="mt-2 mb-5 text-center">称号獲得履歴</h2>
-        <div class="test col-10 text-center">
+        <div class="test col-10 align-center bg-white">
         <?php if (!($legends == PDO::PARAM_NULL)) { //取得ログを表示する ?>
             <?php foreach ($legends as $legend) { ?>
                 <?php $name = getLegends($legend['legend_id']); ?>
