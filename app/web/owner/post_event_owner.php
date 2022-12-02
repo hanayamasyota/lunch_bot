@@ -256,7 +256,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </td>
                         </tr>
                 </table>
-                <input class="text-center" type="submit" formaction="" value="投稿する">
+                <input class="text-center mb-3" type="submit" formaction="" value="投稿する">
             </form>
         <?php } ?>
 

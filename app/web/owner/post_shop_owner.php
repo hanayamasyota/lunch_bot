@@ -147,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Contents-->
     <?php if ($status == 'success') { ?>
-        <div class="container dx-1 my-5 bg-lightnavy">
+        <div class="container dx-1 my-5 mt-3 bg-lightnavy">
             <p>登録が完了しました。</p>
             <a href="owner_index.php">ホームへ</a>
         </div>
@@ -254,7 +254,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </td>
             </tr>
         </table>
-        <input class="text-center" type="submit" formaction="" value="投稿する">
+        <input class="text-center mb-3" type="submit" formaction="" value="投稿する">
         </form>
     <?php } ?>
 
