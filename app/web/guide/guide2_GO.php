@@ -46,14 +46,14 @@
     </p>
     <p class="mb-3">知りたいことに該当する数字を入力。(キーボード)</p>
     <p class="picture">
-      <img src="guide_img/2-2.png" class="mb-5">
+      <img src="guide_img/21.png" class="mb-5">
     </p>
     <p class="mb-3">１. コンビニをさがす</p>
     <p class="mb-3">　近くにあるコンビニと、徒歩でかかる時間が表示される。<br>
         　「レビューを見る」を選択すると、行った時間とその時間帯の混み具合、品揃えを把握できる。<br>
         　「ここに行く！」を選択すると、その場所までのルートを知ることができる。</p>
     <p class="picture">
-      <img src="guide_img/2-3a.png" class="mb-5">
+      <img src="guide_img/22a.png" class="mb-5">
       <img src="guide_img/2-3b.png" class="mb-5">
     </p>
     <p class="mb-3">２. 飲食店を探す</p>
@@ -62,20 +62,20 @@
         　「レビューを見る」を選択すると、ほかの利用者が登録したレビューを見ることができる。<br>
         　「ここに行く！」を選択すると、その場所までのルートを知ることができる。</p>
     <p class="picture">
-      <img src="guide_img/2-4a.png" class="mb-5">
+      <img src="guide_img/23.png" class="mb-5">
       <img src="guide_img/2-4b.png" class="mb-5">
     </p>
     <p class="mb-3">３. みんなが登録したところを見る</p>
     <p class="mb-3">　探したい数字を入力。(キーボード)<br>
         　それぞれの一覧を見ることができる。</p></p>
     <p class="picture">
-      <img src="guide_img/2-5a.png" class="mb-5">
+      <img src="guide_img/24.png" class="mb-5">
       <img src="guide_img/2-5b.png" class="mb-5">
     </p>
     <p class="mb-3">４. おすすめの店</p>
     <p class="mb-3">自分が登録した好みの雰囲気に合わせておすすめの店を表示してくれる。</p>
     <p class="picture">
-      <img src="guide_img/2-6.png" class="mb-5">
+      <img src="guide_img/25.png" class="mb-5">
     </p>
 
     <p class="text-center mb-5"><a href="guide.php">目次に戻る</a></p>
