@@ -138,8 +138,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!-- Navigation-->
     <nav class="fixed-top shadow-sm" id="mainNav">
         <div class="container px-5">
-            <h1 class="pt-3 font-nicokaku pe-1" style="display: inline-block;">ひるまち</h1>
-            <h1 class="pt-3 font-rc" style="display: inline-block;">GO</h1>
+            <h1 class="d-inline pt-3 font-nicokaku pe-1">ひるまち</h1>
+            <h1 class="d-inline pt-3 font-rc">GO</h1>
         </div>
     </nav>
     <!-- Mashead header-->
@@ -159,13 +159,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     <?php } else { ?>
         <div class="container dx-2 my-5 bg-lightnavy text-center">
+        <div class="container px-3 py-3 mb-3 bg-navy text-light h2">
+            <?php echo 'イベント・移動店舗の登録フォーム'; ?>
+        </div>
             <?php if ($status == 'error') { ?>
                 <p class="text-danger">※必須項目が入力されていません</p>
             <?php } ?>
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" value="<?php echo $userId; ?>" name="userid">
                 <table class="table border-top border-navy align-middle mb-5 text-nowrap">
-                    <thead class="bg-navy text-light">お店の登録フォーム</th>
                         <tr>
                             <th class="col-4 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>イベント名
