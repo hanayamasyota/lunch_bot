@@ -29,8 +29,8 @@
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-5">
-        <div class="container px-3 pt-5 bg-imagecolor">
+    <header class="mt-4">
+        <div class="container px-3 pt-2 bg-imagecolor">
             <p class="text-light h3">使い方ガイド</p>
         </div>
     </header>
@@ -38,7 +38,17 @@
     <!-- Contents-->
     <p class="h2 text-center mt-4">ひるまちGO 使い方ガイド</p>
     <p class="text-center">-スコアを見る-</p>
-
+    <p>自分の登録数やレビュー数によって増えるスコア・称号を確認することができます。</p>
+    <hr>
+    <p class="mb-3">メニューを開き、「じぶんのこと」を選択。「スコアをみる」を押す。「スコア確認」を押すとスコア確認画面が表示される。</p>
+    <p class="picture">
+      <img src="guide_img/5-1.png" class="mb-5">
+    </p>
+    <p class="mb-3">自分の今までにしてきた投稿の数や、お店のレビュー数によってスコアが加算されていく。スコアによって、称号が解放されていき、この称号は投稿したときなどに、自分の名前の横に表示されるようになる。</p>
+    <p class="picture">
+      <img src="guide_img/5-2.png" class="mb-5">
+      <img src="guide_img/5-3.png" class="mb-5">
+    </p>
 
 
 

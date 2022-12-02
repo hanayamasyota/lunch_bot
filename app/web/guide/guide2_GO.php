@@ -44,7 +44,7 @@
     <p class="picture">
       <img src="guide_img/2-1.png" class="mb-5">
     </p>
-    <p class="mb-3">知りたいことに該当する数字を入力。(キーボード)</p>
+    <p class="mb-3">知りたいことに該当する数字を入力。</p>
     <p class="picture">
       <img src="guide_img/21.png" class="mb-5">
     </p>
@@ -66,7 +66,7 @@
       <img src="guide_img/2-4b.png" class="mb-5">
     </p>
     <p class="mb-3">３. みんなが登録したところを見る</p>
-    <p class="mb-3">　探したい数字を入力。(キーボード)<br>
+    <p class="mb-3">　探したい数字を入力。<br>
         　それぞれの一覧を見ることができる。</p></p>
     <p class="picture">
       <img src="guide_img/24.png" class="mb-5">
