@@ -46,16 +46,8 @@ if (!(isset($_SESSION['email']))) {
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy w-80">
         <ul class="mx-2 contents align-center w-100">
-            <label for="shop">
-                <div class="w-100">
-                    <li class="contents_list"><a href="post_shop_owner.php" id="shop">実店舗(固定店舗)の登録</a></li>
-                </div>
-            </label>
-            <label for="event">
-                <div class="w-100">
-                    <li class="contents_list"><a href="post_event_owner.php" id="event">イベント・移動店舗の登録</a></li>
-                </div>
-            </label>
+            <li class="contents_list"><a href="post_shop_owner.php" id="shop">実店舗(固定店舗)の登録</a></li>
+            <li class="contents_list"><a href="post_event_owner.php" id="event">イベント・移動店舗の登録</a></li>
         </ul>
         <br>
     </div>
