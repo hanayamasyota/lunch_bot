@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" value="<?php echo $userId; ?>" name="userid">
                 <table class="table border-top border-navy align-middle mb-5 text-nowrap">
-                    <thead class="border border-start">フォームの入力をしてください。</th>
+                    <thead class="bg-navy text-light">お店の登録フォーム</th>
                         <tr>
                             <th class="col-4 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>イベント名
