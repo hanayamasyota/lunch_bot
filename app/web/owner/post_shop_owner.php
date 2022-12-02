@@ -139,8 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
-        <div class="container px-3 pt-2 bg-imagecolor">
+    <header class="mt-5">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">宣伝したいことを登録</p>
         </div>
     </header>
@@ -159,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
         <table class="table border-top border-navy align-middle mb-4 text-nowrap" style="table-layout: fixed;">
-            <thead class="border border-start">フォームの入力をしてください。</thead>
+            <thead class="">お店の登録フォーム</thead>
             <tr>
                 <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>店名
@@ -174,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>開店日
                 </th>
                 <td class="col-9 py-2 font-weight-normal align-middle bg-white">
-                    <input type="date" name="opendate" value="<?php echo $openDate; ?>" class="w-35">から
+                    <input type="date" name="opendate" value="<?php echo $openDate; ?>" class="col-5">から
                 </td>
             </tr>
             <tr>
@@ -182,8 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="time" name="opentime" value="<?php echo $openTime; ?>"><div class="px-1">から</div>
-                    <input type="time" name="closetime" value="<?php echo $closeTime; ?>"><div class="px-1">まで</div>
+                    <input type="time" class="col-4" name="opentime" value="<?php echo $openTime; ?>"><div class="px-1">から</div>
+                    <input type="time" class="col-4" name="closetime" value="<?php echo $closeTime; ?>"><div class="px-1">まで</div>
                 </td>
             </tr>
 

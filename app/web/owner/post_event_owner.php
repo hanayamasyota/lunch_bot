@@ -143,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </nav>
     <!-- Mashead header-->
-    <header class="mt-4">
-        <div class="container px-3 pt-2 bg-imagecolor">
+    <header class="mt-5">
+        <div class="container px-3 pt-5 bg-imagecolor">
             <p class="text-light h3">宣伝したいことを登録</p>
         </div>
     </header>
@@ -171,7 +171,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="text-danger d-inline">*</div>イベント名
                             </th>
                             <td class="col-8 py-2 align-middle bg-white">
-                                <input type="text" name="name" value="<?php echo $name; ?>" placeholder="イベント名を入力">
+                                <input type="text" name="name" class="col-6" value="<?php echo $name; ?>" placeholder="イベント名を入力">
                             </td>
                         </tr>
                         <tr>
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th class="col-4 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>開催時間
                             </th>
-                            <td class="col-8 py-2 align-middle bg-white">
+                            <td class="col-8 py-2 align-middle bg-white text-left">
                                 <input type="time" name="holdstart" value="<?php echo $holdStart; ?>">から
                                 <input type="time" name="holdend" value="<?php echo $holdEnd; ?>">まで
                             </td>
@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th class="col-3 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>場所
                             </th>
-                            <td class="col-9 py-2 align-middle bg-white">
+                            <td class="col-9 py-2 align-middle bg-white text-left">
                                 <input type="submit" formaction="../getlatlng.php?type=event" value="位置情報の登録"><br>
                                 <input type="text" name="lat" value="<?php echo $lat; ?>" class="d-transparent">
                                 <input type="text" name="lng"value="<?php echo $lng; ?>" class="d-transparent d-inline">
@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <th class="col-4 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>ジャンル
                             </th>
-                            <td class="col-8 py-2 align-middle bg-white">
+                            <td class="col-8 py-2 align-middle bg-white text-left">
                                 <select name="genre">
                                     <option hidden value="">選択してください</option>
                                     <?php
