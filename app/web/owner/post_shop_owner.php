@@ -162,13 +162,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post" enctype="multipart/form-data">
         <input type="hidden" value="<?php echo $userId; ?>" name="userid">
 
-        <table class="table border-top border-navy align-middle mb-2 text-nowrap" style="table-layout: fixed;">
+        <table class="table border-top border-navy align-middle mb-3 text-nowrap" style="table-layout: fixed;">
             <tr>
                 <th class="col-3 py-2 align-middle bg-lightbrown">
                     <div class="text-danger d-inline">*</div>店名
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="text" name="name" value="<?php echo $name; ?>" placeholder="飲食店の名前を入力">
+                    <input type="text" name="name" class="col-6" value="<?php echo $name; ?>" placeholder="飲食店の名前を入力">
                 </td>
             </tr>
             
@@ -177,7 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>開店日
                 </th>
                 <td class="col-9 py-2 font-weight-normal align-middle bg-white">
-                    <input type="date" name="opendate" value="<?php echo $openDate; ?>" class="col-5">から
+                    <input type="date" name="opendate" value="<?php echo $openDate; ?>" class="col-3 me-2">から
                 </td>
             </tr>
             <tr>
@@ -185,8 +185,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>営業時間
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <input type="time" class="col-4" name="opentime" value="<?php echo $openTime; ?>"><div class="px-1">から</div>
-                    <input type="time" class="col-4" name="closetime" value="<?php echo $closeTime; ?>"><div class="px-1">まで</div>
+                    <input type="time" class="me-2" name="opentime" value="<?php echo $openTime; ?>">から
+                    <input type="time" class="mx-2" name="closetime" value="<?php echo $closeTime; ?>">まで
                 </td>
             </tr>
 
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </th>
                 <td class="col-9 py-1 align-middle bg-white w-100 h-100">
                     <label for="input1" class="box px-2">
-                        <div class="border rounded border-2 border-navy"><small>+写真を選択</small></div>
+                        <div class="border rounded border-2 border-navy px-2"><small>+写真を選択</small></div>
                         <input type="file" id="input1" name="photo" class="pt-2" style="display: none;">
                     </label><br>
                     <img id="sample1" class="w-100 py-2" style="height: auto;">

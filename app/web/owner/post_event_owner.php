@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php } ?>
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" value="<?php echo $userId; ?>" name="userid">
-                <table class="table border-top border-navy align-middle mb-5 text-nowrap">
+                <table class="table border-top border-navy align-middle mb-3 text-nowrap">
                         <tr>
                             <th class="col-4 py-2 align-middle bg-lightbrown">
                                 <div class="text-danger d-inline">*</div>イベント名
@@ -181,8 +181,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="text-danger d-inline">*</div>開催日
                             </th>
                             <td class="col-8 py-2 font-weight-normal align-middle bg-white">
-                                <input type="date" name="holddatestart" value="<?php echo $holdDateStart; ?>" class="w-35">から<br>
-                                <input type="date" name="holddateend" value="<?php echo $holdDateEnd; ?>" class="w-35">まで<br>
+                                <input type="date" name="holddatestart" value="<?php echo $holdDateStart; ?>" class="col-3 me-2">から
+                                <input type="date" name="holddateend" value="<?php echo $holdDateEnd; ?>" class="col-3 mx-2">まで<br>
                                 ※1日だけの場合は同じ日にちを入力
                             </td>
                         </tr>
@@ -191,8 +191,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="text-danger d-inline">*</div>開催時間
                             </th>
                             <td class="col-8 py-2 align-middle bg-white text-left">
-                                <input type="time" name="holdstart" value="<?php echo $holdStart; ?>">から
-                                <input type="time" name="holdend" value="<?php echo $holdEnd; ?>">まで
+                                <input type="time" class="me-2" name="holdstart" value="<?php echo $holdStart; ?>">から
+                                <input type="time" class="mx-2" name="holdend" value="<?php echo $holdEnd; ?>">まで
                             </td>
                         </tr>
                         <tr>
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </th>
                             <td class="col-8 py-1 align-middle bg-white w-100 h-100">
                                 <label for="input1" class="box px-2">
-                                    <small>+写真を選択</small>
+                                <div class="border rounded border-2 border-navy px-2"><small>+写真を選択</small></div>
                                     <input type="file" id="input1" name="photo" class="pt-2" style="display: none; height: auto;">
                                 </label><br>
                                 <img id="sample1" class="w-75 h-75 py-2">
@@ -258,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </td>
                         </tr>
                 </table>
-                <input class="text-center mb-3" type="submit" formaction="" value="投稿する">
+                <input class="text-center mb-3 px-3 py-2" type="submit" formaction="" value="投稿する">
             </form>
         <?php } ?>
 
