@@ -44,6 +44,7 @@ if (!(isset($_SESSION['email']))) {
 
     <!-- CONTENTS -->
     <div class="container dx-3 my-5 bg-lightnavy">
+        <img src="../../imgs/hirumatiGO.png" class="w-100 h-auto"></img>
         <a href="post_shop_owner.php">実店舗(固定店舗)の登録はこちら</a><br>
         <a href="post_event_owner.php">イベント・移動店舗の登録はこちら</a>
     </div>
