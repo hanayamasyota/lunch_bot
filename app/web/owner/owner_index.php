@@ -44,8 +44,8 @@ if (!(isset($_SESSION['email']))) {
     </header>
 
     <!-- CONTENTS -->
-    <div class="container dx-3 my-5 bg-lightnavy">
-        <ul class="mx-2 contents align-center">
+    <div class="container dx-3 my-5 bg-lightnavy col-12">
+        <ul class="mx-2 contents align-center col-12">
             <label for="shop">
                 <div class="col-12">
                     <li class="contents_list"><a href="post_shop_owner.php" id="shop">実店舗(固定店舗)の登録</a></li>
