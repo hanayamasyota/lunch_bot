@@ -53,7 +53,7 @@
         　「レビューを見る」を選択すると、行った時間とその時間帯の混み具合、品揃えを把握できる。<br>
         　「ここに行く！」を選択すると、その場所までのルートを知ることができる。</p>
     <p class="picture">
-      <img src="guide_img/22a.png" class="mb-5">
+      <img src="guide_img/22.png" class="mb-5">
       <img src="guide_img/2-3b.png" class="mb-5">
     </p>
     <p class="mb-3">２. 飲食店を探す</p>
