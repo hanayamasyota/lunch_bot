@@ -26,6 +26,7 @@ if (!(isset($_SESSION['email']))) {
     <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="../css/styles.css" rel="stylesheet" />
+    <link href="../css/review.css" rel="stylesheet" />
 </head>
 
 <body id="page-top" class="bg-base">
@@ -46,14 +47,17 @@ if (!(isset($_SESSION['email']))) {
     <div class="container dx-3 my-5 bg-lightnavy">
         <ul class="mx-2 contents align-center">
             <label for="shop">
-                <li class="contents_list"><a href="post_shop_owner.php" id="shop">実店舗(固定店舗)の登録</a></li>
+                <div>
+                    <li class="contents_list"><a href="post_shop_owner.php" id="shop">実店舗(固定店舗)の登録</a></li>
+                </div>
             </label>
             <label for="event">
-                <li class="contents_list"><a href="post_event_owner.php" id="event">イベント・移動店舗の登録</a></li>
+                <div>
+                    <li class="contents_list"><a href="post_event_owner.php" id="event">イベント・移動店舗の登録</a></li>
+                </div>
             </label>
         </ul>
         <br>
-        <a href="post_event_owner.php">イベント・移動店舗の登録はこちら</a>
     </div>
 
     <!-- Footer-->
