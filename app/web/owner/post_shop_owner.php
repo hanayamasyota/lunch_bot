@@ -223,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="text-danger d-inline">*</div>ジャンル
                 </th>
                 <td class="col-9 py-2 align-middle bg-white">
-                    <select name="genre" class="d-inline" id ="select1">
+                    <select name="genre" class="d-inline mb-2" id ="select1">
                         <option hidden value="">選択してください</option>
                         <?php 
                         $genres = getAllGenres();

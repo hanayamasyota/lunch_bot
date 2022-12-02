@@ -226,7 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <div class="text-danger d-inline">*</div>ジャンル
                             </th>
                             <td class="col-8 py-2 align-middle bg-white text-left">
-                                <select name="genre">
+                                <select name="genre" class="d-inline mb-2" id ="select1">
                                     <option hidden value="">選択してください</option>
                                     <?php
                                     $genres = getAllGenres();
@@ -238,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </select>
                                 <br>
                                 <input type="text" class="w-50"><br>
-                                <small>セレクトボックス内にない場合は<br>その他を選択しテキストボックスに入力してください</small>
+                                <small>セレクトボックス内にない場合は<br>その他を選択しテキストボックス<br>に追加したいジャンルを入力してください</small>
                             </td>
                         </tr>
                         <tr>
