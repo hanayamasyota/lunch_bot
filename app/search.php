@@ -411,12 +411,28 @@ function makeMapURLOnlyDestination($dst_lat, $dst_lng) {
 }
 
 function searchReccomend($userId, $bot, $token, $userAmbi) {
+    //お気に入りのお店とマッチした店を３つまで取得
     $recShops = getMatchByNavigation($userId, $userAmbi);
+    $recShopLength = 0;
+
+    //履歴からいつも行っていない店を１つ取得
+    $difShop = getDifferentByNavigation($userId);
+
+    //昼休みの時刻を取得
+    $restTime = getRestTimeByUserId($userId);
+
     if (!(isset($recShops))) {
-        replyTextMessage($bot, $token,
-        'おすすめが見つかりませんでした。'
-        );
-        return;
+        if (!(isset($difShop))) {
+            replyTextMessage($bot, $token,
+            'おすすめが見つかりませんでした。'
+            );
+            return;
+        } else {
+            $recShop = $difShop;
+        }
+    } else {
+        //おすすめの店を結合
+        $recShopLength = count($recShops);
     }
 
     $columnArray = array();

@@ -60,6 +60,9 @@ function getMatchByNavigation($userId, $userAmbi) {
 
             if ($userAmbi == $matchAmbi) {
                 array_push($matchShopList, $shopId["shopid"]);
+                if (count($matchShopList) >= 3) {
+                    break;
+                }
             }
     }
     error_log('matchshop:'.print_r($matchShopList, true));
@@ -79,7 +82,6 @@ function getMatchByNavigation($userId, $userAmbi) {
     } else {
         return null;
     }
-
 
     $sql = 'select * from ' .TABLE_NAME_NAVIGATION. ' where ? = pgp_sym_decrypt(userid, \'' . getenv('DB_ENCRYPT_PASS') . '\') and ? = shopid';
     $sth = $dbh->prepare($sql);
